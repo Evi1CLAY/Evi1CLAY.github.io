@@ -1,4 +1,4 @@
-body {
+﻿body {
   width: 100%;
 }
 body:before,
@@ -610,7 +610,7 @@ a {
   margin-right: 0;
 }
 #header .header-nav .social a.weibo {
-  background: url("/img/weibo.png") center no-repeat #aaf;
+  background: url("/img/cnblogs.png") center no-repeat #aaf;
   border: 1px solid #aaf;
 }
 #header .header-nav .social a.weibo:hover {
@@ -663,6 +663,13 @@ a {
   border: 1px solid #0078d8;
 }
 #header .header-nav .social a.zhihu:hover {
+  border: 1px solid #0078d8;
+}
+#header .header-nav .social a.cnblogs {
+  background: url("/img/cnblogs.png") center no-repeat #aaf;
+  border: 1px solid #0078d8;
+}
+#header .header-nav .social a.cnblogs:hover {
   border: 1px solid #0078d8;
 }
 #header .header-nav .social a.douban {

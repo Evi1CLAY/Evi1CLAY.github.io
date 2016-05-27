@@ -1,0 +1,677 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="Focus on Web Security and Programming :)" />
+
+
+
+  <meta name="keywords" content="去除水印," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="0x 00 按照惯例，废话在前　　上学期有个小伙伴让我找火影的一个原声 ED 来着，当时没有找到啊(怂…)，然后前段时间不经意间在 QQ 的微盘里看到了当时接收的种子文件想起了这件事，然后我又左手百度右手谷歌，不断的寻找不断的寻找，有这个原声ED的世界在哪里 TAT 。
+　　最后，在另外一个小伙伴 Shuo 的帮助下终于找到了资源，恩，Nice！
+　　我哩个去，这么好的原声资源居然被发布网站打上了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何去除视频中的动态水印">
+<meta property="og:url" content="http://yoursite.com/2015/09/27/Watermark-Remove/index.html">
+<meta property="og:site_name" content="Evil CLAY's Notes">
+<meta property="og:description" content="0x 00 按照惯例，废话在前　　上学期有个小伙伴让我找火影的一个原声 ED 来着，当时没有找到啊(怂…)，然后前段时间不经意间在 QQ 的微盘里看到了当时接收的种子文件想起了这件事，然后我又左手百度右手谷歌，不断的寻找不断的寻找，有这个原声ED的世界在哪里 TAT 。
+　　最后，在另外一个小伙伴 Shuo 的帮助下终于找到了资源，恩，Nice！
+　　我哩个去，这么好的原声资源居然被发布网站打上了">
+<meta property="og:image" content="http://ww2.sinaimg.cn/mw690/005zAdFCjw1ewhhgmm1hwj30g40emjsd.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/mw690/005zAdFCjw1ewhi0clez7j30mi0ev775.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/mw690/005zAdFCjw1ewhi6d8en0j30di0d63z9.jpg">
+<meta property="og:updated_time" content="2015-09-27T17:38:13.164Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何去除视频中的动态水印">
+<meta name="twitter:description" content="0x 00 按照惯例，废话在前　　上学期有个小伙伴让我找火影的一个原声 ED 来着，当时没有找到啊(怂…)，然后前段时间不经意间在 QQ 的微盘里看到了当时接收的种子文件想起了这件事，然后我又左手百度右手谷歌，不断的寻找不断的寻找，有这个原声ED的世界在哪里 TAT 。
+　　最后，在另外一个小伙伴 Shuo 的帮助下终于找到了资源，恩，Nice！
+　　我哩个去，这么好的原声资源居然被发布网站打上了">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 如何去除视频中的动态水印 | Evil CLAY's Notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-hk">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Evil CLAY's Notes</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              如何去除视频中的动态水印
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-09-27T23:28:50+08:00" content="2015-09-27">
+            2015-09-27
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/FunnyTest/" itemprop="url" rel="index">
+                  <span itemprop="name">FunnyTest</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/09/27/Watermark-Remove/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/27/Watermark-Remove/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h3 id="0x_00_按照惯例，废话在前">0x 00 按照惯例，废话在前</h3><p>　　上学期有个小伙伴让我找火影的一个原声 ED 来着，当时没有找到啊(怂…)，然后前段时间不经意间在 QQ 的微盘里看到了当时接收的种子文件想起了这件事，然后我又左手百度右手谷歌，不断的寻找不断的寻找，有这个原声ED的世界在哪里 TAT 。</p>
+<p>　　最后，在另外一个小伙伴 Shuo 的帮助下终于找到了资源，恩，Nice！</p>
+<p>　　我哩个去，这么好的原声资源居然被发布网站打上了自己的 Logo 水印，至于这个，其实我是能理解的，倒是作为个人而言，为了更好的视觉效果，我还是自己动手把水印去掉吧，仅用于个人观看，侵删。</p>
+<p>　　正准备下载到本地来着，我哩个又去，居然成为会员才可以下载超清版视频，这怎么会难倒我对不对，看我略施小计，如何把它 down 到 本地。</p>
+<h3 id="0x_01_程序员也要超清版">0x 01 程序员也要超清版</h3><p>　　<br>　　火影 ED 在这里：<a href="http://v.yinyuetai.com/video/2350690?qq-pf-to=pcqq.c2c" target="_blank" rel="external">“さよならメモリー 动漫&lt;火影忍者疾风传&gt;ED24 无字幕版”</a></p>
+<p>　　点击下载，且出现了成为达人神马的看起来好麻烦，大概看了一下看样下超清版的是需要成为达人才可以。</p>
+<center><img src="http://ww2.sinaimg.cn/mw690/005zAdFCjw1ewhhgmm1hwj30g40emjsd.jpg" alt="成为达人"></center>
+
+<p>　　作为一个屌丝程序员，怎么可以按照正常套路出牌呢对不对，按下 F12 看这个视频到底是什么鬼。</p>
+<p>　　看看在 Network 里网页在渲染的过程中传输了哪些资源，然后就发现了后缀是 mp4 的视频文件，好兴奋啊好兴奋，嘿嘿嘿。</p>
+<center><img src="http://ww4.sinaimg.cn/mw690/005zAdFCjw1ewhi0clez7j30mi0ev775.jpg" alt="资源传输"></center>
+
+<p>　　接下来就好办了，复制这条连接，掏出迅雷，新建下载，把连接放心去，大小显示 0B，这个估计迅雷这边的显示出了小 bug ，下载到本地是正常的大小。</p>
+<center><img src="http://ww2.sinaimg.cn/mw690/005zAdFCjw1ewhi6d8en0j30di0d63z9.jpg" alt="新建下载"></center>
+
+<p>　　行了，现在拿到了超清版的 ED ，是时候把上面的 Logo 水印去掉了。</p>
+<h3 id="0x_02_马赛克应该打在该打的地方">0x 02 马赛克应该打在该打的地方</h3><p>　　很明显，在这里用马赛克把水印去掉好不如不用，连ED都要打码，这个世界还能让人好好玩耍么，没有图片处理经验可是我可以学啊，网上教程一大堆啊对不对，当然残酷的事实总会毫不留情的打向我的脸：愚笨如我并没有找到如何去除动态水印的方法，心塞。。</p>
+<p>　　看到了一个 <a href="http://v.17173.com/v_102_608/MjA5NTA1NDE.html" title="去除静态水印" target="_blank" rel="external">去除静态水印的老教程</a> ，清晰度不高，不过到蛮靠谱的，顺着静态处理的方法自己查了下资料 利用关键帧处理的方法，终于做出来自己想要的结果了。</p>
+<p>　　先放处理结果。</p>
+<p>==================================分割线====================================</p>
+<p>　　视频上传到 优酷 里了 ，还在发布中，发布出来在接着写把，好困的说。。。2015.09.28</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/去除水印/" rel="tag">#去除水印</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/11/JavaScript-Notes/" rel="next">JavaScript 入门学习笔记</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+            <!-- 多说热评文章-->
+            <p>热评文章</p>
+            <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/09/27/Watermark-Remove/"
+                   data-title="如何去除视频中的动态水印" data-url="http://yoursite.com/2015/09/27/Watermark-Remove/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="https://avatars2.githubusercontent.com/u/13638980?v=3&s=460" alt="Evil CLAY" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Evil CLAY</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">Focus on Web Security and Programming :)</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">標籤</span>
+              
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Evi1CLAY" target="_blank">Github</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/amzhoupeng" target="_blank">知乎</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.cnblogs.com/anka9080" target="_blank">Cnblog</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">Links</p>
+            
+              <span class="links-of-author-item">
+              <a href="http://navisec.it" target="_blank">Navisec.it</a>
+              </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.knownsec.com" target="_blank">Knownsec</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x_00_按照惯例，废话在前"><span class="nav-number">1.</span> <span class="nav-text">0x 00 按照惯例，废话在前</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x_01_程序员也要超清版"><span class="nav-number">2.</span> <span class="nav-text">0x 01 程序员也要超清版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x_02_马赛克应该打在该打的地方"><span class="nav-number">3.</span> <span class="nav-text">0x 02 马赛克应该打在该打的地方</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp;  2013 - 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Evil CLAY</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"evilclay"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

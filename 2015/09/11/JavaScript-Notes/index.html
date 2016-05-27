@@ -1,0 +1,833 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="Focus on Web Security and Programming :)" />
+
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="HTML 就像是人的身体； CSS 就像是各种各样的衣服，能给人带来各种样子上的变化； Javascript 就像是人的活动，可以改变身体的构成，也可以改变各种衣服的样子，三者结合就给网页带来了无穷的变化，成就无限可能。
+
+　　上面是摘自 百度知道的一个问答 ，通俗的把 HTML , CSS , JavaScript 的关系描述了一遍，贴切而且挺有意思的。下面使用栗子讲解的方式把我的 JavaSc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript 入门学习笔记">
+<meta property="og:url" content="http://yoursite.com/2015/09/11/JavaScript-Notes/index.html">
+<meta property="og:site_name" content="Evil CLAY's Notes">
+<meta property="og:description" content="HTML 就像是人的身体； CSS 就像是各种各样的衣服，能给人带来各种样子上的变化； Javascript 就像是人的活动，可以改变身体的构成，也可以改变各种衣服的样子，三者结合就给网页带来了无穷的变化，成就无限可能。
+
+　　上面是摘自 百度知道的一个问答 ，通俗的把 HTML , CSS , JavaScript 的关系描述了一遍，贴切而且挺有意思的。下面使用栗子讲解的方式把我的 JavaSc">
+<meta property="og:updated_time" content="2015-09-19T16:48:33.568Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript 入门学习笔记">
+<meta name="twitter:description" content="HTML 就像是人的身体； CSS 就像是各种各样的衣服，能给人带来各种样子上的变化； Javascript 就像是人的活动，可以改变身体的构成，也可以改变各种衣服的样子，三者结合就给网页带来了无穷的变化，成就无限可能。
+
+　　上面是摘自 百度知道的一个问答 ，通俗的把 HTML , CSS , JavaScript 的关系描述了一遍，贴切而且挺有意思的。下面使用栗子讲解的方式把我的 JavaSc">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> JavaScript 入门学习笔记 | Evil CLAY's Notes </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-hk">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Evil CLAY's Notes</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              JavaScript 入门学习笔记
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-09-11T13:17:56+08:00" content="2015-09-11">
+            2015-09-11
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/Notes/" itemprop="url" rel="index">
+                  <span itemprop="name">Notes</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/09/11/JavaScript-Notes/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/11/JavaScript-Notes/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><blockquote>
+<p>　　HTML 就像是人的身体； CSS 就像是各种各样的衣服，能给人带来各种样子上的变化； Javascript 就像是人的活动，可以改变身体的构成，也可以改变各种衣服的样子，三者结合就给网页带来了无穷的变化，成就无限可能。</p>
+</blockquote>
+<p>　　上面是摘自 <a href="http://zhidao.baidu.com/link?url=0_KbulYQwqGjQqmy9xG_ehmnjavUfq6SAGvXM71rbqlRpzfmJ2aV1gft5AcTHbuAGFlJsnV0xl1Rtg4LwUsrma" target="_blank" rel="external">百度知道的一个问答</a> ，通俗的把 HTML , CSS , JavaScript 的关系描述了一遍，贴切而且挺有意思的。下面使用栗子讲解的方式把我的 JavaScript 学习过程记录下来，以后忘了在回头看看 : )</p>
+<p>　　首先说明两点：</p>
+<ul>
+<li>JavaScript 是用来在页面中特效的，基于对象，并且和 HTML/CSS 一样都是由浏览器解析的。</li>
+<li>JQuery 是 一个 JavaScript 库，使用它简化了 JS 的编程，并且解决了浏览器之间的兼容问题。</li>
+</ul>
+<h3 id="0x_00_嵌入格式">0x 00 嵌入格式</h3><pre><code><span class="tag">&lt;<span class="title">script</span> <span class="attribute">language</span> = "<span class="attribute">javascript</span>" <span class="attribute">type</span> = "<span class="attribute">text</span>/<span class="attribute">javascript</span>"&gt;</span><span class="actionscript">
+    <span class="comment">// JS 代码</span>
+</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+</code></pre><p>　　在这里，属性 language 和 type 可以不写（默认 JavaScript ），但要是嵌入其他前段脚本，比如 jscript，需要写上 language，type 。</p>
+<p>　　嵌入格式可以嵌入 <head>, </head><body> 标签内部，或者 <html> 外，不能够嵌入到 CSS 里。</html></body></p>
+<h3 id="0x_01_输出">0x 01 输出</h3><pre><code>document.<span class="function"><span class="title">write</span><span class="params">(<span class="string">"打印一个字符串!"</span>)</span></span>  <span class="comment">// 在文档中输出双引号中的字符串</span>
+
+<span class="function"><span class="title">alert</span><span class="params">(/hello \n form:www.evilclay.com/)</span></span>  <span class="comment">// 弹出有换行符(\n)的 警告框</span>
+</code></pre><p>　　在这里除了 alert() 是用来弹出提示框，还有下面这两个函数。</p>
+<pre><code><span class="tag">var</span> r = <span class="function"><span class="title">confirm</span><span class="params">(<span class="string">"Are You sure?"</span>)</span></span>  <span class="comment">// 确认框，返回 OK 或者 Cancel</span>
+<span class="tag">var</span> name = <span class="function"><span class="title">prompt</span><span class="params">(<span class="string">"Please input You name,baby:"</span>,<span class="string">"DaGe"</span>)</span></span> <span class="comment">// 有默认值的  提示框，点击确定返回输入的值，点击取消 返回 null</span>
+</code></pre><h3 id="0x_02_如何使用">0x 02 如何使用</h3><p>　　主要分为以下 4 种情况：</p>
+<ul>
+<li>使用<code>&lt;script&gt; &lt;/script&gt;</code>标签将 JS 嵌入到 HTML 中。</li>
+<li>在 <code>href</code> 属性中 引入， 如: <code>href = &quot;javascript:alert(/evilclay.com/)&quot;</code></li>
+<li>在事件中引入，如 <code>onclick</code> 事件。</li>
+<li>在文档中的任意位置调用外部 JS 文件，如：<code>&lt;script src = &quot;test.js&quot;&gt; &lt;/script&gt;</code></li>
+</ul>
+<h3 id="0x_03_变量">0x 03 变量</h3><p>　　声明变量要注意的 3 点：</p>
+<ul>
+<li>变量绝大多数情况下以字母开头。</li>
+<li>变量也可以以 $ 和 _（下划线） 开头，但不推荐这么做。</li>
+<li>现阶段可以把带有 var 声明理解为局部变量，不带的是全局变量。</li>
+</ul>
+<p>　　数组的两种声明方式：</p>
+<pre><code><span class="number">1.</span> var cars = <span class="keyword">new</span> Array();
+
+　　cars[<span class="number">0</span>] = <span class="string">"Audi"</span> ; cars[<span class="number">1</span>] = <span class="string">"BMW"</span>;
+
+<span class="number">2.</span> var cars = <span class="keyword">new</span> Array(<span class="string">"Audi"</span>,<span class="string">"BMW"</span>);
+　　<span class="comment">// 和上面的声明效果是一样的。</span>
+</code></pre><h3 id="0x_04_对象">0x 04 对象</h3><pre><code>var <span class="keyword">person</span> = {
+　　　　firstname:<span class="string">"Bill"</span>,
+　　　　lastname:<span class="string">"Gates"</span>
+};
+</code></pre><p>　　上面的栗子初始化了一个对象 person ，对象属性有下面两种寻址方式:</p>
+<pre><code>- name1 = <span class="keyword">person</span>.firstname;
+- name2 = <span class="keyword">person</span><span class="comment">['lastname']</span>
+</code></pre><p>　　JS 中有以下几种 变量类型：</p>
+<pre><code><span class="number">1.</span> <span class="variable"><span class="keyword">var</span> str</span> = <span class="string">" hello "</span>;  <span class="comment">// 字符串</span>
+<span class="number">2.</span> <span class="variable"><span class="keyword">var</span> num</span> = <span class="number">23333</span> ;  <span class="comment">// 数字</span>
+<span class="number">3.</span> <span class="variable"><span class="keyword">var</span> result</span> = <span class="literal">true</span>;  <span class="comment">// 布尔</span>
+<span class="number">4.</span> <span class="variable"><span class="keyword">var</span> arr</span> = new Array();  <span class="comment">// 数组</span>
+<span class="number">5.</span> <span class="variable"><span class="keyword">var</span> ob</span> = { name:<span class="string">"evilclay"</span>, age:<span class="number">22</span> };  <span class="comment">// 对象</span>
+</code></pre><p>　　在 JS 中，所有的变量 都可以看做是对象（ 属性 + 方法 ）。</p>
+<p>　　对于字符串(String) 变量，有一些内建的属性和方法：</p>
+<pre><code><span class="tag">var</span> txt = <span class="string">"hell0"</span>
+txt<span class="class">.Length</span>  <span class="comment">// 5 , 获得长度</span>
+txt.<span class="function"><span class="title">indexOf</span><span class="params">(<span class="string">"el"</span>)</span></span>  <span class="comment">// 1 , 用来定位某个字符串在原字符串第一次出现的位置</span>
+txt.<span class="function"><span class="title">replace</span><span class="params">(<span class="string">"0"</span>,<span class="string">"0"</span>)</span></span> <span class="comment">// hello, 字符串替换</span>
+txt.<span class="function"><span class="title">search</span><span class="params">(<span class="string">"ll"</span>)</span></span>  <span class="comment">// 2, 返回字符串第一次匹配的位置，和 indexOf 有点区别:)</span>
+txt.<span class="function"><span class="title">toUpperCase</span><span class="params">()</span></span> <span class="comment">// HELL0, 转换成大写</span>
+</code></pre><p>　　遍历对象的属性（ for ..in 结构 ）:</p>
+<pre><code>var <span class="keyword">person</span> = { firstname:<span class="string">"Bill"</span>,lastname:<span class="string">"Gates"</span> }
+var x; var txt = <span class="string">""</span>;
+for (x in <span class="keyword">person</span>){
+    txt = txt + <span class="keyword">person</span><span class="comment">[x]</span>;
+}  
+// 输出： BillGates
+</code></pre><h3 id="0x_05_函数">0x 05 函数</h3><p>　　只有在被调用时，函数体中的代码才会执行。<br>　　函数的定义：</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">myFunction</span><span class="params">(str)</span>{</span>
+    alert<span class="params">(str)</span>;
+    return <span class="built_in">str</span>; <span class="comment">// 返回值可有可无，看情况</span>
+}
+</code></pre><h3 id="0x_06_运算符">0x 06 运算符</h3><ul>
+<li>算数运算符 + * / % ++ –</li>
+<li>赋值运算符 = += -= *= /= %=</li>
+<li>条件运算符 &gt; &lt; == != &gt;= &lt;= === !==</li>
+<li>逻辑运算符 &amp;&amp; || ！</li>
+<li>位运算符 &gt;&gt; &gt;&gt;&gt; &lt;&lt; &lt;&lt;&lt; &amp; | ~</li>
+<li>其他运算符 ?:</li>
+</ul>
+<p>　　说明：<br><br>　　逻辑运算符有短路原则。<br><br>　　== 是 非严格匹配，也就是说匹配前会转换类型，比如 <code>true == 1</code> 就是正确的。<br><br>　　=== 是严格匹配，匹配前会先判断类型是否一致。<br><br>　　&gt;&gt;&gt; 是无符号右移，比如 100 &gt;&gt;&gt; 2 结果是 25，需要把100转换成二进制右移2位。<br><br>　　~ 是取反操作。<br></p>
+<p>　　有趣的小栗子：<br></p>
+<pre><code>a = <span class="number">10</span> + <span class="number">2</span> + <span class="string">"3abc"</span>  <span class="comment">// 在 JS 中 输出 "1023abc"</span>
+a = <span class="number">10</span> + <span class="number">2</span> + <span class="string">"3abc"</span>  <span class="comment">// 在 PHP 中 输出 15</span>
+</code></pre><h3 id="0x_07_DOM">0x 07 DOM</h3><p>　　DOM —— Document Object Module ，文档对象模型</p>
+<p>　　JS 可以修改 HTML 元素， HTML 属性， CSS 样式。</p>
+<h4 id="查找_HTML_元素">查找 HTML 元素</h4><ol>
+<li>via id / class</li>
+</ol>
+<p><code>var x = document.getElementById(&quot;Intro&quot;);</code></p>
+<ol>
+<li>via 标签名</li>
+</ol>
+<p><code>var x = document.getElementById(&quot;stu&quot;);</code><br><code>var y = x.getElementByTagName(&quot;p&quot;)  // 查找 所有&lt;p&gt;中 id = &quot;stu&quot;  的标签</code></p>
+<h4 id="改变_HTML_输出流">改变 HTML 输出流</h4><p>　　使用 <code>document.write()</code> 方法 // 重新加载后会覆盖原文档</p>
+<h4 id="改变_HTML_属性">改变 HTML 属性</h4><p>　　语法： document.getElementById(id).attribute = new value;</p>
+<pre><code><span class="rule"><span class="attribute">eg</span>:<span class="value"> document.<span class="function">getElementById</span>(<span class="string">"pic"</span>).href = <span class="string">"http://www.evilclay.com/a.jpg"</span></span></span>;
+</code></pre><h4 id="改变_HTML_样式">改变 HTML 样式</h4><p>　　语法： document.getElementById(id).style.property = new style;</p>
+<pre><code><span class="rule"><span class="attribute">eg</span>:<span class="value"> document.<span class="function">getElementById</span>(<span class="string">"p2"</span>).style.color = <span class="string">"blue"</span></span></span>;
+</code></pre><p><br><br><strong>=============================分割线===============================</strong></p>
+<p>　　<strong>先写到这里，后面还有 事件， 常用内建对象 的 相关笔记。 2015.09.13</strong></p>
+<p><strong>=========================2015.09.19更新===========================</strong></p>
+<p>　　<strong>今晚把剩下的补上咯</strong></p>
+<h4 id="使用_JS_来分配事件">使用 JS 来分配事件</h4><p>　　语法： document.getElementById(id).event = function();</p>
+<pre><code><span class="rule"><span class="attribute">eg</span>:<span class="value"> 　document.<span class="function">getElementById</span>(id).event = <span class="function">function</span>()</span></span>;
+</code></pre><p>　　JS 中 常用的事件 如下：</p>
+<ul>
+<li>onload &amp; onunload</li>
+</ul>
+<p>　　进入、离开页面时触发， onload 事件可用于检测访问者的浏览器类型，版本</p>
+<p>　　onload 与 onunload 可用于处理cookie</p>
+<ul>
+<li>onchange </li>
+</ul>
+<p>　　在文本框输入完信息焦点离开后会触发事件</p>
+<p>　　可用来做输入检查</p>
+<ul>
+<li>onmouseover &amp; onmouseout</li>
+</ul>
+<p>　　鼠标移至、移出 HTML 元素时触发事件</p>
+<ul>
+<li>onmousedown &amp; onmouseup</li>
+</ul>
+<p>　　鼠标点击、松开 HTML 元素时触发事件</p>
+<ul>
+<li>onfocus</li>
+</ul>
+<p>　　当输入字段获得焦点时触发事件</p>
+<p>　　常用于表单提示</p>
+<p>　　注： 使用 JS 还可以增加、删除 HTML 元素。</p>
+<h3 id="0x_07_常用的内建对象">0x 07 常用的内建对象</h3><h4 id="Date()_对象">Date() 对象</h4><p>　　用来返回当日的时间</p>
+<pre><code>var d1 = <span class="keyword">new</span> Date()  <span class="preprocessor"># 定义 d1 为当前时刻</span>
+
+var d2 = <span class="keyword">new</span> Date(<span class="string">"2015/9/20 00:33:00"</span>)  <span class="preprocessor"># 使用字符串形式定义时间</span>
+
+var d3 = <span class="keyword">new</span> Date(<span class="number">2015</span>,<span class="number">9</span>,<span class="number">20</span>,<span class="number">0</span>,<span class="number">33</span>,<span class="number">0</span>)  <span class="preprocessor"># 使用数字形式定义时间（至少 <span class="number">3</span> 个数字）</span>
+
+var v1 = d1.toLocaleString()  <span class="preprocessor"># 获得 d1 的 本地时间表示</span>
+
+var v2 = d1.getTime()  <span class="preprocessor"># 获得 d1 的毫秒表示形式(从 <span class="number">1970.0</span><span class="number">.0</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> 开始计算)</span>
+</code></pre><h4 id="random()">random()</h4><p>　　用来返回 0-1 之间的随机数</p>
+<h4 id="Math()_对象">Math() 对象</h4><p>　　用来进行数学计算</p>
+<p>　　获得 n1 - n2 之间的随机整数：</p>
+<p><code>var s = Math.floor(Math.random()*(n2 - n1 + 1)) + n1;</code></p>
+<h4 id="String()_对象">String() 对象</h4><pre><code>var str = "abcd"; or var str = new String("abcd")
+
+var v1 = str.charAt(3)  # 取位置为3的字符（从<span class="operator">0开始）
+
+<span class="keyword">var</span> v3 = <span class="keyword">str</span>.<span class="keyword">subString</span>(<span class="keyword">n</span>,<span class="keyword">m</span>)  # 取 <span class="keyword">n</span> 到 <span class="keyword">m</span> 之间的字符(含<span class="keyword">n</span>不含<span class="keyword">m</span>)
+
+<span class="keyword">var</span> v4 = <span class="keyword">str</span>.<span class="keyword">replace</span>(<span class="string">"cd"</span>,<span class="string">"dc"</span>)  # 替换字符串
+
+<span class="keyword">var</span> v5 = <span class="keyword">str</span>.toUpperCase()  # 大写
+
+<span class="keyword">var</span> v6 = <span class="keyword">str</span>.toLowerCase()  # 小写
+
+<span class="keyword">var</span> v7 = <span class="keyword">str</span>.<span class="keyword">split</span>(<span class="string">"b"</span>)  # <span class="string">"b"</span>作为分隔符分割字符串得到数组
+
+<span class="keyword">var</span> p1 = <span class="keyword">str</span>.indexOf(<span class="string">"c"</span>)  # 获得 字符串 <span class="keyword">c</span> 首次出现的位置
+
+<span class="keyword">var</span> p2 = <span class="keyword">str</span>.lastIndexof(<span class="string">"c"</span>)  # 获得字符串 <span class="keyword">c</span> 最后一次出现的位置</span>
+</code></pre><h4 id="数组">数组</h4><pre><code>var arr = [[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">5</span>],[<span class="number">6</span>,<span class="number">7</span>]]
+
+arr[<span class="number">0</span>].length  <span class="preprocessor"># 获得数组 arr[<span class="number">0</span>] 的长度 ，为 <span class="number">3</span></span>
+</code></pre><p>　　常用方法：</p>
+<pre><code><span class="function"><span class="title">concat</span><span class="params">()</span></span>,<span class="function"><span class="title">join</span><span class="params">()</span></span>,<span class="function"><span class="title">pop</span><span class="params">()</span></span>,<span class="function"><span class="title">push</span><span class="params">()</span></span>,<span class="function"><span class="title">shift</span><span class="params">()</span></span>,<span class="function"><span class="title">unshift</span><span class="params">()</span></span>,<span class="function"><span class="title">reverse</span><span class="params">()</span></span>
+</code></pre><h4 id="event_对象">event 对象</h4><pre><code><span class="keyword">event</span>.clientX  <span class="preprocessor"># 获得网页上鼠标的 x 坐标</span>
+
+<span class="keyword">event</span>.clientY  <span class="preprocessor"># 获得网页上鼠标的 y 坐标</span>
+
+<span class="keyword">event</span>.keyCode  <span class="preprocessor"># 键盘事件的按键值</span>
+
+<span class="keyword">event</span>.target  <span class="preprocessor"># Forefox 中，事件发生的那个对象(事件源)</span>
+
+<span class="keyword">event</span>.srcElement  <span class="preprocessor"># IE中的事件源</span>
+</code></pre><h3 id="0x_08_Summary">0x 08 Summary</h3><p>　　上面写的 基本用法主要就是靠练，感觉没啥。</p>
+<p>　　PS: 响应式布局挺好玩的，把适配的角度从一个具体的设备转移到本身程序身上，有意思。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag">#JavaScript</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/27/Watermark-Remove/" rel="prev">如何去除视频中的动态水印</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/09/Web-Security-Pentest/" rel="next">Web 安全 の 渗透测试流程</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+            <!-- 多说热评文章-->
+            <p>热评文章</p>
+            <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/09/11/JavaScript-Notes/"
+                   data-title="JavaScript 入门学习笔记" data-url="http://yoursite.com/2015/09/11/JavaScript-Notes/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="https://avatars2.githubusercontent.com/u/13638980?v=3&s=460" alt="Evil CLAY" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Evil CLAY</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">Focus on Web Security and Programming :)</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">標籤</span>
+              
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Evi1CLAY" target="_blank">Github</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/amzhoupeng" target="_blank">知乎</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.cnblogs.com/anka9080" target="_blank">Cnblog</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">Links</p>
+            
+              <span class="links-of-author-item">
+              <a href="http://navisec.it" target="_blank">Navisec.it</a>
+              </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://www.knownsec.com" target="_blank">Knownsec</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x_00_嵌入格式"><span class="nav-number">1.</span> <span class="nav-text">0x 00 嵌入格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x_01_输出"><span class="nav-number">2.</span> <span class="nav-text">0x 01 输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x_02_如何使用"><span class="nav-number">3.</span> <span class="nav-text">0x 02 如何使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x_03_变量"><span class="nav-number">4.</span> <span class="nav-text">0x 03 变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x_04_对象"><span class="nav-number">5.</span> <span class="nav-text">0x 04 对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x_05_函数"><span class="nav-number">6.</span> <span class="nav-text">0x 05 函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x_06_运算符"><span class="nav-number">7.</span> <span class="nav-text">0x 06 运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x_07_DOM"><span class="nav-number">8.</span> <span class="nav-text">0x 07 DOM</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查找_HTML_元素"><span class="nav-number">8.1.</span> <span class="nav-text">查找 HTML 元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#改变_HTML_输出流"><span class="nav-number">8.2.</span> <span class="nav-text">改变 HTML 输出流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#改变_HTML_属性"><span class="nav-number">8.3.</span> <span class="nav-text">改变 HTML 属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#改变_HTML_样式"><span class="nav-number">8.4.</span> <span class="nav-text">改变 HTML 样式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用_JS_来分配事件"><span class="nav-number">8.5.</span> <span class="nav-text">使用 JS 来分配事件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x_07_常用的内建对象"><span class="nav-number">9.</span> <span class="nav-text">0x 07 常用的内建对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Date()_对象"><span class="nav-number">9.1.</span> <span class="nav-text">Date() 对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#random()"><span class="nav-number">9.2.</span> <span class="nav-text">random()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Math()_对象"><span class="nav-number">9.3.</span> <span class="nav-text">Math() 对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#String()_对象"><span class="nav-number">9.4.</span> <span class="nav-text">String() 对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数组"><span class="nav-number">9.5.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#event_对象"><span class="nav-number">9.6.</span> <span class="nav-text">event 对象</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x_08_Summary"><span class="nav-number">10.</span> <span class="nav-text">0x 08 Summary</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp;  2013 - 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Evil CLAY</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"evilclay"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
