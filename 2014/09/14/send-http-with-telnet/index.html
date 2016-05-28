@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>HTTP 协议分析及 CMD 发送 HTTP 请求 | Anka9080&#39;s Note</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="学习，熟悉HTTP协议，便于以后进行HTTP重放攻击！
+0x 00  HTTP 协议分析　　查看 HTTP 协议 
+先查看鼠标点击一个链接后，浏览器发出了怎样的HTTP请求。Chrome浏览器下，按F12进入开发者模式，点击Network后，在页面中随意点击链接测试，出现下图:
+
+上面的news.baidu.com 就是点击新闻后发出的一条信息相关内容，在图中我们大致可以看到 有请求主机，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP 协议分析及 CMD 发送 HTTP 请求">
+<meta property="og:url" content="http://www.evilclay.com/2014/09/14/send-http-with-telnet/index.html">
+<meta property="og:site_name" content="Anka9080's Note">
+<meta property="og:description" content="学习，熟悉HTTP协议，便于以后进行HTTP重放攻击！
+0x 00  HTTP 协议分析　　查看 HTTP 协议 
+先查看鼠标点击一个链接后，浏览器发出了怎样的HTTP请求。Chrome浏览器下，按F12进入开发者模式，点击Network后，在页面中随意点击链接测试，出现下图:
+
+上面的news.baidu.com 就是点击新闻后发出的一条信息相关内容，在图中我们大致可以看到 有请求主机，">
+<meta property="og:image" content="http://images.cnitblog.com/blog/671902/201409/141225019819569.jpg">
+<meta property="og:image" content="http://images.cnitblog.com/blog/671902/201409/141052402315205.png">
+<meta property="og:image" content="http://images.cnitblog.com/blog/671902/201409/141257062621524.png">
+<meta property="og:image" content="http://images.cnitblog.com/blog/671902/201409/141256063878582.jpg">
+<meta property="og:updated_time" content="2016-05-28T06:46:44.940Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTTP 协议分析及 CMD 发送 HTTP 请求">
+<meta name="twitter:description" content="学习，熟悉HTTP协议，便于以后进行HTTP重放攻击！
+0x 00  HTTP 协议分析　　查看 HTTP 协议 
+先查看鼠标点击一个链接后，浏览器发出了怎样的HTTP请求。Chrome浏览器下，按F12进入开发者模式，点击Network后，在页面中随意点击链接测试，出现下图:
+
+上面的news.baidu.com 就是点击新闻后发出的一条信息相关内容，在图中我们大致可以看到 有请求主机，">
+<meta name="twitter:image" content="http://images.cnitblog.com/blog/671902/201409/141225019819569.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="Anka9080&#39;s Note" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="https://avatars2.githubusercontent.com/u/13638980?v=3&amp;s=460" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Anka9080</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						<li>Links</li>
+						
+						
+						<li>Über</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="http://xss.evilclay.com">XSS 平台</a></li>
+				        
+							<li><a href="/tags/随笔">随笔</a></li>
+				        
+							<li><a href="/1024">Just 4 Fun</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/Evi1CLAY" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="http://www.cnblogs.com/anka9080" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/amzhoupeng" title="zhihu">zhihu</a>
+					        
+								<a class="mail" target="_blank" href="#" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Cookie劫持/" style="font-size: 10px;">Cookie劫持</a> <a href="/tags/DirBuster/" style="font-size: 10px;">DirBuster</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/GoogleHacking/" style="font-size: 10px;">GoogleHacking</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/Kali/" style="font-size: 10px;">Kali</a> <a href="/tags/Nessus/" style="font-size: 10px;">Nessus</a> <a href="/tags/Nmap/" style="font-size: 10px;">Nmap</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Python脚本/" style="font-size: 10px;">Python脚本</a> <a href="/tags/SQLMap/" style="font-size: 10px;">SQLMap</a> <a href="/tags/SQL注入/" style="font-size: 13.33px;">SQL注入</a> <a href="/tags/WIFI热点伪造/" style="font-size: 10px;">WIFI热点伪造</a> <a href="/tags/Wiki/" style="font-size: 10px;">Wiki</a> <a href="/tags/ZoomEye/" style="font-size: 10px;">ZoomEye</a> <a href="/tags/kali/" style="font-size: 13.33px;">kali</a> <a href="/tags/乌云爬虫/" style="font-size: 10px;">乌云爬虫</a> <a href="/tags/信息收集/" style="font-size: 13.33px;">信息收集</a> <a href="/tags/内网渗透/" style="font-size: 10px;">内网渗透</a> <a href="/tags/多线程/" style="font-size: 16.67px;">多线程</a> <a href="/tags/安全工具/" style="font-size: 20px;">安全工具</a> <a href="/tags/密码破解/" style="font-size: 10px;">密码破解</a> <a href="/tags/御剑/" style="font-size: 10px;">御剑</a> <a href="/tags/打印机漏洞/" style="font-size: 10px;">打印机漏洞</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/漏洞分析/" style="font-size: 13.33px;">漏洞分析</a> <a href="/tags/目录扫描/" style="font-size: 10px;">目录扫描</a> <a href="/tags/端口扫描/" style="font-size: 13.33px;">端口扫描</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://xss.evilclay.com">XSS 平台</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/anka9080">CnBlogs博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">该作者并木有留下任何痕迹，相信你，会找到他是谁的 :P</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Anka9080</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="https://avatars2.githubusercontent.com/u/13638980?v=3&amp;s=460" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Anka9080</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="http://xss.evilclay.com">XSS 平台</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+					<li><a href="/1024">Just 4 Fun</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/Evi1CLAY" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="http://www.cnblogs.com/anka9080" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/amzhoupeng" title="zhihu">zhihu</a>
+			        
+						<a class="mail" target="_blank" href="#" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-send-http-with-telnet" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2014/09/14/send-http-with-telnet/" class="article-date">
+  	<time datetime="2014-09-14T05:17:55.000Z" itemprop="datePublished">2014-09-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      HTTP 协议分析及 CMD 发送 HTTP 请求
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Wiki/">Wiki</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>　　　　学习，熟悉HTTP协议，便于以后进行HTTP重放攻击！</p>
+<h2 id="0x-00-HTTP-协议分析"><a href="#0x-00-HTTP-协议分析" class="headerlink" title="0x 00  HTTP 协议分析"></a>0x 00  HTTP 协议分析</h2><p><strong>　　查看 HTTP 协议 </strong></p>
+<p>先查看鼠标点击一个链接后，浏览器发出了怎样的HTTP请求。<br>Chrome浏览器下，按F12进入开发者模式，点击Network后，在页面中随意点击链接测试，出现下图:</p>
+<p><img src="http://images.cnitblog.com/blog/671902/201409/141225019819569.jpg" alt=""></p>
+<p>上面的news.baidu.com 就是点击新闻后发出的一条信息相关内容，在图中我们大致可以看到 有请求主机，IP地址，请求方式，以及返回的状态码（200）</p>
+<p><strong>　 HTTP 请求介绍 </strong></p>
+<p>http请求由三部分组成，请求行，请求头，请求主体。</p>
+<p><img src="http://images.cnitblog.com/blog/671902/201409/141052402315205.png" alt=""></p>
+<p>下面给出一个实例：</p>
+<pre><code>1 POST /login.php HTTP/1.1              // 请求行 包含请求方法，请求地址，协议版本
+2 HOST: www.XXX.com                     // 请求头 
+3                                       // 空一行，表示请求头结束
+4 username=admin &amp; password=admin  // 请求正文 Cookie相关信息
+</code></pre><p>请求方法中GET把请求信息直接标注在URL上，POST多用于提交数据，提交信息在后面的是请求正文中。</p>
+<p>常见的请求头如下：</p>
+<ul>
+<li>User-Agent: 客户端将它的操作系统，浏览器，和其他属性告诉服务器</li>
+<li>X-Forword-For: 代表请求段IP，可以有多个，中间以逗号隔开</li>
+<li>Host: 请求主机名和端口号，默认80</li>
+<li>Referer: 包含一个URL，用户从该URL代表的页面出发访问当前请求的页面</li>
+<li>Connection: 当前连接是否保持</li>
+<li>Accept-Language: 指定接受的自然语言</li>
+<li>Cookie: 表示请求者身份</li>
+</ul>
+<p>其中，User-Agent， X-Forword-For，Referer，Cookie 这4个 HTTP Header 尤其受到网络安全测试人员的喜爱 :)</p>
+<p><strong>　　HTTP 响应介绍 </strong></p>
+<p><img src="http://images.cnitblog.com/blog/671902/201409/141257062621524.png" alt=""></p>
+<p>常见的状态码及作用：</p>
+<ul>
+<li>1xx：指示信息–表示请求已接收，继续处理</li>
+<li>2xx：成功–表示请求已被成功接收、理解、接受    （200成功）</li>
+<li>3xx：重定向–要完成请求必须进行更进一步的操作 （302跳转）</li>
+<li>4xx：客户端错误–请求有语法错误或请求无法实现 （404请求资源不存在）</li>
+<li>5xx：服务器端错误–服务器未能实现合法的请求    （500 服务器内部错误）</li>
+</ul>
+<p>常见HTTP响应头：</p>
+<ul>
+<li>Server: WEB服务器名称 如：Server: Apache/1.3.6(Unix)</li>
+<li>Content-Type: 正文媒体类型</li>
+<li>Content-Length: 正文长度（字节）</li>
+<li>Keep-Alive: 保持连接时间</li>
+<li>Date: 格林时间</li>
+<li>Location: 用于状态码为3xx的跳转，表示客户端应该到哪里去提取文档，当客户端收到后会再次发送请求</li>
+<li>Set-Cookie: 向客户端设置Cookie信息 </li>
+</ul>
+<h3 id="0x-01-使用-Telmet-手工模拟发送-HTTP-请求"><a href="#0x-01-使用-Telmet-手工模拟发送-HTTP-请求" class="headerlink" title="0x 01 使用 Telmet 手工模拟发送 HTTP 请求"></a>0x 01 使用 Telmet 手工模拟发送 HTTP 请求</h3><p>若使用注入 Burp Fiddler等工具截获数据包进行重放也是一样的道理。<br>没开启Telnet服务的同学手动百度一下 如何开启Telnet服务，这里不多说了。<br>进入CMD界面开启telnet：</p>
+<pre><code>telnet www.baidu.com 80
+</code></pre><p>显示空白黑屏界面，在键盘上同时按“Ctrl”键和“]”键，显示如下界面：</p>
+<pre><code>欢迎使用 Microsoft Telnet Client
+
+Escape 字符为 &apos;CTRL+]&apos;
+
+
+Microsoft Telnet&gt;
+</code></pre><p>按“Enter”键 显示空白界面，输入HTTP请求(注意HOST: 后面有个空格)</p>
+<pre><code>GET /index.html HTTP/1.1
+HOST: www.baidu.com
+</code></pre><p>之后连续按两次“Enter”键，完成HTTP请求发送，显示如下信息：</p>
+<p><img src="http://images.cnitblog.com/blog/671902/201409/141256063878582.jpg" alt=""></p>
+<p>至此，已经成功完成HTTP发送模拟。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/09/15/GoogleHacking/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          GoogleHacking ，搜你想要的
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="send-http-with-telnet" data-title="HTTP 协议分析及 CMD 发送 HTTP 请求" data-url="http://www.evilclay.com/2014/09/14/send-http-with-telnet/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+  
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-send-http-with-telnet" data-title="HTTP 协议分析及 CMD 发送 HTTP 请求" data-url="http://www.evilclay.com/2014/09/14/send-http-with-telnet/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'evi1clay'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+  </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 Anka9080
+    	</div>
+      	<div class="footer-right">
+
+          
+Analyse with <script src="http://s23.cnzz.com/z_stat.php?id=1259317280&web_id=1259317280" language="JavaScript"></script>
+
+      	</div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
