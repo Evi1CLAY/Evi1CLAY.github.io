@@ -198,178 +198,6 @@
 
       <div class="body-wrap">
   
-    <article id="post-zoomeye-api" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/28/zoomeye-api/" class="article-date">
-  	<time datetime="2016-05-28T10:03:39.000Z" itemprop="datePublished">2016-05-28</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/28/zoomeye-api/">Python 调用 ZoomEye API 批量获取目标网站IP</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160330161710441-1284229011.png" alt=""></p>
-<h2 id="0x-00-前言"><a href="#0x-00-前言" class="headerlink" title="0x 00 前言"></a>0x 00 前言</h2><p>　　ZoomEye 的 API 在前几天正式对外部开发，这对网络渗透人员来说是一件开心的事</p>
-<p>　　可以说“妈妈再也不用担心批量测(x)试(zhan)没有资源了。”</p>
-<p>　　官方的 API 帮助文档在下面：</p>
-<p>　　<a href="https://www.zoomeye.org/api/" target="_blank" rel="external">https://www.zoomeye.org/api/</a></p>
-<p>　　看了下，使用方法是先提交账户，密码获得一个唯一的访问令牌（access_token）</p>
-<p>　　然后每次调用 API 的时候在 HTTP 的 Headers 里加上格式化后的 access_token 就可以使用了</p>
-<p>　　官方文档为了方便使用给出的是 cURL 方式调用 API ，在这里我给出一个用 Python 调用 API 的 Demo</p>
-<h2 id="0x-01-Code"><a href="#0x-01-Code" class="headerlink" title="0x 01 Code"></a>0x 01 Code</h2><p>　　该 Demo 抓取 ZoomEye 上 搜索 dedecms 的所有结果并把前 100 个IP保存到 文件中.</p>
-<pre><code># coding: utf-8
-# author  : anka9080
-# datetime: 20160330
-
-import os
-import requests
-import json
-
-access_token = &apos;&apos;
-ip_list = []
-
-def login():
-    &quot;&quot;&quot;
-        输入用户米密码 进行登录操作
-    :return: 访问口令 access_token
-    &quot;&quot;&quot;
-    user = raw_input(&apos;[-] input : username :&apos;)
-    passwd = raw_input(&apos;[-] input : password :&apos;)
-    data = {
-        &apos;username&apos; : user,
-        &apos;password&apos; : passwd
-    }
-    data_encoded = json.dumps(data)  # dumps 将 python 对象转换成 json 字符串
-    try:
-        r = requests.post(url = &apos;http://api.zoomeye.org/user/login&apos;,data = data_encoded)
-        r_decoded = json.loads(r.text) # loads() 将 json 字符串转换成 python 对象
-        global access_token
-        access_token = r_decoded[&apos;access_token&apos;]
-    except Exception,e:
-        print &apos;[-] info : username or password is wrong, please try again &apos;
-        exit()
-
-def saveStrToFile(file,str):
-    &quot;&quot;&quot;
-        将字符串写如文件中
-    :return:
-    &quot;&quot;&quot;
-    with open(file,&apos;w&apos;) as output:
-        output.write(str)
-
-def saveListToFile(file,list):
-    &quot;&quot;&quot;
-        将列表逐行写如文件中
-    :return:
-    &quot;&quot;&quot;
-    s = &apos;\n&apos;.join(list)
-    with open(file,&apos;w&apos;) as output:
-        output.write(s)
-
-def apiTest():
-    &quot;&quot;&quot;
-        进行 api 使用测试
-    :return:
-    &quot;&quot;&quot;
-    page = 1
-    global access_token
-    with open(&apos;access_token.txt&apos;,&apos;r&apos;) as input:
-        access_token = input.read()
-    # 将 token 格式化并添加到 HTTP Header 中
-    headers = {
-        &apos;Authorization&apos; : &apos;JWT &apos; + access_token,
-    }
-    # print headers
-    while(True):
-        try:
-
-            r = requests.get(url = &apos;http://api.zoomeye.org/host/search?query=&quot;dedecms&quot;&amp;facet=app,os&amp;page=&apos; + str(page),
-                         headers = headers)
-            r_decoded = json.loads(r.text)
-            # print r_decoded
-            # print r_decoded[&apos;total&apos;]
-            for x in r_decoded[&apos;matches&apos;]:
-                print x[&apos;ip&apos;]
-                ip_list.append(x[&apos;ip&apos;])
-            print &apos;[-] info : count &apos; + str(page * 10)
-
-        except Exception,e:
-            # 若搜索请求超过 API 允许的最大条目限制 或者 全部搜索结束，则终止请求
-            if str(e.message) == &apos;matches&apos;:
-                print &apos;[-] info : account was break, excceeding the max limitations&apos;
-                break
-            else:
-                print  &apos;[-] info : &apos; + str(e.message)
-        else:
-            if page == 10:
-                break
-            page += 1
-
-def main():
-    # 访问口令文件不存在则进行登录操作
-    if not os.path.isfile(&apos;access_token.txt&apos;):
-        print &apos;[-] info : access_token file is not exist, please login&apos;
-        login()
-        saveStrToFile(&apos;access_token.txt&apos;,access_token)
-
-    apiTest()
-    saveListToFile(&apos;ip_list.txt&apos;,ip_list)
-
-if __name__ == &apos;__main__&apos;:
-    main()
-</code></pre><h2 id="0x03-运行测试"><a href="#0x03-运行测试" class="headerlink" title="0x03 运行测试"></a>0x03 运行测试</h2><p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160330160700113-1074709220.png" alt=""></p>
-<p>打开 access_token.txt 文件：</p>
-<p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160330160826551-1914843565.png" alt=""></p>
-<p>打开 ip_list.txt 文件：</p>
-<p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160330160907894-1222152171.png" alt=""></p>
-<p>题外话： 使用 Firefox 的 Modify Headers 添加上 Authentication 这个 头信息后在浏览器里可以</p>
-<p>直接看到返回的 JSON 字符串结果，如下 </p>
-<p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160330161207316-1843049358.png" alt=""></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ZoomEye/">ZoomEye</a></li></ul>
-	</div>
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-  
     <article id="post-wooyun-spider" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -868,6 +696,178 @@ if __name__ == &apos;__main__&apos;:
       
 	<div class="article-tag tagcloud">
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+  
+    <article id="post-zoomeye-api" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/30/zoomeye-api/" class="article-date">
+  	<time datetime="2016-03-30T10:03:39.000Z" itemprop="datePublished">2016-03-30</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/30/zoomeye-api/">Python 调用 ZoomEye API 批量获取目标网站IP</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160330161710441-1284229011.png" alt=""></p>
+<h2 id="0x-00-前言"><a href="#0x-00-前言" class="headerlink" title="0x 00 前言"></a>0x 00 前言</h2><p>　　ZoomEye 的 API 在前几天正式对外部开发，这对网络渗透人员来说是一件开心的事</p>
+<p>　　可以说“妈妈再也不用担心批量测(x)试(zhan)没有资源了。”</p>
+<p>　　官方的 API 帮助文档在下面：</p>
+<p>　　<a href="https://www.zoomeye.org/api/" target="_blank" rel="external">https://www.zoomeye.org/api/</a></p>
+<p>　　看了下，使用方法是先提交账户，密码获得一个唯一的访问令牌（access_token）</p>
+<p>　　然后每次调用 API 的时候在 HTTP 的 Headers 里加上格式化后的 access_token 就可以使用了</p>
+<p>　　官方文档为了方便使用给出的是 cURL 方式调用 API ，在这里我给出一个用 Python 调用 API 的 Demo</p>
+<h2 id="0x-01-Code"><a href="#0x-01-Code" class="headerlink" title="0x 01 Code"></a>0x 01 Code</h2><p>　　该 Demo 抓取 ZoomEye 上 搜索 dedecms 的所有结果并把前 100 个IP保存到 文件中.</p>
+<pre><code># coding: utf-8
+# author  : anka9080
+# datetime: 20160330
+
+import os
+import requests
+import json
+
+access_token = &apos;&apos;
+ip_list = []
+
+def login():
+    &quot;&quot;&quot;
+        输入用户米密码 进行登录操作
+    :return: 访问口令 access_token
+    &quot;&quot;&quot;
+    user = raw_input(&apos;[-] input : username :&apos;)
+    passwd = raw_input(&apos;[-] input : password :&apos;)
+    data = {
+        &apos;username&apos; : user,
+        &apos;password&apos; : passwd
+    }
+    data_encoded = json.dumps(data)  # dumps 将 python 对象转换成 json 字符串
+    try:
+        r = requests.post(url = &apos;http://api.zoomeye.org/user/login&apos;,data = data_encoded)
+        r_decoded = json.loads(r.text) # loads() 将 json 字符串转换成 python 对象
+        global access_token
+        access_token = r_decoded[&apos;access_token&apos;]
+    except Exception,e:
+        print &apos;[-] info : username or password is wrong, please try again &apos;
+        exit()
+
+def saveStrToFile(file,str):
+    &quot;&quot;&quot;
+        将字符串写如文件中
+    :return:
+    &quot;&quot;&quot;
+    with open(file,&apos;w&apos;) as output:
+        output.write(str)
+
+def saveListToFile(file,list):
+    &quot;&quot;&quot;
+        将列表逐行写如文件中
+    :return:
+    &quot;&quot;&quot;
+    s = &apos;\n&apos;.join(list)
+    with open(file,&apos;w&apos;) as output:
+        output.write(s)
+
+def apiTest():
+    &quot;&quot;&quot;
+        进行 api 使用测试
+    :return:
+    &quot;&quot;&quot;
+    page = 1
+    global access_token
+    with open(&apos;access_token.txt&apos;,&apos;r&apos;) as input:
+        access_token = input.read()
+    # 将 token 格式化并添加到 HTTP Header 中
+    headers = {
+        &apos;Authorization&apos; : &apos;JWT &apos; + access_token,
+    }
+    # print headers
+    while(True):
+        try:
+
+            r = requests.get(url = &apos;http://api.zoomeye.org/host/search?query=&quot;dedecms&quot;&amp;facet=app,os&amp;page=&apos; + str(page),
+                         headers = headers)
+            r_decoded = json.loads(r.text)
+            # print r_decoded
+            # print r_decoded[&apos;total&apos;]
+            for x in r_decoded[&apos;matches&apos;]:
+                print x[&apos;ip&apos;]
+                ip_list.append(x[&apos;ip&apos;])
+            print &apos;[-] info : count &apos; + str(page * 10)
+
+        except Exception,e:
+            # 若搜索请求超过 API 允许的最大条目限制 或者 全部搜索结束，则终止请求
+            if str(e.message) == &apos;matches&apos;:
+                print &apos;[-] info : account was break, excceeding the max limitations&apos;
+                break
+            else:
+                print  &apos;[-] info : &apos; + str(e.message)
+        else:
+            if page == 10:
+                break
+            page += 1
+
+def main():
+    # 访问口令文件不存在则进行登录操作
+    if not os.path.isfile(&apos;access_token.txt&apos;):
+        print &apos;[-] info : access_token file is not exist, please login&apos;
+        login()
+        saveStrToFile(&apos;access_token.txt&apos;,access_token)
+
+    apiTest()
+    saveListToFile(&apos;ip_list.txt&apos;,ip_list)
+
+if __name__ == &apos;__main__&apos;:
+    main()
+</code></pre><h2 id="0x03-运行测试"><a href="#0x03-运行测试" class="headerlink" title="0x03 运行测试"></a>0x03 运行测试</h2><p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160330160700113-1074709220.png" alt=""></p>
+<p>打开 access_token.txt 文件：</p>
+<p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160330160826551-1914843565.png" alt=""></p>
+<p>打开 ip_list.txt 文件：</p>
+<p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160330160907894-1222152171.png" alt=""></p>
+<p>题外话： 使用 Firefox 的 Modify Headers 添加上 Authentication 这个 头信息后在浏览器里可以</p>
+<p>直接看到返回的 JSON 字符串结果，如下 </p>
+<p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160330161207316-1843049358.png" alt=""></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ZoomEye/">ZoomEye</a></li></ul>
 	</div>
 
       
