@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>User-Agent 手工注入的探测与利用分析 | Anka9080&#39;s Note</title>
+  <title>User-Agent 手工注入的探测与利用分析 | Anka9080&#39;s Notes</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="原理很简单：后台在接收UA时没有对UA做过滤，也没有PDO进行数据交互（实际PDO是非常有必要的），导致UA中有恶意代码，最终在数据库中执行。 
 0x00 Bug 代码：本地顺手打了一个环境，Bug 代码部分：
@@ -12,7 +12,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="User-Agent 手工注入的探测与利用分析">
 <meta property="og:url" content="http://www.evilclay.com/2016/05/26/ua-sql-injection/index.html">
-<meta property="og:site_name" content="Anka9080's Note">
+<meta property="og:site_name" content="Anka9080's Notes">
 <meta property="og:description" content="原理很简单：后台在接收UA时没有对UA做过滤，也没有PDO进行数据交互（实际PDO是非常有必要的），导致UA中有恶意代码，最终在数据库中执行。 
 0x00 Bug 代码：本地顺手打了一个环境，Bug 代码部分：
 123456789// 保存到访者的IP信息$db=DBConnect();$tbLog=$db-&amp;gt;tbPrefix.&apos;log&apos;; $executeArr=array(&apos;ip&apos;=&amp;g">
@@ -23,7 +23,7 @@
 0x00 Bug 代码：本地顺手打了一个环境，Bug 代码部分：
 123456789// 保存到访者的IP信息$db=DBConnect();$tbLog=$db-&amp;gt;tbPrefix.&apos;log&apos;; $executeArr=array(&apos;ip&apos;=&amp;g">
   
-    <link rel="alternative" href="/atom.xml" title="Anka9080&#39;s Note" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="Anka9080&#39;s Notes" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
