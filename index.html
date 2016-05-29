@@ -41,6 +41,8 @@
 		</hgroup>
 
 		
+		<p class="header-subtitle">误判证患者，晚期。</p>
+		
 
 		
 			<div class="switch-btn">
@@ -71,13 +73,13 @@
 				<div class="tips-box hide">
 					<div class="tips-arrow"></div>
 					<ul class="tips-inner">
-						<li>Menu</li>
-						<li>Tags</li>
+						<li>菜单</li>
+						<li>标签</li>
 						
-						<li>Links</li>
+						<li>友情链接</li>
 						
 						
-						<li>Über</li>
+						<li>关于我</li>
 						
 					</ul>
 				</div>
@@ -90,6 +92,8 @@
 					<nav class="header-menu">
 						<ul>
 						
+							<li><a href="/">首页</a></li>
+				        
 							<li><a href="/archives">所有文章</a></li>
 				        
 							<li><a href="http://xss.evilclay.com">XSS 平台</a></li>
@@ -104,8 +108,6 @@
 								<a class="github" target="_blank" href="https://github.com/Evi1CLAY" title="github">github</a>
 					        
 								<a class="rss" target="_blank" href="http://www.cnblogs.com/anka9080" title="rss">rss</a>
-					        
-								<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/amzhoupeng" title="zhihu">zhihu</a>
 					        
 								<a class="mail" target="_blank" href="#" title="mail">mail</a>
 					        
@@ -163,9 +165,13 @@
 			  <h1 class="header-author">Anka9080</h1>
 			</hgroup>
 			
+			<p class="header-subtitle">误判证患者，晚期。</p>
+			
 			<nav class="header-menu">
 				<ul>
 				
+					<li><a href="/">首页</a></li>
+		        
 					<li><a href="/archives">所有文章</a></li>
 		        
 					<li><a href="http://xss.evilclay.com">XSS 平台</a></li>
@@ -181,8 +187,6 @@
 						<a class="github" target="_blank" href="https://github.com/Evi1CLAY" title="github">github</a>
 			        
 						<a class="rss" target="_blank" href="http://www.cnblogs.com/anka9080" title="rss">rss</a>
-			        
-						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/amzhoupeng" title="zhihu">zhihu</a>
 			        
 						<a class="mail" target="_blank" href="#" title="mail">mail</a>
 			        
@@ -228,203 +232,8 @@
 <p><img src="http://images2015.cnblogs.com/blog/671902/201605/671902-20160527002538147-1212236189.png" alt=""></p>
 <p><strong>数据网盘链接：</strong></p>
 <p>链接：<a href="http://pan.baidu.com/s/1bpDNKOv" target="_blank" rel="external">http://pan.baidu.com/s/1bpDNKOv</a> 密码：6y57</p>
-<p><strong>爬虫脚本：</strong></p>
-<pre><code># coding:utf-8
-# author: anka9080
-# version: 1.0  py3
+<p><strong>爬虫脚本：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"><span class="comment"># author: anka9080</span></span><br><span class="line"><span class="comment"># version: 1.0  py3</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> sys,re,time,socket</span><br><span class="line"><span class="keyword">from</span> requests <span class="keyword">import</span> get</span><br><span class="line"><span class="keyword">from</span> queue <span class="keyword">import</span> Queue, Empty</span><br><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Thread</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 全局变量</span></span><br><span class="line">COUNT = <span class="number">1</span></span><br><span class="line">START_URL = <span class="string">'http://wooyun.org/bugs'</span></span><br><span class="line">ID_DETAILS = []</span><br><span class="line">ALL_ID = []</span><br><span class="line">Failed_ID = []</span><br><span class="line">PROXIES = []</span><br><span class="line"> </span><br><span class="line">HEADERS = &#123;</span><br><span class="line">    <span class="string">"Accept"</span>: <span class="string">"text/html,application/xhtml+xml,application/xml,application/json;q=0.9,image/webp,*/*;q=0.8"</span>,</span><br><span class="line">    <span class="string">"Accept-Encoding"</span>: <span class="string">"gzip, deflate, sdch"</span>,</span><br><span class="line">    <span class="string">"Accept-Language"</span>: <span class="string">"zh-CN,zh;q=0.8"</span>,</span><br><span class="line">    <span class="string">"Cache-Control"</span>: <span class="string">"max-age=0"</span>,</span><br><span class="line">    <span class="string">"Connection"</span>: <span class="string">"keep-alive"</span>,</span><br><span class="line">    <span class="string">"DNT"</span>: <span class="string">"1"</span>,</span><br><span class="line">    <span class="string">"Host"</span>: <span class="string">"wooyun.org"</span>,</span><br><span class="line">    <span class="string">"Upgrade-Insecure-Requests"</span>: <span class="string">"1"</span>,</span><br><span class="line">    <span class="string">"User-Agent"</span>: <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2716.0 Safari/537.36"</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WooYunSpider</span><span class="params">(Thread)</span>:</span></span><br><span class="line">    <span class="string">"""docstring for WooYunSpider"""</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,queue)</span>:</span></span><br><span class="line">        Thread.__init__(self)</span><br><span class="line">        self.pattern1 = re.compile(<span class="string">r'title&gt;(.*?)\| WooYun.*?keywords" content="(.*?),(.*?),(.*?),wooyun'</span>,re.S)  <span class="comment"># 匹配模式在 compile 的时候指定</span></span><br><span class="line">        self.pattern2 = re.compile(<span class="string">r"漏洞Rank：(\d&#123;1,3&#125;)"</span>)</span><br><span class="line">        self.queue = queue</span><br><span class="line">        self.start() <span class="comment"># 执行 run()</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"每次读取 queue 的一条"</span></span><br><span class="line">        <span class="keyword">global</span> COUNT,RES_LOG,ERR_LOG</span><br><span class="line">        <span class="keyword">while</span>(<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                id = self.queue.get(block = <span class="keyword">False</span>)</span><br><span class="line">                r = get(<span class="string">'http://wooyun.org/bugs/'</span> + id,headers = HEADERS)</span><br><span class="line">                html = r.text</span><br><span class="line">            <span class="keyword">except</span> Empty:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                msg = <span class="string">'[ - Socket_Excpt ] 链接被拒绝，再次添加到队列：'</span> + id</span><br><span class="line">                print(msg)</span><br><span class="line">                ERR_LOG.write(msg+<span class="string">'\n'</span>)</span><br><span class="line">                self.queue.put(id)  <span class="comment"># 访问失败则把这个 URL从新加入队列</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                title,comp,author,bug_type,rank = self.get_detail(html,id)</span><br><span class="line">                detail = id+<span class="string">'----'</span>+title+<span class="string">'----'</span>+comp+<span class="string">'----'</span>+author+<span class="string">'----'</span>+bug_type+<span class="string">'----'</span>+rank</span><br><span class="line">                <span class="keyword">try</span>: <span class="comment"># 写入文件可能会诱发 gbk 编码异常，这里保存 id 到 failed</span></span><br><span class="line">                    RES_LOG.write(detail + <span class="string">'\n'</span>)</span><br><span class="line">                <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                    Failed_ID.append(id)</span><br><span class="line">                    msg = <span class="string">'[ - Encode_Excpt ] 字符编码异常：'</span> + id</span><br><span class="line">                    print(msg)</span><br><span class="line">                    ERR_LOG.write(msg+<span class="string">'\n'</span>)</span><br><span class="line">                ID_DETAILS.append(detail)</span><br><span class="line">            <span class="comment"># time.sleep(1)</span></span><br><span class="line"> </span><br><span class="line">            print(<span class="string">'[ - info ] id: &#123;&#125;  count: &#123;&#125;  time: &#123;:.2f&#125;s'</span>.format(id,COUNT,time.time() - start))</span><br><span class="line">            COUNT += <span class="number">1</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment"># 由 缺陷编号 获得对应的 厂商 和 漏洞类型信息</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_detail</span><span class="params">(self,html,id)</span>:</span></span><br><span class="line">        <span class="keyword">global</span> ERR_LOG</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="comment"># print(html)</span></span><br><span class="line">            res = self.pattern1.search(html)</span><br><span class="line">            title = res.group(<span class="number">1</span>).strip()</span><br><span class="line">            comp = res.group(<span class="number">2</span>).strip()</span><br><span class="line">            author = res.group(<span class="number">3</span>).strip()</span><br><span class="line">            bug_type = res.group(<span class="number">4</span>).strip()</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            msg = <span class="string">'[ - Detail_Excpt ] 未解析出 标题等相关信息：'</span> + id</span><br><span class="line">            print(msg)</span><br><span class="line">            ERR_LOG.write(msg+<span class="string">'\n'</span>)</span><br><span class="line">            Failed_ID.append(id)</span><br><span class="line">            title,comp,author,bug_type,rank = <span class="string">'Null'</span>,<span class="string">'Null'</span>,<span class="string">'Null'</span>,<span class="string">'Null'</span>,<span class="string">'Null'</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                res2 = self.pattern2.search(html)  <span class="comment"># 若厂商暂无回应则 rank 为 Null</span></span><br><span class="line">                rank = res2.group(<span class="number">1</span>).strip()</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                msg = <span class="string">'[ - Rank_Excpt ] 未解析出 Rank：'</span> + id</span><br><span class="line">                print(msg)</span><br><span class="line">                ERR_LOG.write(msg+<span class="string">'\n'</span>)</span><br><span class="line">                rank = <span class="string">'Null'</span></span><br><span class="line">             </span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="keyword">print</span> (title,comp,author,bug_type,rank)</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                msg = <span class="string">'[ - Print_Excpt ] 字符编码异常：'</span> + id +<span class="string">'::'</span>+ str(e)</span><br><span class="line">                print(msg)</span><br><span class="line">                ERR_LOG.write(msg+<span class="string">'\n'</span>)</span><br><span class="line">            <span class="keyword">return</span> title,comp,author,bug_type,rank</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ThreadPool</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,thread_num,id_file)</span>:</span></span><br><span class="line">        self.queue = Queue() <span class="comment"># 需要执行的队列</span></span><br><span class="line">        self.threads = [] <span class="comment"># 多线程列表</span></span><br><span class="line">        self.add_task(id_file)</span><br><span class="line">        self.init_threads(thread_num)</span><br><span class="line">         </span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_task</span><span class="params">(self,id_file)</span>:</span></span><br><span class="line">        <span class="keyword">with</span> open(id_file) <span class="keyword">as</span> input:</span><br><span class="line">            <span class="keyword">for</span> id <span class="keyword">in</span> input.readlines():</span><br><span class="line">                self.queue.put(id.strip())         </span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">init_threads</span><span class="params">(self,thread_num)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(thread_num):</span><br><span class="line">            <span class="keyword">print</span> (<span class="string">'[ - info :] loading threading ---&gt; '</span>,i)</span><br><span class="line">            <span class="comment"># time.sleep(1)</span></span><br><span class="line">            self.threads.append(WooYunSpider(self.queue)) <span class="comment"># threads 列表装的是 爬虫线程</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wait</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> t <span class="keyword">in</span> self.threads:</span><br><span class="line">            <span class="keyword">if</span> t.isAlive():</span><br><span class="line">                t.join()</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></span><br><span class="line">    url = <span class="string">'http://wooyun.org/bugs/wooyun-2016-0177647'</span></span><br><span class="line">    r = get(url,headers = HEADERS)</span><br><span class="line">    html = r.text</span><br><span class="line">    <span class="comment"># print type(html)</span></span><br><span class="line">    <span class="comment"># keywords" content="(.*?),(.*?),(.*?),wooyun  ====&gt; 厂商，白帽子，类型</span></span><br><span class="line">    pattern1 = re.compile(<span class="string">r'title&gt;(.*?)\| WooYun'</span>)</span><br><span class="line">    pattern2 = re.compile(<span class="string">r'keywords" content="(.*?),(.*?),(.*?),wooyun'</span>)</span><br><span class="line">    pattern3 = re.compile(<span class="string">r'漏洞Rank：(\d&#123;1,3&#125;)'</span>)</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">500</span>):</span><br><span class="line">        res = pattern1.search(html)</span><br><span class="line">        <span class="comment"># print (res.group(1))</span></span><br><span class="line">        res = pattern2.search(html)</span><br><span class="line">        <span class="comment"># print (res.group(1),res.group(2),res.group(3))</span></span><br><span class="line">        res = pattern3.search(html)</span><br><span class="line">        <span class="comment"># print (res.group(1))</span></span><br><span class="line">        x += <span class="number">1</span></span><br><span class="line">        print(x)</span><br><span class="line">    <span class="comment"># rank = res.group(4).strip()</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment"># print html</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test2</span><span class="params">()</span>:</span></span><br><span class="line">    url = <span class="string">'http://wooyun.org/bugs/wooyun-2016-0177647'</span></span><br><span class="line">    r = get(url,headers = HEADERS)</span><br><span class="line">    html = r.text</span><br><span class="line">    pattern = re.compile(<span class="string">r'title&gt;(.*?)\| WooYun.*?keywords" content="(.*?),(.*?),(.*?),wooyun.*?漏洞Rank：(\d&#123;1,3&#125;)'</span>,re.S)</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">500</span>):</span><br><span class="line">        res = pattern.search(html)</span><br><span class="line">        <span class="comment"># print (res.group(1),res.group(2),res.group(3),res.group(4),res.group(5))</span></span><br><span class="line">        x += <span class="number">1</span></span><br><span class="line">        print(x)</span><br><span class="line"><span class="comment"># 保存结果</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save2file</span><span class="params">(filename,filename_failed_id)</span>:</span></span><br><span class="line">    <span class="keyword">with</span> open(filename,<span class="string">'w'</span>) <span class="keyword">as</span> output:</span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> ID_DETAILS:</span><br><span class="line">            <span class="keyword">try</span>: <span class="comment"># 写入文件可能会诱发 gbk 编码异常，这里忽略</span></span><br><span class="line">                output.write(item + <span class="string">'\n'</span>)</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                <span class="keyword">pass</span></span><br><span class="line">             </span><br><span class="line">    <span class="keyword">with</span> open(filename_failed_id,<span class="string">'w'</span>) <span class="keyword">as</span> output:</span><br><span class="line">        output.write(<span class="string">'\n'</span>.join(Failed_ID))</span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line"> </span><br><span class="line">    socket.setdefaulttimeout(<span class="number">1</span>)</span><br><span class="line">    start = time.time()</span><br><span class="line"> </span><br><span class="line">    <span class="comment"># test()</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment"># 日志记录</span></span><br><span class="line">    ERR_LOG = open(<span class="string">'err_log.txt'</span>,<span class="string">'w'</span>)</span><br><span class="line">    RES_LOG = open(<span class="string">'res_log.txt'</span>,<span class="string">'w'</span>)</span><br><span class="line">    id_file = <span class="string">'id_0526.txt'</span></span><br><span class="line">    <span class="comment"># id_file = 'id_test.txt'</span></span><br><span class="line">    tp = ThreadPool(<span class="number">20</span>,id_file)</span><br><span class="line">    tp.wait()</span><br><span class="line"> </span><br><span class="line">    save2file(<span class="string">'id_details.txt'</span>,<span class="string">'failed_id.txt'</span>)</span><br><span class="line"> </span><br><span class="line">    end = time.time()</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">'[ - info ] cost time :&#123;:.2f&#125;s'</span>.format(end - start))</span><br></pre></td></tr></table></figure></p>
 
-import sys,re,time,socket
-from requests import get
-from queue import Queue, Empty
-from threading import Thread
-
-# 全局变量
-COUNT = 1
-START_URL = &apos;http://wooyun.org/bugs&apos;
-ID_DETAILS = []
-ALL_ID = []
-Failed_ID = []
-PROXIES = []
-
-HEADERS = {
-    &quot;Accept&quot;: &quot;text/html,application/xhtml+xml,application/xml,application/json;q=0.9,image/webp,*/*;q=0.8&quot;,
-    &quot;Accept-Encoding&quot;: &quot;gzip, deflate, sdch&quot;,
-    &quot;Accept-Language&quot;: &quot;zh-CN,zh;q=0.8&quot;,
-    &quot;Cache-Control&quot;: &quot;max-age=0&quot;,
-    &quot;Connection&quot;: &quot;keep-alive&quot;,
-    &quot;DNT&quot;: &quot;1&quot;,
-    &quot;Host&quot;: &quot;wooyun.org&quot;,
-    &quot;Upgrade-Insecure-Requests&quot;: &quot;1&quot;,
-    &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2716.0 Safari/537.36&quot;
-}
-
-class WooYunSpider(Thread):
-    &quot;&quot;&quot;docstring for WooYunSpider&quot;&quot;&quot;
-    def __init__(self,queue):
-        Thread.__init__(self)
-        self.pattern1 = re.compile(r&apos;title&gt;(.*?)\| WooYun.*?keywords&quot; content=&quot;(.*?),(.*?),(.*?),wooyun&apos;,re.S)  # 匹配模式在 compile 的时候指定
-        self.pattern2 = re.compile(r&quot;漏洞Rank：(\d{1,3})&quot;)
-        self.queue = queue
-        self.start() # 执行 run()
-
-    def run(self):
-        &quot;每次读取 queue 的一条&quot;
-        global COUNT,RES_LOG,ERR_LOG
-        while(1):
-            try:
-                id = self.queue.get(block = False)
-                r = get(&apos;http://wooyun.org/bugs/&apos; + id,headers = HEADERS)
-                html = r.text
-            except Empty:
-                break
-            except Exception as e:
-                msg = &apos;[ - Socket_Excpt ] 链接被拒绝，再次添加到队列：&apos; + id
-                print(msg)
-                ERR_LOG.write(msg+&apos;\n&apos;)
-                self.queue.put(id)  # 访问失败则把这个 URL从新加入队列
-            else:
-                title,comp,author,bug_type,rank = self.get_detail(html,id)
-                detail = id+&apos;----&apos;+title+&apos;----&apos;+comp+&apos;----&apos;+author+&apos;----&apos;+bug_type+&apos;----&apos;+rank
-                try: # 写入文件可能会诱发 gbk 编码异常，这里保存 id 到 failed
-                    RES_LOG.write(detail + &apos;\n&apos;)
-                except Exception as e:
-                    Failed_ID.append(id)
-                    msg = &apos;[ - Encode_Excpt ] 字符编码异常：&apos; + id
-                    print(msg)
-                    ERR_LOG.write(msg+&apos;\n&apos;)
-                ID_DETAILS.append(detail)
-            # time.sleep(1)
-
-            print(&apos;[ - info ] id: {}  count: {}  time: {:.2f}s&apos;.format(id,COUNT,time.time() - start))
-            COUNT += 1
-
-    # 由 缺陷编号 获得对应的 厂商 和 漏洞类型信息
-    def get_detail(self,html,id):
-        global ERR_LOG
-        try:
-            # print(html)
-            res = self.pattern1.search(html)
-            title = res.group(1).strip()
-            comp = res.group(2).strip()
-            author = res.group(3).strip()
-            bug_type = res.group(4).strip()
-        except Exception as e:
-            msg = &apos;[ - Detail_Excpt ] 未解析出 标题等相关信息：&apos; + id
-            print(msg)
-            ERR_LOG.write(msg+&apos;\n&apos;)
-            Failed_ID.append(id)
-            title,comp,author,bug_type,rank = &apos;Null&apos;,&apos;Null&apos;,&apos;Null&apos;,&apos;Null&apos;,&apos;Null&apos;
-        else:
-            try:
-                res2 = self.pattern2.search(html)  # 若厂商暂无回应则 rank 为 Null
-                rank = res2.group(1).strip()
-            except Exception as e:
-                msg = &apos;[ - Rank_Excpt ] 未解析出 Rank：&apos; + id
-                print(msg)
-                ERR_LOG.write(msg+&apos;\n&apos;)
-                rank = &apos;Null&apos;
-
-        finally:
-            try:
-                print (title,comp,author,bug_type,rank)
-            except Exception as e:
-                msg = &apos;[ - Print_Excpt ] 字符编码异常：&apos; + id +&apos;::&apos;+ str(e)
-                print(msg)
-                ERR_LOG.write(msg+&apos;\n&apos;)
-            return title,comp,author,bug_type,rank
-
-
-
-
-class ThreadPool(object):
-    def __init__(self,thread_num,id_file):
-        self.queue = Queue() # 需要执行的队列
-        self.threads = [] # 多线程列表
-        self.add_task(id_file)
-        self.init_threads(thread_num)
-
-
-    def add_task(self,id_file):
-        with open(id_file) as input:
-            for id in input.readlines():
-                self.queue.put(id.strip())         
-
-    def init_threads(self,thread_num):
-        for i in range(thread_num):
-            print (&apos;[ - info :] loading threading ---&gt; &apos;,i)
-            # time.sleep(1)
-            self.threads.append(WooYunSpider(self.queue)) # threads 列表装的是 爬虫线程
-
-    def wait(self):
-        for t in self.threads:
-            if t.isAlive():
-                t.join()
-
-
-def test():
-    url = &apos;http://wooyun.org/bugs/wooyun-2016-0177647&apos;
-    r = get(url,headers = HEADERS)
-    html = r.text
-    # print type(html)
-    # keywords&quot; content=&quot;(.*?),(.*?),(.*?),wooyun  ====&gt; 厂商，白帽子，类型
-    pattern1 = re.compile(r&apos;title&gt;(.*?)\| WooYun&apos;)
-    pattern2 = re.compile(r&apos;keywords&quot; content=&quot;(.*?),(.*?),(.*?),wooyun&apos;)
-    pattern3 = re.compile(r&apos;漏洞Rank：(\d{1,3})&apos;)
-    for x in range(500):
-        res = pattern1.search(html)
-        # print (res.group(1))
-        res = pattern2.search(html)
-        # print (res.group(1),res.group(2),res.group(3))
-        res = pattern3.search(html)
-        # print (res.group(1))
-        x += 1
-        print(x)
-    # rank = res.group(4).strip()
-
-    # print html
-
-def test2():
-    url = &apos;http://wooyun.org/bugs/wooyun-2016-0177647&apos;
-    r = get(url,headers = HEADERS)
-    html = r.text
-    pattern = re.compile(r&apos;title&gt;(.*?)\| WooYun.*?keywords&quot; content=&quot;(.*?),(.*?),(.*?),wooyun.*?漏洞Rank：(\d{1,3})&apos;,re.S)
-    for x in range(500):
-        res = pattern.search(html)
-        # print (res.group(1),res.group(2),res.group(3),res.group(4),res.group(5))
-        x += 1
-        print(x)
-# 保存结果
-def save2file(filename,filename_failed_id):
-    with open(filename,&apos;w&apos;) as output:
-        for item in ID_DETAILS:
-            try: # 写入文件可能会诱发 gbk 编码异常，这里忽略
-                output.write(item + &apos;\n&apos;)
-            except Exception as e:
-                pass
-
-    with open(filename_failed_id,&apos;w&apos;) as output:
-        output.write(&apos;\n&apos;.join(Failed_ID))
-
-if __name__ == &apos;__main__&apos;:
-
-    socket.setdefaulttimeout(1)
-    start = time.time()
-
-    # test()
-
-    # 日志记录
-    ERR_LOG = open(&apos;err_log.txt&apos;,&apos;w&apos;)
-    RES_LOG = open(&apos;res_log.txt&apos;,&apos;w&apos;)
-    id_file = &apos;id_0526.txt&apos;
-    # id_file = &apos;id_test.txt&apos;
-    tp = ThreadPool(20,id_file)
-    tp.wait()
-
-    save2file(&apos;id_details.txt&apos;,&apos;failed_id.txt&apos;)
-
-    end = time.time()
-    print (&apos;[ - info ] cost time :{:.2f}s&apos;.format(end - start))
-</code></pre>
       
     </div>
     
@@ -451,7 +260,8 @@ if __name__ == &apos;__main__&apos;:
 
 
 
-  
+
+
   
     <article id="post-ua-sql-injection" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -481,32 +291,10 @@ if __name__ == &apos;__main__&apos;:
       
         <p>原理很简单：后台在接收UA时没有对UA做过滤，也没有PDO进行数据交互（实际PDO是非常有必要的），导致UA中有恶意代码，最终在数据库中执行。 </p>
 <h3 id="0x00-Bug-代码："><a href="#0x00-Bug-代码：" class="headerlink" title="0x00 Bug 代码："></a>0x00 Bug 代码：</h3><p>本地顺手打了一个环境，Bug 代码部分：</p>
-<pre><code>// 保存到访者的IP信息
-$db=DBConnect();
-$tbLog=$db-&gt;tbPrefix.&apos;log&apos;; $executeArr=array(&apos;ip&apos;=&gt;($_SERVER[&quot;HTTP_VIA&quot;])?$_SERVER[&quot;HTTP_X_FORWARDED_FOR&quot;]:$_SERVER[&quot;REMOTE_ADDR&quot;],&apos;ua&apos;=&gt;$_SERVER[&apos;HTTP_USER_AGENT&apos;],&apos;visit_time&apos;=&gt;date(&apos;Y-m-d H:i:s&apos;));
-$db-&gt;AutoExecute($tbLog,$executeArr);
-$smarty=InitSmarty();
-$smarty-&gt;assign(&apos;do&apos;,$do);
-$smarty-&gt;assign(&apos;show&apos;,$show);
-$smarty-&gt;assign(&apos;url&apos;,$url);
-$smarty-&gt;display(&apos;login.html&apos;);
-</code></pre><p>　其中 AutoExecute() 方法 代码如下：</p>
-<pre><code>public function AutoExecute($table,$array=array(),$type=&apos;INSERT&apos;,$where=&apos;&apos;){
-    if(!empty($array) &amp;&amp; !empty($table)){
-        switch(strtoupper($type)){
-            case &apos;INSERT&apos;:
-                $sql=&quot;INSERT INTO {$table}(&quot;.implode(&apos;,&apos;,array_keys($array)).&quot;) VALUES(&apos;&quot;.implode(&quot;&apos;,&apos;&quot;,array_values($array)).&quot;&apos;)&quot;;
-                echo $sql;
-                break;
-            default:break;
-        }
-        return $this-&gt;Execute($sql);
-    }
-    else{
-        return false;
-    }
-}
-</code></pre><p>可以看出 ip，ua 这个变量未经过任何过滤 以 SQL 拼接的方式插入到数据库中。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 保存到访者的IP信息</span></span><br><span class="line">$db=DBConnect();</span><br><span class="line">$tbLog=$db-&gt;tbPrefix.<span class="string">'log'</span>; $executeArr=<span class="keyword">array</span>(<span class="string">'ip'</span>=&gt;($_SERVER[<span class="string">"HTTP_VIA"</span>])?$_SERVER[<span class="string">"HTTP_X_FORWARDED_FOR"</span>]:$_SERVER[<span class="string">"REMOTE_ADDR"</span>],<span class="string">'ua'</span>=&gt;$_SERVER[<span class="string">'HTTP_USER_AGENT'</span>],<span class="string">'visit_time'</span>=&gt;date(<span class="string">'Y-m-d H:i:s'</span>));</span><br><span class="line">$db-&gt;AutoExecute($tbLog,$executeArr);</span><br><span class="line">$smarty=InitSmarty();</span><br><span class="line">$smarty-&gt;assign(<span class="string">'do'</span>,$do);</span><br><span class="line">$smarty-&gt;assign(<span class="string">'show'</span>,$show);</span><br><span class="line">$smarty-&gt;assign(<span class="string">'url'</span>,$url);</span><br><span class="line">$smarty-&gt;display(<span class="string">'login.html'</span>);</span><br></pre></td></tr></table></figure>
+<p>　其中 AutoExecute() 方法 代码如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">AutoExecute</span><span class="params">($table,$array=array<span class="params">()</span>,$type=<span class="string">'INSERT'</span>,$where=<span class="string">''</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="keyword">empty</span>($array) &amp;&amp; !<span class="keyword">empty</span>($table))&#123;</span><br><span class="line">        <span class="keyword">switch</span>(strtoupper($type))&#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'INSERT'</span>:</span><br><span class="line">                $sql=<span class="string">"INSERT INTO &#123;$table&#125;("</span>.implode(<span class="string">','</span>,array_keys($array)).<span class="string">") VALUES('"</span>.implode(<span class="string">"','"</span>,array_values($array)).<span class="string">"')"</span>;</span><br><span class="line">                <span class="keyword">echo</span> $sql;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:<span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> $this-&gt;Execute($sql);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看出 ip，ua 这个变量未经过任何过滤 以 SQL 拼接的方式插入到数据库中。</p>
 <h3 id="0x01-SQLMap-初探"><a href="#0x01-SQLMap-初探" class="headerlink" title="0x01 SQLMap 初探"></a>0x01 SQLMap 初探</h3><p>因为是 HTTP Header 注入，所以决定简单粗暴的使用 -r 参数测试有无注入。</p>
 <p>用burp 代理截包保存成 req.txt ,内容如下：</p>
 <pre><code>GET /index.php?do=login HTTP/1.1
@@ -553,16 +341,17 @@ Connection: keep-alive
 <p>利用Id = 1 union select 1, loadfile(‘盘/绝对路径/1.txt’) from message 来读取文件内容到页面显示</p>
 <p>此外，其他 HTTP Header 的注入与 User-Agent 的注入是一样道理的。</p>
 <h3 id="0x04-SQL注入防御"><a href="#0x04-SQL注入防御" class="headerlink" title="0x04 SQL注入防御"></a>0x04 SQL注入防御</h3><p>至于防御SQL注入，预编译吧，简单可靠，不需要做任何的过滤，做到了“数据和代码的分离</p>
-<pre><code>&lt;?php
+<pre><code class="php"><span class="meta">&lt;?php</span>
 
-$link = new mysqli(&apos;localhost&apos;, &apos;analytics_user&apos;, &apos;aSecurePassword&apos;, &apos;analytics_db&apos;);
+$link = <span class="keyword">new</span> mysqli(<span class="string">'localhost'</span>, <span class="string">'analytics_user'</span>, <span class="string">'aSecurePassword'</span>, <span class="string">'analytics_db'</span>);
 
-$stmt = $link-&gt;prepare(&quot;INSERT INTO visits (ua, dt) VALUES (?, ?)&quot;);
-$stmt-&gt;bind_param(&quot;ss&quot;, $_SERVER[&quot;HTTP_USER_AGENT&quot;], date(&quot;Y-m-d h:i:s&quot;));
+$stmt = $link-&gt;prepare(<span class="string">"INSERT INTO visits (ua, dt) VALUES (?, ?)"</span>);
+$stmt-&gt;bind_param(<span class="string">"ss"</span>, $_SERVER[<span class="string">"HTTP_USER_AGENT"</span>], date(<span class="string">"Y-m-d h:i:s"</span>));
 $stmt-&gt;execute();
 
-?&gt;
-</code></pre><blockquote>
+<span class="meta">?&gt;</span>
+</code></pre>
+<blockquote>
 <p>参考文章：<a href="http://www.freebuf.com/articles/web/105124.html" target="_blank" rel="external">http://www.freebuf.com/articles/web/105124.html</a></p>
 </blockquote>
 
@@ -592,7 +381,8 @@ $stmt-&gt;execute();
 
 
 
-  
+
+
   
     <article id="post-python-multithreads-templete" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -621,69 +411,7 @@ $stmt-&gt;execute();
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="0x-00-Why"><a href="#0x-00-Why" class="headerlink" title="0x 00 Why"></a>0x 00 Why</h2><p>　　Python 的 简单多线程实现 用 dummy 模块 一句话就可以搞定，但需要对线程，队列做进一步的操作，最好自己写个线程池类来实现，考虑到后期会经常使用，所以把模板贴出来。</p>
-<h2 id="0x-01-Coding"><a href="#0x-01-Coding" class="headerlink" title="0x 01 Coding"></a>0x 01 Coding</h2><pre><code># coding:utf-8
-# version: 0.1
-import re,time
-from requests import get
-from Queue import Queue, Empty
-from threading import Thread
-
-# 全局变量
-COUNT = 0
-
-# 爬虫类
-class Spider(Thread):
-    &quot;&quot;&quot;docstring for Spider&quot;&quot;&quot;
-    def __init__(self,queue):
-        Thread.__init__(self)
-        self.queue = queue
-        self.start() # 执行 run()
-
-    def run(self):
-        &quot;每次读取 queue 的一条&quot;
-        global COUNT
-        while(1):
-            try:
-                sth = self.queue.get(block=false)
-            except Empty:
-                break
-            except Exception,e:
-                print &apos;[- Excpt :]&apos;,str(e)
-
-        print COUNT
-        COUNT += 1
-
-
-# 线程池类
-class ThreadPool(object):
-    def __init__(self):
-        self.queue = Queue() # 需要执行的队列
-        self.threads = [] # 多线程列秒
-        pass
-
-    def add_task(self):
-        pass
-
-    def init_threads(self):
-        pass
-
-    def wait(self):
-        for t in self.threads:
-            if t.isAlive():
-                t.join()
-
-
-
-if __name__ == &apos;__main__&apos;:
-    start = time.time()
-
-    tp = ThreadPool(thread_num)
-    tp.wait()
-
-    end = time.time()
-
-    print &apos;[ - info ] cost time :{}&apos;.format(end - start)
-</code></pre>
+<h2 id="0x-01-Coding"><a href="#0x-01-Coding" class="headerlink" title="0x 01 Coding"></a>0x 01 Coding</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"><span class="comment"># version: 0.1</span></span><br><span class="line"><span class="keyword">import</span> re,time</span><br><span class="line"><span class="keyword">from</span> requests <span class="keyword">import</span> get</span><br><span class="line"><span class="keyword">from</span> Queue <span class="keyword">import</span> Queue, Empty</span><br><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Thread</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 全局变量</span></span><br><span class="line">COUNT = <span class="number">0</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 爬虫类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Spider</span><span class="params">(Thread)</span>:</span></span><br><span class="line">    <span class="string">"""docstring for Spider"""</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,queue)</span>:</span></span><br><span class="line">        Thread.__init__(self)</span><br><span class="line">        self.queue = queue</span><br><span class="line">        self.start() <span class="comment"># 执行 run()</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"每次读取 queue 的一条"</span></span><br><span class="line">        <span class="keyword">global</span> COUNT</span><br><span class="line">        <span class="keyword">while</span>(<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                sth = self.queue.get(block=false)</span><br><span class="line">            <span class="keyword">except</span> Empty:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">except</span> Exception,e:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'[- Excpt :]'</span>,str(e)</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">print</span> COUNT</span><br><span class="line">        COUNT += <span class="number">1</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 线程池类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ThreadPool</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.queue = Queue() <span class="comment"># 需要执行的队列</span></span><br><span class="line">        self.threads = [] <span class="comment"># 多线程列秒</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_task</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">init_threads</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wait</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> t <span class="keyword">in</span> self.threads:</span><br><span class="line">            <span class="keyword">if</span> t.isAlive():</span><br><span class="line">                t.join()</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    start = time.time()</span><br><span class="line"> </span><br><span class="line">    tp = ThreadPool(thread_num)</span><br><span class="line">    tp.wait()</span><br><span class="line"> </span><br><span class="line">    end = time.time()</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">print</span> <span class="string">'[ - info ] cost time :&#123;&#125;'</span>.format(end - start)</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -710,7 +438,8 @@ if __name__ == &apos;__main__&apos;:
 
 
 
-  
+
+
   
     <article id="post-zoomeye-api" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -747,107 +476,8 @@ if __name__ == &apos;__main__&apos;:
 <p>　　然后每次调用 API 的时候在 HTTP 的 Headers 里加上格式化后的 access_token 就可以使用了</p>
 <p>　　官方文档为了方便使用给出的是 cURL 方式调用 API ，在这里我给出一个用 Python 调用 API 的 Demo</p>
 <h2 id="0x-01-Code"><a href="#0x-01-Code" class="headerlink" title="0x 01 Code"></a>0x 01 Code</h2><p>　　该 Demo 抓取 ZoomEye 上 搜索 dedecms 的所有结果并把前 100 个IP保存到 文件中.</p>
-<pre><code># coding: utf-8
-# author  : anka9080
-# datetime: 20160330
-
-import os
-import requests
-import json
-
-access_token = &apos;&apos;
-ip_list = []
-
-def login():
-    &quot;&quot;&quot;
-        输入用户米密码 进行登录操作
-    :return: 访问口令 access_token
-    &quot;&quot;&quot;
-    user = raw_input(&apos;[-] input : username :&apos;)
-    passwd = raw_input(&apos;[-] input : password :&apos;)
-    data = {
-        &apos;username&apos; : user,
-        &apos;password&apos; : passwd
-    }
-    data_encoded = json.dumps(data)  # dumps 将 python 对象转换成 json 字符串
-    try:
-        r = requests.post(url = &apos;http://api.zoomeye.org/user/login&apos;,data = data_encoded)
-        r_decoded = json.loads(r.text) # loads() 将 json 字符串转换成 python 对象
-        global access_token
-        access_token = r_decoded[&apos;access_token&apos;]
-    except Exception,e:
-        print &apos;[-] info : username or password is wrong, please try again &apos;
-        exit()
-
-def saveStrToFile(file,str):
-    &quot;&quot;&quot;
-        将字符串写如文件中
-    :return:
-    &quot;&quot;&quot;
-    with open(file,&apos;w&apos;) as output:
-        output.write(str)
-
-def saveListToFile(file,list):
-    &quot;&quot;&quot;
-        将列表逐行写如文件中
-    :return:
-    &quot;&quot;&quot;
-    s = &apos;\n&apos;.join(list)
-    with open(file,&apos;w&apos;) as output:
-        output.write(s)
-
-def apiTest():
-    &quot;&quot;&quot;
-        进行 api 使用测试
-    :return:
-    &quot;&quot;&quot;
-    page = 1
-    global access_token
-    with open(&apos;access_token.txt&apos;,&apos;r&apos;) as input:
-        access_token = input.read()
-    # 将 token 格式化并添加到 HTTP Header 中
-    headers = {
-        &apos;Authorization&apos; : &apos;JWT &apos; + access_token,
-    }
-    # print headers
-    while(True):
-        try:
-
-            r = requests.get(url = &apos;http://api.zoomeye.org/host/search?query=&quot;dedecms&quot;&amp;facet=app,os&amp;page=&apos; + str(page),
-                         headers = headers)
-            r_decoded = json.loads(r.text)
-            # print r_decoded
-            # print r_decoded[&apos;total&apos;]
-            for x in r_decoded[&apos;matches&apos;]:
-                print x[&apos;ip&apos;]
-                ip_list.append(x[&apos;ip&apos;])
-            print &apos;[-] info : count &apos; + str(page * 10)
-
-        except Exception,e:
-            # 若搜索请求超过 API 允许的最大条目限制 或者 全部搜索结束，则终止请求
-            if str(e.message) == &apos;matches&apos;:
-                print &apos;[-] info : account was break, excceeding the max limitations&apos;
-                break
-            else:
-                print  &apos;[-] info : &apos; + str(e.message)
-        else:
-            if page == 10:
-                break
-            page += 1
-
-def main():
-    # 访问口令文件不存在则进行登录操作
-    if not os.path.isfile(&apos;access_token.txt&apos;):
-        print &apos;[-] info : access_token file is not exist, please login&apos;
-        login()
-        saveStrToFile(&apos;access_token.txt&apos;,access_token)
-
-    apiTest()
-    saveListToFile(&apos;ip_list.txt&apos;,ip_list)
-
-if __name__ == &apos;__main__&apos;:
-    main()
-</code></pre><h2 id="0x03-运行测试"><a href="#0x03-运行测试" class="headerlink" title="0x03 运行测试"></a>0x03 运行测试</h2><p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160330160700113-1074709220.png" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"><span class="comment"># author  : anka9080</span></span><br><span class="line"><span class="comment"># datetime: 20160330</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"> </span><br><span class="line">access_token = <span class="string">''</span></span><br><span class="line">ip_list = []</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">        输入用户米密码 进行登录操作</span><br><span class="line">    :return: 访问口令 access_token</span><br><span class="line">    """</span></span><br><span class="line">    user = raw_input(<span class="string">'[-] input : username :'</span>)</span><br><span class="line">    passwd = raw_input(<span class="string">'[-] input : password :'</span>)</span><br><span class="line">    data = &#123;</span><br><span class="line">        <span class="string">'username'</span> : user,</span><br><span class="line">        <span class="string">'password'</span> : passwd</span><br><span class="line">    &#125;</span><br><span class="line">    data_encoded = json.dumps(data)  <span class="comment"># dumps 将 python 对象转换成 json 字符串</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        r = requests.post(url = <span class="string">'http://api.zoomeye.org/user/login'</span>,data = data_encoded)</span><br><span class="line">        r_decoded = json.loads(r.text) <span class="comment"># loads() 将 json 字符串转换成 python 对象</span></span><br><span class="line">        <span class="keyword">global</span> access_token</span><br><span class="line">        access_token = r_decoded[<span class="string">'access_token'</span>]</span><br><span class="line">    <span class="keyword">except</span> Exception,e:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">'[-] info : username or password is wrong, please try again '</span></span><br><span class="line">        exit()</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">saveStrToFile</span><span class="params">(file,str)</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">        将字符串写如文件中</span><br><span class="line">    :return:</span><br><span class="line">    """</span></span><br><span class="line">    <span class="keyword">with</span> open(file,<span class="string">'w'</span>) <span class="keyword">as</span> output:</span><br><span class="line">        output.write(str)</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">saveListToFile</span><span class="params">(file,list)</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">        将列表逐行写如文件中</span><br><span class="line">    :return:</span><br><span class="line">    """</span></span><br><span class="line">    s = <span class="string">'\n'</span>.join(list)</span><br><span class="line">    <span class="keyword">with</span> open(file,<span class="string">'w'</span>) <span class="keyword">as</span> output:</span><br><span class="line">        output.write(s)</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">apiTest</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">        进行 api 使用测试</span><br><span class="line">    :return:</span><br><span class="line">    """</span></span><br><span class="line">    page = <span class="number">1</span></span><br><span class="line">    <span class="keyword">global</span> access_token</span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">'access_token.txt'</span>,<span class="string">'r'</span>) <span class="keyword">as</span> input:</span><br><span class="line">        access_token = input.read()</span><br><span class="line">    <span class="comment"># 将 token 格式化并添加到 HTTP Header 中</span></span><br><span class="line">    headers = &#123;</span><br><span class="line">        <span class="string">'Authorization'</span> : <span class="string">'JWT '</span> + access_token,</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment"># print headers</span></span><br><span class="line">    <span class="keyword">while</span>(<span class="keyword">True</span>):</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">             </span><br><span class="line">            r = requests.get(url = <span class="string">'http://api.zoomeye.org/host/search?query="dedecms"&amp;facet=app,os&amp;page='</span> + str(page),</span><br><span class="line">                         headers = headers)</span><br><span class="line">            r_decoded = json.loads(r.text)</span><br><span class="line">            <span class="comment"># print r_decoded</span></span><br><span class="line">            <span class="comment"># print r_decoded['total']</span></span><br><span class="line">            <span class="keyword">for</span> x <span class="keyword">in</span> r_decoded[<span class="string">'matches'</span>]:</span><br><span class="line">                <span class="keyword">print</span> x[<span class="string">'ip'</span>]</span><br><span class="line">                ip_list.append(x[<span class="string">'ip'</span>])</span><br><span class="line">            <span class="keyword">print</span> <span class="string">'[-] info : count '</span> + str(page * <span class="number">10</span>)</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">except</span> Exception,e:</span><br><span class="line">            <span class="comment"># 若搜索请求超过 API 允许的最大条目限制 或者 全部搜索结束，则终止请求</span></span><br><span class="line">            <span class="keyword">if</span> str(e.message) == <span class="string">'matches'</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'[-] info : account was break, excceeding the max limitations'</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">print</span>  <span class="string">'[-] info : '</span> + str(e.message)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> page == <span class="number">10</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            page += <span class="number">1</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># 访问口令文件不存在则进行登录操作</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.isfile(<span class="string">'access_token.txt'</span>):</span><br><span class="line">        <span class="keyword">print</span> <span class="string">'[-] info : access_token file is not exist, please login'</span></span><br><span class="line">        login()</span><br><span class="line">        saveStrToFile(<span class="string">'access_token.txt'</span>,access_token)</span><br><span class="line"> </span><br><span class="line">    apiTest()</span><br><span class="line">    saveListToFile(<span class="string">'ip_list.txt'</span>,ip_list)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<h2 id="0x03-运行测试"><a href="#0x03-运行测试" class="headerlink" title="0x03 运行测试"></a>0x03 运行测试</h2><p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160330160700113-1074709220.png" alt=""></p>
 <p>打开 access_token.txt 文件：</p>
 <p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160330160826551-1914843565.png" alt=""></p>
 <p>打开 ip_list.txt 文件：</p>
@@ -882,7 +512,8 @@ if __name__ == &apos;__main__&apos;:
 
 
 
-  
+
+
   
     <article id="post-python-multithread-ports-scanner" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -915,52 +546,8 @@ if __name__ == &apos;__main__&apos;:
 <p>当端口关闭，返回的是 RST 响应：</p>
 <p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160309164613975-859417226.png" alt=""></p>
 <h2 id="Coding"><a href="#Coding" class="headerlink" title="Coding"></a>Coding</h2><p>可以用 socket 编写一个小脚本来测试主机端口的开启情况，基本代码如下：</p>
-<pre><code># coding: utf-8
-#author: anka9080
-
-import socket
-from datetime import datetime
-
-# Set time-out to get the scanning fast
-socket.setdefaulttimeout(0.5)
-
-# Ask for input
-remote_server = raw_input(&quot;Enter a remote host to scan:&quot;)
-remote_server_ip = socket.gethostbyname(remote_server)
-
-# Print a nice banner with info on which host we are about to scan
-print &apos;-&apos; * 60
-print &apos;Please wait, scanning remote host &apos;, remote_server_ip
-print &apos;-&apos; * 60
-
-# Check what time the scan started
-t1 = datetime.now()
-
-# Using the range function to specify ports(1 - 1024)
-# We also put in some error handling for catching errors
-try:
-    for port in range(1,1025):
-        sock = socket.socket(2,1) # 2:socket.AF_INET 1:socket.SOCK_STREAM
-        res = sock.connect_ex((remote_server_ip,port))
-        if res == 0:
-            print &apos;Port {}: OPEN&apos;.format(port)
-        sock.close()
-
-except socket.gaierror:
-    print &apos;Hostname could not be resolved.Exiting&apos;
-
-except socket.error:
-    print &quot;Could&apos;t connect to the server&quot;
-
-# Check the time now
-t2 = datetime.now()
-
-# Calculates the difference of time
-total = t2 - t1
-
-# Print the info to screen
-print &apos;Scanning Completed in: &apos;, total
-</code></pre><p>程序测试结果如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"><span class="comment">#author: anka9080</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line"><span class="comment"># Set time-out to get the scanning fast</span></span><br><span class="line">socket.setdefaulttimeout(<span class="number">0.5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ask for input</span></span><br><span class="line">remote_server = raw_input(<span class="string">"Enter a remote host to scan:"</span>)</span><br><span class="line">remote_server_ip = socket.gethostbyname(remote_server)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Print a nice banner with info on which host we are about to scan</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'-'</span> * <span class="number">60</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'Please wait, scanning remote host '</span>, remote_server_ip</span><br><span class="line"><span class="keyword">print</span> <span class="string">'-'</span> * <span class="number">60</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Check what time the scan started</span></span><br><span class="line">t1 = datetime.now()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Using the range function to specify ports(1 - 1024)</span></span><br><span class="line"><span class="comment"># We also put in some error handling for catching errors</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">for</span> port <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">1025</span>):</span><br><span class="line">        sock = socket.socket(<span class="number">2</span>,<span class="number">1</span>) <span class="comment"># 2:socket.AF_INET 1:socket.SOCK_STREAM</span></span><br><span class="line">        res = sock.connect_ex((remote_server_ip,port))</span><br><span class="line">        <span class="keyword">if</span> res == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">print</span> <span class="string">'Port &#123;&#125;: OPEN'</span>.format(port)</span><br><span class="line">        sock.close()</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> socket.gaierror:</span><br><span class="line">    <span class="keyword">print</span> <span class="string">'Hostname could not be resolved.Exiting'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> socket.error:</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"Could't connect to the server"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Check the time now</span></span><br><span class="line">t2 = datetime.now()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Calculates the difference of time</span></span><br><span class="line">total = t2 - t1</span><br><span class="line"></span><br><span class="line"><span class="comment"># Print the info to screen</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'Scanning Completed in: '</span>, total</span><br></pre></td></tr></table></figure>
+<p>程序测试结果如下：</p>
 <p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160309165331772-1919340199.png" alt=""></p>
 <p>看出来 在 socket 的超时时间设置为0.5的前提下 依然需要花费 8分27秒才能够把周知端口号扫完，有没有其他方式加快扫描速度？答案是有的。</p>
 <blockquote>
@@ -978,51 +565,8 @@ print &apos;Scanning Completed in: &apos;, total
 </blockquote>
 <h2 id="0x-02-Better-Coding"><a href="#0x-02-Better-Coding" class="headerlink" title="0x 02 Better Coding"></a>0x 02 Better Coding</h2><p>所以对于这种时间主要花费在 socket 连接( 非 CPU 计算密集型 )的程序 可以使用 多线程来提升效率，</p>
 <p>这里选择使用内建的库 multiprocessing.dummy 来实现多线程扫描：</p>
-<pre><code># coding: utf-8
-# proj: 多线程 Socket TCP 端口扫描器
-# author: anka9080
-
-import socket
-from datetime import datetime
-from multiprocessing.dummy import Pool as ThreadPool
-
-remote_server = raw_input(&quot;Enter a remote host to scan:&quot;)
-remote_server_ip = socket.gethostbyname(remote_server)
-ports = []
-
-print &apos;-&apos; * 60
-print &apos;Please wait, scanning remote host &apos;, remote_server_ip
-print &apos;-&apos; * 60
-
-
-socket.setdefaulttimeout(0.5)
-
-def scan_port(port):
-    try:
-        s = socket.socket(2,1)
-        res = s.connect_ex((remote_server_ip,port))
-        if res == 0: # 如果端口开启 发送 hello 获取banner
-            print &apos;Port {}: OPEN&apos;.format(port)
-        s.close()
-    except Exception,e:
-        print str(e.message)
-
-
-
-for i in range(1,1025):
-    ports.append(i)
-
-# Check what time the scan started
-t1 = datetime.now()
-
-
-pool = ThreadPool(processes = 8)
-results = pool.map(scan_port,ports)
-pool.close()
-pool.join()
-
-print &apos;Multiprocess Scanning Completed in  &apos;, datetime.now() - t1
-</code></pre><p>　扫描的结果如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"><span class="comment"># proj: 多线程 Socket TCP 端口扫描器</span></span><br><span class="line"><span class="comment"># author: anka9080</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">from</span> multiprocessing.dummy <span class="keyword">import</span> Pool <span class="keyword">as</span> ThreadPool</span><br><span class="line"> </span><br><span class="line">remote_server = raw_input(<span class="string">"Enter a remote host to scan:"</span>)</span><br><span class="line">remote_server_ip = socket.gethostbyname(remote_server)</span><br><span class="line">ports = []</span><br><span class="line"> </span><br><span class="line"><span class="keyword">print</span> <span class="string">'-'</span> * <span class="number">60</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'Please wait, scanning remote host '</span>, remote_server_ip</span><br><span class="line"><span class="keyword">print</span> <span class="string">'-'</span> * <span class="number">60</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">socket.setdefaulttimeout(<span class="number">0.5</span>)</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">scan_port</span><span class="params">(port)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        s = socket.socket(<span class="number">2</span>,<span class="number">1</span>)</span><br><span class="line">        res = s.connect_ex((remote_server_ip,port))</span><br><span class="line">        <span class="keyword">if</span> res == <span class="number">0</span>: <span class="comment"># 如果端口开启 发送 hello 获取banner</span></span><br><span class="line">            <span class="keyword">print</span> <span class="string">'Port &#123;&#125;: OPEN'</span>.format(port)</span><br><span class="line">        s.close()</span><br><span class="line">    <span class="keyword">except</span> Exception,e:</span><br><span class="line">        <span class="keyword">print</span> str(e.message)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">1025</span>):</span><br><span class="line">    ports.append(i)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Check what time the scan started</span></span><br><span class="line">t1 = datetime.now()</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">pool = ThreadPool(processes = <span class="number">8</span>)</span><br><span class="line">results = pool.map(scan_port,ports)</span><br><span class="line">pool.close()</span><br><span class="line">pool.join()</span><br><span class="line"> </span><br><span class="line"><span class="keyword">print</span> <span class="string">'Multiprocess Scanning Completed in  '</span>, datetime.now() - t1</span><br></pre></td></tr></table></figure>
+<p>　扫描的结果如下：</p>
 <p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160309175531991-613764362.png" alt=""></p>
 <p>　　可以发现 8 个线程并行发起请求，效率有很大的提升。</p>
 <p>　　在被扫描主机未安装连接限制软件的前提下，测试了开启不同线程扫描所花费的时间 ：</p>
@@ -1037,28 +581,8 @@ print &apos;Multiprocess Scanning Completed in  &apos;, datetime.now() - t1
 </ul>
 <p><strong>至于开多少线程合适要自己来 fuzzing ， 不要以为开的线程越多越好，因为线程的创建，线程之间的切换也是要消耗资源的。</strong></p>
 <p>要获取 Banner 的话，把核心函数修改成如下即可：</p>
-<pre><code>def scan_port(port):
-    try:
-        s = socket.socket(2,1)
-        res = s.connect_ex((remote_server_ip,port))
-        if res == 0: # 如果端口开启 发送 hello 获取banner
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">scan_port</span><span class="params">(port)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        s = socket.socket(<span class="number">2</span>,<span class="number">1</span>)</span><br><span class="line">        res = s.connect_ex((remote_server_ip,port))</span><br><span class="line">        <span class="keyword">if</span> res == <span class="number">0</span>: <span class="comment"># 如果端口开启 发送 hello 获取banner</span></span><br><span class="line"> </span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                s.send(<span class="string">'hello'</span>)</span><br><span class="line">                banner = s.recv(<span class="number">1024</span>)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">            <span class="keyword">except</span> Exception,e:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'Port &#123;&#125;: OPEN'</span>.format(port)</span><br><span class="line">                <span class="keyword">print</span> str(e.message)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'Port &#123;&#125;: OPEN'</span>.format(port)</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'Banner &#123;&#125;'</span>.format(banner)</span><br><span class="line"> </span><br><span class="line">        s.close()</span><br><span class="line">    <span class="keyword">except</span> Exception,e:</span><br><span class="line">        <span class="keyword">print</span> str(e.message)</span><br></pre></td></tr></table></figure>
 
-            try:
-                s.send(&apos;hello&apos;)
-                banner = s.recv(1024)
-
-
-            except Exception,e:
-                print &apos;Port {}: OPEN&apos;.format(port)
-                print str(e.message)
-            else:
-                print &apos;Port {}: OPEN&apos;.format(port)
-                print &apos;Banner {}&apos;.format(banner)
-
-        s.close()
-    except Exception,e:
-        print str(e.message)
-</code></pre>
       
     </div>
     
@@ -1085,7 +609,8 @@ print &apos;Multiprocess Scanning Completed in  &apos;, datetime.now() - t1
 
 
 
-  
+
+
   
     <article id="post-printer-hack" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -1153,91 +678,8 @@ print &apos;Multiprocess Scanning Completed in  &apos;, datetime.now() - t1
 <p>利用该漏洞，配合 Beef 攻击框架，通过一段编写好的 JavaScript（hook.js）控制目标主机的浏览器，通过目标主机浏览器获得该主机的详细信息，并进一步扫描内网，配合 Metasploit 绝对是内网渗透一大杀器。</p>
 <h2 id="0x04-全球漏洞分布"><a href="#0x04-全球漏洞分布" class="headerlink" title="0x04 全球漏洞分布"></a>0x04 全球漏洞分布</h2><p><strong> 自动测试脚本 </strong></p>
 <p>HP打印机的厂商已经对固件进行了升级，采用更安全的加密机制处理PJL密钥，不过由于全球范围用户基数比较大，已经用户安全意识不强，依然大量存在这种受害打印机，由ZoomEye网络空间搜索引擎导出的数据接合我们小组写的自动化扫描脚本。</p>
-<pre><code>#!/usr/bin/env python
-# -*- coding: UTF-8 -*-
-
-import socket
-import json
-import sys
-from optparse import OptionParser
-
-PJL_START = &quot;\033%-12345X@PJL &quot;
-PJL_FINISH = &quot;\033%-12345X\r\n&quot;
-PJL_USTATUS = &quot;USTATUS DEVICE=&quot;
-PJL_INFO_ID = &quot;INFO ID\r\n&quot;
-
-EOF = PJL_START + PJL_USTATUS + &quot;OFF\r\n&quot; + PJL_FINISH  #PJL  语言
-DEVICEID = PJL_START + PJL_INFO_ID + PJL_FINISH  #PJL  语言  获取设备型号
-
-class Printer():
-    def __init__(self):
-        self.usage()
-        if sys.argv &lt; 1 :
-            self.usage()
-        self.readfile(options.file)
-
-    def usage(self):
-        parser = OptionParser()
-        parser.add_option(&quot;-i&quot;, &quot;--ip&quot;, dest=&quot;ip&quot;,
-                          help=&quot;test single ip&quot;)  #
-        parser.add_option(&quot;-f&quot;, &quot;--file&quot;,dest=&quot;file&quot;,
-                          help=&quot;files &quot;) #
-        global options
-        (options, args) = parser.parse_args()
-
-    def Buildsocket(self, ip, port=9100):
-        sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM,0)   #与主机建立socket连接
-        sock.settimeout(5)
-        try:
-            sock.connect((ip, port))
-        except:
-            print &quot;[!*]-ip-%s-can&apos;t connect--&quot; % ip
-            return &apos;error&apos;
-        sock.send(EOF)
-        sock.send(DEVICEID)   # 发送PJL指令给远程打印机
-        try:
-            device = sock.recv(1024)
-        except:
-            return &apos;No&apos;
-        print &quot;[!*]-ip-%s-is-ok\r\ndeviceidis-%s&quot; % (str(ip), device)
-        sock.close()
-        return &apos;OK&apos;
-
-    def GetDiviceMap(self, data,status):
-        f = open(&apos;result.txt&apos;, &apos;a+&apos;)
-        try:
-            f.write(str(data[&apos;ip&apos;]) + &apos;, &apos; + status + &apos;, &apos; + str(data[&apos;geoinfo&apos;][&apos;country&apos;][&apos;name&apos;][&apos;en&apos;])
-            +&apos;, &apos;+ str(data[&apos;geoinfo&apos;][&apos;city&apos;][&apos;en&apos;]) + &apos;, &apos; + str(data[&apos;geoinfo&apos;][&apos;location&apos;][&apos;longitude&apos;])
-            +&apos;, &apos;+ str(data[&apos;geoinfo&apos;][&apos;location&apos;][&apos;latitude&apos;]) + &apos;, &apos; + str(data[&apos;geoinfo&apos;][&apos;country&apos;][&apos;code&apos;])
-            +&apos;, &apos; + str(data[&apos;geoinfo&apos;][&apos;continent&apos;][&apos;name&apos;][&apos;en&apos;]) + &quot;\r\n&quot;)
-        except:
-            pass
-        f.close()
-
-    def readfile(self, file):
-        Vuln_ip = 0 # ip 列表输入的IP数量
-        No_vuln_ip = 0
-        CantConnectIP = 0
-        linenum = 0
-        f = open(file, &apos;r&apos;)
-        for line in f.readlines():
-            data = json.loads(line)
-            status = self.Buildsocket(data[&apos;ip&apos;])
-            if status == &apos;error&apos;:
-                CantConnectIP += 1
-            elif status == &apos;No&apos;:
-                No_vuln_ip += 1
-            else:
-                Vuln_ip += 1
-            self.GetDiviceMap(data, status)
-            linenum += 1
-            print &quot;[!*]-Now-is-%s-lines&quot; % str(linenum)
-        f.close()
-        print str(CantConnectIP) + &quot;  &quot; + str(No_vuln_ip) + &quot;  &quot; + str(Vuln_ip)
-
-if __name__ == &apos;__main__&apos;:
-    Printer()
-</code></pre><p>全球影响面</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> optparse <span class="keyword">import</span> OptionParser</span><br><span class="line"></span><br><span class="line">PJL_START = <span class="string">"\033%-12345X@PJL "</span></span><br><span class="line">PJL_FINISH = <span class="string">"\033%-12345X\r\n"</span></span><br><span class="line">PJL_USTATUS = <span class="string">"USTATUS DEVICE="</span></span><br><span class="line">PJL_INFO_ID = <span class="string">"INFO ID\r\n"</span></span><br><span class="line"></span><br><span class="line">EOF = PJL_START + PJL_USTATUS + <span class="string">"OFF\r\n"</span> + PJL_FINISH  <span class="comment">#PJL  语言</span></span><br><span class="line">DEVICEID = PJL_START + PJL_INFO_ID + PJL_FINISH  <span class="comment">#PJL  语言  获取设备型号</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Printer</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.usage()</span><br><span class="line">        <span class="keyword">if</span> sys.argv &lt; <span class="number">1</span> :</span><br><span class="line">            self.usage()</span><br><span class="line">        self.readfile(options.file)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">usage</span><span class="params">(self)</span>:</span></span><br><span class="line">        parser = OptionParser()</span><br><span class="line">        parser.add_option(<span class="string">"-i"</span>, <span class="string">"--ip"</span>, dest=<span class="string">"ip"</span>,</span><br><span class="line">                          help=<span class="string">"test single ip"</span>)  <span class="comment">#</span></span><br><span class="line">        parser.add_option(<span class="string">"-f"</span>, <span class="string">"--file"</span>,dest=<span class="string">"file"</span>,</span><br><span class="line">                          help=<span class="string">"files "</span>) <span class="comment">#</span></span><br><span class="line">        <span class="keyword">global</span> options</span><br><span class="line">        (options, args) = parser.parse_args()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Buildsocket</span><span class="params">(self, ip, port=<span class="number">9100</span>)</span>:</span></span><br><span class="line">        sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM,<span class="number">0</span>)   <span class="comment">#与主机建立socket连接</span></span><br><span class="line">        sock.settimeout(<span class="number">5</span>)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            sock.connect((ip, port))</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">print</span> <span class="string">"[!*]-ip-%s-can't connect--"</span> % ip</span><br><span class="line">            <span class="keyword">return</span> <span class="string">'error'</span></span><br><span class="line">        sock.send(EOF)</span><br><span class="line">        sock.send(DEVICEID)   <span class="comment"># 发送PJL指令给远程打印机</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            device = sock.recv(<span class="number">1024</span>)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">'No'</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"[!*]-ip-%s-is-ok\r\ndeviceidis-%s"</span> % (str(ip), device)</span><br><span class="line">        sock.close()</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'OK'</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">GetDiviceMap</span><span class="params">(self, data,status)</span>:</span></span><br><span class="line">        f = open(<span class="string">'result.txt'</span>, <span class="string">'a+'</span>)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            f.write(str(data[<span class="string">'ip'</span>]) + <span class="string">', '</span> + status + <span class="string">', '</span> + str(data[<span class="string">'geoinfo'</span>][<span class="string">'country'</span>][<span class="string">'name'</span>][<span class="string">'en'</span>])</span><br><span class="line">            +<span class="string">', '</span>+ str(data[<span class="string">'geoinfo'</span>][<span class="string">'city'</span>][<span class="string">'en'</span>]) + <span class="string">', '</span> + str(data[<span class="string">'geoinfo'</span>][<span class="string">'location'</span>][<span class="string">'longitude'</span>])</span><br><span class="line">            +<span class="string">', '</span>+ str(data[<span class="string">'geoinfo'</span>][<span class="string">'location'</span>][<span class="string">'latitude'</span>]) + <span class="string">', '</span> + str(data[<span class="string">'geoinfo'</span>][<span class="string">'country'</span>][<span class="string">'code'</span>])</span><br><span class="line">            +<span class="string">', '</span> + str(data[<span class="string">'geoinfo'</span>][<span class="string">'continent'</span>][<span class="string">'name'</span>][<span class="string">'en'</span>]) + <span class="string">"\r\n"</span>)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        f.close()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">readfile</span><span class="params">(self, file)</span>:</span></span><br><span class="line">        Vuln_ip = <span class="number">0</span> <span class="comment"># ip 列表输入的IP数量</span></span><br><span class="line">        No_vuln_ip = <span class="number">0</span></span><br><span class="line">        CantConnectIP = <span class="number">0</span></span><br><span class="line">        linenum = <span class="number">0</span></span><br><span class="line">        f = open(file, <span class="string">'r'</span>)</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> f.readlines():</span><br><span class="line">            data = json.loads(line)</span><br><span class="line">            status = self.Buildsocket(data[<span class="string">'ip'</span>])</span><br><span class="line">            <span class="keyword">if</span> status == <span class="string">'error'</span>:</span><br><span class="line">                CantConnectIP += <span class="number">1</span></span><br><span class="line">            <span class="keyword">elif</span> status == <span class="string">'No'</span>:</span><br><span class="line">                No_vuln_ip += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                Vuln_ip += <span class="number">1</span></span><br><span class="line">            self.GetDiviceMap(data, status)</span><br><span class="line">            linenum += <span class="number">1</span></span><br><span class="line">            <span class="keyword">print</span> <span class="string">"[!*]-Now-is-%s-lines"</span> % str(linenum)</span><br><span class="line">        f.close()</span><br><span class="line">        <span class="keyword">print</span> str(CantConnectIP) + <span class="string">"  "</span> + str(No_vuln_ip) + <span class="string">"  "</span> + str(Vuln_ip)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    Printer()</span><br></pre></td></tr></table></figure>
+<p>全球影响面</p>
 <p>这个漏洞波及了很多国家和地区，以美国最盛。我们用小组开发的自动化脚本加上ZoomEye提供的1万组惠普打印机IP进行测试。 结果绘制成图表如下。</p>
 <ul>
 <li>全球可入侵IP分布</li>
@@ -1290,7 +732,8 @@ if __name__ == &apos;__main__&apos;:
 
 
 
-  
+
+
   
     <article id="post-github-cmd" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -1360,7 +803,8 @@ if __name__ == &apos;__main__&apos;:
 
 
 
-  
+
+
   
     <article id="post-python-spider-subdomain-ip" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -1393,68 +837,8 @@ if __name__ == &apos;__main__&apos;:
 <p>而且人工识别是否是重复的二级域名也够蛋疼的，正好最近在学正则表达式，权当练手了</p>
 <p>2016年更新：<br>发现了一些不错的扫子域名的网站，如下</p>
 <p><strong><a href="http://subdomain.chaxun.la" target="_blank" rel="external">http://subdomain.chaxun.la</a></strong></p>
-<h2 id="0x-01-Code"><a href="#0x-01-Code" class="headerlink" title="0x 01 Code"></a>0x 01 Code</h2><pre><code># coding=utf-8
-# author:Anka9080
-# environment:Eclipse
-
-import urllib
-import urllib2
-import cookielib
-import re
-
-
-#site = &apos;baidu.com&apos;
-print &apos;Please input the root site like &quot;baidu.com&quot;:&apos;
-site = raw_input()
-siteFormat1 = site
-siteFormat1 = siteFormat1.replace(&apos;.&apos;, &apos;\.&apos;)
-#print siteFormat1
-
-urlPage = &apos;http://www.haosou.com/s?src=360sou_newhome&amp;q=site:&apos;+site
-req = urllib2.Request(urlPage)
-res = urllib2.urlopen(req)
-html = res.read().decode(&apos;utf-8&apos;)
-# 获得搜索结果的页面数
-pageStr = re.search(ur&apos;找到相关结果约(.*?)个&apos;,html)
-page = pageStr.group(1)
-formatNum = &apos;0123456789&apos;
-for c in page:
-    if not c in formatNum:
-        page = page.replace(c,&apos;&apos;)
-page = int(page) / 10
-print &apos;Total Page: &apos; + str(page)
-
-if page &gt; 6:
-    page = 6
-newItems = []
-for p in range(1, page):
-    urlDomain = &apos;http://www.haosou.com/s?src=360sou_newhome&amp;q=site:&apos;+site+&apos;&amp;pn=&apos;+str(p)
-    req = urllib2.Request(urlDomain)
-    res = urllib2.urlopen(req)
-    html = res.read().decode(&apos;utf-8&apos;)
-    tmp = &apos;linkinfo\&quot;\&gt;\&lt;cite\&gt;(.+?\.&apos;+siteFormat1+&apos;)&apos;;
-    pattern = re.compile(tmp)        
-    items = re.findall(pattern, html)
-
-
-    # 去重操作
-    for item in items:
-        if item not in newItems:  
-            newItems.append(item)
-
-print &apos;SubDomain Count: &apos;+ str(len(newItems) - 1)
-
-for item in newItems: 
-
-    # 获得对应 IP 信息
-    pattern = re.compile(ur&apos;\&gt;\&gt;\ (.*?)\&lt;\/font[\s|\S]*?本站主数据：(.*?)\&lt;\/li\&gt;&apos;)
-    urlIP = &apos;http://www.ip138.com/ips138.asp?ip=&apos;+item
-    req = urllib2.Request(urlIP)
-    res = urllib2.urlopen(req)
-    html = res.read().decode(&apos;gb2312&apos;)    
-    result = re.search(pattern,html)
-    print item + &apos;    &apos; + result.group(1) + &apos;    &apos; + result.group(2)
-</code></pre><p>脚本运行结果如下：</p>
+<h2 id="0x-01-Code"><a href="#0x-01-Code" class="headerlink" title="0x 01 Code"></a>0x 01 Code</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="comment"># author:Anka9080</span></span><br><span class="line"><span class="comment"># environment:Eclipse</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line"><span class="keyword">import</span> cookielib</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#site = 'baidu.com'</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'Please input the root site like "baidu.com":'</span></span><br><span class="line">site = raw_input()</span><br><span class="line">siteFormat1 = site</span><br><span class="line">siteFormat1 = siteFormat1.replace(<span class="string">'.'</span>, <span class="string">'\.'</span>)</span><br><span class="line"><span class="comment">#print siteFormat1</span></span><br><span class="line"></span><br><span class="line">urlPage = <span class="string">'http://www.haosou.com/s?src=360sou_newhome&amp;q=site:'</span>+site</span><br><span class="line">req = urllib2.Request(urlPage)</span><br><span class="line">res = urllib2.urlopen(req)</span><br><span class="line">html = res.read().decode(<span class="string">'utf-8'</span>)</span><br><span class="line"><span class="comment"># 获得搜索结果的页面数</span></span><br><span class="line">pageStr = re.search(<span class="string">ur'找到相关结果约(.*?)个'</span>,html)</span><br><span class="line">page = pageStr.group(<span class="number">1</span>)</span><br><span class="line">formatNum = <span class="string">'0123456789'</span></span><br><span class="line"><span class="keyword">for</span> c <span class="keyword">in</span> page:</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> c <span class="keyword">in</span> formatNum:</span><br><span class="line">        page = page.replace(c,<span class="string">''</span>)</span><br><span class="line">page = int(page) / <span class="number">10</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'Total Page: '</span> + str(page)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> page &gt; <span class="number">6</span>:</span><br><span class="line">    page = <span class="number">6</span></span><br><span class="line">newItems = []</span><br><span class="line"><span class="keyword">for</span> p <span class="keyword">in</span> range(<span class="number">1</span>, page):</span><br><span class="line">    urlDomain = <span class="string">'http://www.haosou.com/s?src=360sou_newhome&amp;q=site:'</span>+site+<span class="string">'&amp;pn='</span>+str(p)</span><br><span class="line">    req = urllib2.Request(urlDomain)</span><br><span class="line">    res = urllib2.urlopen(req)</span><br><span class="line">    html = res.read().decode(<span class="string">'utf-8'</span>)</span><br><span class="line">    tmp = <span class="string">'linkinfo\"\&gt;\&lt;cite\&gt;(.+?\.'</span>+siteFormat1+<span class="string">')'</span>;</span><br><span class="line">    pattern = re.compile(tmp)        </span><br><span class="line">    items = re.findall(pattern, html)</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 去重操作</span></span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> items:</span><br><span class="line">        <span class="keyword">if</span> item <span class="keyword">not</span> <span class="keyword">in</span> newItems:  </span><br><span class="line">            newItems.append(item)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">'SubDomain Count: '</span>+ str(len(newItems) - <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> newItems: </span><br><span class="line">   </span><br><span class="line">    <span class="comment"># 获得对应 IP 信息</span></span><br><span class="line">    pattern = re.compile(<span class="string">ur'\&gt;\&gt;\ (.*?)\&lt;\/font[\s|\S]*?本站主数据：(.*?)\&lt;\/li\&gt;'</span>)</span><br><span class="line">    urlIP = <span class="string">'http://www.ip138.com/ips138.asp?ip='</span>+item</span><br><span class="line">    req = urllib2.Request(urlIP)</span><br><span class="line">    res = urllib2.urlopen(req)</span><br><span class="line">    html = res.read().decode(<span class="string">'gb2312'</span>)    </span><br><span class="line">    result = re.search(pattern,html)</span><br><span class="line">    <span class="keyword">print</span> item + <span class="string">'    '</span> + result.group(<span class="number">1</span>) + <span class="string">'    '</span> + result.group(<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<p>脚本运行结果如下：</p>
 <pre><code>Please input the root site like &quot;baidu.com&quot;:
 baidu.com
 Total Page: 2
@@ -1506,7 +890,8 @@ pan.baidu.com    202.108.23.29    北京市  联通
 
 
 
-  
+
+
   
     <article id="post-fake-wifi-ap" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -1586,7 +971,8 @@ pan.baidu.com    202.108.23.29    北京市  联通
 
 
 
-  
+
+
   
     <article id="post-arpspoof" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -1625,14 +1011,14 @@ pan.baidu.com    202.108.23.29    北京市  联通
 <p>　　　　前三款工具已经集成在Kali中，ferret需要手动安装</p>
 <p><strong>2、 安装ferret</strong></p>
 <p>(1) 修改正确的软件安装源<br>(2) 添加Kali对32位应用程序的支持</p>
-<pre><code>dpkg --add-architecture i386
-</code></pre><p>(3) 更新安装源</p>
-<pre><code>apt-get clean &amp;&amp; apt-get update &amp;&amp; apt-get upgrade -y &amp;&amp; apt-get dist-upgrade -y
-</code></pre><p>(4) 安装ferret</p>
-<pre><code>aptitude install ferret-sidejack:i386
-</code></pre><p><strong>3、 打开路由转发（临时生效）</strong></p>
-<pre><code>echo &quot;1&quot; &gt; /proc/sys/net/ipv4/ip_forward　　
-</code></pre><p><strong>4、 开始 ARP 欺骗</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpkg --add-architecture i386</span><br></pre></td></tr></table></figure>
+<p>(3) 更新安装源</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get clean &amp;&amp; apt-get update &amp;&amp; apt-get upgrade -y &amp;&amp; apt-get dist-upgrade -y</span><br></pre></td></tr></table></figure>
+<p>(4) 安装ferret</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aptitude install ferret-sidejack:i386</span><br></pre></td></tr></table></figure>
+<p><strong>3、 打开路由转发（临时生效）</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"1"</span> &gt; /proc/sys/net/ipv4/ip_forward</span><br></pre></td></tr></table></figure>
+<p><strong>4、 开始 ARP 欺骗</strong></p>
 <p><img src="http://images.cnitblog.com/blog/671902/201501/021846569813530.png" alt=""></p>
 <p><strong>5、 新开一个Shell，抓取通过eth0接口的输出cookie.cap文件</strong></p>
 <p><img src="http://images.cnitblog.com/blog/671902/201501/021849080915177.png" alt=""></p>
@@ -1686,7 +1072,8 @@ pan.baidu.com    202.108.23.29    北京市  联通
 
 
 
-  
+
+
   
   
     <nav id="page-nav">
@@ -1701,15 +1088,11 @@ pan.baidu.com    202.108.23.29    北京市  联通
     		&copy; 2016 Anka9080
     	</div>
       	<div class="footer-right">
-
-          
-Analyse with <script src="http://s23.cnzz.com/z_stat.php?id=1259317280&web_id=1259317280" language="JavaScript"></script>
-
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
       	</div>
     </div>
   </div>
 </footer>
-
     </div>
     
   <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">

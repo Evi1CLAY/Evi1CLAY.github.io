@@ -27,7 +27,7 @@
 <meta property="og:image" content="http://images2015.cnblogs.com/blog/671902/201603/671902-20160330160826551-1914843565.png">
 <meta property="og:image" content="http://images2015.cnblogs.com/blog/671902/201603/671902-20160330160907894-1222152171.png">
 <meta property="og:image" content="http://images2015.cnblogs.com/blog/671902/201603/671902-20160330161207316-1843049358.png">
-<meta property="og:updated_time" content="2016-05-28T10:30:36.492Z">
+<meta property="og:updated_time" content="2016-05-29T03:34:48.749Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python 调用 ZoomEye API 批量获取目标网站IP">
 <meta name="twitter:description" content="0x 00 前言　　ZoomEye 的 API 在前几天正式对外部开发，这对网络渗透人员来说是一件开心的事
@@ -63,6 +63,8 @@
 		</hgroup>
 
 		
+		<p class="header-subtitle">误判证患者，晚期。</p>
+		
 
 		
 			<div class="switch-btn">
@@ -93,13 +95,13 @@
 				<div class="tips-box hide">
 					<div class="tips-arrow"></div>
 					<ul class="tips-inner">
-						<li>Menu</li>
-						<li>Tags</li>
+						<li>菜单</li>
+						<li>标签</li>
 						
-						<li>Links</li>
+						<li>友情链接</li>
 						
 						
-						<li>Über</li>
+						<li>关于我</li>
 						
 					</ul>
 				</div>
@@ -112,6 +114,8 @@
 					<nav class="header-menu">
 						<ul>
 						
+							<li><a href="/">首页</a></li>
+				        
 							<li><a href="/archives">所有文章</a></li>
 				        
 							<li><a href="http://xss.evilclay.com">XSS 平台</a></li>
@@ -126,8 +130,6 @@
 								<a class="github" target="_blank" href="https://github.com/Evi1CLAY" title="github">github</a>
 					        
 								<a class="rss" target="_blank" href="http://www.cnblogs.com/anka9080" title="rss">rss</a>
-					        
-								<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/amzhoupeng" title="zhihu">zhihu</a>
 					        
 								<a class="mail" target="_blank" href="#" title="mail">mail</a>
 					        
@@ -185,9 +187,13 @@
 			  <h1 class="header-author">Anka9080</h1>
 			</hgroup>
 			
+			<p class="header-subtitle">误判证患者，晚期。</p>
+			
 			<nav class="header-menu">
 				<ul>
 				
+					<li><a href="/">首页</a></li>
+		        
 					<li><a href="/archives">所有文章</a></li>
 		        
 					<li><a href="http://xss.evilclay.com">XSS 平台</a></li>
@@ -203,8 +209,6 @@
 						<a class="github" target="_blank" href="https://github.com/Evi1CLAY" title="github">github</a>
 			        
 						<a class="rss" target="_blank" href="http://www.cnblogs.com/anka9080" title="rss">rss</a>
-			        
-						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/amzhoupeng" title="zhihu">zhihu</a>
 			        
 						<a class="mail" target="_blank" href="#" title="mail">mail</a>
 			        
@@ -260,107 +264,8 @@
 <p>　　然后每次调用 API 的时候在 HTTP 的 Headers 里加上格式化后的 access_token 就可以使用了</p>
 <p>　　官方文档为了方便使用给出的是 cURL 方式调用 API ，在这里我给出一个用 Python 调用 API 的 Demo</p>
 <h2 id="0x-01-Code"><a href="#0x-01-Code" class="headerlink" title="0x 01 Code"></a>0x 01 Code</h2><p>　　该 Demo 抓取 ZoomEye 上 搜索 dedecms 的所有结果并把前 100 个IP保存到 文件中.</p>
-<pre><code># coding: utf-8
-# author  : anka9080
-# datetime: 20160330
-
-import os
-import requests
-import json
-
-access_token = &apos;&apos;
-ip_list = []
-
-def login():
-    &quot;&quot;&quot;
-        输入用户米密码 进行登录操作
-    :return: 访问口令 access_token
-    &quot;&quot;&quot;
-    user = raw_input(&apos;[-] input : username :&apos;)
-    passwd = raw_input(&apos;[-] input : password :&apos;)
-    data = {
-        &apos;username&apos; : user,
-        &apos;password&apos; : passwd
-    }
-    data_encoded = json.dumps(data)  # dumps 将 python 对象转换成 json 字符串
-    try:
-        r = requests.post(url = &apos;http://api.zoomeye.org/user/login&apos;,data = data_encoded)
-        r_decoded = json.loads(r.text) # loads() 将 json 字符串转换成 python 对象
-        global access_token
-        access_token = r_decoded[&apos;access_token&apos;]
-    except Exception,e:
-        print &apos;[-] info : username or password is wrong, please try again &apos;
-        exit()
-
-def saveStrToFile(file,str):
-    &quot;&quot;&quot;
-        将字符串写如文件中
-    :return:
-    &quot;&quot;&quot;
-    with open(file,&apos;w&apos;) as output:
-        output.write(str)
-
-def saveListToFile(file,list):
-    &quot;&quot;&quot;
-        将列表逐行写如文件中
-    :return:
-    &quot;&quot;&quot;
-    s = &apos;\n&apos;.join(list)
-    with open(file,&apos;w&apos;) as output:
-        output.write(s)
-
-def apiTest():
-    &quot;&quot;&quot;
-        进行 api 使用测试
-    :return:
-    &quot;&quot;&quot;
-    page = 1
-    global access_token
-    with open(&apos;access_token.txt&apos;,&apos;r&apos;) as input:
-        access_token = input.read()
-    # 将 token 格式化并添加到 HTTP Header 中
-    headers = {
-        &apos;Authorization&apos; : &apos;JWT &apos; + access_token,
-    }
-    # print headers
-    while(True):
-        try:
-
-            r = requests.get(url = &apos;http://api.zoomeye.org/host/search?query=&quot;dedecms&quot;&amp;facet=app,os&amp;page=&apos; + str(page),
-                         headers = headers)
-            r_decoded = json.loads(r.text)
-            # print r_decoded
-            # print r_decoded[&apos;total&apos;]
-            for x in r_decoded[&apos;matches&apos;]:
-                print x[&apos;ip&apos;]
-                ip_list.append(x[&apos;ip&apos;])
-            print &apos;[-] info : count &apos; + str(page * 10)
-
-        except Exception,e:
-            # 若搜索请求超过 API 允许的最大条目限制 或者 全部搜索结束，则终止请求
-            if str(e.message) == &apos;matches&apos;:
-                print &apos;[-] info : account was break, excceeding the max limitations&apos;
-                break
-            else:
-                print  &apos;[-] info : &apos; + str(e.message)
-        else:
-            if page == 10:
-                break
-            page += 1
-
-def main():
-    # 访问口令文件不存在则进行登录操作
-    if not os.path.isfile(&apos;access_token.txt&apos;):
-        print &apos;[-] info : access_token file is not exist, please login&apos;
-        login()
-        saveStrToFile(&apos;access_token.txt&apos;,access_token)
-
-    apiTest()
-    saveListToFile(&apos;ip_list.txt&apos;,ip_list)
-
-if __name__ == &apos;__main__&apos;:
-    main()
-</code></pre><h2 id="0x03-运行测试"><a href="#0x03-运行测试" class="headerlink" title="0x03 运行测试"></a>0x03 运行测试</h2><p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160330160700113-1074709220.png" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"><span class="comment"># author  : anka9080</span></span><br><span class="line"><span class="comment"># datetime: 20160330</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"> </span><br><span class="line">access_token = <span class="string">''</span></span><br><span class="line">ip_list = []</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">        输入用户米密码 进行登录操作</span><br><span class="line">    :return: 访问口令 access_token</span><br><span class="line">    """</span></span><br><span class="line">    user = raw_input(<span class="string">'[-] input : username :'</span>)</span><br><span class="line">    passwd = raw_input(<span class="string">'[-] input : password :'</span>)</span><br><span class="line">    data = &#123;</span><br><span class="line">        <span class="string">'username'</span> : user,</span><br><span class="line">        <span class="string">'password'</span> : passwd</span><br><span class="line">    &#125;</span><br><span class="line">    data_encoded = json.dumps(data)  <span class="comment"># dumps 将 python 对象转换成 json 字符串</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        r = requests.post(url = <span class="string">'http://api.zoomeye.org/user/login'</span>,data = data_encoded)</span><br><span class="line">        r_decoded = json.loads(r.text) <span class="comment"># loads() 将 json 字符串转换成 python 对象</span></span><br><span class="line">        <span class="keyword">global</span> access_token</span><br><span class="line">        access_token = r_decoded[<span class="string">'access_token'</span>]</span><br><span class="line">    <span class="keyword">except</span> Exception,e:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">'[-] info : username or password is wrong, please try again '</span></span><br><span class="line">        exit()</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">saveStrToFile</span><span class="params">(file,str)</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">        将字符串写如文件中</span><br><span class="line">    :return:</span><br><span class="line">    """</span></span><br><span class="line">    <span class="keyword">with</span> open(file,<span class="string">'w'</span>) <span class="keyword">as</span> output:</span><br><span class="line">        output.write(str)</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">saveListToFile</span><span class="params">(file,list)</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">        将列表逐行写如文件中</span><br><span class="line">    :return:</span><br><span class="line">    """</span></span><br><span class="line">    s = <span class="string">'\n'</span>.join(list)</span><br><span class="line">    <span class="keyword">with</span> open(file,<span class="string">'w'</span>) <span class="keyword">as</span> output:</span><br><span class="line">        output.write(s)</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">apiTest</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">        进行 api 使用测试</span><br><span class="line">    :return:</span><br><span class="line">    """</span></span><br><span class="line">    page = <span class="number">1</span></span><br><span class="line">    <span class="keyword">global</span> access_token</span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">'access_token.txt'</span>,<span class="string">'r'</span>) <span class="keyword">as</span> input:</span><br><span class="line">        access_token = input.read()</span><br><span class="line">    <span class="comment"># 将 token 格式化并添加到 HTTP Header 中</span></span><br><span class="line">    headers = &#123;</span><br><span class="line">        <span class="string">'Authorization'</span> : <span class="string">'JWT '</span> + access_token,</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment"># print headers</span></span><br><span class="line">    <span class="keyword">while</span>(<span class="keyword">True</span>):</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">             </span><br><span class="line">            r = requests.get(url = <span class="string">'http://api.zoomeye.org/host/search?query="dedecms"&amp;facet=app,os&amp;page='</span> + str(page),</span><br><span class="line">                         headers = headers)</span><br><span class="line">            r_decoded = json.loads(r.text)</span><br><span class="line">            <span class="comment"># print r_decoded</span></span><br><span class="line">            <span class="comment"># print r_decoded['total']</span></span><br><span class="line">            <span class="keyword">for</span> x <span class="keyword">in</span> r_decoded[<span class="string">'matches'</span>]:</span><br><span class="line">                <span class="keyword">print</span> x[<span class="string">'ip'</span>]</span><br><span class="line">                ip_list.append(x[<span class="string">'ip'</span>])</span><br><span class="line">            <span class="keyword">print</span> <span class="string">'[-] info : count '</span> + str(page * <span class="number">10</span>)</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">except</span> Exception,e:</span><br><span class="line">            <span class="comment"># 若搜索请求超过 API 允许的最大条目限制 或者 全部搜索结束，则终止请求</span></span><br><span class="line">            <span class="keyword">if</span> str(e.message) == <span class="string">'matches'</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'[-] info : account was break, excceeding the max limitations'</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">print</span>  <span class="string">'[-] info : '</span> + str(e.message)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> page == <span class="number">10</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            page += <span class="number">1</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># 访问口令文件不存在则进行登录操作</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.isfile(<span class="string">'access_token.txt'</span>):</span><br><span class="line">        <span class="keyword">print</span> <span class="string">'[-] info : access_token file is not exist, please login'</span></span><br><span class="line">        login()</span><br><span class="line">        saveStrToFile(<span class="string">'access_token.txt'</span>,access_token)</span><br><span class="line"> </span><br><span class="line">    apiTest()</span><br><span class="line">    saveListToFile(<span class="string">'ip_list.txt'</span>,ip_list)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<h2 id="0x03-运行测试"><a href="#0x03-运行测试" class="headerlink" title="0x03 运行测试"></a>0x03 运行测试</h2><p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160330160700113-1074709220.png" alt=""></p>
 <p>打开 access_token.txt 文件：</p>
 <p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160330160826551-1914843565.png" alt=""></p>
 <p>打开 ip_list.txt 文件：</p>
@@ -401,7 +306,7 @@ if __name__ == &apos;__main__&apos;:
 <div class="share_jia">
 	<!-- JiaThis Button BEGIN -->
 	<div class="jiathis_style">
-		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<span class="jiathis_txt">分享到: &nbsp; </span>
 		<a class="jiathis_button_facebook"></a> 
     <a class="jiathis_button_twitter"></a>
     <a class="jiathis_button_plus"></a> 
@@ -442,26 +347,8 @@ if __name__ == &apos;__main__&apos;:
 
 
 
-  
-  <section id="comments">
-    <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="post-zoomeye-api" data-title="Python 调用 ZoomEye API 批量获取目标网站IP" data-url="http://www.evilclay.com/2016/03/30/zoomeye-api/"></div>
-    <!-- 多说评论框 end -->
-    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-    <script type="text/javascript">
-    var duoshuoQuery = {short_name:'evi1clay'};
-      (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0] 
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
-      })();
-      </script>
-    <!-- 多说公共JS代码 end -->
-  </section>
-  </div>
+
+</div>
       <footer id="footer">
   <div class="outer">
     <div id="footer-info">
@@ -469,15 +356,11 @@ if __name__ == &apos;__main__&apos;:
     		&copy; 2016 Anka9080
     	</div>
       	<div class="footer-right">
-
-          
-Analyse with <script src="http://s23.cnzz.com/z_stat.php?id=1259317280&web_id=1259317280" language="JavaScript"></script>
-
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
       	</div>
     </div>
   </div>
 </footer>
-
     </div>
     
   <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">

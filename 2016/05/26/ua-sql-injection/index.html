@@ -8,26 +8,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="原理很简单：后台在接收UA时没有对UA做过滤，也没有PDO进行数据交互（实际PDO是非常有必要的），导致UA中有恶意代码，最终在数据库中执行。 
 0x00 Bug 代码：本地顺手打了一个环境，Bug 代码部分：
-// 保存到访者的IP信息
-$db=DBConnect();
-$tbLog=$db-&amp;gt;tbPrefix.&amp;apos;log&amp;apos;; $executeArr=array(&amp;apo">
+123456789// 保存到访者的IP信息$db=DBConnect();$tbLog=$db-&amp;gt;tbPrefix.&apos;log&apos;; $executeArr=array(&apos;ip&apos;=&amp;g">
 <meta property="og:type" content="article">
 <meta property="og:title" content="User-Agent 手工注入的探测与利用分析">
 <meta property="og:url" content="http://www.evilclay.com/2016/05/26/ua-sql-injection/index.html">
 <meta property="og:site_name" content="Anka9080's Note">
 <meta property="og:description" content="原理很简单：后台在接收UA时没有对UA做过滤，也没有PDO进行数据交互（实际PDO是非常有必要的），导致UA中有恶意代码，最终在数据库中执行。 
 0x00 Bug 代码：本地顺手打了一个环境，Bug 代码部分：
-// 保存到访者的IP信息
-$db=DBConnect();
-$tbLog=$db-&amp;gt;tbPrefix.&amp;apos;log&amp;apos;; $executeArr=array(&amp;apo">
-<meta property="og:updated_time" content="2016-05-28T10:23:39.641Z">
+123456789// 保存到访者的IP信息$db=DBConnect();$tbLog=$db-&amp;gt;tbPrefix.&apos;log&apos;; $executeArr=array(&apos;ip&apos;=&amp;g">
+<meta property="og:updated_time" content="2016-05-29T03:34:19.827Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="User-Agent 手工注入的探测与利用分析">
 <meta name="twitter:description" content="原理很简单：后台在接收UA时没有对UA做过滤，也没有PDO进行数据交互（实际PDO是非常有必要的），导致UA中有恶意代码，最终在数据库中执行。 
 0x00 Bug 代码：本地顺手打了一个环境，Bug 代码部分：
-// 保存到访者的IP信息
-$db=DBConnect();
-$tbLog=$db-&amp;gt;tbPrefix.&amp;apos;log&amp;apos;; $executeArr=array(&amp;apo">
+123456789// 保存到访者的IP信息$db=DBConnect();$tbLog=$db-&amp;gt;tbPrefix.&apos;log&apos;; $executeArr=array(&apos;ip&apos;=&amp;g">
   
     <link rel="alternative" href="/atom.xml" title="Anka9080&#39;s Note" type="application/atom+xml">
   
@@ -53,6 +47,8 @@ $tbLog=$db-&amp;gt;tbPrefix.&amp;apos;log&amp;apos;; $executeArr=array(&amp;apo"
 		  <h1 class="header-author"><a href="/">Anka9080</a></h1>
 		</hgroup>
 
+		
+		<p class="header-subtitle">误判证患者，晚期。</p>
 		
 
 		
@@ -84,13 +80,13 @@ $tbLog=$db-&amp;gt;tbPrefix.&amp;apos;log&amp;apos;; $executeArr=array(&amp;apo"
 				<div class="tips-box hide">
 					<div class="tips-arrow"></div>
 					<ul class="tips-inner">
-						<li>Menu</li>
-						<li>Tags</li>
+						<li>菜单</li>
+						<li>标签</li>
 						
-						<li>Links</li>
+						<li>友情链接</li>
 						
 						
-						<li>Über</li>
+						<li>关于我</li>
 						
 					</ul>
 				</div>
@@ -103,6 +99,8 @@ $tbLog=$db-&amp;gt;tbPrefix.&amp;apos;log&amp;apos;; $executeArr=array(&amp;apo"
 					<nav class="header-menu">
 						<ul>
 						
+							<li><a href="/">首页</a></li>
+				        
 							<li><a href="/archives">所有文章</a></li>
 				        
 							<li><a href="http://xss.evilclay.com">XSS 平台</a></li>
@@ -117,8 +115,6 @@ $tbLog=$db-&amp;gt;tbPrefix.&amp;apos;log&amp;apos;; $executeArr=array(&amp;apo"
 								<a class="github" target="_blank" href="https://github.com/Evi1CLAY" title="github">github</a>
 					        
 								<a class="rss" target="_blank" href="http://www.cnblogs.com/anka9080" title="rss">rss</a>
-					        
-								<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/amzhoupeng" title="zhihu">zhihu</a>
 					        
 								<a class="mail" target="_blank" href="#" title="mail">mail</a>
 					        
@@ -176,9 +172,13 @@ $tbLog=$db-&amp;gt;tbPrefix.&amp;apos;log&amp;apos;; $executeArr=array(&amp;apo"
 			  <h1 class="header-author">Anka9080</h1>
 			</hgroup>
 			
+			<p class="header-subtitle">误判证患者，晚期。</p>
+			
 			<nav class="header-menu">
 				<ul>
 				
+					<li><a href="/">首页</a></li>
+		        
 					<li><a href="/archives">所有文章</a></li>
 		        
 					<li><a href="http://xss.evilclay.com">XSS 平台</a></li>
@@ -194,8 +194,6 @@ $tbLog=$db-&amp;gt;tbPrefix.&amp;apos;log&amp;apos;; $executeArr=array(&amp;apo"
 						<a class="github" target="_blank" href="https://github.com/Evi1CLAY" title="github">github</a>
 			        
 						<a class="rss" target="_blank" href="http://www.cnblogs.com/anka9080" title="rss">rss</a>
-			        
-						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/amzhoupeng" title="zhihu">zhihu</a>
 			        
 						<a class="mail" target="_blank" href="#" title="mail">mail</a>
 			        
@@ -244,32 +242,10 @@ $tbLog=$db-&amp;gt;tbPrefix.&amp;apos;log&amp;apos;; $executeArr=array(&amp;apo"
       
         <p>原理很简单：后台在接收UA时没有对UA做过滤，也没有PDO进行数据交互（实际PDO是非常有必要的），导致UA中有恶意代码，最终在数据库中执行。 </p>
 <h3 id="0x00-Bug-代码："><a href="#0x00-Bug-代码：" class="headerlink" title="0x00 Bug 代码："></a>0x00 Bug 代码：</h3><p>本地顺手打了一个环境，Bug 代码部分：</p>
-<pre><code>// 保存到访者的IP信息
-$db=DBConnect();
-$tbLog=$db-&gt;tbPrefix.&apos;log&apos;; $executeArr=array(&apos;ip&apos;=&gt;($_SERVER[&quot;HTTP_VIA&quot;])?$_SERVER[&quot;HTTP_X_FORWARDED_FOR&quot;]:$_SERVER[&quot;REMOTE_ADDR&quot;],&apos;ua&apos;=&gt;$_SERVER[&apos;HTTP_USER_AGENT&apos;],&apos;visit_time&apos;=&gt;date(&apos;Y-m-d H:i:s&apos;));
-$db-&gt;AutoExecute($tbLog,$executeArr);
-$smarty=InitSmarty();
-$smarty-&gt;assign(&apos;do&apos;,$do);
-$smarty-&gt;assign(&apos;show&apos;,$show);
-$smarty-&gt;assign(&apos;url&apos;,$url);
-$smarty-&gt;display(&apos;login.html&apos;);
-</code></pre><p>　其中 AutoExecute() 方法 代码如下：</p>
-<pre><code>public function AutoExecute($table,$array=array(),$type=&apos;INSERT&apos;,$where=&apos;&apos;){
-    if(!empty($array) &amp;&amp; !empty($table)){
-        switch(strtoupper($type)){
-            case &apos;INSERT&apos;:
-                $sql=&quot;INSERT INTO {$table}(&quot;.implode(&apos;,&apos;,array_keys($array)).&quot;) VALUES(&apos;&quot;.implode(&quot;&apos;,&apos;&quot;,array_values($array)).&quot;&apos;)&quot;;
-                echo $sql;
-                break;
-            default:break;
-        }
-        return $this-&gt;Execute($sql);
-    }
-    else{
-        return false;
-    }
-}
-</code></pre><p>可以看出 ip，ua 这个变量未经过任何过滤 以 SQL 拼接的方式插入到数据库中。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 保存到访者的IP信息</span></span><br><span class="line">$db=DBConnect();</span><br><span class="line">$tbLog=$db-&gt;tbPrefix.<span class="string">'log'</span>; $executeArr=<span class="keyword">array</span>(<span class="string">'ip'</span>=&gt;($_SERVER[<span class="string">"HTTP_VIA"</span>])?$_SERVER[<span class="string">"HTTP_X_FORWARDED_FOR"</span>]:$_SERVER[<span class="string">"REMOTE_ADDR"</span>],<span class="string">'ua'</span>=&gt;$_SERVER[<span class="string">'HTTP_USER_AGENT'</span>],<span class="string">'visit_time'</span>=&gt;date(<span class="string">'Y-m-d H:i:s'</span>));</span><br><span class="line">$db-&gt;AutoExecute($tbLog,$executeArr);</span><br><span class="line">$smarty=InitSmarty();</span><br><span class="line">$smarty-&gt;assign(<span class="string">'do'</span>,$do);</span><br><span class="line">$smarty-&gt;assign(<span class="string">'show'</span>,$show);</span><br><span class="line">$smarty-&gt;assign(<span class="string">'url'</span>,$url);</span><br><span class="line">$smarty-&gt;display(<span class="string">'login.html'</span>);</span><br></pre></td></tr></table></figure>
+<p>　其中 AutoExecute() 方法 代码如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">AutoExecute</span><span class="params">($table,$array=array<span class="params">()</span>,$type=<span class="string">'INSERT'</span>,$where=<span class="string">''</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="keyword">empty</span>($array) &amp;&amp; !<span class="keyword">empty</span>($table))&#123;</span><br><span class="line">        <span class="keyword">switch</span>(strtoupper($type))&#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'INSERT'</span>:</span><br><span class="line">                $sql=<span class="string">"INSERT INTO &#123;$table&#125;("</span>.implode(<span class="string">','</span>,array_keys($array)).<span class="string">") VALUES('"</span>.implode(<span class="string">"','"</span>,array_values($array)).<span class="string">"')"</span>;</span><br><span class="line">                <span class="keyword">echo</span> $sql;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:<span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> $this-&gt;Execute($sql);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看出 ip，ua 这个变量未经过任何过滤 以 SQL 拼接的方式插入到数据库中。</p>
 <h3 id="0x01-SQLMap-初探"><a href="#0x01-SQLMap-初探" class="headerlink" title="0x01 SQLMap 初探"></a>0x01 SQLMap 初探</h3><p>因为是 HTTP Header 注入，所以决定简单粗暴的使用 -r 参数测试有无注入。</p>
 <p>用burp 代理截包保存成 req.txt ,内容如下：</p>
 <pre><code>GET /index.php?do=login HTTP/1.1
@@ -316,16 +292,17 @@ Connection: keep-alive
 <p>利用Id = 1 union select 1, loadfile(‘盘/绝对路径/1.txt’) from message 来读取文件内容到页面显示</p>
 <p>此外，其他 HTTP Header 的注入与 User-Agent 的注入是一样道理的。</p>
 <h3 id="0x04-SQL注入防御"><a href="#0x04-SQL注入防御" class="headerlink" title="0x04 SQL注入防御"></a>0x04 SQL注入防御</h3><p>至于防御SQL注入，预编译吧，简单可靠，不需要做任何的过滤，做到了“数据和代码的分离</p>
-<pre><code>&lt;?php
+<pre><code class="php"><span class="meta">&lt;?php</span>
 
-$link = new mysqli(&apos;localhost&apos;, &apos;analytics_user&apos;, &apos;aSecurePassword&apos;, &apos;analytics_db&apos;);
+$link = <span class="keyword">new</span> mysqli(<span class="string">'localhost'</span>, <span class="string">'analytics_user'</span>, <span class="string">'aSecurePassword'</span>, <span class="string">'analytics_db'</span>);
 
-$stmt = $link-&gt;prepare(&quot;INSERT INTO visits (ua, dt) VALUES (?, ?)&quot;);
-$stmt-&gt;bind_param(&quot;ss&quot;, $_SERVER[&quot;HTTP_USER_AGENT&quot;], date(&quot;Y-m-d h:i:s&quot;));
+$stmt = $link-&gt;prepare(<span class="string">"INSERT INTO visits (ua, dt) VALUES (?, ?)"</span>);
+$stmt-&gt;bind_param(<span class="string">"ss"</span>, $_SERVER[<span class="string">"HTTP_USER_AGENT"</span>], date(<span class="string">"Y-m-d h:i:s"</span>));
 $stmt-&gt;execute();
 
-?&gt;
-</code></pre><blockquote>
+<span class="meta">?&gt;</span>
+</code></pre>
+<blockquote>
 <p>参考文章：<a href="http://www.freebuf.com/articles/web/105124.html" target="_blank" rel="external">http://www.freebuf.com/articles/web/105124.html</a></p>
 </blockquote>
 
@@ -361,7 +338,7 @@ $stmt-&gt;execute();
 <div class="share_jia">
 	<!-- JiaThis Button BEGIN -->
 	<div class="jiathis_style">
-		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<span class="jiathis_txt">分享到: &nbsp; </span>
 		<a class="jiathis_button_facebook"></a> 
     <a class="jiathis_button_twitter"></a>
     <a class="jiathis_button_plus"></a> 
@@ -402,26 +379,8 @@ $stmt-&gt;execute();
 
 
 
-  
-  <section id="comments">
-    <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="post-ua-sql-injection" data-title="User-Agent 手工注入的探测与利用分析" data-url="http://www.evilclay.com/2016/05/26/ua-sql-injection/"></div>
-    <!-- 多说评论框 end -->
-    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-    <script type="text/javascript">
-    var duoshuoQuery = {short_name:'evi1clay'};
-      (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0] 
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
-      })();
-      </script>
-    <!-- 多说公共JS代码 end -->
-  </section>
-  </div>
+
+</div>
       <footer id="footer">
   <div class="outer">
     <div id="footer-info">
@@ -429,15 +388,11 @@ $stmt-&gt;execute();
     		&copy; 2016 Anka9080
     	</div>
       	<div class="footer-right">
-
-          
-Analyse with <script src="http://s23.cnzz.com/z_stat.php?id=1259317280&web_id=1259317280" language="JavaScript"></script>
-
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
       	</div>
     </div>
   </div>
 </footer>
-
     </div>
     
   <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
