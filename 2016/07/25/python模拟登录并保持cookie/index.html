@@ -4,26 +4,24 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>目录扫描 DirBuster 与 御剑 使用Demo | Anka9080&#39;s Notes</title>
+  <title>python模拟登录并保持cookie | Anka9080&#39;s Notes</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="要想熟悉目标网站的体系架构，知道网站有哪些目录是必不可少的向AWVS，Burp类大型扫描工具也可以进行目录扫描，不过无论是目录扫描还是SQL 注入，综合型的工具远没有专业扫描工具来的简单，实在。　期待能有一个扫描器抓扫弱点URL资源的，好像已经有白帽子在开发了。
-0x00 DirBuster　　DirBuster是Owasp(开放Web软体安全项目- Open Web Application">
+  <meta name="description" content="前言最近在爬行 nosec.org 的数据，看了下需要模拟登录拿到cookie后才能访问想抓的数据，重要的是 nosec.org 的登录页面 form 中有个 authenticity_token 字段每次访问登录页面都会自动生成，而且会和你的用户名，密码一样被POST到服务器。
+经过一番研究后发现，直接访问网站登录界面的时候，服务器的响应头会有一个Set-Cookie字段，如下：
+1234_no">
 <meta property="og:type" content="article">
-<meta property="og:title" content="目录扫描 DirBuster 与 御剑 使用Demo">
-<meta property="og:url" content="http://www.evilclay.com/2014/09/16/find-dir/index.html">
+<meta property="og:title" content="python模拟登录并保持cookie">
+<meta property="og:url" content="http://www.evilclay.com/2016/07/25/python模拟登录并保持cookie/index.html">
 <meta property="og:site_name" content="Anka9080's Notes">
-<meta property="og:description" content="要想熟悉目标网站的体系架构，知道网站有哪些目录是必不可少的向AWVS，Burp类大型扫描工具也可以进行目录扫描，不过无论是目录扫描还是SQL 注入，综合型的工具远没有专业扫描工具来的简单，实在。　期待能有一个扫描器抓扫弱点URL资源的，好像已经有白帽子在开发了。
-0x00 DirBuster　　DirBuster是Owasp(开放Web软体安全项目- Open Web Application">
-<meta property="og:image" content="http://images.cnitblog.com/blog/671902/201409/162109281289637.jpg">
-<meta property="og:image" content="http://images.cnitblog.com/blog/671902/201409/162103128002003.jpg">
-<meta property="og:image" content="http://images.cnitblog.com/blog/671902/201409/162114165965209.jpg">
-<meta property="og:image" content="http://images.cnitblog.com/blog/671902/201409/162123493154341.jpg">
-<meta property="og:updated_time" content="2016-05-28T07:46:43.808Z">
+<meta property="og:description" content="前言最近在爬行 nosec.org 的数据，看了下需要模拟登录拿到cookie后才能访问想抓的数据，重要的是 nosec.org 的登录页面 form 中有个 authenticity_token 字段每次访问登录页面都会自动生成，而且会和你的用户名，密码一样被POST到服务器。
+经过一番研究后发现，直接访问网站登录界面的时候，服务器的响应头会有一个Set-Cookie字段，如下：
+1234_no">
+<meta property="og:updated_time" content="2016-07-24T17:21:58.277Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="目录扫描 DirBuster 与 御剑 使用Demo">
-<meta name="twitter:description" content="要想熟悉目标网站的体系架构，知道网站有哪些目录是必不可少的向AWVS，Burp类大型扫描工具也可以进行目录扫描，不过无论是目录扫描还是SQL 注入，综合型的工具远没有专业扫描工具来的简单，实在。　期待能有一个扫描器抓扫弱点URL资源的，好像已经有白帽子在开发了。
-0x00 DirBuster　　DirBuster是Owasp(开放Web软体安全项目- Open Web Application">
-<meta name="twitter:image" content="http://images.cnitblog.com/blog/671902/201409/162109281289637.jpg">
+<meta name="twitter:title" content="python模拟登录并保持cookie">
+<meta name="twitter:description" content="前言最近在爬行 nosec.org 的数据，看了下需要模拟登录拿到cookie后才能访问想抓的数据，重要的是 nosec.org 的登录页面 form 中有个 authenticity_token 字段每次访问登录页面都会自动生成，而且会和你的用户名，密码一样被POST到服务器。
+经过一番研究后发现，直接访问网站登录界面的时候，服务器的响应头会有一个Set-Cookie字段，如下：
+1234_no">
   
     <link rel="alternative" href="/atom.xml" title="Anka9080&#39;s Notes" type="application/atom+xml">
   
@@ -209,11 +207,11 @@
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-find-dir" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-python模拟登录并保持cookie" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2014/09/16/find-dir/" class="article-date">
-  	<time datetime="2014-09-16T06:51:58.000Z" itemprop="datePublished">2014-09-16</time>
+      <a href="/2016/07/25/python模拟登录并保持cookie/" class="article-date">
+  	<time datetime="2016-07-24T17:03:49.000Z" itemprop="datePublished">2016-07-25</time>
 </a>
     </div>
   
@@ -226,7 +224,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      目录扫描 DirBuster 与 御剑 使用Demo
+      python模拟登录并保持cookie
     </h1>
   
 
@@ -235,7 +233,7 @@
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DirBuster/">DirBuster</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全工具/">安全工具</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/御剑/">御剑</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/目录扫描/">目录扫描</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/模拟登录/">模拟登录</a></li></ul>
 	</div>
 
         
@@ -246,42 +244,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>　　要想熟悉目标网站的体系架构，知道网站有哪些目录是必不可少的<br>向AWVS，Burp类大型扫描工具也可以进行目录扫描，不过无论是目录扫描还是SQL 注入，综合型的工具远没有专业扫描工具来的简单，实在。　期待能有一个扫描器抓扫弱点URL资源的，好像已经有白帽子在开发了。</p>
-<h2 id="0x00-DirBuster"><a href="#0x00-DirBuster" class="headerlink" title="0x00 DirBuster"></a>0x00 DirBuster</h2><p>　　DirBuster是Owasp(开放Web软体安全项目- Open Web Application Security Project )开发的一款专门用于探测Web服务器的目录和隐藏文件。由于使用Java编写，电脑中要装有JDK才能运行。DirBuster 扫描二级目录的策略有两个：1，爬行网站；2，暴力破解。</p>
-<ol>
-<li>配置说明</li>
-</ol>
-<p>点击Options—Advanced Options打开如下配置界面</p>
-<p><img src="http://images.cnitblog.com/blog/671902/201409/162109281289637.jpg" alt=""></p>
-<p>在这里可以设置不扫描文件类型，设置遇到表单自动登录，增加HTTP头（Cookie……），</p>
-<p>以及代理设置，超时链接设置，默认线程，字典，扩展名设置</p>
-<p>有时间的小伙伴自己捣鼓捣鼓 ，这里不多说了</p>
-<ol>
-<li>扫描测试</li>
-</ol>
-<p>本地搭建了一个Dede站，直接开撸</p>
-<p><img src="http://images.cnitblog.com/blog/671902/201409/162103128002003.jpg" alt=""></p>
-<p>在第4步中也可以选择纯暴力破解模式，命中率不高，相比之下还是模糊测试好用些</p>
-<p>（坏笑~）上面有一个小错误，在第7步的时候，扫目标站下的目录应该填写/DedeCms5.7/{dir} 不知道细心的小伙伴发现了没~</p>
-<p>否则的话扫的就是127.0.0.1：8080下的目录了</p>
-<ol>
-<li>扫描结果</li>
-</ol>
-<p>这是本地扫描目录列表，点击TreeView可以自己查看目录树</p>
-<p><img src="http://images.cnitblog.com/blog/671902/201409/162114165965209.jpg" alt=""></p>
-<p>　　　　　　</p>
-<h2 id="0x-01-御剑"><a href="#0x-01-御剑" class="headerlink" title="0x 01 御剑"></a>0x 01 御剑</h2><p>　　国内第一后台扫描神器,不用配置，御剑只会做字典扫描，不做爬虫扫描，填上网站，只需要点一下就够了，上图 </p>
-<p><img src="http://images.cnitblog.com/blog/671902/201409/162123493154341.jpg" alt=""></p>
-<p>简单粗暴，适合使用，期待御剑的其他作品。</p>
-<p><strong> Summary： </strong></p>
-<p>前面文章已经说过了，对于目录扫描我们可以手动查看robots.txt，说不定后台就放在里面。</p>
-<p>还是那句话，一个扫描器扫描结果不理想时，我们大可以两个扫描器一起上。工具是死的，要学会灵活使用 !</p>
-<p>一般来说一个靠谱的目录扫描器可以从两方面入手：</p>
-<ul>
-<li>爬行本网站以及搜索引擎的相关URL并做去重处理</li>
-<li>找一个靠谱的字典去做 fuzzing</li>
-</ul>
-<p>子域名探测和目录扫描的思路是一样的，对于子域名探测可以写个爬虫爬取专门探测子域名网站上的结果。</p>
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>最近在爬行 nosec.org 的数据，看了下需要模拟登录拿到cookie后才能访问想抓的数据，重要的是 nosec.org 的登录页面 form 中有个 authenticity_token 字段每次访问登录页面都会自动生成，而且会和你的用户名，密码一样被POST到服务器。</p>
+<p>经过一番研究后发现，直接访问网站登录界面的时候，服务器的响应头会有一个Set-Cookie字段，如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">_nosec_session=ZTlHNmxuZXE4R0s1UXpsVUxGRTNPblNBWFd2TXU4TU9aNWVJM2lyLzNFY0pLeUdNMDY1cmZqanpkc0ppaGtjU</span><br><span class="line">i9kTGdWenBrNXJKenNqbnN2YUxucE1DRW5UMHNTR1RxWDZPeGlLazllTmY1czVpYWplazJXdWkvZS9wUHJpc1Jya3ZzcmNVMytPR</span><br><span class="line">it2T1dEcGx4bHNDTTVzSmVTb0xhSjRycE03QUl5RXE5Z2tZWG1mTHFBWGx1QW52QjBURi8rLS1acE8yeVRtMFRZR1JWdExneStwdmpRPT0</span><br><span class="line">%3D-<span class="_">-a</span>6ccd9a12a8af5c8b5fb6625c24bb4db0398c503; path=/; HttpOnly</span><br></pre></td></tr></table></figure>
+<p>而且页面form 的表单有一个 authenticity_token 的 input ，内容如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"authenticity_token"</span> <span class="attr">value</span>=<span class="string">"cGdhqVxDMRndpKbpvIV66wfEQlGf4Rz6UtXqsf79brEvFveHw2rCc6uz3euFEyUlpuA0azt5uNhnmrUiCaAyUg=="</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>之前按照后端的逻辑分析_nosec_session 的值 经过解密以及各种xx手法得到 authenticity_token 的值，然后顺带着 username 和 password post就行了，最后发现这真是一个大写的傻逼！！ 老是用后端的思维思考问题，过不得最近走路都走不好了。所以来，直接在页面中抓取已经生成的 authenticity_token 的值，然后 顺着 POST 过去就好了啊。</p>
+<p>使用 requests 库 的 Session() 方法，确实很好用，比早期直接拿 cookielib 就干方便多了。</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><p>类XXX 的 login 方法用来模拟登录，就贴出这部分登录的代码好了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">XXX</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">(self)</span>:</span></span><br><span class="line"></span><br><span class="line">        r = self.s.get(<span class="string">'https://nosec.org/users/sign_in'</span>)</span><br><span class="line">        html =  r.text</span><br><span class="line">        p1 = re.compile(<span class="string">r'city_token" value="(.*?)"'</span>)</span><br><span class="line">        res = re.search(p1,html)</span><br><span class="line">        authenticity_token =  str(res.group(<span class="number">1</span>))</span><br><span class="line">        <span class="keyword">print</span> <span class="string">'authenticity_token:'</span>,authenticity_token</span><br><span class="line">        <span class="comment"># print 'cookies',self.s.cookies</span></span><br><span class="line">        <span class="comment"># print s.cookies</span></span><br><span class="line">        data = &#123;</span><br><span class="line">            <span class="string">'authenticity_token'</span>:authenticity_token,</span><br><span class="line">            <span class="string">'user[login]'</span>:<span class="string">'xxxxx'</span>,</span><br><span class="line">            <span class="string">'user[password]'</span>:<span class="string">'xxxxx'</span></span><br><span class="line">        &#125;</span><br><span class="line">        r = self.s.post(<span class="string">'https://nosec.org/users/sign_in'</span>,data=data)</span><br><span class="line">        <span class="comment"># print r.headers</span></span><br><span class="line">        <span class="comment"># print r.request.headers</span></span><br><span class="line">        <span class="comment"># print self.s.cookies</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">'[*] OK!'</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br></pre></td></tr></table></figure>
+<p>调用了 login 方法后 下次直接用self.s.get() 请求网页就会带着 cookie 啦。</p>
+<p>之前被思路坑了一次，被笔误也坑了一次(https 写成 http)，导致我抓狂了好久才发现这个 “BUG” = =、所以还得多谢 代码，提高排 Bug 的效率  2333！</p>
 
       
     </div>
@@ -291,18 +264,9 @@
     
 <nav id="article-nav">
   
-    <a href="/2014/09/17/nmap/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          Nmap 端口扫描利器
-        
-      </div>
-    </a>
   
-  
-    <a href="/2014/09/15/GoogleHacking/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">GoogleHacking ，搜你想要的</div>
+    <a href="/2016/07/10/近期更新的-Github-Python-脚本/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">近期更新的 Github Python 脚本</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -337,7 +301,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="find-dir" data-title="目录扫描 DirBuster 与 御剑 使用Demo" data-url="http://www.evilclay.com/2014/09/16/find-dir/"></div>
+	<div class="ds-thread" data-thread-key="python模拟登录并保持cookie" data-title="python模拟登录并保持cookie" data-url="http://www.evilclay.com/2016/07/25/python模拟登录并保持cookie/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
