@@ -245,26 +245,26 @@
 </ol>
 <h2 id="关于路由"><a href="#关于路由" class="headerlink" title="关于路由"></a>关于路由</h2><ol>
 <li><p>忽略 <code>get/post</code> 型</p>
-<p> @app.route(‘/‘)</p>
-</li>
+<pre><code>@app.route(&apos;/&apos;)
+</code></pre></li>
 <li><p>判断是否是 GET 请求</p>
-<p> if request.method == ‘GET’:</p>
-</li>
+<pre><code>if request.method == &apos;GET&apos;:
+</code></pre></li>
 <li><p>重定向使用</p>
-<p> redirect(‘/login’)</p>
-</li>
+<pre><code>redirect(&apos;/login&apos;)
+</code></pre></li>
 <li><p>返回错误信息</p>
-<p> return ‘<html><script>alert(‘Some ERR message’)</script></html>‘</p>
-</li>
+<pre><code>return &apos;&lt;html&gt;&lt;script&gt;alert(&apos;Some ERR message&apos;)&lt;/script&gt;&lt;/html&gt;&apos;
+</code></pre></li>
 <li><p>判断是GET请求中是否有某参数</p>
-<p> if request.args.has_key(‘somekey’):</p>
-</li>
+<pre><code>if request.args.has_key(&apos;somekey&apos;):
+</code></pre></li>
 <li><p>从GET请求里取出某参数，不存在则设为默认值：</p>
-<p> request.args.get(‘keyname’,’defaultvalue’)</p>
-</li>
+<pre><code>request.args.get(&apos;keyname&apos;,&apos;defaultvalue&apos;)
+</code></pre></li>
 <li><p>刷新数据使用 JSON 的数据格式</p>
-<p> return json.dump(dict_var)</p>
-</li>
+<pre><code>return json.dump(dict_var)
+</code></pre></li>
 </ol>
 <h2 id="关于数据库操作"><a href="#关于数据库操作" class="headerlink" title="关于数据库操作"></a>关于数据库操作</h2><ol>
 <li>数据库类写在libs.models文件中</li>
