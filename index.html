@@ -265,17 +265,11 @@
 <li><p><code>__init__</code>方法包含 <code>self._conn</code> 和 <code>self._cur</code> 的定义,<code>connhe cur</code> 都是私有变量</p>
 </li>
 <li><p>查询，更新，插入操作统一用 <code>query/update/insert</code> 方法，而且需要使用 <code>try..catch</code> 包围。返回游标执行SQL语句的结果</p>
-<pre><code>try:
-    sql op..
-    result = ...
-except MySQLdb.Error,e:
-    err_msg = &apos;[-] MySQL err!&apos;,e.args[0],e.args[1]
-    print err_msg
-    result = False
-return result
-</code></pre></li>
-<li><p>常用方法</p>
 </li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	sql op..</span><br><span class="line">	result = ...</span><br><span class="line"><span class="keyword">except</span> MySQLdb.Error,e:</span><br><span class="line">	err_msg = <span class="string">'[-] MySQL err!'</span>,e.args[<span class="number">0</span>],e.args[<span class="number">1</span>]</span><br><span class="line">	<span class="keyword">print</span> err_msg</span><br><span class="line">	result = <span class="keyword">False</span></span><br><span class="line"><span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+<ol>
+<li>常用方法</li>
 </ol>
 <p>a. 获得所有数据 fetch_all</p>
 <pre><code>self._cur.fetchall()
