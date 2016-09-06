@@ -34,7 +34,7 @@ README.md 项目介绍文件
 说明
 功能函数以及类函数 统一写在 libs 文件夹内
 MySQL的配置参数，入口口令等（一些根据情况需要自定义的参数）全局参数统一使用">
-<meta property="og:updated_time" content="2016-09-06T15:34:44.208Z">
+<meta property="og:updated_time" content="2016-09-06T15:36:06.363Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Flask-Web项目小结">
 <meta name="twitter:description" content="项目文件结构
@@ -315,8 +315,8 @@ MySQL的配置参数，入口口令等（一些根据情况需要自定义的参
 <li>常用方法</li>
 </ol>
 <p>a. 获得所有数据 fetch_all</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self._cur.fetchall()</span><br></pre></td></tr></table></figure>
-<p>b. 获得一行数据 fetch_one</p>
+<pre><code>self._cur.fetchall()
+</code></pre><p>b. 获得一行数据 fetch_one</p>
 <pre><code>self._cur.fetchone()
 </code></pre><p>c. 获得返回结果的数量 get_count</p>
 <pre><code>self._cur.rowcount
