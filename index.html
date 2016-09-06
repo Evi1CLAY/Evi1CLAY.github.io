@@ -237,10 +237,10 @@
 <li>中间人（Broker）：负责把队列中的任务派送给Worker处理。</li>
 <li>Celery系统可以包含多个Worker 和 Broker，一次获得高可用性和横向扩展能力。</li>
 </ul>
-<h4 id="消费者代码-tasks-py"><a href="#消费者代码-tasks-py" class="headerlink" title="消费者代码 tasks.py"></a>消费者代码 tasks.py</h4><p><img src="/source/img/worker_code.png" alt=""></p>
+<h4 id="消费者代码-tasks-py"><a href="#消费者代码-tasks-py" class="headerlink" title="消费者代码 tasks.py"></a>消费者代码 tasks.py</h4><p><img src="/img/worker_code.png" alt=""></p>
 <h4 id="启动消费者进程"><a href="#启动消费者进程" class="headerlink" title="启动消费者进程"></a>启动消费者进程</h4><pre><code>celery -A tasks worker --loglevel=info
-</code></pre><h4 id="生产者添加任务"><a href="#生产者添加任务" class="headerlink" title="生产者添加任务"></a>生产者添加任务</h4><p><img src="/source/img/add_task.png" alt=""></p>
-<h4 id="消费者处理任务"><a href="#消费者处理任务" class="headerlink" title="消费者处理任务"></a>消费者处理任务</h4><p><img src="/source/img/do_task.png" alt=""></p>
+</code></pre><h4 id="生产者添加任务"><a href="#生产者添加任务" class="headerlink" title="生产者添加任务"></a>生产者添加任务</h4><p><img src="/img/add_task.png" alt=""></p>
+<h4 id="消费者处理任务"><a href="#消费者处理任务" class="headerlink" title="消费者处理任务"></a>消费者处理任务</h4><p><img src="/img/do_task.png" alt=""></p>
 
       
     </div>
