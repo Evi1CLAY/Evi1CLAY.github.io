@@ -32,8 +32,7 @@ Celery系统可以包含多个Worker 和 Broker，一次获得高可用性和横
 启动消费者进程celery -A tasks work">
 <meta property="og:image" content="http://www.evilclay.com/img/worker_code.png">
 <meta property="og:image" content="http://www.evilclay.com/img/add_task.png">
-<meta property="og:image" content="http://www.evilclay.com/img/do_task.png">
-<meta property="og:updated_time" content="2016-09-06T14:20:00.103Z">
+<meta property="og:updated_time" content="2016-09-06T14:32:51.838Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Celery-分布式任务队列小记">
 <meta name="twitter:description" content="需求： 分布式 + 异步 处理任务
@@ -281,7 +280,13 @@ Celery系统可以包含多个Worker 和 Broker，一次获得高可用性和横
 <h4 id="消费者代码-tasks-py"><a href="#消费者代码-tasks-py" class="headerlink" title="消费者代码 tasks.py"></a>消费者代码 tasks.py</h4><p><img src="/img/worker_code.png" alt=""></p>
 <h4 id="启动消费者进程"><a href="#启动消费者进程" class="headerlink" title="启动消费者进程"></a>启动消费者进程</h4><pre><code>celery -A tasks worker --loglevel=info
 </code></pre><h4 id="生产者添加任务"><a href="#生产者添加任务" class="headerlink" title="生产者添加任务"></a>生产者添加任务</h4><p><img src="/img/add_task.png" alt=""></p>
-<h4 id="消费者处理任务"><a href="#消费者处理任务" class="headerlink" title="消费者处理任务"></a>消费者处理任务</h4><p><img src="/img/do_task.png" alt=""></p>
+<h4 id="消费者处理任务"><a href="#消费者处理任务" class="headerlink" title="消费者处理任务"></a>消费者处理任务</h4><p>TO DO： 图片回头补上</p>
+<p>tasks.py 源码：<br><a href="https://github.com/Evi1CLAY/CoolPool/tree/master/Python/Celery" target="_blank" rel="external">Evi1CLAY Git</a></p>
+<p>参考：</p>
+<blockquote>
+<p><a href="http://docs.jinkan.org/docs/celery/" target="_blank" rel="external">http://docs.jinkan.org/docs/celery/</a></p>
+<p><a href="http://www.ibm.com/developerworks/cn/opensource/os-cn-celery-web-service/index.html" target="_blank" rel="external">http://www.ibm.com/developerworks/cn/opensource/os-cn-celery-web-service/index.html</a></p>
+</blockquote>
 
       
     </div>
