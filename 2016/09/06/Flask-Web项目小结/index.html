@@ -4,17 +4,51 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Archives: 2015/1 | Anka9080&#39;s Notes</title>
+  <title>Flask-Web项目小结 | Anka9080&#39;s Notes</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Python,渗透测试,安全研发">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Anka9080's Notes">
-<meta property="og:url" content="http://www.evilclay.com/archives/2015/01/index.html">
+  <meta name="description" content="项目文件结构
+libs 一些声明的类和函数文件夹
+static 静态文件文件夹
+templates HTML模板文件文件夹
+config.py 项目配置文件
+app.py 项目入口文件
+CHANGELOG.md 项目更新log
+README.md 项目介绍文件
+
+说明
+功能函数以及类函数 统一写在 libs 文件夹内
+MySQL的配置参数，入口口令等（一些根据情况需要自定义的参数）全局参数统一使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flask-Web项目小结">
+<meta property="og:url" content="http://www.evilclay.com/2016/09/06/Flask-Web项目小结/index.html">
 <meta property="og:site_name" content="Anka9080's Notes">
-<meta property="og:description" content="Python,渗透测试,安全研发">
+<meta property="og:description" content="项目文件结构
+libs 一些声明的类和函数文件夹
+static 静态文件文件夹
+templates HTML模板文件文件夹
+config.py 项目配置文件
+app.py 项目入口文件
+CHANGELOG.md 项目更新log
+README.md 项目介绍文件
+
+说明
+功能函数以及类函数 统一写在 libs 文件夹内
+MySQL的配置参数，入口口令等（一些根据情况需要自定义的参数）全局参数统一使用">
+<meta property="og:updated_time" content="2016-09-06T14:48:29.681Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Anka9080's Notes">
-<meta name="twitter:description" content="Python,渗透测试,安全研发">
+<meta name="twitter:title" content="Flask-Web项目小结">
+<meta name="twitter:description" content="项目文件结构
+libs 一些声明的类和函数文件夹
+static 静态文件文件夹
+templates HTML模板文件文件夹
+config.py 项目配置文件
+app.py 项目入口文件
+CHANGELOG.md 项目更新log
+README.md 项目介绍文件
+
+说明
+功能函数以及类函数 统一写在 libs 文件夹内
+MySQL的配置参数，入口口令等（一些根据情况需要自定义的参数）全局参数统一使用">
   
     <link rel="alternative" href="/atom.xml" title="Anka9080&#39;s Notes" type="application/atom+xml">
   
@@ -200,84 +234,163 @@
 	</div>
 </nav>
 
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-Flask-Web项目小结" class="article article-type-post" itemscope itemprop="blogPost">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/01/02/fake-wifi-ap/" class="archive-article-date">
-  	<time datetime="2015-01-02T08:58:22.000Z" itemprop="datePublished">Jan 2</time>
+    <div class="article-meta">
+      <a href="/2016/09/06/Flask-Web项目小结/" class="article-date">
+  	<time datetime="2016-09-06T14:47:29.000Z" itemprop="datePublished">2016-09-06</time>
 </a>
-        </div>
-    	 
+    </div>
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/01/02/fake-wifi-ap/">搭建假冒 WIFI 热点等小(mei)白(zhi)兔(men)来蹭网啊 - -。</a>
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Flask-Web项目小结
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+      </header>
+      
+      <div class="article-info article-info-post">
+        
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WIFI热点伪造/">WIFI热点伪造</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kali/">kali</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flask/">Flask</a></li></ul>
 	</div>
 
-          
+        
 
-        </div>
         <div class="clearfix"></div>
-    </header>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="项目文件结构"><a href="#项目文件结构" class="headerlink" title="项目文件结构"></a>项目文件结构</h2><ul>
+<li>libs 一些声明的类和函数文件夹</li>
+<li>static 静态文件文件夹</li>
+<li>templates HTML模板文件文件夹</li>
+<li>config.py 项目配置文件</li>
+<li>app.py 项目入口文件</li>
+<li>CHANGELOG.md 项目更新log</li>
+<li>README.md 项目介绍文件</li>
+</ul>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><ol>
+<li>功能函数以及类函数 统一写在 libs 文件夹内</li>
+<li>MySQL的配置参数，入口口令等（一些根据情况需要自定义的参数）全局参数统一使用config.py的方式配置。</li>
+<li><code>app_secret_key</code>这种在项目中不需要变动的参数可以写在app.py文件中。<br>app.py 文件除了一些route定义不应该包含其他的方法。</li>
+<li>一些类若需要在路由函数中调用，其实例化放在 app.py 路由区域前。</li>
+</ol>
+<h2 id="关于路由"><a href="#关于路由" class="headerlink" title="关于路由"></a>关于路由</h2><ol>
+<li><p>忽略 <code>get/post</code> 型</p>
+<p> @app.route(‘/‘)</p>
+</li>
+<li><p>判断是否是 GET 请求</p>
+<p> if request.method == ‘GET’:</p>
+</li>
+<li><p>重定向使用</p>
+<p> redirect(‘/login’)</p>
+</li>
+<li><p>返回错误信息</p>
+<p> return ‘<html><script>alert(‘Some ERR message’)</script></html>‘</p>
+</li>
+<li><p>判断是GET请求中是否有某参数</p>
+<p> if request.args.has_key(‘somekey’):</p>
+</li>
+<li><p>从GET请求里取出某参数，不存在则设为默认值：</p>
+<p> request.args.get(‘keyname’,’defaultvalue’)</p>
+</li>
+<li><p>刷新数据使用 JSON 的数据格式</p>
+<p> return json.dump(dict_var)</p>
+</li>
+</ol>
+<h2 id="关于数据库操作"><a href="#关于数据库操作" class="headerlink" title="关于数据库操作"></a>关于数据库操作</h2><ol>
+<li>数据库类写在libs.models文件中</li>
+<li>数据库连接信息从config.py文件中读取</li>
+<li><code>__init__</code>方法包含 <code>self._conn</code> 和 <code>self._cur</code> 的定义,<code>connhe cur</code> 都是私有变量</li>
+<li>查询，更新，插入操作统一用 <code>query/update/insert</code> 方法，而且需要使用 <code>try..catch</code> 包围。返回游标执行SQL语句的结果</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	sql op..</span><br><span class="line">	result = ...</span><br><span class="line"><span class="keyword">except</span> MySQLdb.Error,e:</span><br><span class="line">	err_msg = <span class="string">'[-] MySQL err!'</span>,e.args[<span class="number">0</span>],e.args[<span class="number">1</span>]</span><br><span class="line">	<span class="keyword">print</span> err_msg</span><br><span class="line">	result = <span class="keyword">False</span></span><br><span class="line"><span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+<ol>
+<li>常用方法</li>
+</ol>
+<p>a. 获得所有数据 fetch_all</p>
+<pre><code>self._cur.fetchall()
+</code></pre><p>b. 获得一行数据 fetch_one</p>
+<pre><code>self._cur.fetchone()
+</code></pre><p>c. 获得返回结果的数量 get_count</p>
+<pre><code>self._cur.rowcount
+</code></pre><p>d. 关闭连接 close</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	self._cur.close()</span><br><span class="line">	self._conn.close()</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">	<span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
   </div>
-</article>
   
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/01/02/arpspoof/" class="archive-article-date">
-  	<time datetime="2015-01-02T08:42:41.000Z" itemprop="datePublished">Jan 2</time>
-</a>
-        </div>
-    	 
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/01/02/arpspoof/">内网 ARP 欺骗劫持 Cookie 登入百度</a>
-    </h1>
   
+    <a href="/2016/09/06/Celery-分布式任务队列小记/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Celery-分布式任务队列小记</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cookie劫持/">Cookie劫持</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kali/">Kali</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内网渗透/">内网渗透</a></li></ul>
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
 	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
 
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
 
-    
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Flask-Web项目小结" data-title="Flask-Web项目小结" data-url="http://www.evilclay.com/2016/09/06/Flask-Web项目小结/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
 
 </div>
       <footer id="footer">
@@ -303,8 +416,8 @@
 		mathjax: true,
 		animate: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false
