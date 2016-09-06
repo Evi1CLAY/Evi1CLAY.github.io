@@ -34,7 +34,7 @@ README.md 项目介绍文件
 说明
 功能函数以及类函数 统一写在 libs 文件夹内
 MySQL的配置参数，入口口令等（一些根据情况需要自定义的参数）全局参数统一使用">
-<meta property="og:updated_time" content="2016-09-06T14:54:21.048Z">
+<meta property="og:updated_time" content="2016-09-06T15:29:55.408Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Flask-Web项目小结">
 <meta name="twitter:description" content="项目文件结构
@@ -286,36 +286,40 @@ MySQL的配置参数，入口口令等（一些根据情况需要自定义的参
 <li><code>app_secret_key</code>这种在项目中不需要变动的参数可以写在app.py文件中。<br>app.py 文件除了一些route定义不应该包含其他的方法。</li>
 <li>一些类若需要在路由函数中调用，其实例化放在 app.py 路由区域前。</li>
 </ol>
-<h2 id="关于路由"><a href="#关于路由" class="headerlink" title="关于路由"></a>关于路由</h2><ol>
-<li><p>忽略 <code>get/post</code> 型</p>
+<h2 id="关于路由"><a href="#关于路由" class="headerlink" title="关于路由"></a>关于路由</h2><p>忽略 <code>get/post</code> 型</p>
 <pre><code>@app.route(&apos;/&apos;)
-</code></pre></li>
-<li><p>判断是否是 GET 请求</p>
+</code></pre><p>判断是否是 GET 请求</p>
 <pre><code>if request.method == &apos;GET&apos;:
-</code></pre></li>
-<li><p>重定向使用</p>
+</code></pre><p>重定向使用</p>
 <pre><code>redirect(&apos;/login&apos;)
-</code></pre></li>
-<li><p>返回错误信息</p>
+</code></pre><p>返回错误信息</p>
 <pre><code>return &apos;&lt;html&gt;&lt;script&gt;alert(&apos;Some ERR message&apos;)&lt;/script&gt;&lt;/html&gt;&apos;
-</code></pre></li>
-<li><p>判断是GET请求中是否有某参数</p>
+</code></pre><p>判断是GET请求中是否有某参数</p>
 <pre><code>if request.args.has_key(&apos;somekey&apos;):
-</code></pre></li>
-<li><p>从GET请求里取出某参数，不存在则设为默认值：</p>
+</code></pre><p>从GET请求里取出某参数，不存在则设为默认值：</p>
 <pre><code>request.args.get(&apos;keyname&apos;,&apos;defaultvalue&apos;)
-</code></pre></li>
-<li><p>刷新数据使用 JSON 的数据格式</p>
+</code></pre><p>刷新数据使用 JSON 的数据格式</p>
 <pre><code>return json.dump(dict_var)
+</code></pre><h2 id="关于数据库操作"><a href="#关于数据库操作" class="headerlink" title="关于数据库操作"></a>关于数据库操作</h2><ol>
+<li><p>数据库类写在libs.models文件中</p>
+</li>
+<li><p>数据库连接信息从config.py文件中读取</p>
+</li>
+<li><p><code>__init__</code>方法包含 <code>self._conn</code> 和 <code>self._cur</code> 的定义,<code>connhe cur</code> 都是私有变量</p>
+</li>
+</ol>
+<ol>
+<li><p>查询，更新，插入操作统一用 <code>query/update/insert</code> 方法，而且需要使用 <code>try..catch</code> 包围。返回游标执行SQL语句的结果</p>
+<pre><code>try:
+    sql op..
+    result = ...
+except MySQLdb.Error,e:
+    err_msg = &apos;[-] MySQL err!&apos;,e.args[0],e.args[1]
+    print err_msg
+    result = False
+return result
 </code></pre></li>
 </ol>
-<h2 id="关于数据库操作"><a href="#关于数据库操作" class="headerlink" title="关于数据库操作"></a>关于数据库操作</h2><ol>
-<li>数据库类写在libs.models文件中</li>
-<li>数据库连接信息从config.py文件中读取</li>
-<li><code>__init__</code>方法包含 <code>self._conn</code> 和 <code>self._cur</code> 的定义,<code>connhe cur</code> 都是私有变量</li>
-<li>查询，更新，插入操作统一用 <code>query/update/insert</code> 方法，而且需要使用 <code>try..catch</code> 包围。返回游标执行SQL语句的结果</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	sql op..</span><br><span class="line">	result = ...</span><br><span class="line"><span class="keyword">except</span> MySQLdb.Error,e:</span><br><span class="line">	err_msg = <span class="string">'[-] MySQL err!'</span>,e.args[<span class="number">0</span>],e.args[<span class="number">1</span>]</span><br><span class="line">	<span class="keyword">print</span> err_msg</span><br><span class="line">	result = <span class="keyword">False</span></span><br><span class="line"><span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
 <ol>
 <li>常用方法</li>
 </ol>
