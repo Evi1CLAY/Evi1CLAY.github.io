@@ -264,8 +264,6 @@
 </li>
 <li><p><code>__init__</code>方法包含 <code>self._conn</code> 和 <code>self._cur</code> 的定义,<code>connhe cur</code> 都是私有变量</p>
 </li>
-</ol>
-<ol>
 <li><p>查询，更新，插入操作统一用 <code>query/update/insert</code> 方法，而且需要使用 <code>try..catch</code> 包围。返回游标执行SQL语句的结果</p>
 <pre><code>try:
     sql op..
@@ -276,9 +274,8 @@ except MySQLdb.Error,e:
     result = False
 return result
 </code></pre></li>
-</ol>
-<ol>
-<li>常用方法</li>
+<li><p>常用方法</p>
+</li>
 </ol>
 <p>a. 获得所有数据 fetch_all</p>
 <pre><code>self._cur.fetchall()
