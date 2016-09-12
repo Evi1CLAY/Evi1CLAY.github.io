@@ -241,8 +241,7 @@
 <h2 id="安装Sublime-Text3"><a href="#安装Sublime-Text3" class="headerlink" title="安装Sublime Text3"></a>安装Sublime Text3</h2><pre><code>$ sudo add-apt-repository ppa:webupd8team/sublime-text-3
 $ sudo apt-get update
 $ sudo apt-get install sublime-text-installer
-</code></pre><p>###Lisence:</p>
-<pre><code>—– BEGIN LICENSE —–
+</code></pre><h3 id="Lisence"><a href="#Lisence" class="headerlink" title="Lisence:"></a>Lisence:</h3><pre><code>—– BEGIN LICENSE —–
 Michael Barnes
 Single User License
 EA7E-821385
@@ -255,21 +254,17 @@ FCCC7561 8A4A1741 68FA4223 ADCEDE07
 200C25BE DBBC4855 C4CFB774 C5EC138C
 0FEC1CEF D9DCECEC D3A5DAD1 01316C36
 —— END LICENSE ——
-</code></pre><p>###安装Package Control</p>
-<p>按 Ctrl + ` 进去控制台，输入：</p>
+</code></pre><h3 id="安装Package-Control"><a href="#安装Package-Control" class="headerlink" title="安装Package Control"></a>安装Package Control</h3><p>按 Ctrl + ` 进去控制台，输入：</p>
 <pre><code>import urllib.request,os,hashlib; h = &apos;2915d1851351e5ee549c20394736b442&apos; + &apos;8bc59f460fa1548d1514676163dafc88&apos;; pf = &apos;Package Control.sublime-package&apos;; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( &apos;http://packagecontrol.io/&apos; + pf.replace(&apos; &apos;, &apos;%20&apos;)).read(); dh = hashlib.sha256(by).hexdigest(); print(&apos;Error validating download (got %s instead of %s), please try manual install&apos; % (dh, h)) if dh != h else open(os.path.join( ipp, pf), &apos;wb&apos; ).write(by) 
-</code></pre><p>###fix中文输入</p>
-<pre><code>sudo apt-get update &amp;&amp; sudo apt-get upgrade
+</code></pre><h3 id="fix中文输入"><a href="#fix中文输入" class="headerlink" title="fix中文输入"></a>fix中文输入</h3><pre><code>sudo apt-get update &amp;&amp; sudo apt-get upgrade
 git clone https://github.com/lyfeyaj/sublime-text-imfix.git
 cd sublime-text-imfix
 ./sublime-imfix
 </code></pre><p>之后重启 Sublime。</p>
 <h2 id="顶端状态栏"><a href="#顶端状态栏" class="headerlink" title="顶端状态栏"></a>顶端状态栏</h2><pre><code>sudo apt-get install indicator-multiload # 安装
 indicator-multiload # 运行
-</code></pre><h2 id="Markdown编辑器-haroopad"><a href="#Markdown编辑器-haroopad" class="headerlink" title="Markdown编辑器 haroopad"></a>Markdown编辑器 haroopad</h2><p>###下载安装包</p>
-<pre><code>https://bitbucket.org/rhiokim/haroopad-download/downloads/haroopad-v0.13.1-x64.tar.gz
-</code></pre><p>###安装haroopad</p>
-<pre><code>cd ~/opt/haroopad
+</code></pre><h2 id="Markdown编辑器-haroopad"><a href="#Markdown编辑器-haroopad" class="headerlink" title="Markdown编辑器 haroopad"></a>Markdown编辑器 haroopad</h2><h3 id="下载安装包"><a href="#下载安装包" class="headerlink" title="下载安装包"></a>下载安装包</h3><pre><code>https://bitbucket.org/rhiokim/haroopad-download/downloads/haroopad-v0.13.1-x64.tar.gz
+</code></pre><h3 id="安装haroopad"><a href="#安装haroopad" class="headerlink" title="安装haroopad"></a>安装haroopad</h3><pre><code>cd ~/opt/haroopad
 tar zxvf haroopad-v0.13.1-x64.tar.gz -C haroopad.v0.13.1.x64
 cd haroopad.v0.13.1.x64
 tar zxvf data.tar.gz
@@ -278,8 +273,7 @@ sudo cp -r ./usr /
 tar zxf control.tar.gz
 chmod 755 postinst
 sudo ./postinst
-</code></pre><p>###修复桌面图标</p>
-<pre><code>sudo vi /usr/share/applications/Haroopad.desktop
+</code></pre><h3 id="修复桌面图标"><a href="#修复桌面图标" class="headerlink" title="修复桌面图标"></a>修复桌面图标</h3><pre><code>sudo vi /usr/share/applications/Haroopad.desktop
 </code></pre><p>Icon 的值改成：</p>
 <pre><code>/usr/share/icons/hicolor/128x128/apps/haroopad.png
 </code></pre><h2 id="设置显示桌面快捷键"><a href="#设置显示桌面快捷键" class="headerlink" title="设置显示桌面快捷键"></a>设置显示桌面快捷键</h2><pre><code>SystemSetting -- Keyboard -- shortcuts -- Navigations 
