@@ -26,7 +26,7 @@ sudo apt-get install xxx=x.y.z  // 指定版本安装
 设置环境变量">
 <meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/connect_pptp_conf1.png">
 <meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/connect_pptp_conf2.png">
-<meta property="og:updated_time" content="2016-09-18T18:04:59.623Z">
+<meta property="og:updated_time" content="2016-09-19T18:17:18.929Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ubuntu常用命令笔记">
 <meta name="twitter:description" content="自己的东西用着靠谱，记录下省得到时候还要劳烦搜索引擎，这份笔记会保持更新 xD
@@ -374,7 +374,9 @@ md5sum es.zip
 </code></pre><h4 id="查找当前目录下所有包含某字符串的文本文件"><a href="#查找当前目录下所有包含某字符串的文本文件" class="headerlink" title="查找当前目录下所有包含某字符串的文本文件"></a>查找当前目录下所有包含某字符串的文本文件</h4><pre><code>grep -rn str *
 -r 递归遍历
 -n 显示行号
-</code></pre><h4 id="SSH-连接到其他主机"><a href="#SSH-连接到其他主机" class="headerlink" title="SSH 连接到其他主机"></a>SSH 连接到其他主机</h4><pre><code>ssh 
+</code></pre><h4 id="SSH-连接到其他主机"><a href="#SSH-连接到其他主机" class="headerlink" title="SSH 连接到其他主机"></a>SSH 连接到其他主机</h4><pre><code>ssh user@xxx.xxx.xxx.xxx
+</code></pre><h4 id="修复Ubuntu中文输入出现两个输入框"><a href="#修复Ubuntu中文输入出现两个输入框" class="headerlink" title="修复Ubuntu中文输入出现两个输入框"></a>修复Ubuntu中文输入出现两个输入框</h4><pre><code>// kill 掉fcitx-qimpanel这个进程。
+user@linux:~$ ps -A | grep fcitx
 </code></pre>
       
     </div>
