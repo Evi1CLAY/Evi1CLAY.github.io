@@ -18,7 +18,7 @@
 
 ###下载安装
 1234wget https://raw.githubusercontent.com/Evi1CLAY/CoolPool/master/Script/ubuntu-onekey-pptp-vpn/setup.shsudo sh setup.sh -u 用户名 -p 密码">
-<meta property="og:updated_time" content="2016-09-19T18:22:37.172Z">
+<meta property="og:updated_time" content="2016-09-19T18:29:05.172Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ubuntu配置PPTP服务器">
 <meta name="twitter:description" content="以前在 VPN 服务器配置这块浪费了很多时间，今天发现比较好的脚本安装方式，主要记录下使用过程中的小坑 :P
@@ -256,6 +256,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/ppp/chap-secrets</span><br><span class="line">// 按照这种格式修改并保存</span><br><span class="line">anka9080 pptpd woshimima *</span><br></pre></td></tr></table></figure>
 <h4 id="使用感受"><a href="#使用感受" class="headerlink" title="使用感受"></a>使用感受</h4><p>安装是没问题的，有时候使用本地主机连接不上，可能是本地网络（路由）不支持，比如我现在可以用手机在运营商网络的状态下链接成功，在本地无线网的状态下连接失败！</p>
 <p>如果验证的时候用户或密码错误，错误代码是 691</p>
+<p>有时候输入正确的用户名口令连接不上，返回的错误代码 619 重启 PPTP 服务再进行连接</p>
 <h4 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h4><p><a href="https://raw.githubusercontent.com/Evi1CLAY/CoolPool/master/Script/ubuntu-onekey-pptp-vpn/" target="_blank" rel="external">https://raw.githubusercontent.com/Evi1CLAY/CoolPool/master/Script/ubuntu-onekey-pptp-vpn/</a></p>
 
       
