@@ -4,45 +4,27 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Ubuntu命令行配置静态IP | Anka9080&#39;s Notes</title>
+  <title>Ubuntu配置PPTP服务器 | Anka9080&#39;s Notes</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="vim /etc/network/interfaces
+  <meta name="description" content="以前在 VPN 服务器配置这块浪费了很多时间，今天发现比较好的脚本安装方式，主要记录下使用过程中的小坑 :P
 
-原内容如下：// 表示默认使用 DHCP 分配 IP
-auto lo
-iface lo inet loopback
-
-auto eth0
-iface eth0 inet dhcp
-配置静态IP：这里是给网卡 eth0 做配置，具体需要配置哪个网卡可以使用 ifconfig 查看下
-1234567891011auto loiface lo">
+###下载安装
+1234wget https://raw.githubusercontent.com/Evi1CLAY/CoolPool/master/Script/ubuntu-onekey-pptp-vpn/setup.shsudo sh setup.sh -u 用户名 -p 密码">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Ubuntu命令行配置静态IP">
-<meta property="og:url" content="http://www.evilclay.com/2016/09/20/Ubuntu命令行配置静态IP/index.html">
+<meta property="og:title" content="Ubuntu配置PPTP服务器">
+<meta property="og:url" content="http://www.evilclay.com/2016/09/20/Ubuntu配置PPTP服务器/index.html">
 <meta property="og:site_name" content="Anka9080's Notes">
-<meta property="og:description" content="vim /etc/network/interfaces
+<meta property="og:description" content="以前在 VPN 服务器配置这块浪费了很多时间，今天发现比较好的脚本安装方式，主要记录下使用过程中的小坑 :P
 
-原内容如下：// 表示默认使用 DHCP 分配 IP
-auto lo
-iface lo inet loopback
-
-auto eth0
-iface eth0 inet dhcp
-配置静态IP：这里是给网卡 eth0 做配置，具体需要配置哪个网卡可以使用 ifconfig 查看下
-1234567891011auto loiface lo">
-<meta property="og:updated_time" content="2016-09-19T17:44:52.970Z">
+###下载安装
+1234wget https://raw.githubusercontent.com/Evi1CLAY/CoolPool/master/Script/ubuntu-onekey-pptp-vpn/setup.shsudo sh setup.sh -u 用户名 -p 密码">
+<meta property="og:updated_time" content="2016-09-19T18:14:08.259Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ubuntu命令行配置静态IP">
-<meta name="twitter:description" content="vim /etc/network/interfaces
+<meta name="twitter:title" content="Ubuntu配置PPTP服务器">
+<meta name="twitter:description" content="以前在 VPN 服务器配置这块浪费了很多时间，今天发现比较好的脚本安装方式，主要记录下使用过程中的小坑 :P
 
-原内容如下：// 表示默认使用 DHCP 分配 IP
-auto lo
-iface lo inet loopback
-
-auto eth0
-iface eth0 inet dhcp
-配置静态IP：这里是给网卡 eth0 做配置，具体需要配置哪个网卡可以使用 ifconfig 查看下
-1234567891011auto loiface lo">
+###下载安装
+1234wget https://raw.githubusercontent.com/Evi1CLAY/CoolPool/master/Script/ubuntu-onekey-pptp-vpn/setup.shsudo sh setup.sh -u 用户名 -p 密码">
   
     <link rel="alternative" href="/atom.xml" title="Anka9080&#39;s Notes" type="application/atom+xml">
   
@@ -228,11 +210,11 @@ iface eth0 inet dhcp
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-Ubuntu命令行配置静态IP" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Ubuntu配置PPTP服务器" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/09/20/Ubuntu命令行配置静态IP/" class="article-date">
-  	<time datetime="2016-09-19T17:41:02.000Z" itemprop="datePublished">2016-09-20</time>
+      <a href="/2016/09/20/Ubuntu配置PPTP服务器/" class="article-date">
+  	<time datetime="2016-09-19T17:57:56.000Z" itemprop="datePublished">2016-09-20</time>
 </a>
     </div>
   
@@ -245,7 +227,7 @@ iface eth0 inet dhcp
         
   
     <h1 class="article-title" itemprop="name">
-      Ubuntu命令行配置静态IP
+      Ubuntu配置PPTP服务器
     </h1>
   
 
@@ -254,7 +236,7 @@ iface eth0 inet dhcp
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ubuntu/">Ubuntu</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PPTP/">PPTP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ubuntu/">Ubuntu</a></li></ul>
 	</div>
 
         
@@ -266,20 +248,15 @@ iface eth0 inet dhcp
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>vim /etc/network/interfaces</p>
+<p>以前在 VPN 服务器配置这块浪费了很多时间，今天发现比较好的脚本安装方式，主要记录下使用过程中的小坑 :P</p>
 </blockquote>
-<h4 id="原内容如下："><a href="#原内容如下：" class="headerlink" title="原内容如下："></a>原内容如下：</h4><pre><code>// 表示默认使用 DHCP 分配 IP
-auto lo
-iface lo inet loopback
+<p>###下载安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/Evi1CLAY/CoolPool/master/Script/ubuntu-onekey-pptp-vpn/setup.sh</span><br><span class="line">sudo sh setup.sh -u 用户名 -p 密码</span><br><span class="line">// 下面这种方式或默认生成用户名vpn以及随机密码</span><br><span class="line">sudo sh setup.sh</span><br></pre></td></tr></table></figure>
+<p>安装之后可以通过修改配置文件的方式重新设定用户口令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/ppp/chap-secrets</span><br><span class="line">// 按照这种格式修改并保存</span><br><span class="line">anka9080 pptpd woshimima *</span><br></pre></td></tr></table></figure>
+<h4 id="使用感受"><a href="#使用感受" class="headerlink" title="使用感受"></a>使用感受</h4><p>安装是没问题的，有时候使用本地主机连接不上，可能是本地网络（路由）不支持，比如我现在可以用手机在运营商网络的状态下链接成功，在本地无线网的状态下连接失败！</p>
+<h4 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h4><p><a href="https://raw.githubusercontent.com/Evi1CLAY/CoolPool/master/Script/ubuntu-onekey-pptp-vpn/" target="_blank" rel="external">https://raw.githubusercontent.com/Evi1CLAY/CoolPool/master/Script/ubuntu-onekey-pptp-vpn/</a></p>
 
-auto eth0
-iface eth0 inet dhcp
-</code></pre><h4 id="配置静态IP："><a href="#配置静态IP：" class="headerlink" title="配置静态IP："></a>配置静态IP：</h4><p>这里是给网卡 eth0 做配置，具体需要配置哪个网卡可以使用 ifconfig 查看下</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">auto lo</span><br><span class="line">iface lo inet loopback</span><br><span class="line"></span><br><span class="line"><span class="comment"># The primary network interface</span></span><br><span class="line">auto eth0</span><br><span class="line"><span class="comment">#iface eth0 inet dhcp</span></span><br><span class="line"></span><br><span class="line">iface eth0 inet static</span><br><span class="line">address 192.168.80.129</span><br><span class="line">netmask 255.255.255.0</span><br><span class="line">gateway 192.168.80.2</span><br></pre></td></tr></table></figure>
-<h4 id="手动设置-DNS-服务器"><a href="#手动设置-DNS-服务器" class="headerlink" title="手动设置 DNS 服务器"></a>手动设置 DNS 服务器</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vim /etc/resolv.conf</span></span><br></pre></td></tr></table></figure>
-<p>添加如下内容（这点所有Linux发行版都通用）：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nameserver 192.168.80.2</span><br><span class="line">nameserver 8.8.8.8</span><br></pre></td></tr></table></figure>
-<h4 id="重启使配置生效"><a href="#重启使配置生效" class="headerlink" title="重启使配置生效"></a>重启使配置生效</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/networking restart</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -288,18 +265,9 @@ iface eth0 inet dhcp
     
 <nav id="article-nav">
   
-    <a href="/2016/09/20/Ubuntu配置PPTP服务器/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          Ubuntu配置PPTP服务器
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/09/17/新Get的Sublime快捷操作/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">新Get的Sublime快捷操作</div>
+    <a href="/2016/09/20/Ubuntu命令行配置静态IP/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Ubuntu命令行配置静态IP</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -334,7 +302,7 @@ iface eth0 inet dhcp
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="Ubuntu命令行配置静态IP" data-title="Ubuntu命令行配置静态IP" data-url="http://www.evilclay.com/2016/09/20/Ubuntu命令行配置静态IP/"></div>
+	<div class="ds-thread" data-thread-key="Ubuntu配置PPTP服务器" data-title="Ubuntu配置PPTP服务器" data-url="http://www.evilclay.com/2016/09/20/Ubuntu配置PPTP服务器/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
