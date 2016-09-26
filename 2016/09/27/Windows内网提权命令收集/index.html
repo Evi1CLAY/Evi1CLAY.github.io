@@ -4,40 +4,39 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>破解 Windows 7/8 登录密码 | Anka9080&#39;s Notes</title>
+  <title>Windows内网提权命令收集 | Anka9080&#39;s Notes</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="// 文末有惊喜：）
-
-0x 00 破解思路用户的明文密码经过单向Hash加密生成Hash散列，Hash散列又被加密存放在系统盘\Windiws\System32\config文件下
-要获得明文就要先得到SAM文件，从中提取出hash散列，然后网上查询或者暴力破解获得明文密码
-　　　　SAM文件的获取可分为两种方法：
-　　　　　　1）直接从本机操作系统获取；
-　　　　　　2） 利用安装了Lin">
+  <meta name="description" content="一、系统信息查看系统的各种信息
+systeminfo
+// 结果返回OS的名称，版本，系统安装时间，启动时间，CPU位数，CPU个数，频率，系统目录，内存大小，安装了多少补丁，网卡
+systeminfo | findstr /B /C:&amp;quot;OS 名称&amp;quot;
+// 过滤输出 系统名称
+// findstr /B 从行的开始进行匹配  /C: 表示匹配字符串
+识别系统体系架构
+echo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="破解 Windows 7/8 登录密码">
-<meta property="og:url" content="http://www.evilclay.com/2014/10/25/pojie-windows-login/index.html">
+<meta property="og:title" content="Windows内网提权命令收集">
+<meta property="og:url" content="http://www.evilclay.com/2016/09/27/Windows内网提权命令收集/index.html">
 <meta property="og:site_name" content="Anka9080's Notes">
-<meta property="og:description" content="// 文末有惊喜：）
-
-0x 00 破解思路用户的明文密码经过单向Hash加密生成Hash散列，Hash散列又被加密存放在系统盘\Windiws\System32\config文件下
-要获得明文就要先得到SAM文件，从中提取出hash散列，然后网上查询或者暴力破解获得明文密码
-　　　　SAM文件的获取可分为两种方法：
-　　　　　　1）直接从本机操作系统获取；
-　　　　　　2） 利用安装了Lin">
-<meta property="og:image" content="http://images.cnitblog.com/blog/671902/201410/251855363714539.jpg">
-<meta property="og:image" content="http://images.cnitblog.com/blog/671902/201410/252010458084913.png">
-<meta property="og:image" content="http://images.cnitblog.com/blog/671902/201410/252021369188030.png">
-<meta property="og:updated_time" content="2016-05-28T08:56:30.628Z">
+<meta property="og:description" content="一、系统信息查看系统的各种信息
+systeminfo
+// 结果返回OS的名称，版本，系统安装时间，启动时间，CPU位数，CPU个数，频率，系统目录，内存大小，安装了多少补丁，网卡
+systeminfo | findstr /B /C:&amp;quot;OS 名称&amp;quot;
+// 过滤输出 系统名称
+// findstr /B 从行的开始进行匹配  /C: 表示匹配字符串
+识别系统体系架构
+echo">
+<meta property="og:updated_time" content="2016-09-26T17:13:20.215Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="破解 Windows 7/8 登录密码">
-<meta name="twitter:description" content="// 文末有惊喜：）
-
-0x 00 破解思路用户的明文密码经过单向Hash加密生成Hash散列，Hash散列又被加密存放在系统盘\Windiws\System32\config文件下
-要获得明文就要先得到SAM文件，从中提取出hash散列，然后网上查询或者暴力破解获得明文密码
-　　　　SAM文件的获取可分为两种方法：
-　　　　　　1）直接从本机操作系统获取；
-　　　　　　2） 利用安装了Lin">
-<meta name="twitter:image" content="http://images.cnitblog.com/blog/671902/201410/251855363714539.jpg">
+<meta name="twitter:title" content="Windows内网提权命令收集">
+<meta name="twitter:description" content="一、系统信息查看系统的各种信息
+systeminfo
+// 结果返回OS的名称，版本，系统安装时间，启动时间，CPU位数，CPU个数，频率，系统目录，内存大小，安装了多少补丁，网卡
+systeminfo | findstr /B /C:&amp;quot;OS 名称&amp;quot;
+// 过滤输出 系统名称
+// findstr /B 从行的开始进行匹配  /C: 表示匹配字符串
+识别系统体系架构
+echo">
   
     <link rel="alternative" href="/atom.xml" title="Anka9080&#39;s Notes" type="application/atom+xml">
   
@@ -223,11 +222,11 @@
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-pojie-windows-login" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Windows内网提权命令收集" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2014/10/25/pojie-windows-login/" class="article-date">
-  	<time datetime="2014-10-25T07:27:16.000Z" itemprop="datePublished">2014-10-25</time>
+      <a href="/2016/09/27/Windows内网提权命令收集/" class="article-date">
+  	<time datetime="2016-09-26T17:07:24.000Z" itemprop="datePublished">2016-09-27</time>
 </a>
     </div>
   
@@ -240,7 +239,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      破解 Windows 7/8 登录密码
+      Windows内网提权命令收集
     </h1>
   
 
@@ -249,7 +248,7 @@
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kali/">kali</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/密码破解/">密码破解</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows运维/">Windows运维</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内网提权/">内网提权</a></li></ul>
 	</div>
 
         
@@ -260,68 +259,48 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://images.cnitblog.com/blog/671902/201410/251855363714539.jpg" alt=""></p>
-<blockquote>
-<p>// 文末有惊喜：）</p>
-</blockquote>
-<h2 id="0x-00-破解思路"><a href="#0x-00-破解思路" class="headerlink" title="0x 00 破解思路"></a>0x 00 破解思路</h2><p>用户的明文密码经过单向Hash加密生成Hash散列，Hash散列又被加密存放在系统盘\Windiws\System32\config文件下</p>
-<p>要获得明文就要先得到SAM文件，从中提取出hash散列，然后网上查询或者暴力破解获得明文密码</p>
-<p>　　　　SAM文件的获取可分为两种方法：</p>
-<p>　　　　　　1）直接从本机操作系统获取；</p>
-<p>　　　　　　2） 利用安装了Linux（或是WinPE）的U盘获取；</p>
-<p>获得SAM文件以后可以很简单的提取到用户的hash散列，然后就是破解部分了</p>
-<p>直接上hash破解网站，让网站解密，简单粗暴，不过需要Money~</p>
-<p>也可以在本机暴力破解，因为单项加密的不可逆性</p>
-<p>破解过程实际上是一堆字母组合做hash加密，得到的结果与密文做对比</p>
-<p>并不是真正的破解，还好计算机有强大的计算能力 = =！</p>
-<h2 id="0x-01-破解测试"><a href="#0x-01-破解测试" class="headerlink" title="0x 01 破解测试"></a>0x 01 破解测试</h2><p>环境&gt;&gt;</p>
-<p>　　　　被破解主机：win 7 旗舰版 64位</p>
-<p>　　　　工具：bkhive（生成bootkey文件 用于提取hash散列）</p>
-<p>　　　　　　　    samdump2 （提取hash工具）</p>
-<p>　　　　　　  　  john （暴力破解hash得明文）</p>
-<p>　　　　上面三个工具都已经集成在U盘(kali)中</p>
-<p>由于亲测Win8和 Win7 的加密算法一样，加密文件存放位置也是相同的 这里就演示Win7下的</p>
-<p><strong>1、 生成被破解账户</strong></p>
-<p>Win7 CMD下，创建两个待破解用户</p>
-<pre><code>net user Frank 1t2e3n /add
-net user Alice xy4567 /add
-</code></pre><p><strong>2、 提取SAM文件</strong></p>
-<p>将本机设置为U盘启动，插上U盘，进入kali</p>
-<p>打开我的电脑，点击Win7的系统盘图标，这时候kali已经把Win7系统盘（Win7OS）挂载到</p>
-<p>/media下，把/media/Win7OS/Windows/System32/config/下的SAM文件和SYSTEM文件复制出来，需要注意大小写</p>
-<p><strong>3、 提取hash散列</strong></p>
-<p>先用bkhive从SYSTEM文件生成一个bootkey文件</p>
-<p>再使用samdump2工具从SAM文件和bootkey中提取出hash散列</p>
-<pre><code>/*  在/tmp目录下执行  */
-bkhive SYSTEM bootkey
-samdump2 bootkey SAM &gt; hashes.txt
-</code></pre><p>hash散列就被保存在/tmp/hashes.txt中，格式如下：</p>
-<p><img src="http://images.cnitblog.com/blog/671902/201410/252010458084913.png" alt=""></p>
-<p>现在windows的大多数操作系统已经使用NTLMv2加密方式，所以得到的LM散列一般没什么用（空字符加密的结果）上面的NTLM字符串就是我们想要得到的hash散列</p>
-<h2 id="0x-04-破解hash"><a href="#0x-04-破解hash" class="headerlink" title="0x 04 破解hash"></a>0x 04 破解hash</h2><p>如果原先明文密码长度在6位以内我们可以使用John the Ripper这款工具进行爆破，很简单的</p>
-<p>在本机测试的结果是不到一小时所有的6位长度的密码都可以破解成功</p>
-<pre><code>/* 在tmp目录下执行 */
-john hashes.txt --format=nt2  // nt2 表示使用NTLMv2破解方式
-</code></pre><p>然后就可以撸啊撸(xD)去了，让他自己跑呗(其实我去睡午觉了我会乱说~)</p>
-<p>在然后就没了，看截图</p>
-<p><img src="http://images.cnitblog.com/blog/671902/201410/252021369188030.png" alt=""></p>
-<p>Frank 和 Alice的 password 已经出来~ </p>
-<p>大致的算了一下 john 破解NTMLv2的速度大致一秒钟100多万条吧</p>
-<p>所以说 跑个一个小时也没有结果建议网上解密，<br><a href="http://www.hashkiller.co.uk/" target="_blank" rel="external"><strong>hashkiller</strong></a>，<a href="http://www.cmd5.com/" target="_blank" rel="external"><strong>cmd5</strong></a> 都是不错的网站</p>
-<p>上面倒腾了一大堆，看着也够麻烦的，要是你瞟到了这里说明你赚了   ：)</p>
-<ul>
-<li>如果正常进入本机的话可以直接提取hash的，Windows下神器PwDump7在这，直接运行.exe就可以，地址贴在后面</li>
-<li>如果你想要直接获得本机账户密码的话，也可以，在桌面上运行mimikatz2，法国牛人写的，确实赞，不过报毒 ….</li>
-<li>如果拿到SYSTEM和SAM文件，在Windows下也有获取hash的工具 SAMInside，导入文件即可</li>
-<li>如果进不了也可以在CMD模式下COPY文件到U盘然后，取出hash破解</li>
-<li>当然，在这篇文件里写的都是破解登录密码，而非清除（重置）</li>
-<li>因为清除重置什么的和砸破窗户跳进去有什么区别… ：)</li>
-</ul>
-<p>工具下载：</p>
-<p>　　<strong>PwDump7</strong> 　　 百度网盘  <a href="http://pan.baidu.com/s/1kT9RcjX" target="_blank" rel="external">http://pan.baidu.com/s/1kT9RcjX</a> 密码: bb1s</p>
-<p>　　<strong>mimikatz2</strong>　　百度网盘  <a href="http://pan.baidu.com/s/1jGoouA6" target="_blank" rel="external">http://pan.baidu.com/s/1jGoouA6</a> 密码: iakf</p>
-<p>　　<strong>SANInside</strong> 　 百度网盘  <a href="http://pan.baidu.com/s/1D7jUu" target="_blank" rel="external">http://pan.baidu.com/s/1D7jUu</a> 密码: 91ud</p>
-
+        <h3 id="一、系统信息"><a href="#一、系统信息" class="headerlink" title="一、系统信息"></a>一、系统信息</h3><p>查看系统的各种信息</p>
+<pre><code>systeminfo
+// 结果返回OS的名称，版本，系统安装时间，启动时间，CPU位数，CPU个数，频率，系统目录，内存大小，安装了多少补丁，网卡
+systeminfo | findstr /B /C:&quot;OS 名称&quot;
+// 过滤输出 系统名称
+// findstr /B 从行的开始进行匹配  /C: 表示匹配字符串
+</code></pre><p>识别系统体系架构</p>
+<pre><code>echo %PROCESSOR_ARCHITECTURE% 
+</code></pre><p>查看所有系统环境变量</p>
+<pre><code>SET
+</code></pre><p>查看用户的信息</p>
+<pre><code>net user xxx
+</code></pre><h3 id="二、网络信息"><a href="#二、网络信息" class="headerlink" title="二、网络信息"></a>二、网络信息</h3><p>路由信息</p>
+<pre><code>route print
+// 查看内网的route信息
+</code></pre><p>查看 ARP 缓存表</p>
+<pre><code>arp -a
+</code></pre><p>查看所有的网络连接</p>
+<pre><code>netstat -ano
+</code></pre><h3 id="三、应用程序信息"><a href="#三、应用程序信息" class="headerlink" title="三、应用程序信息"></a>三、应用程序信息</h3><p>查看计划任务</p>
+<pre><code>chcp 437 // 中文系统需要先设置成美国编码
+schtasks /QUERY /fo LIST /v
+</code></pre><p>查看服务进程PID</p>
+<pre><code>tasklist /SVC
+// 在任务资源管理器页面也可以设置查看
+</code></pre><p>查看安装的驱动</p>
+<pre><code>DRIVERQUERY
+</code></pre><p>查看安装的程序以及版本信息</p>
+<pre><code>wmic product list brief
+// 作为漏洞利用线索
+//  在控制面板-卸载程序界面也可以看到相关信息
+</code></pre><p>查看服务，进程，启动程序相关信息</p>
+<pre><code>wmic service list brief
+wmic process list brief
+wmic startup list brief
+</code></pre><p>查看安装的补丁和时间信息</p>
+<pre><code>wmic qfe get Caption,Description,HotFixID,InstalledOn
+</code></pre><p>查看特定漏洞的补丁信息</p>
+<pre><code>wmic qfe get Caption,Description,HotFixID,InstalledOn | findstr /C:&quot;KBxxxxxxx&quot;
+</code></pre><h3 id="四、-敏感数据文件"><a href="#四、-敏感数据文件" class="headerlink" title="四、 敏感数据文件"></a>四、 敏感数据文件</h3><pre><code>dir /b/s config*  // 当前目录下查找所有文件以config开头的文件
+findstr /si password *.xml *.ini *.txt    当前目录下在指定的文件类型中查找指定的字符串
+</code></pre>
       
     </div>
     
@@ -330,18 +309,9 @@ john hashes.txt --format=nt2  // nt2 表示使用NTLMv2破解方式
     
 <nav id="article-nav">
   
-    <a href="/2014/11/26/nessus/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          Nessus 多功能扫描器
-        
-      </div>
-    </a>
   
-  
-    <a href="/2014/09/17/nmap/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Nmap 端口扫描利器</div>
+    <a href="/2016/09/25/12306-余票查询小助手/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">12306 余票查询小助手</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -376,7 +346,7 @@ john hashes.txt --format=nt2  // nt2 表示使用NTLMv2破解方式
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="pojie-windows-login" data-title="破解 Windows 7/8 登录密码" data-url="http://www.evilclay.com/2014/10/25/pojie-windows-login/"></div>
+	<div class="ds-thread" data-thread-key="Windows内网提权命令收集" data-title="Windows内网提权命令收集" data-url="http://www.evilclay.com/2016/09/27/Windows内网提权命令收集/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
