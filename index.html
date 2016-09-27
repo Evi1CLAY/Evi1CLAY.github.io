@@ -47,7 +47,7 @@
 				<h1 class="site-name"><a href="/" title="Anka9080&#39;s Notes">Anka9080&#39;s Notes</a></h1>
 				<h2 class="blog-motto">Call Me Fucking Full Stacker</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -63,7 +63,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
 						<input type="hidden" name="q" value="site:www.evilclay.com">
 					</form>
 					
@@ -75,1016 +75,281 @@
     <div id="container">
       <div id="main">
 
-   
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2016/09/27/Windows内网提权命令收集/" title="Windows内网提权命令收集" itemprop="url">
+  
+    <h1 itemprop="name">Windows内网提权命令收集</h1>
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/09/27/Windows内网提权命令收集/" title="Windows内网提权命令收集" itemprop="url">Windows内网提权命令收集</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2016-09-26T17:07:24.000Z" itemprop="datePublished"> Published 2016-09-27</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="一、系统信息"><a href="#一、系统信息" class="headerlink" title="一、系统信息"></a>一、系统信息</h3><p>查看系统的各种信息</p>
-<pre><code>systeminfo
+     
+           <p itemprop="description" >一、系统信息查看系统的各种信息
+systeminfo
 // 结果返回OS的名称，版本，系统安装时间，启动时间，CPU位数，CPU个数，频率，系统目录，内存大小，安装了多少补丁，网卡
-systeminfo | findstr /B /C:&quot;OS 名称&quot;
-// 过滤输出 系统名称
-// findstr /B 从行的开始进行匹配  /C: 表示匹配字符串
-</code></pre><p>识别系统体系架构</p>
-<pre><code>echo %PROCESSOR_ARCHITECTURE% 
-</code></pre><p>查看所有系统环境变量</p>
-<pre><code>SET
-</code></pre><p>查看用户的信息</p>
-<pre><code>net user xxx
-</code></pre><h3 id="二、网络信息"><a href="#二、网络信息" class="headerlink" title="二、网络信息"></a>二、网络信息</h3><p>路由信息</p>
-<pre><code>route print
-// 查看内网的route信息
-</code></pre><p>查看 ARP 缓存表</p>
-<pre><code>arp -a
-</code></pre><p>查看所有的网络连接</p>
-<pre><code>netstat -ano
-</code></pre><h3 id="三、应用程序信息"><a href="#三、应用程序信息" class="headerlink" title="三、应用程序信息"></a>三、应用程序信息</h3><p>查看计划任务</p>
-<pre><code>chcp 437 // 中文系统需要先设置成美国编码
-schtasks /QUERY /fo LIST /v
-</code></pre><p>查看服务进程PID</p>
-<pre><code>tasklist /SVC
-// 在任务资源管理器页面也可以设置查看
-</code></pre><p>查看安装的驱动</p>
-<pre><code>DRIVERQUERY
-</code></pre><p>查看安装的程序以及版本信息</p>
-<pre><code>wmic product list brief
-// 作为漏洞利用线索
-//  在控制面板-卸载程序界面也可以看到相关信息
-</code></pre><p>查看服务，进程，启动程序相关信息</p>
-<pre><code>wmic service list brief
-wmic process list brief
-wmic startup list brief
-</code></pre><p>查看安装的补丁和时间信息</p>
-<pre><code>wmic qfe get Caption,Description,HotFixID,InstalledOn
-</code></pre><p>查看特定漏洞的补丁信息</p>
-<pre><code>wmic qfe get Caption,Description,HotFixID,InstalledOn | findstr /C:&quot;KBxxxxxxx&quot;
-</code></pre><h3 id="四、-敏感数据文件"><a href="#四、-敏感数据文件" class="headerlink" title="四、 敏感数据文件"></a>四、 敏感数据文件</h3><pre><code>dir /b/s config*  // 当前目录下查找所有文件以config开头的文件
-findstr /si password *.xml *.ini *.txt    当前目录下在指定的文件类型中查找指定的字符串
-</code></pre>
+systeminfo | findstr /B /C:&amp;quot;OS 名称&amp;quot;
+// 过</p>
         
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
+    
+    <time datetime="2016-09-26T17:07:24.000Z" itemprop="datePublished">2016-09-27</time>
+  </a>
+</section>
 
 
-  <div class="article-tags">
+
+
+
+
   
-  <span></span> <a href="/tags/内网提权/">内网提权</a><a href="/tags/Windows运维/">Windows运维</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/09/27/Windows内网提权命令收集/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/09/27/Windows内网提权命令收集/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/09/25/12306-余票查询小助手/" title="12306 余票查询小助手" itemprop="url">12306 余票查询小助手</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2016-09-25T01:55:05.000Z" itemprop="datePublished"> Published 2016-09-25</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <blockquote>
-<p>本程序循环访问 12306 网站，不停的刷新页面，直到发现配置文件中预定的车次有余票时发送提示邮件并结束程序。</p>
-</blockquote>
-<h4 id="脚本分析"><a href="#脚本分析" class="headerlink" title="脚本分析"></a>脚本分析</h4><ul>
-<li><p>共有两个 py 文件</p>
-<ul>
-<li>12306.py   // 程序的入口文件</li>
-<li>config.py  // 程序的配置文件</li>
-</ul>
-</li>
-<li><p>12306.py 的内容</p>
-</li>
-</ul>
-<p>在这个文件需要配置发送邮件用到的发件人账户和授权码。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"><span class="comment"># 刷票助手 v0.1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> ssl,urllib2</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> smtplib</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">from</span> email.mime.text <span class="keyword">import</span> MIMEText</span><br><span class="line"><span class="keyword">from</span> email.utils <span class="keyword">import</span> parseaddr, formataddr</span><br><span class="line"><span class="keyword">from</span> email.header <span class="keyword">import</span> Header</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> config <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment"># trains = ['G345','G1905']</span></span><br><span class="line"></span><br><span class="line">seat_dict = &#123;</span><br><span class="line">    <span class="string">'二等座'</span>:<span class="string">'ze_num'</span>,</span><br><span class="line">    <span class="string">'硬卧'</span>:<span class="string">'yw_num'</span>,</span><br><span class="line">    <span class="string">'硬座'</span>:<span class="string">'yz_num'</span></span><br><span class="line">&#125;</span><br><span class="line">seat_name = <span class="string">''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据输入判断选择的座位类型</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">select_seat</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> seat_name</span><br><span class="line">    <span class="keyword">if</span> seat_type <span class="keyword">in</span> seat_dict.keys():</span><br><span class="line">        seat_name = seat_dict[seat_type]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span><br><span class="line">    请求页面判断指定的车次是否有指定座位</span><br><span class="line">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">refresh</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> seat_name</span><br><span class="line">    <span class="comment"># url = 'https://kyfw.12306.cn/otn/lcxxcx/query?purpose_codes=ADULT&amp;queryDate=2016-10-06&amp;from_station=OXH&amp;to_station=HFH'</span></span><br><span class="line">    <span class="comment"># r = requests.get(url)</span></span><br><span class="line">    req = urllib2.Request(url)</span><br><span class="line">    gcontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1)</span><br><span class="line">    html = urllib2.urlopen(req, context=gcontext).read()</span><br><span class="line">    <span class="comment"># print html</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'&gt; &#123;&#125; refrash ...'</span>.format(datetime.datetime.now())</span><br><span class="line">    html_dict = json.loads(html)</span><br><span class="line">    <span class="comment"># print html_dict</span></span><br><span class="line">    datas = html_dict[<span class="string">'data'</span>][<span class="string">'datas'</span>]</span><br><span class="line">    <span class="keyword">for</span> data <span class="keyword">in</span> datas:</span><br><span class="line">        <span class="keyword">if</span> data[<span class="string">'station_train_code'</span>] <span class="keyword">in</span> trains:</span><br><span class="line">        <span class="comment"># if data['station_train_code']:</span></span><br><span class="line">            <span class="comment"># ze_num 表示二等座</span></span><br><span class="line">            <span class="keyword">if</span> data[seat_name] != <span class="string">u'无'</span> <span class="keyword">and</span> data[seat_name] != <span class="string">u'--'</span>:</span><br><span class="line">                <span class="keyword">print</span>  data</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'[+] Congratulations!'</span></span><br><span class="line">                msg = <span class="string">'Great Shoot, 火车:&#123;&#125; 去登录官网瞅瞅吧!'</span>.format(data[<span class="string">'station_train_code'</span>])</span><br><span class="line">                send_email(msg,email)</span><br><span class="line">                <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span><br><span class="line">	使用 smtp.qq.com 服务器 来发送邮件</span><br><span class="line">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_email</span><span class="params">(info,to_addr)</span>:</span></span><br><span class="line">    msg = MIMEText(info, <span class="string">'html'</span>, <span class="string">'utf-8'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">#输入Email地址和口令:</span></span><br><span class="line">    from_addr = <span class="string">'xxxxx@foxmail.com'</span>  // 账户</span><br><span class="line">    password = <span class="string">'xxxxxx'</span>    // 授权码</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 输入SMTP服务器地址:</span></span><br><span class="line">    smtp_server = <span class="string">'smtp.qq.com'</span></span><br><span class="line">    <span class="comment"># 输入收件人地址:</span></span><br><span class="line">    to_addr = to_addr</span><br><span class="line">    msg[<span class="string">'From'</span>] = _format_addr(<span class="string">u'抢火车票 小助手 &lt;%s&gt;'</span> % from_addr)</span><br><span class="line">    msg[<span class="string">'To'</span>] = _format_addr(<span class="string">u'你好 &lt;%s&gt;'</span> % to_addr)</span><br><span class="line">    msg[<span class="string">'Subject'</span>] = Header(<span class="string">u'Hello, 已经成功捕获一只小白兔 ~'</span>, <span class="string">'utf-8'</span>).encode()</span><br><span class="line"></span><br><span class="line">    server = smtplib.SMTP(smtp_server, <span class="number">25</span>)  <span class="comment"># 连接 SMTP服务器 端口</span></span><br><span class="line">    server.starttls() <span class="comment"># 使用SSL加密方式传输数据</span></span><br><span class="line">    server.set_debuglevel(<span class="number">0</span>)  <span class="comment"># 打印出和SMTP服务器交互的所有信息</span></span><br><span class="line">    server.login(from_addr, password) <span class="comment"># 认证  这里的 password 不是QQ邮箱密码开启SMTP服务器后生成的授权码</span></span><br><span class="line">    server.sendmail(from_addr, [to_addr], msg.as_string())</span><br><span class="line">    server.quit()</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span><br><span class="line">    格式化邮件正文信息</span><br><span class="line">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_format_addr</span><span class="params">(s)</span>:</span></span><br><span class="line">	name, addr = parseaddr(s)</span><br><span class="line">	<span class="keyword">return</span> formataddr(( \</span><br><span class="line">		Header(name, <span class="string">'utf-8'</span>).encode(), \</span><br><span class="line">		addr.encode(<span class="string">'utf-8'</span>) <span class="keyword">if</span> isinstance(addr, unicode) <span class="keyword">else</span> addr))</span><br><span class="line"><span class="string">"""</span><br><span class="line">    程序循环入口</span><br><span class="line">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># 选择座位类型</span></span><br><span class="line">    select_seat()</span><br><span class="line"></span><br><span class="line">    success = <span class="keyword">False</span></span><br><span class="line">    <span class="comment"># 每个10秒钟发送一个请求查询票源情况</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> success:</span><br><span class="line">        success = refresh()</span><br><span class="line">        time.sleep(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
-<ul>
-<li>config.py</li>
-</ul>
-<p>这里根据需求进行修改，可以修改车次，座位类型，收件人邮箱账号</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置文件 -----------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 点击查询时按钮发送的请求 URL (浏览器 F12 查看 network 选项卡 能看到这个请求)</span></span><br><span class="line">url = <span class="string">'https://kyfw.12306.cn/otn/lcxxcx/query?purpose_codes=ADULT&amp;queryDate=2016-10-06&amp;from_station=OXH&amp;to_station=HFH'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 期望刷到的火车编号</span></span><br><span class="line">trains = [<span class="string">'G3245'</span>,<span class="string">'G105'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 期望刷到的座位类型</span></span><br><span class="line"><span class="comment"># 从 ['二等座','硬卧','硬座'] 中选一个填写</span></span><br><span class="line">seat_type = <span class="string">'二等座'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 刷到火车票洪接收通知的邮件账户，成功后会向该账户发送一封提示邮件</span></span><br><span class="line">email = <span class="string">'anka9080@foxmail.com'</span></span><br></pre></td></tr></table></figure>
-<h4 id="源码下载"><a href="#源码下载" class="headerlink" title="源码下载"></a>源码下载</h4><p>GitHub: <a href="https://github.com/Evi1CLAY/CoolPool/tree/master/Python/12306" target="_blank" rel="external">https://github.com/Evi1CLAY/CoolPool/tree/master/Python/12306</a></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
+<section class="post" itemscope itemprop="blogitem">
   
-  <span></span> <a href="/tags/12306抢票/">12306抢票</a><a href="/tags/自动化/">自动化</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/09/25/12306-余票查询小助手/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/09/25/12306-余票查询小助手/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/09/20/Ubuntu配置PPTP服务器/" title="Ubuntu配置PPTP服务器" itemprop="url">Ubuntu配置PPTP服务器</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2016-09-19T17:57:56.000Z" itemprop="datePublished"> Published 2016-09-20</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <blockquote>
-<p>以前在 VPN 服务器配置这块浪费了很多时间，今天发现比较好的脚本安装方式，主要记录下使用过程中的小坑 :P</p>
-</blockquote>
-<p>###下载安装</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/Evi1CLAY/CoolPool/master/Script/ubuntu-onekey-pptp-vpn/setup.sh</span><br><span class="line">sudo sh setup.sh -u 用户名 -p 密码</span><br><span class="line">// 下面这种方式或默认生成用户名vpn以及随机密码</span><br><span class="line">sudo sh setup.sh</span><br></pre></td></tr></table></figure>
-<p>安装之后可以通过修改配置文件的方式重新设定用户口令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/ppp/chap-secrets</span><br><span class="line">// 按照这种格式修改并保存</span><br><span class="line">anka9080 pptpd woshimima *</span><br></pre></td></tr></table></figure>
-<h4 id="使用感受"><a href="#使用感受" class="headerlink" title="使用感受"></a>使用感受</h4><p>安装是没问题的，有时候使用本地主机连接不上，可能是本地网络（路由）不支持，比如我现在可以用手机在运营商网络的状态下链接成功，在本地无线网的状态下连接失败！</p>
-<p>如果验证的时候用户或密码错误，错误代码是 691</p>
-<p>有时候输入正确的用户名口令连接不上，返回的错误代码 619 重启 PPTP 服务再进行连接</p>
-<p>需要对 VPN 服务器做一些配置，才能将其用于二层VPN连接</p>
-<h4 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h4><p><a href="https://raw.githubusercontent.com/Evi1CLAY/CoolPool/master/Script/ubuntu-onekey-pptp-vpn/" target="_blank" rel="external">https://raw.githubusercontent.com/Evi1CLAY/CoolPool/master/Script/ubuntu-onekey-pptp-vpn/</a></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
+    <a href="/2016/09/25/12306-余票查询小助手/" title="12306 余票查询小助手" itemprop="url">
   
-  <span></span> <a href="/tags/Ubuntu/">Ubuntu</a><a href="/tags/PPTP/">PPTP</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/09/20/Ubuntu配置PPTP服务器/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/09/20/Ubuntu配置PPTP服务器/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
+    <h1 itemprop="name">12306 余票查询小助手</h1>
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/09/20/Ubuntu命令行配置静态IP/" title="Ubuntu命令行配置静态IP" itemprop="url">Ubuntu命令行配置静态IP</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2016-09-19T17:41:02.000Z" itemprop="datePublished"> Published 2016-09-20</time>
-    
-  </p>
-</header>
-    <div class="article-content">
+     
+           <p itemprop="description" >本程序循环访问 12306 网站，不停的刷新页面，直到发现配置文件中预定的车次有余票时发送提示邮件并结束程序。
+
+脚本分析
+共有两个 py 文件
+
+12306.py   // 程序的入口文件
+config.py  // 程序的配置文件
+
+
+12306.py 的内容
+
+
+在这个文件</p>
         
-        <blockquote>
-<p>vim /etc/network/interfaces</p>
-</blockquote>
-<h4 id="原内容如下："><a href="#原内容如下：" class="headerlink" title="原内容如下："></a>原内容如下：</h4><pre><code>// 表示默认使用 DHCP 分配 IP
+    
+    <time datetime="2016-09-25T01:55:05.000Z" itemprop="datePublished">2016-09-25</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2016/09/20/Ubuntu配置PPTP服务器/" title="Ubuntu配置PPTP服务器" itemprop="url">
+  
+    <h1 itemprop="name">Ubuntu配置PPTP服务器</h1>
+    
+     
+           <p itemprop="description" >以前在 VPN 服务器配置这块浪费了很多时间，今天发现比较好的脚本安装方式，主要记录下使用过程中的小坑 :P
+
+###下载安装
+1234wget https://raw.githubusercontent.com/Evi1CLAY/CoolPool/master/Script/u</p>
+        
+    
+    <time datetime="2016-09-19T17:57:56.000Z" itemprop="datePublished">2016-09-20</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2016/09/20/Ubuntu命令行配置静态IP/" title="Ubuntu命令行配置静态IP" itemprop="url">
+  
+    <h1 itemprop="name">Ubuntu命令行配置静态IP</h1>
+    
+     
+           <p itemprop="description" >vim /etc/network/interfaces
+
+原内容如下：// 表示默认使用 DHCP 分配 IP
 auto lo
 iface lo inet loopback
 
 auto eth0
 iface eth0 inet dhcp
-</code></pre><h4 id="配置静态IP："><a href="#配置静态IP：" class="headerlink" title="配置静态IP："></a>配置静态IP：</h4><p>这里是给网卡 eth0 做配置，具体需要配置哪个网卡可以使用 ifconfig 查看下</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">auto lo</span><br><span class="line">iface lo inet loopback</span><br><span class="line"></span><br><span class="line"><span class="comment"># The primary network interface</span></span><br><span class="line">auto eth0</span><br><span class="line"><span class="comment">#iface eth0 inet dhcp</span></span><br><span class="line"></span><br><span class="line">iface eth0 inet static</span><br><span class="line">address 192.168.80.129</span><br><span class="line">netmask 255.255.255.0</span><br><span class="line">gateway 192.168.80.2</span><br></pre></td></tr></table></figure>
-<h4 id="手动设置-DNS-服务器"><a href="#手动设置-DNS-服务器" class="headerlink" title="手动设置 DNS 服务器"></a>手动设置 DNS 服务器</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vim /etc/resolv.conf</span></span><br></pre></td></tr></table></figure>
-<p>添加如下内容（这点所有Linux发行版都通用）：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nameserver 192.168.80.2</span><br><span class="line">nameserver 8.8.8.8</span><br></pre></td></tr></table></figure>
-<h4 id="重启使配置生效"><a href="#重启使配置生效" class="headerlink" title="重启使配置生效"></a>重启使配置生效</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/networking restart</span><br></pre></td></tr></table></figure>
+配置静态IP：这里是给网卡 eth0 做配</p>
         
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
+    
+    <time datetime="2016-09-19T17:41:02.000Z" itemprop="datePublished">2016-09-20</time>
+  </a>
+</section>
 
 
-  <div class="article-tags">
+
+
+
+
   
-  <span></span> <a href="/tags/Ubuntu/">Ubuntu</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/09/20/Ubuntu命令行配置静态IP/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/09/20/Ubuntu命令行配置静态IP/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/09/17/新Get的Sublime快捷操作/" title="新Get的Sublime快捷操作" itemprop="url">新Get的Sublime快捷操作</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2016-09-17T10:34:52.000Z" itemprop="datePublished"> Published 2016-09-17</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <blockquote>
-<p>User 中的设置会覆盖 Default</p>
-</blockquote>
-<p>任意位置光标移动到下一行</p>
-<pre><code>Ctrl + Enter
-</code></pre><p>格式化 HTML </p>
-<pre><code>Ctrl + Shift + P 命令面板运行 Reindent Lines
-</code></pre><p>分屏显示</p>
-<pre><code>Alt + Shift + 数字
-</code></pre><p>指定编写语言</p>
-<pre><code>Ctrl + Shift + P 命令面板输入语言名
-</code></pre><p>绑定快捷键</p>
-<pre><code>修改 key-bindings-user 文件
-</code></pre><p>查找文件</p>
-<pre><code>Ctrl + P
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
+<section class="post" itemscope itemprop="blogitem">
   
-  <span></span> <a href="/tags/Sublime/">Sublime</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/09/17/新Get的Sublime快捷操作/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/09/17/新Get的Sublime快捷操作/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/09/13/Ubuntu装完系统后的几条配置/" title="Ubuntu装完系统后的几条配置" itemprop="url">Ubuntu装完系统后的几条配置</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2016-09-12T16:46:08.000Z" itemprop="datePublished"> Published 2016-09-13</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <blockquote>
-<p>OS :　Ubuntu16.04</p>
-</blockquote>
-<h2 id="安装搜狗输入法"><a href="#安装搜狗输入法" class="headerlink" title="安装搜狗输入法"></a>安装搜狗输入法</h2><ol>
-<li>官网下载 deb 包</li>
-<li>双击打开，等一会出现软件包安装界面</li>
-<li>SustemSetting - LanguageSupport 等待自动更新完毕</li>
-<li>im-config 下一步下一步 重启</li>
-<li>点击右上角通知栏键盘图标，添加输入法，取消Only Show Current Language选项会显示所有语言的输入法，搜索sogou添加即可。</li>
-</ol>
-<h2 id="安装Sublime-Text3"><a href="#安装Sublime-Text3" class="headerlink" title="安装Sublime Text3"></a>安装Sublime Text3</h2><pre><code>$ sudo add-apt-repository ppa:webupd8team/sublime-text-3
-$ sudo apt-get update
-$ sudo apt-get install sublime-text-installer
-</code></pre><h3 id="Lisence"><a href="#Lisence" class="headerlink" title="Lisence:"></a>Lisence:</h3><pre><code>—– BEGIN LICENSE —–
-Michael Barnes
-Single User License
-EA7E-821385
-8A353C41 872A0D5C DF9B2950 AFF6F667
-C458EA6D 8EA3C286 98D1D650 131A97AB
-AA919AEC EF20E143 B361B1E7 4C8B7F04
-B085E65E 2F5F5360 8489D422 FB8FC1AA
-93F6323C FD7F7544 3F39C318 D95E6480
-FCCC7561 8A4A1741 68FA4223 ADCEDE07
-200C25BE DBBC4855 C4CFB774 C5EC138C
-0FEC1CEF D9DCECEC D3A5DAD1 01316C36
-—— END LICENSE ——
-</code></pre><h3 id="安装Package-Control"><a href="#安装Package-Control" class="headerlink" title="安装Package Control"></a>安装Package Control</h3><p>按 Ctrl + ` 进去控制台，输入：</p>
-<pre><code>import urllib.request,os,hashlib; h = &apos;2915d1851351e5ee549c20394736b442&apos; + &apos;8bc59f460fa1548d1514676163dafc88&apos;; pf = &apos;Package Control.sublime-package&apos;; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( &apos;http://packagecontrol.io/&apos; + pf.replace(&apos; &apos;, &apos;%20&apos;)).read(); dh = hashlib.sha256(by).hexdigest(); print(&apos;Error validating download (got %s instead of %s), please try manual install&apos; % (dh, h)) if dh != h else open(os.path.join( ipp, pf), &apos;wb&apos; ).write(by) 
-</code></pre><h3 id="fix中文输入"><a href="#fix中文输入" class="headerlink" title="fix中文输入"></a>fix中文输入</h3><pre><code>sudo apt-get update &amp;&amp; sudo apt-get upgrade
-git clone https://github.com/lyfeyaj/sublime-text-imfix.git
-cd sublime-text-imfix
-./sublime-imfix
-</code></pre><p>之后重启 Sublime。</p>
-<h2 id="顶端状态栏"><a href="#顶端状态栏" class="headerlink" title="顶端状态栏"></a>顶端状态栏</h2><pre><code>sudo apt-get install indicator-multiload # 安装
-indicator-multiload # 运行
-</code></pre><h2 id="Markdown编辑器-haroopad"><a href="#Markdown编辑器-haroopad" class="headerlink" title="Markdown编辑器 haroopad"></a>Markdown编辑器 haroopad</h2><h3 id="下载安装包"><a href="#下载安装包" class="headerlink" title="下载安装包"></a>下载安装包</h3><pre><code>https://bitbucket.org/rhiokim/haroopad-download/downloads/haroopad-v0.13.1-x64.tar.gz
-</code></pre><h3 id="安装haroopad"><a href="#安装haroopad" class="headerlink" title="安装haroopad"></a>安装haroopad</h3><pre><code>cd ~/opt/haroopad
-tar zxvf haroopad-v0.13.1-x64.tar.gz -C haroopad.v0.13.1.x64
-cd haroopad.v0.13.1.x64
-tar zxvf data.tar.gz
-sudo cp -r ./usr /
-
-tar zxf control.tar.gz
-chmod 755 postinst
-sudo ./postinst
-</code></pre><h3 id="修复桌面图标"><a href="#修复桌面图标" class="headerlink" title="修复桌面图标"></a>修复桌面图标</h3><pre><code>sudo vi /usr/share/applications/Haroopad.desktop
-</code></pre><p>Icon 的值改成：</p>
-<pre><code>/usr/share/icons/hicolor/128x128/apps/haroopad.png
-</code></pre><h2 id="设置显示桌面快捷键"><a href="#设置显示桌面快捷键" class="headerlink" title="设置显示桌面快捷键"></a>设置显示桌面快捷键</h2><pre><code>SystemSetting -- Keyboard -- shortcuts -- Navigations 
-
-设置 Hide all normal windows 为 Ctrl + D
-</code></pre><h2 id="安装配置-MySQL"><a href="#安装配置-MySQL" class="headerlink" title="安装配置 MySQL"></a>安装配置 MySQL</h2><pre><code>sudo apt-get install mysql-server mysql-client libmysqlclient-dev
-
-中途有问题就执行 apt-get update
-</code></pre><p>装好后配置为任意IP可以访问</p>
-<pre><code>1.sudo mysql -uroot -p; use mysql; update user set host = &apos;%&apos; where user = &apos;需要授权的用户名&apos;;
-2.vi /etc/mysql/my.cnf（Ubuntu14） OR vi /etc/mysql/mysql.conf.d/mysqld.cnf（Ubuntu16）  文件 bind ip 127.0.0.1 改成需要授权的ip
-3.重新启动 MySQL
-</code></pre><h2 id="安装-Apache"><a href="#安装-Apache" class="headerlink" title="安装 Apache"></a>安装 Apache</h2><pre><code>sudo apt install apache2
-</code></pre><h2 id="安装-PHP-模块"><a href="#安装-PHP-模块" class="headerlink" title="安装 PHP 模块"></a>安装 PHP 模块</h2><pre><code>sudo apt-get install php libapache2-mod-php php-mcrypt php-mysql
-在根目录写入phpinfo 进行测试。
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
+    <a href="/2016/09/17/新Get的Sublime快捷操作/" title="新Get的Sublime快捷操作" itemprop="url">
   
-  <span></span> <a href="/tags/Ubuntu/">Ubuntu</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/09/13/Ubuntu装完系统后的几条配置/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/09/13/Ubuntu装完系统后的几条配置/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
+    <h1 itemprop="name">新Get的Sublime快捷操作</h1>
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
+     
+           <p itemprop="description" >User 中的设置会覆盖 Default
+
+任意位置光标移动到下一行
+Ctrl + Enter
+格式化 HTML 
+Ctrl + Shift + P 命令面板运行 Reindent Lines
+分屏显示
+Alt + Shift + 数字
+指定编写语言
+Ctrl + Shift +</p>
+        
     
-      <a href="/2016/09/13/Ubuntu常用命令笔记/" title="Ubuntu常用命令笔记" itemprop="url">Ubuntu常用命令笔记</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2016-09-12T16:33:28.000Z" itemprop="datePublished"> Published 2016-09-13</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <blockquote>
-<p>自己的东西用着靠谱，记录下省得到时候还要劳烦搜索引擎，这份笔记会保持更新 xD</p>
-</blockquote>
-<h4 id="显示所有系统变量"><a href="#显示所有系统变量" class="headerlink" title="显示所有系统变量"></a>显示所有系统变量</h4><pre><code>env
-</code></pre><h4 id="apt-查看软件版本，并安装特定版本的软件"><a href="#apt-查看软件版本，并安装特定版本的软件" class="headerlink" title="apt 查看软件版本，并安装特定版本的软件"></a>apt 查看软件版本，并安装特定版本的软件</h4><pre><code>sudo apt-cache showpkg package  // 查看可以安装的版本
-sudo apt-get install xxx=x.y.z  // 指定版本安装
-</code></pre><h4 id="在新的-Tab-页打开-CMD"><a href="#在新的-Tab-页打开-CMD" class="headerlink" title="在新的 Tab 页打开 CMD"></a>在新的 Tab 页打开 CMD</h4><pre><code>Ctrl + Shift + T
-</code></pre><h4 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h4><p>添加全局变量在<code>/etc/profile</code>文件中</p>
-<pre><code>vi /etc/profile
-添加 export PATH=&quot;$PATH:/etc/apache/bin&quot;
-</code></pre><p>注意：＝ 即等号两边不能有任何空格<br>修改后运行 <code>./profile</code> 重新加载环境变量使修改生效。</p>
-<h4 id="命令行方式给浏览器设置代理"><a href="#命令行方式给浏览器设置代理" class="headerlink" title="命令行方式给浏览器设置代理"></a>命令行方式给浏览器设置代理</h4><pre><code>Google-Chrome-stable --proxy-server=&quot;127.0.0.1:8080&quot;
-</code></pre><p>默认使用 HTTP 代理，支持 HTTPS, SOCKS.</p>
-<h4 id="递归更改文件夹权限"><a href="#递归更改文件夹权限" class="headerlink" title="递归更改文件夹权限"></a>递归更改文件夹权限</h4><pre><code>sudo chmod -R 777 &lt;dirname&gt;
-</code></pre><h4 id="修改本机-HOSTS-文件"><a href="#修改本机-HOSTS-文件" class="headerlink" title="修改本机 HOSTS 文件"></a>修改本机 HOSTS 文件</h4><pre><code>sudo vi /etc/hosts
-</code></pre><h4 id="从命令行打开可视化当前目录"><a href="#从命令行打开可视化当前目录" class="headerlink" title="从命令行打开可视化当前目录"></a>从命令行打开可视化当前目录</h4><pre><code>nautilus
-</code></pre><h4 id="运行-jar-包"><a href="#运行-jar-包" class="headerlink" title="运行 jar 包"></a>运行 jar 包</h4><pre><code>java -jar &lt;jarname&gt;
-</code></pre><h4 id="查找命令在系统中的位置"><a href="#查找命令在系统中的位置" class="headerlink" title="查找命令在系统中的位置"></a>查找命令在系统中的位置</h4><pre><code>which ls # 查找 ls 命令的默认位置
-whereis ls # 查找 系统中所有叫做 ls 的文件和文件夹
-</code></pre><h4 id="tar-压缩"><a href="#tar-压缩" class="headerlink" title="tar 压缩"></a>tar 压缩</h4><pre><code>tar -xzvf file.tar.gz    # 解压缩到当前目录
-</code></pre><h4 id="取消MySQL开机自启动"><a href="#取消MySQL开机自启动" class="headerlink" title="取消MySQL开机自启动"></a>取消MySQL开机自启动</h4><pre><code>vi /etc/inid/mysql.cnf
-// 对应的条目修改成以下
-#start on runlevel[2345]
-stop on starting rc RUNLEVEL=[0123456]
-</code></pre><h4 id="关闭-mysql-服务"><a href="#关闭-mysql-服务" class="headerlink" title="关闭 mysql 服务"></a>关闭 mysql 服务</h4><pre><code>sudo service mysql stop
-</code></pre><h4 id="取消-Apache-开机自启动"><a href="#取消-Apache-开机自启动" class="headerlink" title="取消 Apache 开机自启动"></a>取消 Apache 开机自启动</h4><pre><code>update-rc.d -f apache2 remove
-</code></pre><h4 id="截图"><a href="#截图" class="headerlink" title="截图"></a>截图</h4><pre><code>gnome-screenshot -a // 手动截取选定区域
-</code></pre><h4 id="运行-Burp-Suite"><a href="#运行-Burp-Suite" class="headerlink" title="运行 Burp Suite"></a>运行 Burp Suite</h4><p>得到<code>BurpLoader.jar burpsuite_pro_v1.5.20.jar</code>文件，移动到<code>/opt/burp</code>文件夹内</p>
-<pre><code>sudo chmod +x BurpLoader.jar burpsuite_pro_v1.5.20.jar 
-sudo touch /usr/bin/burp &amp;&amp; sudo chmod +x /usr/bin/burp
-// burp 的文件内容为：
-#! /bin/bash
-java -jar /opt/burp/BurpLoader.jar
-</code></pre><h4 id="配置右键打开终端"><a href="#配置右键打开终端" class="headerlink" title="配置右键打开终端"></a>配置右键打开终端</h4><pre><code>sudo apt-get install nautilus-open-terminal    // 重启生效
-</code></pre><h4 id="配置-FTP-服务器"><a href="#配置-FTP-服务器" class="headerlink" title="配置 FTP 服务器"></a>配置 FTP 服务器</h4><pre><code>apt-get install vsftpd  // 需要先安装 FTP 服务
-service vsftpd start    // 启动
-</code></pre><p>打开 <code>/etc/vsftpd</code> 修改下面几项：</p>
-<pre><code>listen=YES                // 开启服务
-anonmyous_enable=YES // 允许匿名登录
-local_enable=YES        // 允许本地用户登录
-write_enable=YES        // 允许全局写权限
-local_umask=022        // 设置访问权限 上一条写权限同样适用
-// 022表示7（rwx）5（rx）5（rx）
-// u 所有者 g 同组人员 o 其他组人员
-</code></pre><h4 id="进程相关"><a href="#进程相关" class="headerlink" title="进程相关"></a>进程相关</h4><pre><code>pkill -9 进程名  // 通过进程名杀死(-9 表示强制)
-kill -9 进程ID    // 通过进程ID杀死
-netstat [-lnp|-anp|-tnp] | grep 8000  // 查找使用8000端口号的进程
-ps -aux    // 显示所有用户的进程并打印相应的CMD命令
-</code></pre><h4 id="Ubuntu-设置静态-IP"><a href="#Ubuntu-设置静态-IP" class="headerlink" title="Ubuntu 设置静态 IP"></a>Ubuntu 设置静态 IP</h4><pre><code>sudo vim /etc/network/interfaces
-// 修改成如下
-auto eth0
-iface eth0 inet static
-address 192.168.0.117
-gateway 192.168.0.1 
-netmask 255.255.255.0
-network 192.168.0.0
-broadcast 192.168.0.255
-</code></pre><p>重启服务 <code>service networking restart</code></p>
-<h4 id="Ubuntu-设置临时-IP"><a href="#Ubuntu-设置临时-IP" class="headerlink" title="Ubuntu 设置临时 IP"></a>Ubuntu 设置临时 IP</h4><pre><code>ifconfig eth0 192.168.1.130 netmask 255.255.255.0 up  // IP 子网掩码
-route add default gw 192.168.1.1    // 网管
-vim /etc.resolv.conf
-添加 nameserver 8.8.8.8  // DNS
-</code></pre><h4 id="开启-关闭-SSH"><a href="#开启-关闭-SSH" class="headerlink" title="开启 关闭 SSH"></a>开启 关闭 SSH</h4><pre><code>service ssh start/stop  // 需要先安装 SSH
-</code></pre><h4 id="禁止-Ping-主机"><a href="#禁止-Ping-主机" class="headerlink" title="禁止 Ping 主机"></a>禁止 Ping 主机</h4><pre><code>echo 1 &gt; /proc/sys/net/ipv4/icmp_echo_ignore_all
-</code></pre><h4 id="查看系统磁盘使用率"><a href="#查看系统磁盘使用率" class="headerlink" title="查看系统磁盘使用率"></a>查看系统磁盘使用率</h4><pre><code>df -h
-</code></pre><h4 id="查看内核版本"><a href="#查看内核版本" class="headerlink" title="查看内核版本"></a>查看内核版本</h4><pre><code>uname -a
-</code></pre><h4 id="查看-CPU-内存"><a href="#查看-CPU-内存" class="headerlink" title="查看 CPU ,内存"></a>查看 CPU ,内存</h4><pre><code>top     // 查看 CPU ， 内存情况
-free -h // 查看内存使用率
-</code></pre><h4 id="安装-卸载-deb-包"><a href="#安装-卸载-deb-包" class="headerlink" title="安装/卸载 .deb 包"></a>安装/卸载 .deb 包</h4><pre><code>sudo dpkg -i package.deb // 安装
-sudo dpkg -r package   // 卸载
-</code></pre><h4 id="将普通用户（anka9080）添加到-sudoers"><a href="#将普通用户（anka9080）添加到-sudoers" class="headerlink" title="将普通用户（anka9080）添加到 sudoers"></a>将普通用户（anka9080）添加到 sudoers</h4><pre><code>adduser anka9080  //填写好密码之后
-sudo vi /etc/sudoers
-// 在 root ALL=(ALL) ALL 下一行添加
-anka9080 ALL=(ALL) ALL
-</code></pre><h4 id="zip-压缩解压缩"><a href="#zip-压缩解压缩" class="headerlink" title="zip 压缩解压缩"></a>zip 压缩解压缩</h4><pre><code>zip -r new.zip dirname
-unzip new.zip
-</code></pre><h4 id="Linux-目录介绍"><a href="#Linux-目录介绍" class="headerlink" title="Linux 目录介绍"></a>Linux 目录介绍</h4><ul>
-<li>/    根目录，必须要挂载的目录 1-2G（主分区）</li>
-<li>/boot    引导目录，建议单独挂载 大小100M（主分区）</li>
-<li>/swap    交换分区，设置为物理内存的2倍，若物理内存&gt;2G，设为2G，类似Win下虚拟内存，休眠时会用到</li>
-<li>/home    用户home目录所在地，容量依普通用户数量定，一般每个用户100M（主分区）</li>
-<li>/opt    第三方应用程序默认安装目录</li>
-<li>/usr    系统软件所在目录</li>
-<li>/var    动态的应用程序数据，余下空间（10-20G）</li>
-</ul>
-<h5 id="设置Apache-支持-GD库-扩展"><a href="#设置Apache-支持-GD库-扩展" class="headerlink" title="设置Apache 支持 GD库 扩展"></a>设置Apache 支持 GD库 扩展</h5><pre><code>apt-get install php5-gd  // 重启服务器
-</code></pre><h4 id="设置-MySQL-外网可访问："><a href="#设置-MySQL-外网可访问：" class="headerlink" title="设置 MySQL 外网可访问："></a>设置 MySQL 外网可访问：</h4><pre><code>use mysql;
-update user set host = &apos;%&apos; where user = &apos;需要授权的用户名&apos;;
-修改 /etc/mysql/my.cnf 文件 bind ip 127.0.0.1 改成需要授权的ip
-重新启动 MySQL
-</code></pre><h4 id="安装-Flask"><a href="#安装-Flask" class="headerlink" title="安装 Flask"></a>安装 Flask</h4><pre><code>pip install flask
-</code></pre><h4 id="Ubuntu14-04-安装-LAMP"><a href="#Ubuntu14-04-安装-LAMP" class="headerlink" title="Ubuntu14.04 安装 LAMP"></a>Ubuntu14.04 安装 LAMP</h4><pre><code>apt-get install apache2 php5-mysql libapache2-mod-php5 mysql-server
-</code></pre><h4 id="Python-安装-MySQL库"><a href="#Python-安装-MySQL库" class="headerlink" title="Python 安装 MySQL库"></a>Python 安装 MySQL库</h4><pre><code>sudo pip install mysql-python
-// 若报错 pip install mysql-python fails with EnvironmentError: mysql_config not found
-sudo apt-get install libmysqlclient-dev
-// 若报错 fatal error: Python.h: No such file or directory
-sudo apt-get install python-dev
-</code></pre><h4 id="Ubuntu-查看当前远程链接用户"><a href="#Ubuntu-查看当前远程链接用户" class="headerlink" title="Ubuntu 查看当前远程链接用户"></a>Ubuntu 查看当前远程链接用户</h4><pre><code>w
-</code></pre><h4 id="ssh-日志存放位置"><a href="#ssh-日志存放位置" class="headerlink" title="ssh 日志存放位置"></a>ssh 日志存放位置</h4><pre><code>/var/log/auth.log
-</code></pre><h4 id="查看SSH最近几次-成功登录的日志"><a href="#查看SSH最近几次-成功登录的日志" class="headerlink" title="查看SSH最近几次 成功登录的日志"></a>查看SSH最近几次 成功登录的日志</h4><pre><code>last
-若因为wtmp文件不存在导致last命令不可用，可以手动创建 wtmp 文件
-touch /var/log/wtmp
-chmod 0664 /var/log/wtmp
-chown root:utmp /var/log/wtmp
-</code></pre><h4 id="Ubuntu连接-PPTP-VPN服务器"><a href="#Ubuntu连接-PPTP-VPN服务器" class="headerlink" title="Ubuntu连接 PPTP VPN服务器"></a>Ubuntu连接 PPTP VPN服务器</h4><p>新建一个 VPN 连接，点击 Edit，按如下图配置</p>
-<p><img src="http://7xku36.com1.z0.glb.clouddn.com/connect_pptp_conf1.png" width="60%"><br><img src="http://7xku36.com1.z0.glb.clouddn.com/connect_pptp_conf2.png" width="60%"></p>
-<h4 id="查看文件夹大小"><a href="#查看文件夹大小" class="headerlink" title="查看文件夹大小"></a>查看文件夹大小</h4><pre><code>du -sh [filename|dirname]
-</code></pre><h4 id="split-分割文本文件"><a href="#split-分割文本文件" class="headerlink" title="split 分割文本文件"></a>split 分割文本文件</h4><pre><code>split -b 50m es.zip es_part_  // 分割后每个文件大小50m
-// 组装分割后的文件
-cat es_part_* &gt; es.zip
-// 计算md5sum
-md5sum es.zip
-</code></pre><h4 id="查找当前目录下所有包含某字符串的文本文件"><a href="#查找当前目录下所有包含某字符串的文本文件" class="headerlink" title="查找当前目录下所有包含某字符串的文本文件"></a>查找当前目录下所有包含某字符串的文本文件</h4><pre><code>grep -rn str *
--r 递归遍历
--n 显示行号
-</code></pre><h4 id="SSH-连接到其他主机"><a href="#SSH-连接到其他主机" class="headerlink" title="SSH 连接到其他主机"></a>SSH 连接到其他主机</h4><pre><code>ssh user@xxx.xxx.xxx.xxx
-</code></pre><h4 id="修复Ubuntu中文输入出现两个输入框"><a href="#修复Ubuntu中文输入出现两个输入框" class="headerlink" title="修复Ubuntu中文输入出现两个输入框"></a>修复Ubuntu中文输入出现两个输入框</h4><pre><code>// kill 掉fcitx-qimpanel这个进程。
-user@linux:~$ ps -A | grep fcitx
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
+    <time datetime="2016-09-17T10:34:52.000Z" itemprop="datePublished">2016-09-17</time>
+  </a>
+</section>
 
 
-  <div class="article-tags">
+
+
+
+
   
-  <span></span> <a href="/tags/Ubuntu/">Ubuntu</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/09/13/Ubuntu常用命令笔记/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/09/13/Ubuntu常用命令笔记/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/09/11/Target-Blank漏洞分析/" title="Target_Blank 漏洞分析" itemprop="url">Target_Blank 漏洞分析</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2016-09-11T07:58:16.000Z" itemprop="datePublished"> Published 2016-09-11</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>在浏览器中点击 <code>target=&#39;_blank&#39;</code> 的标签后，新标签的站点可以通过 <code>windows.opener</code> 对原标签的进行访问，进而可能会导致钓鱼事件或拿到用户的浏览历史。</p>
-<h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h2><p>在这个 Demo 中，打开原网站( index.html )中的 一个链接( evil.html )，会在新Tab打开新的页面，同时原 Tab 中的网站会被替换成另一个网站。</p>
-<p>原网站代码( index.html ):</p>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;title&gt;Index Page&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    Target_Blank_Vuln Demo:
-    &lt;br&gt;
-
-    &lt;br&gt;
-    After u click the evil site , this page will be replaced to another site silently!
-    &lt;br&gt;&lt;br&gt;
-    &lt;!-- Fixed --&gt;
-    &lt;!-- &lt;a href=&quot;evil.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Evil Site&lt;/a&gt; --&gt;
-    &lt;!-- Vuln --&gt;
-    &lt;a href=&quot;evil.html&quot; target=&quot;_blank&quot;&gt;Evil Site&lt;/a&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><p>恶意链接的HTML源码( evil.html ):</p>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;title&gt;Evil Site&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;script type=&quot;text/javascript&quot;&gt;
-        if (window.opener) {
-            window.opener.location = &quot;http://www.evilclay.com&quot;;
-        }
-    &lt;/script&gt;
-    &lt;h2&gt;hey, I have Got U.&lt;/h2&gt;
-    &lt;br&gt;
-    &lt;h2&gt;Look Back :P&lt;/h2&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><p>分析： 通过 <code>target=&quot;_blank&quot;</code> 打开的新的标签页中的网站 evil.html 会控制原标签页的内容，在这里会把原标签重定向到 www.evilclay.com .</p>
-<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><ol>
-<li>浏览器访问 <code>index.html</code> ， 页面如下：</li>
-</ol>
-<p><img src="/img/tb_1.png" alt=""></p>
-<ol>
-<li>点击 <code>index.html</code> 中的 链接，发现在新的Tab打开链接，同时原Tab正在跳转至另外一个网站(在 <code>Javascript</code> 中自定义的链接)。</li>
-</ol>
-<p><img src="/img/tb_2.png" alt=""></p>
-<ol>
-<li>返回原 Tab 页面，确实已经不是之前的页面了。</li>
-</ol>
-<p><img src="/img/tb_3.png" alt=""></p>
-<h2 id="利用场景"><a href="#利用场景" class="headerlink" title="利用场景"></a>利用场景</h2><p>这个漏洞的利用条件是攻击者可以在正常页面中加入自己网站的一个链接，从而可以拿来对其他用户进行钓鱼攻击。先伪造好一个与原网站一样的页面，其他用户点击这个连接时，替换原网页的内容，将用户导向到钓鱼网站上，在移动端的利用应该会更隐蔽</p>
-<p>目前，Twitter 依然没有 fix 这个漏洞，自己可以在 Twitter 的个人简介中添加链接进行测试  xD</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
-<li><a href="https://dev.to/ben/the-targetblank-vulnerability-by-example" target="_blank" rel="external">https://dev.to/ben/the-targetblank-vulnerability-by-example</a></li>
-</ol>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
+<section class="post" itemscope itemprop="blogitem">
   
-  <span></span> <a href="/tags/漏洞分析/">漏洞分析</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/09/11/Target-Blank漏洞分析/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/09/11/Target-Blank漏洞分析/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/09/11/Ubuntu16.04-编译安装最新版Hydra/" title="Ubuntu16.04 编译安装最新版Hydra" itemprop="url">Ubuntu16.04 编译安装最新版Hydra</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2016-09-10T18:29:19.000Z" itemprop="datePublished"> Published 2016-09-11</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <blockquote>
-<p>前言：因为在最新版的Hydra在 Ubuntu14.04 下编译安装确实有蜜汁Bug，参考Github上的这个 Issue (<a href="https://github.com/vanhauser-thc/thc-hydra/issues/147" target="_blank" rel="external">https://github.com/vanhauser-thc/thc-hydra/issues/147</a>) 所以不得不装了 Ubuntu16.04 再把它撸一遍 = =。然后，我发现其实官网一定要看仔细了，因为最权威的操作往往都是从官网流出来的，只是自己没注意而已。</p>
-</blockquote>
-<h2 id="装第三方依赖库"><a href="#装第三方依赖库" class="headerlink" title="装第三方依赖库"></a>装第三方依赖库</h2><ol>
-<li>装环境之前更新下源包</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
-<ol>
-<li>因为要使用 SSL 爆破功能所以需要用到 libssh 库，图方便把官网给出的第三方库都给装上得了。</li>
-</ol>
-<blockquote>
-<p>参考： <a href="https://www.thc.org/thc-hydra/" target="_blank" rel="external">https://www.thc.org/thc-hydra/</a></p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libssl-dev libssh-dev libidn11-dev libpcre3-dev libgtk2.0-dev libmysqlclient-dev libpq-dev libsvn-dev firebird2.1-dev libncurses5-dev</span><br></pre></td></tr></table></figure>
-<p>由于官网给出的 <code>libncp-dev</code> 这个库装不上，所以我把它删掉了，需要的时候可以自行搜索装上，目前用不到~</p>
-<h2 id="编译安装-Hydra"><a href="#编译安装-Hydra" class="headerlink" title="编译安装 Hydra"></a>编译安装 Hydra</h2><ol>
-<li><p>在 GitHub （<a href="https://github.com/vanhauser-thc/thc-hydra/releases）上下载最新版本，目前是8.3。" target="_blank" rel="external">https://github.com/vanhauser-thc/thc-hydra/releases）上下载最新版本，目前是8.3。</a></p>
-</li>
-<li><p>解压归档文件</p>
-</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xzvf thc-hydra-8.3.tar.gz</span><br></pre></td></tr></table></figure>
-<ol>
-<li>进入解压后的文件编译并安装</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> thc-hydra-8.3/</span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
-<p>至此已经成功安装了 ;-)</p>
-<h2 id="测试-ssh-爆破"><a href="#测试-ssh-爆破" class="headerlink" title="测试 ssh 爆破"></a>测试 ssh 爆破</h2><p>如图所示，已经爆破出密码：</p>
-<p><img src="/img/hydra_ssh_success.png" alt=""></p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
-<li><a href="https://www.thc.org/thc-hydra/" target="_blank" rel="external">https://www.thc.org/thc-hydra/</a> 第三方依赖库</li>
-<li><a href="https://github.com/vanhauser-thc/thc-hydra/releases" target="_blank" rel="external">https://github.com/vanhauser-thc/thc-hydra/releases</a> Hydra 最新版下载地址</li>
-</ol>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
+    <a href="/2016/09/13/Ubuntu装完系统后的几条配置/" title="Ubuntu装完系统后的几条配置" itemprop="url">
   
-  <span></span> <a href="/tags/Hydra/">Hydra</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/09/11/Ubuntu16.04-编译安装最新版Hydra/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/09/11/Ubuntu16.04-编译安装最新版Hydra/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
+    <h1 itemprop="name">Ubuntu装完系统后的几条配置</h1>
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
+     
+           <p itemprop="description" >OS :　Ubuntu16.04
+
+安装搜狗输入法
+官网下载 deb 包
+双击打开，等一会出现软件包安装界面
+SustemSetting - LanguageSupport 等待自动更新完毕
+im-config 下一步下一步 重启
+点击右上角通知栏键盘图标，添加输入法，取消Onl</p>
+        
     
-      <a href="/2016/09/06/Flask-Web项目小结/" title="Flask-Web项目小结" itemprop="url">Flask-Web项目小结</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2016-09-06T14:47:29.000Z" itemprop="datePublished"> Published 2016-09-06</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="项目文件结构"><a href="#项目文件结构" class="headerlink" title="项目文件结构"></a>项目文件结构</h2><ul>
-<li>libs 一些声明的类和函数文件夹</li>
-<li>static 静态文件文件夹</li>
-<li>templates HTML模板文件文件夹</li>
-<li>config.py 项目配置文件</li>
-<li>app.py 项目入口文件</li>
-<li>CHANGELOG.md 项目更新log</li>
-<li>README.md 项目介绍文件</li>
-</ul>
-<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><ol>
-<li>功能函数以及类函数 统一写在 libs 文件夹内</li>
-<li>MySQL的配置参数，入口口令等（一些根据情况需要自定义的参数）全局参数统一使用config.py的方式配置。</li>
-<li><code>app_secret_key</code>这种在项目中不需要变动的参数可以写在app.py文件中。<br>app.py 文件除了一些route定义不应该包含其他的方法。</li>
-<li>一些类若需要在路由函数中调用，其实例化放在 app.py 路由区域前。</li>
-</ol>
-<h2 id="关于路由"><a href="#关于路由" class="headerlink" title="关于路由"></a>关于路由</h2><p>忽略 <code>get/post</code> 型</p>
-<pre><code>@app.route(&apos;/&apos;)
-</code></pre><p>判断是否是 GET 请求</p>
-<pre><code>if request.method == &apos;GET&apos;:
-</code></pre><p>重定向使用</p>
-<pre><code>redirect(&apos;/login&apos;)
-</code></pre><p>返回错误信息</p>
-<pre><code>return &apos;&lt;html&gt;&lt;script&gt;alert(&apos;Some ERR message&apos;)&lt;/script&gt;&lt;/html&gt;&apos;
-</code></pre><p>判断是GET请求中是否有某参数</p>
-<pre><code>if request.args.has_key(&apos;somekey&apos;):
-</code></pre><p>从GET请求里取出某参数，不存在则设为默认值：</p>
-<pre><code>request.args.get(&apos;keyname&apos;,&apos;defaultvalue&apos;)
-</code></pre><p>刷新数据使用 JSON 的数据格式</p>
-<pre><code>return json.dump(dict_var)
-</code></pre><h2 id="关于数据库操作"><a href="#关于数据库操作" class="headerlink" title="关于数据库操作"></a>关于数据库操作</h2><ol>
-<li><p>数据库类写在libs.models文件中</p>
-</li>
-<li><p>数据库连接信息从config.py文件中读取</p>
-</li>
-<li><p><code>__init__</code>方法包含 <code>self._conn</code> 和 <code>self._cur</code> 的定义,<code>connhe cur</code> 都是私有变量</p>
-</li>
-<li><p>查询，更新，插入操作统一用 <code>query/update/insert</code> 方法，而且需要使用 <code>try..catch</code> 包围。返回游标执行SQL语句的结果</p>
-</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	sql op..</span><br><span class="line">	result = ...</span><br><span class="line"><span class="keyword">except</span> MySQLdb.Error,e:</span><br><span class="line">	err_msg = <span class="string">'[-] MySQL err!'</span>,e.args[<span class="number">0</span>],e.args[<span class="number">1</span>]</span><br><span class="line">	<span class="keyword">print</span> err_msg</span><br><span class="line">	result = <span class="keyword">False</span></span><br><span class="line"><span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
-<ol>
-<li>常用方法</li>
-</ol>
-<p>a. 获得所有数据 fetch_all</p>
-<pre><code>self._cur.fetchall()
-</code></pre><p>b. 获得一行数据 fetch_one</p>
-<pre><code>self._cur.fetchone()
-</code></pre><p>c. 获得返回结果的数量 get_count</p>
-<pre><code>self._cur.rowcount
-</code></pre><p>d. 关闭连接 close</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	self._cur.close()</span><br><span class="line">	self._conn.close()</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">	<span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
+    <time datetime="2016-09-12T16:46:08.000Z" itemprop="datePublished">2016-09-13</time>
+  </a>
+</section>
 
 
-  <div class="article-tags">
+
+
+
+
   
-  <span></span> <a href="/tags/Flask/">Flask</a>
-  </div>
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2016/09/13/Ubuntu常用命令笔记/" title="Ubuntu常用命令笔记" itemprop="url">
+  
+    <h1 itemprop="name">Ubuntu常用命令笔记</h1>
+    
+     
+           <p itemprop="description" >自己的东西用着靠谱，记录下省得到时候还要劳烦搜索引擎，这份笔记会保持更新 xD
 
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/09/06/Flask-Web项目小结/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/09/06/Flask-Web项目小结/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
+显示所有系统变量env
+apt 查看软件版本，并安装特定版本的软件sudo apt-cache showpkg package  // 查看可以安装的版本
+sudo apt-get install </p>
+        
+    
+    <time datetime="2016-09-12T16:33:28.000Z" itemprop="datePublished">2016-09-13</time>
+  </a>
+</section>
 
 
 
 
 
 
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2016/09/11/Target-Blank漏洞分析/" title="Target_Blank 漏洞分析" itemprop="url">
+  
+    <h1 itemprop="name">Target_Blank 漏洞分析</h1>
+    
+     
+           <p itemprop="description" >概述在浏览器中点击 target=&amp;#39;_blank&amp;#39; 的标签后，新标签的站点可以通过 windows.opener 对原标签的进行访问，进而可能会导致钓鱼事件或拿到用户的浏览历史。
+Demo在这个 Demo 中，打开原网站( index.html )中的 一个链接(</p>
+        
+    
+    <time datetime="2016-09-11T07:58:16.000Z" itemprop="datePublished">2016-09-11</time>
+  </a>
+</section>
 
-  <nav id="page-nav" class="clearfix">
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2016/09/11/Ubuntu16.04-编译安装最新版Hydra/" title="Ubuntu16.04 编译安装最新版Hydra" itemprop="url">
+  
+    <h1 itemprop="name">Ubuntu16.04 编译安装最新版Hydra</h1>
+    
+     
+           <p itemprop="description" >前言：因为在最新版的Hydra在 Ubuntu14.04 下编译安装确实有蜜汁Bug，参考Github上的这个 Issue (https://github.com/vanhauser-thc/thc-hydra/issues/147) 所以不得不装了 Ubuntu16.04 再把</p>
+        
+    
+    <time datetime="2016-09-10T18:29:19.000Z" itemprop="datePublished">2016-09-11</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2016/09/06/Flask-Web项目小结/" title="Flask-Web项目小结" itemprop="url">
+  
+    <h1 itemprop="name">Flask-Web项目小结</h1>
+    
+     
+           <p itemprop="description" >项目文件结构
+libs 一些声明的类和函数文件夹
+static 静态文件文件夹
+templates HTML模板文件文件夹
+config.py 项目配置文件
+app.py 项目入口文件
+CHANGELOG.md 项目更新log
+README.md 项目介绍文件
+
+说明
+功能函数以</p>
+        
+    
+    <time datetime="2016-09-06T14:47:29.000Z" itemprop="datePublished">2016-09-06</time>
+  </a>
+</section>
+
+
+
+
+
+
+
+  <nav id="page-nav" class="clearfix unexpand">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
   </nav>
 
 </div>
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
 
   
 
   
 <div class="tagslist">
-	<p class="asidetitle">Tags</p>
+	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
 			
@@ -1172,7 +437,7 @@ user@linux:~$ ps -A | grep fcitx
 
 
   <div class="linkslist">
-  <p class="asidetitle">Links</p>
+  <p class="asidetitle">友情链接</p>
     <ul>
         
           <li>
@@ -1196,11 +461,8 @@ user@linux:~$ ps -A | grep fcitx
     </ul>
 </div>
 
-  
-
-
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
 
 </aside>
@@ -1340,7 +602,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 

