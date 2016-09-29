@@ -31,7 +31,7 @@ systeminfo | findstr /B /C:&amp;quot;OS 名称&amp;quot;
 // findstr /B 从行的开始进行匹配  /C: 表示匹配字符串
 识别系统体系架构
 echo">
-<meta property="og:updated_time" content="2016-09-26T17:13:20.215Z">
+<meta property="og:updated_time" content="2016-09-29T14:50:02.256Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Windows内网提权命令收集">
 <meta name="twitter:description" content="一、系统信息查看系统的各种信息
@@ -162,7 +162,10 @@ wmic startup list brief
 <pre><code>wmic qfe get Caption,Description,HotFixID,InstalledOn | findstr /C:&quot;KBxxxxxxx&quot;
 </code></pre><h3 id="四、-敏感数据文件"><a href="#四、-敏感数据文件" class="headerlink" title="四、 敏感数据文件"></a>四、 敏感数据文件</h3><pre><code>dir /b/s config*  // 当前目录下查找所有文件以config开头的文件
 findstr /si password *.xml *.ini *.txt    当前目录下在指定的文件类型中查找指定的字符串
-</code></pre>  
+</code></pre><blockquote>
+<p>参考<br><a href="http://www.freebuf.com/articles/system/114731.html" target="_blank" rel="external">http://www.freebuf.com/articles/system/114731.html</a></p>
+</blockquote>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -317,12 +320,6 @@ findstr /si password *.xml *.ini *.txt    当前目录下在指定的文件类�
   <div class="linkslist">
   <p class="asidetitle">Links</p>
     <ul>
-        
-          <li>
-            
-            	<a href="http://www.awbeci.com" target="_blank" title="一个面向程序员的分类导航">Awbeci导航</a>
-            
-          </li>
         
           <li>
             
