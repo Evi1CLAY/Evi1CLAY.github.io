@@ -4,26 +4,49 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Python ThreadPool 线程池模板 | Anka9080&#39;s Notes</title>
+    <title>Social-Engineer-Tool（SET）社会工程学工具包制作钓鱼网站 | Anka9080&#39;s Notes</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Anka9080">
     
 
     
-    <meta name="description" content="0x 00 Why　　Python 的 简单多线程实现 用 dummy 模块 一句话就可以搞定，但需要对线程，队列做进一步的操作，最好自己写个线程池类来实现，考虑到后期会经常使用，所以把模板贴出来。
-0x 01 Coding1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484">
+    <meta name="description" content="Social-Engineer-Tool 是一个好工具，使用 Python 开发，准备后期深入的挖掘一下，今天俺要拿它的克隆网站功能制作一个钓鱼网站看看效果咋样~
+
+安装最新版 SET 工具
+从 GitHub上下载最近的安装包并解压(20161003最新是7.3.16版本)
+
+https://github.com/trustedsec/social-engineer-toolkit/releas">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python ThreadPool 线程池模板">
-<meta property="og:url" content="http://www.evilclay.com/2016/05/24/python-multithreads-templete/index.html">
+<meta property="og:title" content="Social-Engineer-Tool（SET）社会工程学工具包制作钓鱼网站">
+<meta property="og:url" content="http://www.evilclay.com/2016/10/03/Social-Engineer-Tool（SET）社会工程学工具包制作钓鱼网站/index.html">
 <meta property="og:site_name" content="Anka9080's Notes">
-<meta property="og:description" content="0x 00 Why　　Python 的 简单多线程实现 用 dummy 模块 一句话就可以搞定，但需要对线程，队列做进一步的操作，最好自己写个线程池类来实现，考虑到后期会经常使用，所以把模板贴出来。
-0x 01 Coding1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484">
-<meta property="og:updated_time" content="2016-05-29T03:32:45.567Z">
+<meta property="og:description" content="Social-Engineer-Tool 是一个好工具，使用 Python 开发，准备后期深入的挖掘一下，今天俺要拿它的克隆网站功能制作一个钓鱼网站看看效果咋样~
+
+安装最新版 SET 工具
+从 GitHub上下载最近的安装包并解压(20161003最新是7.3.16版本)
+
+https://github.com/trustedsec/social-engineer-toolkit/releas">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/set0.png">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/set1.png">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/set3.png">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/set4.png">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/html1.png">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/html2.png">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/php.png">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/formal_login.png">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/fake_login.png">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/set5.png">
+<meta property="og:updated_time" content="2016-10-02T16:49:20.383Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python ThreadPool 线程池模板">
-<meta name="twitter:description" content="0x 00 Why　　Python 的 简单多线程实现 用 dummy 模块 一句话就可以搞定，但需要对线程，队列做进一步的操作，最好自己写个线程池类来实现，考虑到后期会经常使用，所以把模板贴出来。
-0x 01 Coding1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484">
+<meta name="twitter:title" content="Social-Engineer-Tool（SET）社会工程学工具包制作钓鱼网站">
+<meta name="twitter:description" content="Social-Engineer-Tool 是一个好工具，使用 Python 开发，准备后期深入的挖掘一下，今天俺要拿它的克隆网站功能制作一个钓鱼网站看看效果咋样~
+
+安装最新版 SET 工具
+从 GitHub上下载最近的安装包并解压(20161003最新是7.3.16版本)
+
+https://github.com/trustedsec/social-engineer-toolkit/releas">
+<meta name="twitter:image" content="http://7xku36.com1.z0.glb.clouddn.com/set0.png">
 
     
     <link rel="alternative" href="/atom.xml" title="Anka9080&#39;s Notes" type="application/atom+xml">
@@ -83,14 +106,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/05/24/python-multithreads-templete/" title="Python ThreadPool 线程池模板" itemprop="url">Python ThreadPool 线程池模板</a>
+      <a href="/2016/10/03/Social-Engineer-Tool（SET）社会工程学工具包制作钓鱼网站/" title="Social-Engineer-Tool（SET）社会工程学工具包制作钓鱼网站" itemprop="url">Social-Engineer-Tool（SET）社会工程学工具包制作钓鱼网站</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
 		
   <p class="article-time">
-    <time datetime="2016-05-24T10:11:29.000Z" itemprop="datePublished"> 发表于 2016-05-24</time>
+    <time datetime="2016-10-02T16:22:06.000Z" itemprop="datePublished"> 发表于 2016-10-03</time>
     
   </p>
 </header>
@@ -99,12 +122,71 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x-00-Why"><span class="toc-number">1.</span> <span class="toc-text">0x 00 Why</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x-01-Coding"><span class="toc-number">2.</span> <span class="toc-text">0x 01 Coding</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装最新版-SET-工具"><span class="toc-number">1.</span> <span class="toc-text">安装最新版 SET 工具</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#克隆网站"><span class="toc-number">2.</span> <span class="toc-text">克隆网站</span></a></li></ol>
 		
 		</div>
 		
-		<h2 id="0x-00-Why"><a href="#0x-00-Why" class="headerlink" title="0x 00 Why"></a>0x 00 Why</h2><p>　　Python 的 简单多线程实现 用 dummy 模块 一句话就可以搞定，但需要对线程，队列做进一步的操作，最好自己写个线程池类来实现，考虑到后期会经常使用，所以把模板贴出来。</p>
-<h2 id="0x-01-Coding"><a href="#0x-01-Coding" class="headerlink" title="0x 01 Coding"></a>0x 01 Coding</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"><span class="comment"># version: 0.1</span></span><br><span class="line"><span class="keyword">import</span> re,time</span><br><span class="line"><span class="keyword">from</span> requests <span class="keyword">import</span> get</span><br><span class="line"><span class="keyword">from</span> Queue <span class="keyword">import</span> Queue, Empty</span><br><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Thread</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 全局变量</span></span><br><span class="line">COUNT = <span class="number">0</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 爬虫类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Spider</span><span class="params">(Thread)</span>:</span></span><br><span class="line">    <span class="string">"""docstring for Spider"""</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,queue)</span>:</span></span><br><span class="line">        Thread.__init__(self)</span><br><span class="line">        self.queue = queue</span><br><span class="line">        self.start() <span class="comment"># 执行 run()</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"每次读取 queue 的一条"</span></span><br><span class="line">        <span class="keyword">global</span> COUNT</span><br><span class="line">        <span class="keyword">while</span>(<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                sth = self.queue.get(block=false)</span><br><span class="line">            <span class="keyword">except</span> Empty:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">except</span> Exception,e:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'[- Excpt :]'</span>,str(e)</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">print</span> COUNT</span><br><span class="line">        COUNT += <span class="number">1</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 线程池类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ThreadPool</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.queue = Queue() <span class="comment"># 需要执行的队列</span></span><br><span class="line">        self.threads = [] <span class="comment"># 多线程列秒</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_task</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">init_threads</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wait</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> t <span class="keyword">in</span> self.threads:</span><br><span class="line">            <span class="keyword">if</span> t.isAlive():</span><br><span class="line">                t.join()</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    start = time.time()</span><br><span class="line"> </span><br><span class="line">    tp = ThreadPool(thread_num)</span><br><span class="line">    tp.wait()</span><br><span class="line"> </span><br><span class="line">    end = time.time()</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">print</span> <span class="string">'[ - info ] cost time :&#123;&#125;'</span>.format(end - start)</span><br></pre></td></tr></table></figure>  
+		<blockquote>
+<p>Social-Engineer-Tool 是一个好工具，使用 Python 开发，准备后期深入的挖掘一下，今天俺要拿它的克隆网站功能制作一个钓鱼网站看看效果咋样~</p>
+</blockquote>
+<h4 id="安装最新版-SET-工具"><a href="#安装最新版-SET-工具" class="headerlink" title="安装最新版 SET 工具"></a>安装最新版 SET 工具</h4><ol>
+<li>从 GitHub上下载最近的安装包并解压(20161003最新是7.3.16版本)</li>
+</ol>
+<p><a href="https://github.com/trustedsec/social-engineer-toolkit/releases" target="_blank" rel="external">https://github.com/trustedsec/social-engineer-toolkit/releases</a></p>
+<ol>
+<li>执行 <code>sudo python setup.py install</code> 会安装 SET 以及相关的依赖工具。</li>
+</ol>
+<h4 id="克隆网站"><a href="#克隆网站" class="headerlink" title="克隆网站"></a>克隆网站</h4><ol>
+<li>使用 <code>sudo setoolkit</code> 打开 SET 工具</li>
+</ol>
+<p><img src="http://7xku36.com1.z0.glb.clouddn.com/set0.png" alt=""></p>
+<ol>
+<li>因为要做钓鱼攻击，这里选择 3</li>
+</ol>
+<p><img src="http://7xku36.com1.z0.glb.clouddn.com/set1.png" alt=""></p>
+<ol>
+<li>这一步选择钓鱼页面的生成方式，选择从指定的网站克隆钓鱼页面 2</li>
+</ol>
+<p><img src="http://7xku36.com1.z0.glb.clouddn.com/set3.png" alt=""></p>
+<ol>
+<li>这一步设定钓鱼服务器的 IP 以及需要克隆的页面 URL 地址，我这里使用本机(192.168.1.105)直接作为钓鱼服务器。</li>
+</ol>
+<p><img src="http://7xku36.com1.z0.glb.clouddn.com/set4.png" alt=""></p>
+<ol>
+<li>设置好之后会在 钓鱼服务器的 Web 根目录下直接生成钓鱼页面，如下所示:</li>
+</ol>
+<p><img src="http://7xku36.com1.z0.glb.clouddn.com/html1.png" alt=""></p>
+<ol>
+<li>html 文件 和 PHP 文件都是用来钓鱼的页面，havester 开头的文件是用来接收用户输入的账户信息，看一下文件的内容：</li>
+</ol>
+<ul>
+<li>index.html 内容：</li>
+</ul>
+<p><img src="http://7xku36.com1.z0.glb.clouddn.com/html2.png" alt=""></p>
+<p>可以看出 把 form 的action 改成 钓鱼网站的接收地址。</p>
+<ul>
+<li>post.php  内容：</li>
+</ul>
+<p><img src="http://7xku36.com1.z0.glb.clouddn.com/php.png" alt=""></p>
+<p>就是接收 POST 参数，然后把 POST数据写到文件里。</p>
+<ol>
+<li>先看需要钓鱼的真实网站：</li>
+</ol>
+<p><img src="http://7xku36.com1.z0.glb.clouddn.com/formal_login.png" alt=""></p>
+<p>是一个简单的 登录 界面。</p>
+<ol>
+<li>使用 SET 工具 克隆后的钓鱼网站页面：</li>
+</ol>
+<p><img src="http://7xku36.com1.z0.glb.clouddn.com/fake_login.png" alt=""></p>
+<p>可以看出 克隆出来的网站除了图标没有意外其他和真实网站一模一样，话说这个SET做钓鱼页面简直省心省力，赞！</p>
+<ol>
+<li>在钓鱼页面输了一个账户，密码测试后，钓鱼服务器接收的账户信息：</li>
+</ol>
+<p><img src="http://7xku36.com1.z0.glb.clouddn.com/set5.png" alt=""></p>
+<blockquote>
+<p>参考:<br><a href="https://github.com/trustedsec/social-engineer-toolkit/blob/master/readme/User_Manual.pdf" target="_blank" rel="external">https://github.com/trustedsec/social-engineer-toolkit/blob/master/readme/User_Manual.pdf</a><br><a href="http://www.freebuf.com/sectool/73409.html" target="_blank" rel="external">http://www.freebuf.com/sectool/73409.html</a></p>
+</blockquote>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -112,7 +194,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Python/">Python</a><a href="/tags/多线程/">多线程</a>
+  <span></span> <a href="/tags/社工工程学-钓鱼网站-SET/">社工工程学|钓鱼网站|SET</a>
   </div>
 
 </div>
@@ -121,7 +203,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://www.evilclay.com/2016/05/24/python-multithreads-templete/" data-title="Python ThreadPool 线程池模板 | Anka9080&#39;s Notes" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.evilclay.com/2016/10/03/Social-Engineer-Tool（SET）社会工程学工具包制作钓鱼网站/" data-title="Social-Engineer-Tool（SET）社会工程学工具包制作钓鱼网站 | Anka9080&#39;s Notes" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -134,19 +216,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/05/26/ua-sql-injection/" title="User-Agent 手工注入的探测与利用分析">
-  <strong>上一篇：</strong><br/>
-  <span>
-  User-Agent 手工注入的探测与利用分析</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/03/30/zoomeye-api/"  title="Python 调用 ZoomEye API 批量获取目标网站IP">
+<a href="/2016/09/27/Windows内网提权命令收集/"  title="Windows内网提权命令收集">
  <strong>下一篇：</strong><br/> 
- <span>Python 调用 ZoomEye API 批量获取目标网站IP
+ <span>Windows内网提权命令收集
 </span>
 </a>
 </div>
@@ -155,7 +229,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/05/24/python-multithreads-templete/" data-title="Python ThreadPool 线程池模板" data-url="http://www.evilclay.com/2016/05/24/python-multithreads-templete/"></div>
+	<div class="ds-thread" data-thread-key="2016/10/03/Social-Engineer-Tool（SET）社会工程学工具包制作钓鱼网站/" data-title="Social-Engineer-Tool（SET）社会工程学工具包制作钓鱼网站" data-url="http://www.evilclay.com/2016/10/03/Social-Engineer-Tool（SET）社会工程学工具包制作钓鱼网站/"></div>
 </section>
 
 
@@ -165,7 +239,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x-00-Why"><span class="toc-number">1.</span> <span class="toc-text">0x 00 Why</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x-01-Coding"><span class="toc-number">2.</span> <span class="toc-text">0x 01 Coding</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装最新版-SET-工具"><span class="toc-number">1.</span> <span class="toc-text">安装最新版 SET 工具</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#克隆网站"><span class="toc-number">2.</span> <span class="toc-text">克隆网站</span></a></li></ol>
  
   </div>
 
