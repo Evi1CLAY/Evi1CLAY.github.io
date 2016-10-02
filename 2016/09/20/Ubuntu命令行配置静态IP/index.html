@@ -20,7 +20,7 @@ iface lo inet loopback
 auto eth0
 iface eth0 inet dhcp
 配置静态IP：这里是给网卡 eth0 做配置，具体需要配置哪个网卡可以使用 ifconfig 查看下
-1234567891011auto loiface lo">
+123456789# The primary networ">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ubuntu命令行配置静态IP">
 <meta property="og:url" content="http://www.evilclay.com/2016/09/20/Ubuntu命令行配置静态IP/index.html">
@@ -34,8 +34,8 @@ iface lo inet loopback
 auto eth0
 iface eth0 inet dhcp
 配置静态IP：这里是给网卡 eth0 做配置，具体需要配置哪个网卡可以使用 ifconfig 查看下
-1234567891011auto loiface lo">
-<meta property="og:updated_time" content="2016-09-19T17:44:52.970Z">
+123456789# The primary networ">
+<meta property="og:updated_time" content="2016-10-02T17:41:15.515Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ubuntu命令行配置静态IP">
 <meta name="twitter:description" content="vim /etc/network/interfaces
@@ -47,7 +47,7 @@ iface lo inet loopback
 auto eth0
 iface eth0 inet dhcp
 配置静态IP：这里是给网卡 eth0 做配置，具体需要配置哪个网卡可以使用 ifconfig 查看下
-1234567891011auto loiface lo">
+123456789# The primary networ">
 
     
     <link rel="alternative" href="/atom.xml" title="Anka9080&#39;s Notes" type="application/atom+xml">
@@ -137,7 +137,7 @@ iface lo inet loopback
 auto eth0
 iface eth0 inet dhcp
 </code></pre><h4 id="配置静态IP："><a href="#配置静态IP：" class="headerlink" title="配置静态IP："></a>配置静态IP：</h4><p>这里是给网卡 eth0 做配置，具体需要配置哪个网卡可以使用 ifconfig 查看下</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">auto lo</span><br><span class="line">iface lo inet loopback</span><br><span class="line"></span><br><span class="line"><span class="comment"># The primary network interface</span></span><br><span class="line">auto eth0</span><br><span class="line"><span class="comment">#iface eth0 inet dhcp</span></span><br><span class="line"></span><br><span class="line">iface eth0 inet static</span><br><span class="line">address 192.168.80.129</span><br><span class="line">netmask 255.255.255.0</span><br><span class="line">gateway 192.168.80.2</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># The primary network interface</span></span><br><span class="line">auto eth0</span><br><span class="line"><span class="comment">#iface eth0 inet dhcp</span></span><br><span class="line"></span><br><span class="line">iface eth0 inet static</span><br><span class="line">address 192.168.80.129</span><br><span class="line">netmask 255.255.255.0</span><br><span class="line">gateway 192.168.80.2</span><br></pre></td></tr></table></figure>
 <h4 id="手动设置-DNS-服务器"><a href="#手动设置-DNS-服务器" class="headerlink" title="手动设置 DNS 服务器"></a>手动设置 DNS 服务器</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vim /etc/resolv.conf</span></span><br></pre></td></tr></table></figure>
 <p>添加如下内容（这点所有Linux发行版都通用）：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nameserver 192.168.80.2</span><br><span class="line">nameserver 8.8.8.8</span><br></pre></td></tr></table></figure>
