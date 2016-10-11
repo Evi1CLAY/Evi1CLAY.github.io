@@ -11,22 +11,16 @@
     
 
     
-    <meta name="description" content="闲扯发呆这种事情真的有毒，想到3年前一个前辈问我的一个技术问题，当你拿到一个非 ROOT 权限的注入点后，如何获得 系统的 ROOT/SYSTEM 权限，实话说，到今天我依然回答不出来一个我想要的答案，突然间一种技术止步不前的危机感，实在惶恐，就在不久前的一次ShowCase上，牛叉的 no 老师在提权这块给我一些实用的思路，回想起来有以下三种方法：
-
-查看 系统内的 补丁安装情况，以及安装了那些">
+    <meta name="description" content="闲扯发呆这种事情真的有毒，想到3年前一个前辈问我的一个技术问题，当你拿到一个非 ROOT 权限的注入点后，如何获得 系统的 ROOT/SYSTEM 权限，实话说，到今天我依然回答不出来一个我想要的答案，突然间一种技术止步不前的危机感，实在惶恐(惶恐是因为明明刚入门的骚年就有这种感觉了，可怕)，就在不久前的一次ShowCase上，牛叉的 no 老师在提权这块给我一些实用的思路，回想起来有以下三种方法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="XML外部实体注入（XXE）漏洞分析及漏洞场景探索">
 <meta property="og:url" content="http://www.evilclay.com/2016/10/11/XML外部实体注入（XXE）漏洞分析及漏洞场景探索/index.html">
 <meta property="og:site_name" content="Anka9080's Notes">
-<meta property="og:description" content="闲扯发呆这种事情真的有毒，想到3年前一个前辈问我的一个技术问题，当你拿到一个非 ROOT 权限的注入点后，如何获得 系统的 ROOT/SYSTEM 权限，实话说，到今天我依然回答不出来一个我想要的答案，突然间一种技术止步不前的危机感，实在惶恐，就在不久前的一次ShowCase上，牛叉的 no 老师在提权这块给我一些实用的思路，回想起来有以下三种方法：
-
-查看 系统内的 补丁安装情况，以及安装了那些">
-<meta property="og:updated_time" content="2016-10-11T15:16:59.948Z">
+<meta property="og:description" content="闲扯发呆这种事情真的有毒，想到3年前一个前辈问我的一个技术问题，当你拿到一个非 ROOT 权限的注入点后，如何获得 系统的 ROOT/SYSTEM 权限，实话说，到今天我依然回答不出来一个我想要的答案，突然间一种技术止步不前的危机感，实在惶恐(惶恐是因为明明刚入门的骚年就有这种感觉了，可怕)，就在不久前的一次ShowCase上，牛叉的 no 老师在提权这块给我一些实用的思路，回想起来有以下三种方法">
+<meta property="og:updated_time" content="2016-10-11T15:21:25.661Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="XML外部实体注入（XXE）漏洞分析及漏洞场景探索">
-<meta name="twitter:description" content="闲扯发呆这种事情真的有毒，想到3年前一个前辈问我的一个技术问题，当你拿到一个非 ROOT 权限的注入点后，如何获得 系统的 ROOT/SYSTEM 权限，实话说，到今天我依然回答不出来一个我想要的答案，突然间一种技术止步不前的危机感，实在惶恐，就在不久前的一次ShowCase上，牛叉的 no 老师在提权这块给我一些实用的思路，回想起来有以下三种方法：
-
-查看 系统内的 补丁安装情况，以及安装了那些">
+<meta name="twitter:description" content="闲扯发呆这种事情真的有毒，想到3年前一个前辈问我的一个技术问题，当你拿到一个非 ROOT 权限的注入点后，如何获得 系统的 ROOT/SYSTEM 权限，实话说，到今天我依然回答不出来一个我想要的答案，突然间一种技术止步不前的危机感，实在惶恐(惶恐是因为明明刚入门的骚年就有这种感觉了，可怕)，就在不久前的一次ShowCase上，牛叉的 no 老师在提权这块给我一些实用的思路，回想起来有以下三种方法">
 
     
     <link rel="alternative" href="/atom.xml" title="Anka9080&#39;s Notes" type="application/atom+xml">
@@ -106,7 +100,7 @@
 		
 		</div>
 		
-		<h2 id="闲扯"><a href="#闲扯" class="headerlink" title="闲扯"></a>闲扯</h2><p>发呆这种事情真的有毒，想到3年前一个前辈问我的一个技术问题，<strong>当你拿到一个非 ROOT 权限的注入点后，如何获得 系统的 ROOT/SYSTEM 权限</strong>，实话说，到今天我依然回答不出来一个我想要的答案，突然间一种技术止步不前的危机感，实在惶恐，就在不久前的一次ShowCase上，牛叉的 no 老师在提权这块给我一些实用的思路，回想起来有以下三种方法：</p>
+		<h2 id="闲扯"><a href="#闲扯" class="headerlink" title="闲扯"></a>闲扯</h2><p>发呆这种事情真的有毒，想到3年前一个前辈问我的一个技术问题，<strong>当你拿到一个非 ROOT 权限的注入点后，如何获得 系统的 ROOT/SYSTEM 权限</strong>，实话说，到今天我依然回答不出来一个我想要的答案，突然间一种技术止步不前的危机感，实在惶恐(惶恐是因为明明刚入门的骚年就有这种感觉了，可怕)，就在不久前的一次ShowCase上，牛叉的 no 老师在提权这块给我一些实用的思路，回想起来有以下三种方法：</p>
 <ol>
 <li>查看 系统内的 补丁安装情况，以及安装了那些软件或者组件，利用系统或者软件本身的漏洞使用对用的 EXP 进行提权操作。</li>
 <li>手机数据库以及可接触到的文件各种账户信息（Web后台账户，DB账户），分析邮件，密码规则，对高权限的账户进行 Fuzz。</li>
@@ -121,7 +115,7 @@
 <p>要想猥琐，先学套路！</p>
 <p>要想猥琐，先学套路！</p>
 </blockquote>
-<p>闲扯了这么多，没啥卵用，但就是想扯，毕竟我有点控计不住我子鸡了。</p>
+<p>闲扯了这些，没啥卵用，但就是想扯，毕竟我有点控计不住我子鸡了。</p>
 <p>下面步入正题，这周看了下 XXE 相关的文章，最终目的很简单，就是想看看 XXE 的漏洞该怎么去挖，在一步步走向终点的过程中，会学习什么是 XXE，XXE 漏洞对应代码/程序的使用场景，以及为什么会出现XXE。</p>
   
 	</div>
