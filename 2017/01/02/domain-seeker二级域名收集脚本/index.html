@@ -1,0 +1,563 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>DomainSeeker 多方式收集目标子域名信息 | Anka9080&#39;s Notes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Anka9080">
+    
+
+    
+    <meta name="description" content="前言参照猪猪侠的 wydomain 项目写一个简单的二级域名查找的脚本，提供三种方式来收集目标的子域名信息。
+
+DNS枚举
+搜索引擎结果
+子域名查询接口
+
+并且综合三种方式收集的子域名进行去重处理。
+运行程序帮助
+123456789101112usage: domain_seeker.py [-h] [-t NUM] [-d DOMAIN] [-b] [-s] [-a]Multi-method S">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DomainSeeker 多方式收集目标子域名信息">
+<meta property="og:url" content="http://www.evilclay.com/2017/01/02/domain-seeker二级域名收集脚本/index.html">
+<meta property="og:site_name" content="Anka9080's Notes">
+<meta property="og:description" content="前言参照猪猪侠的 wydomain 项目写一个简单的二级域名查找的脚本，提供三种方式来收集目标的子域名信息。
+
+DNS枚举
+搜索引擎结果
+子域名查询接口
+
+并且综合三种方式收集的子域名进行去重处理。
+运行程序帮助
+123456789101112usage: domain_seeker.py [-h] [-t NUM] [-d DOMAIN] [-b] [-s] [-a]Multi-method S">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/domain_seeker_demo.png">
+<meta property="og:updated_time" content="2017-01-02T06:45:46.364Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DomainSeeker 多方式收集目标子域名信息">
+<meta name="twitter:description" content="前言参照猪猪侠的 wydomain 项目写一个简单的二级域名查找的脚本，提供三种方式来收集目标的子域名信息。
+
+DNS枚举
+搜索引擎结果
+子域名查询接口
+
+并且综合三种方式收集的子域名进行去重处理。
+运行程序帮助
+123456789101112usage: domain_seeker.py [-h] [-t NUM] [-d DOMAIN] [-b] [-s] [-a]Multi-method S">
+<meta name="twitter:image" content="http://7xku36.com1.z0.glb.clouddn.com/domain_seeker_demo.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Anka9080&#39;s Notes" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Anka9080&#39;s Notes" title="Anka9080&#39;s Notes"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Anka9080&#39;s Notes">Anka9080&#39;s Notes</a></h1>
+				<h2 class="blog-motto">勿忘初心。</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/2048/">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:www.evilclay.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/01/02/domain-seeker二级域名收集脚本/" title="DomainSeeker 多方式收集目标子域名信息" itemprop="url">DomainSeeker 多方式收集目标子域名信息</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
+		
+  <p class="article-time">
+    <time datetime="2017-01-02T06:34:07.000Z" itemprop="datePublished"> Published 2017-01-02</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行"><span class="toc-number">2.</span> <span class="toc-text">运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码"><span class="toc-number">3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>参照猪猪侠的 wydomain 项目写一个简单的二级域名查找的脚本，提供三种方式来收集目标的子域名信息。</p>
+<ul>
+<li>DNS枚举</li>
+<li>搜索引擎结果</li>
+<li>子域名查询接口</li>
+</ul>
+<p>并且综合三种方式收集的子域名进行去重处理。</p>
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><p>程序帮助</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">usage: domain_seeker.py [-h] [-t NUM] [-d DOMAIN] [-b] [-s] [-a]</span><br><span class="line"></span><br><span class="line">Multi-method SubDomain Seeker</span><br><span class="line"></span><br><span class="line">optional arguments:</span><br><span class="line">  -h, --help            show this help message <span class="keyword">and</span> exit</span><br><span class="line">  -t NUM, --thread NUM  thread count</span><br><span class="line">  -d DOMAIN, --domain DOMAIN</span><br><span class="line">                        target doamin</span><br><span class="line">  -b, --bruteforce      dns bruteforce</span><br><span class="line">  -s, --search          search engine</span><br><span class="line">  -a, --api             domain finder api</span><br></pre></td></tr></table></figure>
+<p>测试收集 swu.edu.cn 的所有域名，可以看到经过去重后还有282个子域名条目。</p>
+<p><img src="http://7xku36.com1.z0.glb.clouddn.com/domain_seeker_demo.png" alt=""></p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># encoding:utf-8</span></span><br><span class="line"><span class="comment"># author: Anka9080</span></span><br><span class="line"><span class="comment"># email: funsociety.bat@gmail.com</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> Queue</span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> dns.resolver</span><br><span class="line"><span class="keyword">import</span> dns.rdatatype</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">logging.basicConfig(</span><br><span class="line">    level=logging.INFO, </span><br><span class="line">    format=<span class="string">'%(asctime)s [%(levelname)s] %(message)s'</span>,</span><br><span class="line">)</span><br><span class="line">logging.getLogger(<span class="string">"requests"</span>).setLevel(logging.WARN)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 域名服务器</span></span><br><span class="line">NAMESERVERS = [</span><br><span class="line">    <span class="string">'114.114.114.114'</span>,</span><br><span class="line">    <span class="string">'119.29.29.29'</span>,</span><br><span class="line">    <span class="string">'223.5.5.5'</span>,</span><br><span class="line">    <span class="string">'8.8.8.8'</span>,</span><br><span class="line">    <span class="string">'182.254.116.116'</span>,</span><br><span class="line">    <span class="string">'223.6.6.6'</span>,</span><br><span class="line">    <span class="string">'8.8.4.4'</span>,</span><br><span class="line">    <span class="string">'180.76.76.76'</span>,</span><br><span class="line">    <span class="string">'216.146.35.35'</span>,</span><br><span class="line">    <span class="string">'123.125.81.6'</span>,</span><br><span class="line">    <span class="string">'218.30.118.6'</span>,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FileUtils</span><span class="params">(object)</span>:</span></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getLines</span><span class="params">(filename)</span>:</span></span><br><span class="line">        <span class="keyword">with</span> open(filename) <span class="keyword">as</span> fn:</span><br><span class="line">            <span class="keyword">for</span> line <span class="keyword">in</span> fn.readlines():</span><br><span class="line">                <span class="keyword">yield</span> line.strip()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 域名基类(提供解析相关的功能函数)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Domain</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,nameservers=[],timeout=<span class="string">''</span>)</span>:</span></span><br><span class="line">        self.resolver = dns.resolver.Resolver()</span><br><span class="line">        <span class="keyword">if</span> nameservers: self.resolver.nameservers = nameservers</span><br><span class="line">        <span class="keyword">if</span> timeout: self.resolver.timeout = timeout</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取泛解析的IP列表</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">extensive</span><span class="params">(self,target)</span>:</span></span><br><span class="line">        test_domains = [<span class="string">'Anka9080_&#123;0&#125;.&#123;1&#125;'</span>.format(i,target) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>)]</span><br><span class="line">        <span class="comment"># print '-- test_domains:',test_domains</span></span><br><span class="line">        e_ips = []</span><br><span class="line">        <span class="keyword">for</span> domain <span class="keyword">in</span> test_domains:</span><br><span class="line">            record = self.query(domain,<span class="string">'A'</span>)</span><br><span class="line">            <span class="keyword">if</span> record <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">                e_ips.extend(record[<span class="string">'A'</span>])</span><br><span class="line">        <span class="keyword">return</span> e_ips</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 解析域名</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">query</span><span class="params">(self,target,rdtype)</span>:</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            answer = self.resolver.query(target, rdtype)</span><br><span class="line">            <span class="keyword">return</span> self.parser(answer)</span><br><span class="line">        <span class="keyword">except</span> dns.resolver.NoAnswer:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">None</span> <span class="comment"># catch the except, nothing to do</span></span><br><span class="line">        <span class="keyword">except</span> dns.resolver.NXDOMAIN:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">None</span> <span class="comment"># catch the except, nothing to do</span></span><br><span class="line">        <span class="keyword">except</span> dns.resolver.Timeout:</span><br><span class="line">            <span class="comment"># timeout retry</span></span><br><span class="line">            print(target, rdtype, <span class="string">'&lt;timeout&gt;'</span>)</span><br><span class="line">        <span class="keyword">except</span> Exception, e:</span><br><span class="line">            <span class="keyword">raise</span> e</span><br><span class="line">            logging.info(str(e))</span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parser</span><span class="params">(self, answer)</span>:</span></span><br><span class="line">        <span class="string">"""result relationship only two format </span><br><span class="line">        @domain     domain name</span><br><span class="line">        @address    ip address</span><br><span class="line">        """</span></span><br><span class="line">        result = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> rrsets <span class="keyword">in</span> answer.response.answer:</span><br><span class="line">            <span class="keyword">for</span> item <span class="keyword">in</span> rrsets.items:</span><br><span class="line">                rdtype = self.get_type_name(item.rdtype)</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> item.rdtype == self.get_type_id(<span class="string">'A'</span>):</span><br><span class="line">                    <span class="keyword">if</span> result.has_key(rdtype):</span><br><span class="line">                        result[rdtype].append(item.address)</span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                        result[rdtype] = [item.address]</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">is_domain</span><span class="params">(self, domain)</span>:</span></span><br><span class="line">        domain_regex = re.compile(</span><br><span class="line">            <span class="string">r'(?:[A-Z0-9_](?:[A-Z0-9-_]&#123;0,247&#125;[A-Z0-9])?\.)+(?:[A-Z]&#123;2,6&#125;|[A-Z0-9-]&#123;2,&#125;(?&lt;!-))\Z'</span>, </span><br><span class="line">            re.IGNORECASE)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span> <span class="keyword">if</span> domain_regex.match(domain) <span class="keyword">else</span> <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_type_name</span><span class="params">(self, typeid)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> dns.rdatatype.to_text(typeid)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_type_id</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> dns.rdatatype.from_text(name)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 域名枚举类(域名解析的入口)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DomainFuzzer</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,target,dict_file=<span class="string">'top200_domain.txt'</span>)</span>:</span></span><br><span class="line">        self.target = target</span><br><span class="line">        self.dict = list(set(FileUtils.getLines(dict_file)))</span><br><span class="line">        self.resolver = Domain(NAMESERVERS,timeout=<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 多线程枚举 入口</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self,thread_cnt=<span class="number">16</span>)</span>:</span></span><br><span class="line">        <span class="comment"># 所有子域名队列,check后存在的域名和IP字典</span></span><br><span class="line">        all_queue,ok_queue = Queue.Queue(),Queue.Queue()</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> self.dict:</span><br><span class="line">            all_queue.put(<span class="string">'.'</span>.join([str(line),str(self.target)]))</span><br><span class="line">        </span><br><span class="line">        e_ips,threads = self.resolver.extensive(self.target),[]</span><br><span class="line">        <span class="comment"># print '-- extensive',e_ips</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> xrange(thread_cnt):</span><br><span class="line">            threads.append(self.bruteWorker(self.resolver,all_queue,ok_queue,e_ips))</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> t <span class="keyword">in</span> threads: t.start()</span><br><span class="line">        <span class="keyword">for</span> t <span class="keyword">in</span> threads: t.join()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">not</span> ok_queue.empty():</span><br><span class="line">            <span class="keyword">yield</span> ok_queue.get()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 单线程枚举入口</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">bruteWorker</span><span class="params">(threading.Thread)</span>:</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,resolver,all_queue,ok_queue,extensive=[])</span>:</span></span><br><span class="line">            threading.Thread.__init__(self)</span><br><span class="line">            self.all_queue = all_queue</span><br><span class="line">            self.resolver = resolver</span><br><span class="line">            self.ok_queue = ok_queue</span><br><span class="line">            self.extensive = extensive</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="keyword">while</span> <span class="keyword">not</span> self.all_queue.empty():</span><br><span class="line">                    sub = self.all_queue.get_nowait()</span><br><span class="line">                    <span class="comment"># print '-- sub: ',sub</span></span><br><span class="line"></span><br><span class="line">                    record = self.resolver.query(sub,<span class="string">'A'</span>)</span><br><span class="line">                    <span class="keyword">if</span> record:</span><br><span class="line">                        ips = record[<span class="string">'A'</span>]</span><br><span class="line">                        <span class="keyword">for</span> ip <span class="keyword">in</span> ips:</span><br><span class="line">                            <span class="keyword">if</span> ip <span class="keyword">not</span> <span class="keyword">in</span> self.extensive:</span><br><span class="line">                                self.ok_queue.put(sub)</span><br><span class="line">                                <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">return</span> self.ok_queue</span><br><span class="line">            <span class="keyword">except</span> Exception,e:</span><br><span class="line">                <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 好搜搜索引擎接口</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HaosouAPI</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    api = <span class="string">'http://www.haosou.com/s?src=360sou_newhome&amp;q=site:'</span></span><br><span class="line">    <span class="comment"># 好搜搜索引擎的入口</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,target)</span>:</span></span><br><span class="line">        self.target = target</span><br><span class="line">        self.ptn = self.get_ptn()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_ptn</span><span class="params">(self)</span>:</span></span><br><span class="line">        tmp = self.target.replace(<span class="string">'.'</span>,<span class="string">'\.'</span>)</span><br><span class="line">        <span class="keyword">return</span> re.compile(<span class="string">'linkinfo\"\&gt;\&lt;cite\&gt;(.+?\.'</span>+tmp+<span class="string">')'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self,page_cnt=<span class="number">50</span>)</span>:</span></span><br><span class="line">        subs = []</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> xrange(<span class="number">1</span>,page_cnt):</span><br><span class="line">            url = self.api+self.target+<span class="string">'&amp;pn='</span>+str(x)</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                rsp = requests.get(url)</span><br><span class="line">            <span class="keyword">except</span> Exception,e:</span><br><span class="line">                logging.info(str(e))</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            html = rsp.text</span><br><span class="line">            items = re.findall(self.ptn,html)</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> items:</span><br><span class="line">                subs.append(i)</span><br><span class="line">        <span class="keyword">return</span> set(subs)</span><br><span class="line"></span><br><span class="line"><span class="comment"># i.links.cn 子域名查询接口</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ILinksAPI</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    api = <span class="string">'http://i.links.cn/subdomain/'</span></span><br><span class="line">    headers = &#123;</span><br><span class="line">        <span class="string">"Content-Type"</span>: <span class="string">"application/x-www-form-urlencoded"</span>, </span><br><span class="line">        <span class="string">"Referer"</span>: <span class="string">"http://i.links.cn/subdomain/"</span>,</span><br><span class="line">        <span class="string">"User-Agent"</span>:<span class="string">"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.87 Safari/537.36"</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,target)</span>:</span></span><br><span class="line">        self.target = target</span><br><span class="line">        self.ptn = self.get_ptn()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_ptn</span><span class="params">(self)</span>:</span></span><br><span class="line">        tmp = self.target.replace(<span class="string">'.'</span>,<span class="string">'\.'</span>)</span><br><span class="line">        <span class="keyword">return</span> re.compile(<span class="string">'https?://([\w\-\.]*?'</span>+tmp+<span class="string">')'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        subs = set()</span><br><span class="line">        data = &#123;</span><br><span class="line">            <span class="string">'domain'</span>:self.target,</span><br><span class="line">            <span class="string">'b2'</span>:<span class="number">1</span>,</span><br><span class="line">            <span class="string">"b3"</span>:<span class="number">1</span>,</span><br><span class="line">            <span class="string">"b4"</span>:<span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            rsp = requests.post(self.api,headers=self.headers,data=data)</span><br><span class="line">        <span class="keyword">except</span> Exception,e:</span><br><span class="line">            logging.info(str(e))</span><br><span class="line">            <span class="keyword">return</span> subs</span><br><span class="line">        html = rsp.text</span><br><span class="line">        items = re.findall(self.ptn,html)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> items:</span><br><span class="line">            subs.add(i)</span><br><span class="line">        <span class="keyword">return</span> subs</span><br><span class="line">            </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(args)</span>:</span></span><br><span class="line">    domain = args.domain</span><br><span class="line">    thread_cnt = int(args.thread)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> domain:</span><br><span class="line">        print(<span class="string">'usage: domain_seeker.py -d aliyun.com -a'</span>)</span><br><span class="line">        sys.exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    res_subs = set()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 使用 API</span></span><br><span class="line">    <span class="keyword">if</span> args.api:</span><br><span class="line">        iapi = ILinksAPI(domain)</span><br><span class="line">        subs = iapi.run()</span><br><span class="line">        logging.info(<span class="string">'API Module success with '</span>+str(len(subs)))</span><br><span class="line">        res_subs = res_subs.union(subs)  </span><br><span class="line"></span><br><span class="line">    <span class="comment"># 使用搜索引擎</span></span><br><span class="line">    <span class="keyword">if</span> args.search:</span><br><span class="line">        ha = HaosouAPI(domain)</span><br><span class="line">        subs = ha.run()</span><br><span class="line">        logging.info(<span class="string">'Search Engine Module success with '</span>+str(len(subs)))</span><br><span class="line">        res_subs = res_subs.union(subs)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 使用 dns 枚举</span></span><br><span class="line">    <span class="keyword">if</span> args.bruteforce:</span><br><span class="line">        <span class="comment"># logging.info("Fuck")</span></span><br><span class="line">        df = DomainFuzzer(domain)</span><br><span class="line">        <span class="comment"># 爆破得到的域名列表</span></span><br><span class="line">        subs = set()</span><br><span class="line">        <span class="keyword">for</span> sub <span class="keyword">in</span> df.run(thread_cnt):</span><br><span class="line">            subs.add(sub)</span><br><span class="line">        logging.info(<span class="string">'Bruteforce Module success with '</span>+str(len(subs)))</span><br><span class="line">        res_subs = res_subs.union(subs)</span><br><span class="line"></span><br><span class="line">    logging.info(<span class="string">'End success with '</span>+str(len(res_subs)))</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> res_subs:</span><br><span class="line">        <span class="keyword">print</span> x</span><br><span class="line">    <span class="keyword">return</span> res_subs</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    parser = argparse.ArgumentParser(description=<span class="string">"Multi-method SubDomain Seeker"</span>)</span><br><span class="line">    parser.add_argument(<span class="string">"-t"</span>,<span class="string">"--thread"</span>,metavar=<span class="string">'NUM'</span>,default=<span class="number">100</span>,help=<span class="string">"thread count"</span>)</span><br><span class="line">    parser.add_argument(<span class="string">"-d"</span>,<span class="string">"--domain"</span>,metavar=<span class="string">'DOMAIN'</span>,help=<span class="string">"target doamin"</span>)</span><br><span class="line">    parser.add_argument(<span class="string">"-b"</span>,<span class="string">"--bruteforce"</span>,help=<span class="string">"dns bruteforce"</span>,action=<span class="string">'store_true'</span>)</span><br><span class="line">    parser.add_argument(<span class="string">"-s"</span>,<span class="string">"--search"</span>,help=<span class="string">"search engine"</span>,action=<span class="string">'store_true'</span>)</span><br><span class="line">    parser.add_argument(<span class="string">"-a"</span>,<span class="string">"--api"</span>,help=<span class="string">"domain finder api"</span>,action=<span class="string">'store_true'</span>)    </span><br><span class="line">    args = parser.parse_args()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        run(args)</span><br><span class="line">    <span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">        logging.info(<span class="string">"Ctrl C - Human Stop"</span>)</span><br><span class="line">        sys.exit(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>GitHub源码： <a href="https://github.com/Evi1CLAY/CoolPool" target="_blank" rel="external">https://github.com/Evi1CLAY/CoolPool</a></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a href="https://github.com/ring04h/wydomain" target="_blank" rel="external">https://github.com/ring04h/wydomain</a></li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/二级域名查找/">二级域名查找</a><a href="/tags/DNS枚举/">DNS枚举</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://www.evilclay.com/2017/01/02/domain-seeker二级域名收集脚本/" data-title="DomainSeeker 多方式收集目标子域名信息 | Anka9080&#39;s Notes" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/12/18/识别验证码账户暴力破解小记/"  title="识别验证码账户暴力破解小记">
+ <strong>下一篇：</strong><br/> 
+ <span>识别验证码账户暴力破解小记
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2017/01/02/domain-seeker二级域名收集脚本/" data-title="DomainSeeker 多方式收集目标子域名信息" data-url="http://www.evilclay.com/2017/01/02/domain-seeker二级域名收集脚本/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行"><span class="toc-number">2.</span> <span class="toc-text">运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码"><span class="toc-number">3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/安全工具/" title="安全工具">安全工具<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Ubuntu/" title="Ubuntu">Ubuntu<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/漏洞分析/" title="漏洞分析">漏洞分析<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/多线程/" title="多线程">多线程<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/内网渗透/" title="内网渗透">内网渗透<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/kali/" title="kali">kali<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/端口扫描/" title="端口扫描">端口扫描<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/信息收集/" title="信息收集">信息收集<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Flask/" title="Flask">Flask<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SQL注入/" title="SQL注入">SQL注入<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/社工工程学/" title="社工工程学">社工工程学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/钓鱼网站/" title="钓鱼网站">钓鱼网站<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SET/" title="SET">SET<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Celery/" title="Celery">Celery<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/分布式/" title="分布式">分布式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/内网提权/" title="内网提权">内网提权<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Windows运维/" title="Windows运维">Windows运维<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/sudo/" title="sudo">sudo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/二级域名查找/" title="二级域名查找">二级域名查找<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://navisec.it" target="_blank" title="信息安全从业简明导航">Navisec.it</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://sec-wiki.com" target="_blank" title="安全维基">Sec-Wiki</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Anka9080 Page in ZorelWorld. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/5800672330" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/https://github.com/Evi1CLAY" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="Anka9080">Anka9080</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"evi1clay"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
