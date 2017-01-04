@@ -16,7 +16,7 @@
 大牛告诉我是有三种方式可以去验证的：
 
 使用 ICMP 协议（Ping命令）
-使用 HTPP 协议 （发送 HTTP 请求）
+使用 HTTP 协议 （发送 HTTP 请求）
 使用 DNS 协议 （发送DNS查询请求）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="FakeDNSServer - 轻量级DNSLog查询工具">
@@ -27,10 +27,12 @@
 大牛告诉我是有三种方式可以去验证的：
 
 使用 ICMP 协议（Ping命令）
-使用 HTPP 协议 （发送 HTTP 请求）
+使用 HTTP 协议 （发送 HTTP 请求）
 使用 DNS 协议 （发送DNS查询请求）">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/icmp_log.png">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/http_curl_apache_log.png">
 <meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/fake_dns_log.png">
-<meta property="og:updated_time" content="2017-01-04T16:34:47.402Z">
+<meta property="og:updated_time" content="2017-01-04T17:44:00.629Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FakeDNSServer - 轻量级DNSLog查询工具">
 <meta name="twitter:description" content="前言最近研究了类似盲注类命令执行没有回显的情况的处理方式，听了No老师的一些实战经验，手动搭建了DNSLog程序和一个简易的DNSServer，当做笔记记录下来啦。
@@ -38,9 +40,9 @@
 大牛告诉我是有三种方式可以去验证的：
 
 使用 ICMP 协议（Ping命令）
-使用 HTPP 协议 （发送 HTTP 请求）
+使用 HTTP 协议 （发送 HTTP 请求）
 使用 DNS 协议 （发送DNS查询请求）">
-<meta name="twitter:image" content="http://7xku36.com1.z0.glb.clouddn.com/fake_dns_log.png">
+<meta name="twitter:image" content="http://7xku36.com1.z0.glb.clouddn.com/icmp_log.png">
 
     
     <link rel="alternative" href="/atom.xml" title="Anka9080&#39;s Notes" type="application/atom+xml">
@@ -64,7 +66,7 @@
 				<h1 class="site-name"><a href="/" title="Anka9080&#39;s Notes">Anka9080&#39;s Notes</a></h1>
 				<h2 class="blog-motto">勿忘初心。</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -80,7 +82,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
 						<input type="hidden" name="q" value="site:www.evilclay.com">
 					</form>
 					
@@ -103,14 +105,14 @@
 		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
 		
   <p class="article-time">
-    <time datetime="2017-01-04T15:19:04.000Z" itemprop="datePublished"> Published 2017-01-04</time>
+    <time datetime="2017-01-04T15:19:04.000Z" itemprop="datePublished"> 发表于 2017-01-04</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
+			<strong class="toc-title">文章目录</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行"><span class="toc-number">2.</span> <span class="toc-text">运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码"><span class="toc-number">3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol>
 		
@@ -121,11 +123,26 @@
 <p>大牛告诉我是有三种方式可以去验证的：</p>
 <ul>
 <li>使用 ICMP 协议（Ping命令）</li>
-<li>使用 HTPP 协议 （发送 HTTP 请求）</li>
+<li>使用 HTTP 协议 （发送 HTTP 请求）</li>
 <li>使用 DNS 协议 （发送DNS查询请求）</li>
 </ul>
-<p>第一种方式可以验证命令能够执行，但是不能够把命令的回显带过来。<br>第二种需要自己搭建一个HTTP服务器，然后去查Log就可以看到你在靶机发送的请求，一般在不能联网的内网的时候这个方法就比较尴尬了，也有可能HTTP协议被封掉。<br>第三种需要搭建一个轻量型的DNS服务器，当然能接受到DNS请求验证命令执行就可以了，至于解不解析DNS请求看你心情了，而且DNS协议一般都不会被封。</p>
-<p>下面有请神器上场 ~ </p>
+<p>第一种方式可以验证命令能够执行，但是不能够把命令的回显带过来。</p>
+<p>在Linux需要设置iptables才能把icmp的请求写入到日志文件里，当然直接开 tcpdump 或者 wireshark 这种抓包工具也能能看到有谁 ping 了你的主机的。</p>
+<pre><code>TCPDump命令：
+tcpdump ip proto \\icmp
+</code></pre><p>若想永久保存ICMP信息，建议设置 iptables ：</p>
+<pre><code>iptables -I INPUT -p icmp --icmp-type 8 -m state  --state NEW,ESTABLISHED,RELATED -j LOG --log-level=1 --log-prefix &quot;Ping Request &quot;
+// 会把所有的ICMP请求写入到 iptables 的日志文件中
+// Ubuntu/Debian日志位置:  /var/log/kern.log
+// CentOS/RHEL/Fedora日志位置:  /var/log/messages
+</code></pre><p>这里是其他主机发起一次ping请求后 Kali（Debian）主机的/var/log/kern.log 输出：</p>
+<p><img src="http://7xku36.com1.z0.glb.clouddn.com/icmp_log.png" alt=""></p>
+<p>第二种需要自己搭建一个HTTP服务器，然后去查Log就可以看到你在靶机发送的请求，一般在不能联网的内网的时候这个方法就比较尴尬了，也有可能HTTP协议被封掉。</p>
+<p>这里使用 curl 发起一个带 命令执行的HTTP 请求记录，查看日志信息：</p>
+<pre><code>vim /var/log/apache2/access.log
+</code></pre><p><img src="http://7xku36.com1.z0.glb.clouddn.com/http_curl_apache_log.png" alt=""></p>
+<p>第三种需要搭建一个轻量型的DNS服务器，当然能接受到DNS请求验证命令执行就可以了，至于解不解析DNS请求看你心情了，而且DNS协议一般都不会被封，这篇文章主要记录的也是这种姿势。</p>
+<p>下面有请神器上场 ~</p>
 <p>BugScanTeam 开源的 DNSLog 程序，简直懒人福利有木有，README已经写得够详细了，不多说了，这是 Git 地址 <a href="https://github.com/bugscanteam/dnslog/" target="_blank" rel="external">https://github.com/bugscanteam/dnslog/</a></p>
 <p>在这里我就小小的提示下 需要方便的自定义DNS服务器的域名提供商请找新网（本人亲测万网，Godaddy需要认证，最后是问了Yan表哥才知道的 - -）</p>
 <p>后面自己参照SimmpleDNSServer写了一个小的DNS服务器。</p>
@@ -192,24 +209,24 @@
 
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">Contents</strong>
+  <strong class="toc-title">文章目录</strong>
  
  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行"><span class="toc-number">2.</span> <span class="toc-text">运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码"><span class="toc-number">3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol>
  
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
 
   
 
   
 <div class="tagslist">
-	<p class="asidetitle">Tags</p>
+	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
 			
@@ -297,7 +314,7 @@
 
 
   <div class="linkslist">
-  <p class="asidetitle">Links</p>
+  <p class="asidetitle">友情链接</p>
     <ul>
         
           <li>
@@ -316,7 +333,7 @@
 </div>
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
 
 </aside>
@@ -545,7 +562,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
