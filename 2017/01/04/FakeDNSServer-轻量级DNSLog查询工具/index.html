@@ -32,7 +32,7 @@
 <meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/icmp_log.png">
 <meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/http_curl_apache_log.png">
 <meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/fake_dns_log.png">
-<meta property="og:updated_time" content="2017-01-04T17:44:00.629Z">
+<meta property="og:updated_time" content="2017-01-04T17:48:00.832Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FakeDNSServer - 轻量级DNSLog查询工具">
 <meta name="twitter:description" content="前言最近研究了类似盲注类命令执行没有回显的情况的处理方式，听了No老师的一些实战经验，手动搭建了DNSLog程序和一个简易的DNSServer，当做笔记记录下来啦。
@@ -66,7 +66,7 @@
 				<h1 class="site-name"><a href="/" title="Anka9080&#39;s Notes">Anka9080&#39;s Notes</a></h1>
 				<h2 class="blog-motto">勿忘初心。</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -82,7 +82,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
 						<input type="hidden" name="q" value="site:www.evilclay.com">
 					</form>
 					
@@ -105,14 +105,14 @@
 		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
 		
   <p class="article-time">
-    <time datetime="2017-01-04T15:19:04.000Z" itemprop="datePublished"> 发表于 2017-01-04</time>
+    <time datetime="2017-01-04T15:19:04.000Z" itemprop="datePublished"> Published 2017-01-04</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
+			<strong class="toc-title">Contents</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行"><span class="toc-number">2.</span> <span class="toc-text">运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码"><span class="toc-number">3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol>
 		
@@ -159,6 +159,8 @@ tcpdump ip proto \\icmp
 <li><p><a href="https://ricterz.me/posts/%E7%AC%94%E8%AE%B0:%20Data%20Retrieval%20over%20DNS%20in%20SQL%20Injection%20Attacks" target="_blank" rel="external">https://ricterz.me/posts/%E7%AC%94%E8%AE%B0:%20Data%20Retrieval%20over%20DNS%20in%20SQL%20Injection%20Attacks</a></p>
 </li>
 <li><p><a href="http://code.activestate.com/recipes/491264-mini-fake-dns-server/" target="_blank" rel="external">http://code.activestate.com/recipes/491264-mini-fake-dns-server/</a></p>
+</li>
+<li><p><a href="http://serverfault.com/questions/448541/how-to-know-who-ping-my-computer" target="_blank" rel="external">http://serverfault.com/questions/448541/how-to-know-who-ping-my-computer</a></p>
 </li>
 </ol>
   
@@ -209,24 +211,24 @@ tcpdump ip proto \\icmp
 
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
+  <strong class="toc-title">Contents</strong>
  
  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行"><span class="toc-number">2.</span> <span class="toc-text">运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码"><span class="toc-number">3.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol>
  
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
 <aside class="clearfix">
 
   
 
   
 <div class="tagslist">
-	<p class="asidetitle">标签</p>
+	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
 			
@@ -314,7 +316,7 @@ tcpdump ip proto \\icmp
 
 
   <div class="linkslist">
-  <p class="asidetitle">友情链接</p>
+  <p class="asidetitle">Links</p>
     <ul>
         
           <li>
@@ -333,7 +335,7 @@ tcpdump ip proto \\icmp
 </div>
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
 </div>
 
 </aside>
@@ -562,7 +564,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
