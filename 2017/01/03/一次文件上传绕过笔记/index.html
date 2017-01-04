@@ -21,7 +21,7 @@
 <meta property="og:description" content="前言No老师之前给了个 PHP 上传脚本，正好趁着晚上没事做研究了一下。因为这次直接拿到了源代码，绕过的过程思路很清晰，倒是真正绕过后感觉看上去写的挺”严谨”的代码深挖下去总会有 Bug 的，除此之外，学习到一些很有用的东西，特地记录下。
 上传代码先贴出上传代码：
 12345678910111213141516171819202122232425262728293031323334&amp;lt;?php">
-<meta property="og:updated_time" content="2017-01-02T17:35:57.985Z">
+<meta property="og:updated_time" content="2017-01-04T16:47:50.529Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一次文件上传绕过笔记">
 <meta name="twitter:description" content="前言No老师之前给了个 PHP 上传脚本，正好趁着晚上没事做研究了一下。因为这次直接拿到了源代码，绕过的过程思路很清晰，倒是真正绕过后感觉看上去写的挺”严谨”的代码深挖下去总会有 Bug 的，除此之外，学习到一些很有用的东西，特地记录下。
@@ -121,6 +121,7 @@
 <h4 id="构造PHP环境"><a href="#构造PHP环境" class="headerlink" title="构造PHP环境"></a>构造PHP环境</h4><p>因为正则表达式中<code>\&lt;\? |\?\&gt;|\&lt;\%|</code>这段代码的存在导致无法正常定义 PHP 脚本，所以，可以用这种方法定义：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language=<span class="string">"php"</span>&gt; PHP 代码 &lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
 <h4 id="插入用户可以控制的输入点"><a href="#插入用户可以控制的输入点" class="headerlink" title="插入用户可以控制的输入点"></a>插入用户可以控制的输入点</h4><p>因为 <code>[$]_GET|[$]_POST|[$]_COOKIE</code> 都已经被过滤，所以无非找找其他的输入接收关键字有没有过滤，或者换一种方式（感觉应该会有，我没想到），在这里突然想到了没有过滤 REQUEST 方法，随意直接用 REQUEST 构造 一句话就可以了。</p>
 <h4 id="让数据可以在服务端当做PHP代码执行"><a href="#让数据可以在服务端当做PHP代码执行" class="headerlink" title="让数据可以在服务端当做PHP代码执行"></a>让数据可以在服务端当做PHP代码执行</h4><p>因为 <code>passthru|open|[$]_FILES|system|eval|exec|assert</code> 这些危险函数直接被 ban 了，所以要想办法绕过，</p>
+<p>———————–  放着，这个坑以后填上  —————————</p>
   
 	</div>
 		<footer class="article-footer clearfix">
