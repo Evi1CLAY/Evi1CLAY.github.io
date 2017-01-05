@@ -32,7 +32,7 @@
 <meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/icmp_log.png">
 <meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/http_curl_apache_log.png">
 <meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/fake_dns_log.png">
-<meta property="og:updated_time" content="2017-01-04T17:48:00.832Z">
+<meta property="og:updated_time" content="2017-01-05T05:46:16.618Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FakeDNSServer - 轻量级DNSLog查询工具">
 <meta name="twitter:description" content="前言最近研究了类似盲注类命令执行没有回显的情况的处理方式，听了No老师的一些实战经验，手动搭建了DNSLog程序和一个简易的DNSServer，当做笔记记录下来啦。
@@ -129,7 +129,7 @@
 <p>第一种方式可以验证命令能够执行，但是不能够把命令的回显带过来。</p>
 <p>在Linux需要设置iptables才能把icmp的请求写入到日志文件里，当然直接开 tcpdump 或者 wireshark 这种抓包工具也能能看到有谁 ping 了你的主机的。</p>
 <pre><code>TCPDump命令：
-tcpdump ip proto \\icmp
+tcpdump -i eth0 icmp
 </code></pre><p>若想永久保存ICMP信息，建议设置 iptables ：</p>
 <pre><code>iptables -I INPUT -p icmp --icmp-type 8 -m state  --state NEW,ESTABLISHED,RELATED -j LOG --log-level=1 --log-prefix &quot;Ping Request &quot;
 // 会把所有的ICMP请求写入到 iptables 的日志文件中
