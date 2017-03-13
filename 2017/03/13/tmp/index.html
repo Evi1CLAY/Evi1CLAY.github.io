@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>tmp | Anka9080&#39;s Notes</title>
+    <title>CSP（内容安全策略）学习 | Anka9080&#39;s Notes</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Anka9080">
@@ -14,14 +14,14 @@
     <meta name="description" content="今天在一段 PHP 验证码代码中包含了以下内容，怀着好奇的心里研究了一下~
 header(“Content-Security-Policy: default-src ‘self’; style-src ‘self’ ‘unsafe-inline’; img-src ‘self’ data:; frame-src ‘none’”);header(“X-Content-Security-Policy:">
 <meta property="og:type" content="article">
-<meta property="og:title" content="tmp">
+<meta property="og:title" content="CSP（内容安全策略）学习">
 <meta property="og:url" content="http://www.evilclay.com/2017/03/13/tmp/index.html">
 <meta property="og:site_name" content="Anka9080's Notes">
 <meta property="og:description" content="今天在一段 PHP 验证码代码中包含了以下内容，怀着好奇的心里研究了一下~
 header(“Content-Security-Policy: default-src ‘self’; style-src ‘self’ ‘unsafe-inline’; img-src ‘self’ data:; frame-src ‘none’”);header(“X-Content-Security-Policy:">
-<meta property="og:updated_time" content="2017-03-13T13:56:57.847Z">
+<meta property="og:updated_time" content="2017-03-13T13:59:36.818Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tmp">
+<meta name="twitter:title" content="CSP（内容安全策略）学习">
 <meta name="twitter:description" content="今天在一段 PHP 验证码代码中包含了以下内容，怀着好奇的心里研究了一下~
 header(“Content-Security-Policy: default-src ‘self’; style-src ‘self’ ‘unsafe-inline’; img-src ‘self’ data:; frame-src ‘none’”);header(“X-Content-Security-Policy:">
 
@@ -47,7 +47,7 @@ header(“Content-Security-Policy: default-src ‘self’; style-src ‘self’ 
 				<h1 class="site-name"><a href="/" title="Anka9080&#39;s Notes">Anka9080&#39;s Notes</a></h1>
 				<h2 class="blog-motto">勿忘初心。</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -63,7 +63,7 @@ header(“Content-Security-Policy: default-src ‘self’; style-src ‘self’ 
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
 						<input type="hidden" name="q" value="site:www.evilclay.com">
 					</form>
 					
@@ -79,21 +79,21 @@ header(“Content-Security-Policy: default-src ‘self’; style-src ‘self’ 
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/03/13/tmp/" title="tmp" itemprop="url">tmp</a>
+      <a href="/2017/03/13/tmp/" title="CSP（内容安全策略）学习" itemprop="url">CSP（内容安全策略）学习</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
 		
   <p class="article-time">
-    <time datetime="2017-03-13T13:05:04.000Z" itemprop="datePublished"> Published 2017-03-13</time>
+    <time datetime="2017-03-13T13:05:04.000Z" itemprop="datePublished"> 发表于 2017-03-13</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
+			<strong class="toc-title">文章目录</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Content-Security-Policy"><span class="toc-number">1.</span> <span class="toc-text">Content-Security-Policy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#X-Content-Security-Policy"><span class="toc-number">2.</span> <span class="toc-text">X-Content-Security-Policy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#X-WebKit-CSP"><span class="toc-number">3.</span> <span class="toc-text">X-WebKit-CSP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#X-XSS-Protection"><span class="toc-number">4.</span> <span class="toc-text">X-XSS-Protection</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#X-Content-Type-Options"><span class="toc-number">5.</span> <span class="toc-text">X-Content-Type-Options</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#X-Frame-Options"><span class="toc-number">6.</span> <span class="toc-text">X-Frame-Options</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#题外话"><span class="toc-number">7.</span> <span class="toc-text">题外话</span></a></li></ol>
 		
@@ -101,6 +101,7 @@ header(“Content-Security-Policy: default-src ‘self’; style-src ‘self’ 
 		
 		<p>今天在一段 PHP 验证码代码中包含了以下内容，怀着好奇的心里研究了一下~</p>
 <p>header(“Content-Security-Policy: default-src ‘self’; style-src ‘self’ ‘unsafe-inline’; img-src ‘self’ data:; frame-src ‘none’”);<br>header(“X-Content-Security-Policy: default-src ‘self’; style-src ‘self’ ‘unsafe-inline’; img-src ‘self’ data:; frame-src ‘none’”);<br>header(“X-WebKit-CSP: default-src ‘self’; style-src ‘self’ ‘unsafe-inline’;img-src ‘self’ data:; frame-src ‘none’”);<br>header(“X-XSS-Protection: 1; mode=block”);<br>header(“X-Content-Type-Options: nosniff”);<br>header(“X-Frame-Options: DENY”);</p>
+<p>我们来先说一下CSP， 内容安全策略 (CSP, Content Security Policy) 是一个附加的安全层，用于帮助检测和缓解某些类型的攻击，包括跨站脚本 (XSS) 和数据注入等攻击。 这些攻击可用于实现从数据窃取到网站破坏或作为恶意软件分发版本等用途。</p>
 <h4 id="Content-Security-Policy"><a href="#Content-Security-Policy" class="headerlink" title="Content-Security-Policy"></a>Content-Security-Policy</h4><p>这个字段表示内容安全策略，也就是大名鼎鼎的 CSP ，主要是定义页面可以加载哪些资源，减少 XSS 的发生。</p>
 <p>Content-Security-Policy 由一组指令+指令值对组成。目前的所有指令值可以<a href="https://imququ.com/post/content-security-policy-reference.html" target="_blank" rel="external">参考这里</a>，这里仅仅对上面的栗子给出说明：</p>
 <p>default-src ‘self’; 表示所有资源（js、image、css、web font，ajax）的默认加载策略是同源的。</p>
@@ -119,13 +120,18 @@ header(“Content-Security-Policy: default-src ‘self’; style-src ‘self’ 
 <div class="article-catetags">
 
 
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/XSS防护/">XSS防护</a><a href="/tags/CSP策略/">CSP策略</a>
+  </div>
+
 </div>
 
 
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://www.evilclay.com/2017/03/13/tmp/" data-title="tmp | Anka9080&#39;s Notes" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.evilclay.com/2017/03/13/tmp/" data-title="CSP（内容安全策略）学习 | Anka9080&#39;s Notes" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -151,29 +157,29 @@ header(“Content-Security-Policy: default-src ‘self’; style-src ‘self’ 
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2017/03/13/tmp/" data-title="tmp" data-url="http://www.evilclay.com/2017/03/13/tmp/"></div>
+	<div class="ds-thread" data-thread-key="2017/03/13/tmp/" data-title="CSP（内容安全策略）学习" data-url="http://www.evilclay.com/2017/03/13/tmp/"></div>
 </section>
 
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">Contents</strong>
+  <strong class="toc-title">文章目录</strong>
  
  <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Content-Security-Policy"><span class="toc-number">1.</span> <span class="toc-text">Content-Security-Policy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#X-Content-Security-Policy"><span class="toc-number">2.</span> <span class="toc-text">X-Content-Security-Policy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#X-WebKit-CSP"><span class="toc-number">3.</span> <span class="toc-text">X-WebKit-CSP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#X-XSS-Protection"><span class="toc-number">4.</span> <span class="toc-text">X-XSS-Protection</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#X-Content-Type-Options"><span class="toc-number">5.</span> <span class="toc-text">X-Content-Type-Options</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#X-Frame-Options"><span class="toc-number">6.</span> <span class="toc-text">X-Frame-Options</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#题外话"><span class="toc-number">7.</span> <span class="toc-text">题外话</span></a></li></ol>
  
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
 
   
 
   
 <div class="tagslist">
-	<p class="asidetitle">Tags</p>
+	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
 			
@@ -221,7 +227,7 @@ header(“Content-Security-Policy: default-src ‘self’; style-src ‘self’ 
 			
 		
 			
-				<li><a href="/tags/Cookie劫持/" title="Cookie劫持">Cookie劫持<sup>1</sup></a></li>
+				<li><a href="/tags/DirBuster/" title="DirBuster">DirBuster<sup>1</sup></a></li>
 			
 		
 			
@@ -261,7 +267,7 @@ header(“Content-Security-Policy: default-src ‘self’; style-src ‘self’ 
 
 
   <div class="linkslist">
-  <p class="asidetitle">Links</p>
+  <p class="asidetitle">友情链接</p>
     <ul>
         
           <li>
@@ -280,7 +286,7 @@ header(“Content-Security-Policy: default-src ‘self’; style-src ‘self’ 
 </div>
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
 
 </aside>
@@ -509,7 +515,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
