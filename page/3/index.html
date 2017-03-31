@@ -43,7 +43,7 @@
 				<h1 class="site-name"><a href="/" title="Anka9080&#39;s Notes">Anka9080&#39;s Notes</a></h1>
 				<h2 class="blog-motto">勿忘初心。</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -59,7 +59,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
 						<input type="hidden" name="q" value="site:www.evilclay.com">
 					</form>
 					
@@ -70,6 +70,34 @@
     </header>
     <div id="container">
       <div id="main">
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2016/09/20/Ubuntu命令行配置静态IP/" title="Ubuntu命令行配置静态IP" itemprop="url">
+  
+    <h1 itemprop="name">Ubuntu命令行配置静态IP</h1>
+    
+     
+           <p itemprop="description" >vim /etc/network/interfaces
+
+原内容如下：// 表示默认使用 DHCP 分配 IP
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet dhcp
+配置静态IP：这里是给网卡 eth0 做配</p>
+        
+    
+    <time datetime="2016-09-19T17:41:02.000Z" itemprop="datePublished">2016-09-20</time>
+  </a>
+</section>
+
+
+
+
+
 
   
 <section class="post" itemscope itemprop="blogitem">
@@ -305,43 +333,23 @@ row最外层，col-md-12 次外层，内层根据需求来填充。</p>
 
 
 
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2016/07/25/python模拟登录并保持cookie/" title="python模拟登录并保持cookie" itemprop="url">
-  
-    <h1 itemprop="name">python模拟登录并保持cookie</h1>
-    
-     
-           <p itemprop="description" >前言最近在爬行 nosec.org 的数据，看了下需要模拟登录拿到cookie后才能访问想抓的数据，重要的是 nosec.org 的登录页面 form 中有个 authenticity_token 字段每次访问登录页面都会自动生成，而且会和你的用户名，密码一样被POST到服务器。</p>
-        
-    
-    <time datetime="2016-07-24T17:03:49.000Z" itemprop="datePublished">2016-07-25</time>
-  </a>
-</section>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix unexpand">
     <a class="extend prev" rel="prev" href="/page/2/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">Next<span></span></a>
   </nav>
 
 </div>
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
 <aside class="clearfix">
 
   
 
   
 <div class="tagslist">
-	<p class="asidetitle">标签</p>
+	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
 			
@@ -389,7 +397,7 @@ row最外层，col-md-12 次外层，内层根据需求来填充。</p>
 			
 		
 			
-				<li><a href="/tags/DirBuster/" title="DirBuster">DirBuster<sup>1</sup></a></li>
+				<li><a href="/tags/闲扯/" title="闲扯">闲扯<sup>1</sup></a></li>
 			
 		
 			
@@ -429,7 +437,7 @@ row最外层，col-md-12 次外层，内层根据需求来填充。</p>
 
 
   <div class="linkslist">
-  <p class="asidetitle">友情链接</p>
+  <p class="asidetitle">Links</p>
     <ul>
         
           <li>
@@ -448,7 +456,7 @@ row最外层，col-md-12 次外层，内层根据需求来填充。</p>
 </div>
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
 </div>
 
 </aside>
@@ -591,7 +599,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 

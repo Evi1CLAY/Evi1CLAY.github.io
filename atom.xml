@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.evilclay.com/"/>
-  <updated>2017-03-13T13:59:36.818Z</updated>
+  <updated>2017-03-31T11:41:25.503Z</updated>
   <id>http://www.evilclay.com/</id>
   
   <author>
@@ -14,6 +14,51 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>谈谈 Vim 的几种文件备份</title>
+    <link href="http://www.evilclay.com/2017/03/31/%E8%B0%88%E8%B0%88-Vim-%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%87%E4%BB%B6%E5%A4%87%E4%BB%BD/"/>
+    <id>http://www.evilclay.com/2017/03/31/谈谈-Vim-的几种文件备份/</id>
+    <published>2017-03-31T11:32:24.000Z</published>
+    <updated>2017-03-31T11:41:25.503Z</updated>
+    
+    <content type="html"><![CDATA[<p>源自 MCTF 看到了 Vim 的 undo 备份，顺手学习了下 Vim 的几种备份机制，或有疏漏，请指出。</p>
+<h3 id="1-Vim-的交换文件-swp"><a href="#1-Vim-的交换文件-swp" class="headerlink" title="1. Vim 的交换文件  ..swp"></a>1. Vim 的交换文件  .<filename>.swp</filename></h3><p>默认交换文件在打开文件的时候就会产生交换文件，正常退出的时候才会删除交换文件（断电，Ctrl+Z强制退出就不会删除），内容大致是这个样子。</p>
+<p><img src="http://7xku36.com1.z0.glb.clouddn.com/vimswp.png" alt="swpdemo"></p>
+<p>通过在 Vim 配置文件设置 set noswapfile 来关闭交换文件。</p>
+<h3 id="2-Vim-的备份文件"><a href="#2-Vim-的备份文件" class="headerlink" title="2. Vim 的备份文件 ~"></a>2. Vim 的备份文件 <filename>~</filename></h3><p>默认关闭，需要通过设置 set backup 来开启，Unbuntu的Vim配置文件是 /etc/vim/vimrc</p>
+<p>开启后，对文件进行修改后会保存修改之前的一个副本，展示如下：</p>
+<p><img src="http://7xku36.com1.z0.glb.clouddn.com/vimbackup.png" alt="~Demo"></p>
+<p>如果不喜欢 ~ 作为备份文件的后缀，可以使用 set backupext=.bak 来设置备份文件的扩展名。</p>
+<p>当然可以通过设置 set nobackup 来关闭备份文件。</p>
+<h3 id="3-undo-备份文件-un"><a href="#3-undo-备份文件-un" class="headerlink" title="3. undo 备份文件  ..un.~"></a>3. undo 备份文件  .<filename>.un.~</filename></h3><p>默认关闭，需要设置 set undofile 来开启 undo 备份文件。这是 Vim 官方给出的 undo 备份文件的解释：</p>
+<p>When on, Vim automatically saves undo history to an undo file when writing a buffer to a file, and restores undo history from the same file on buffer read.</p>
+<p>也就是说开启时，在 Vim 中编辑文件是使用了 撤销更改（u命令）的操作，会把撤销更改的那部分保存到缓存文件 .<filename>.un.~ 中。</filename></p>
+<p>测试发现这个 undo 缓存文件是追加写入的，所以你所有的撤销操作都会在这个文件中找到。</p>
+<p>内容大概是这个样子：</p>
+<p><img src="http://7xku36.com1.z0.glb.clouddn.com/vimundo.png" alt="undodemo"></p>
+<h3 id="4-PS"><a href="#4-PS" class="headerlink" title="4. PS"></a>4. PS</h3><p>默认缓存文件会在当前目录下生成，可以通过修改配置文件的方式指定自动保存位置。</p>
+<p>参考连接中有提高可以通过 Vim 的备份机制实现 内容的版本控制。</p>
+<p>我们可以从漏洞挖掘的角度延伸一点点，像 敏感文件扫描这种工具一般都是一个敏感文件列表无脑开扫，若是增加一个功能：</p>
+<p>结合爬虫已经爬取到的文件和目录，生成相应的缓存/备份文件，是不是又会有新的发现 :p</p>
+<h3 id="5-参考"><a href="#5-参考" class="headerlink" title="5. 参考"></a>5. 参考</h3><p><a href="http://blog.163.com/yysfire@126/blog/static/1831747201011443159904/" target="_blank" rel="external">http://blog.163.com/yysfire@126/blog/static/1831747201011443159904/</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;源自 MCTF 看到了 Vim 的 undo 备份，顺手学习了下 Vim 的几种备份机制，或有疏漏，请指出。&lt;/p&gt;
+&lt;h3 id=&quot;1-Vim-的交换文件-swp&quot;&gt;&lt;a href=&quot;#1-Vim-的交换文件-swp&quot; class=&quot;headerlink&quot; title=&quot;
+    
+    </summary>
+    
+    
+      <category term="Vim" scheme="http://www.evilclay.com/tags/Vim/"/>
+    
+      <category term="缓存文件" scheme="http://www.evilclay.com/tags/%E7%BC%93%E5%AD%98%E6%96%87%E4%BB%B6/"/>
+    
+      <category term="敏感文件探测" scheme="http://www.evilclay.com/tags/%E6%95%8F%E6%84%9F%E6%96%87%E4%BB%B6%E6%8E%A2%E6%B5%8B/"/>
+    
+  </entry>
   
   <entry>
     <title>CSP（内容安全策略）学习</title>
@@ -976,43 +1021,6 @@ findstr /si password *.xml *.ini *.txt    当前目录下在指定的文件类�
       <category term="Ubuntu" scheme="http://www.evilclay.com/tags/Ubuntu/"/>
     
       <category term="PPTP" scheme="http://www.evilclay.com/tags/PPTP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Ubuntu命令行配置静态IP</title>
-    <link href="http://www.evilclay.com/2016/09/20/Ubuntu%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%85%8D%E7%BD%AE%E9%9D%99%E6%80%81IP/"/>
-    <id>http://www.evilclay.com/2016/09/20/Ubuntu命令行配置静态IP/</id>
-    <published>2016-09-19T17:41:02.000Z</published>
-    <updated>2016-10-02T17:41:15.515Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote>
-<p>vim /etc/network/interfaces</p>
-</blockquote>
-<h4 id="原内容如下："><a href="#原内容如下：" class="headerlink" title="原内容如下："></a>原内容如下：</h4><pre><code>// 表示默认使用 DHCP 分配 IP
-auto lo
-iface lo inet loopback
-
-auto eth0
-iface eth0 inet dhcp
-</code></pre><h4 id="配置静态IP："><a href="#配置静态IP：" class="headerlink" title="配置静态IP："></a>配置静态IP：</h4><p>这里是给网卡 eth0 做配置，具体需要配置哪个网卡可以使用 ifconfig 查看下</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># The primary network interface</span></span><br><span class="line">auto eth0</span><br><span class="line"><span class="comment">#iface eth0 inet dhcp</span></span><br><span class="line"></span><br><span class="line">iface eth0 inet static</span><br><span class="line">address 192.168.80.129</span><br><span class="line">netmask 255.255.255.0</span><br><span class="line">gateway 192.168.80.2</span><br></pre></td></tr></table></figure>
-<h4 id="手动设置-DNS-服务器"><a href="#手动设置-DNS-服务器" class="headerlink" title="手动设置 DNS 服务器"></a>手动设置 DNS 服务器</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vim /etc/resolv.conf</span></span><br></pre></td></tr></table></figure>
-<p>添加如下内容（这点所有Linux发行版都通用）：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nameserver 192.168.80.2</span><br><span class="line">nameserver 8.8.8.8</span><br></pre></td></tr></table></figure>
-<h4 id="重启使配置生效"><a href="#重启使配置生效" class="headerlink" title="重启使配置生效"></a>重启使配置生效</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/networking restart</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;vim /etc/network/interfaces&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h4 id=&quot;原内容如下：&quot;&gt;&lt;a href=&quot;#原内容如下：&quot; class=&quot;headerlink&quot; title=&quot;原内容如下：&quot;&gt;&lt;/a&gt;原内容如下：
-    
-    </summary>
-    
-    
-      <category term="Ubuntu" scheme="http://www.evilclay.com/tags/Ubuntu/"/>
     
   </entry>
   
