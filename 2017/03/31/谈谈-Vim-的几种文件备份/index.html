@@ -12,30 +12,30 @@
 
     
     <meta name="description" content="源自 MCTF 看到了 Vim 的 undo 备份，顺手学习了下 Vim 的几种备份机制，或有疏漏，请指出。
-1. Vim 的交换文件  ..swp默认交换文件在打开文件的时候就会产生交换文件，正常退出的时候才会删除交换文件（断电，Ctrl+Z强制退出就不会删除），内容大致是这个样子。
+1. Vim 的交换文件  .filename.swp默认交换文件在打开文件的时候就会产生交换文件，正常退出的时候才会删除交换文件（断电，Ctrl+Z强制退出就不会删除），内容大致是这个样子。
 
 通过在 Vim 配置文件设置 set noswapfile 来关闭交换文件。
-2. Vim 的备份文件 ~默认">
+2. Vim 的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="谈谈 Vim 的几种文件备份">
 <meta property="og:url" content="http://www.evilclay.com/2017/03/31/谈谈-Vim-的几种文件备份/index.html">
 <meta property="og:site_name" content="Anka9080's Notes">
 <meta property="og:description" content="源自 MCTF 看到了 Vim 的 undo 备份，顺手学习了下 Vim 的几种备份机制，或有疏漏，请指出。
-1. Vim 的交换文件  ..swp默认交换文件在打开文件的时候就会产生交换文件，正常退出的时候才会删除交换文件（断电，Ctrl+Z强制退出就不会删除），内容大致是这个样子。
+1. Vim 的交换文件  .filename.swp默认交换文件在打开文件的时候就会产生交换文件，正常退出的时候才会删除交换文件（断电，Ctrl+Z强制退出就不会删除），内容大致是这个样子。
 
 通过在 Vim 配置文件设置 set noswapfile 来关闭交换文件。
-2. Vim 的备份文件 ~默认">
+2. Vim 的">
 <meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/vimswp.png">
 <meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/vimbackup.png">
 <meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/vimundo.png">
-<meta property="og:updated_time" content="2017-03-31T11:41:25.503Z">
+<meta property="og:updated_time" content="2017-03-31T14:01:04.896Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="谈谈 Vim 的几种文件备份">
 <meta name="twitter:description" content="源自 MCTF 看到了 Vim 的 undo 备份，顺手学习了下 Vim 的几种备份机制，或有疏漏，请指出。
-1. Vim 的交换文件  ..swp默认交换文件在打开文件的时候就会产生交换文件，正常退出的时候才会删除交换文件（断电，Ctrl+Z强制退出就不会删除），内容大致是这个样子。
+1. Vim 的交换文件  .filename.swp默认交换文件在打开文件的时候就会产生交换文件，正常退出的时候才会删除交换文件（断电，Ctrl+Z强制退出就不会删除），内容大致是这个样子。
 
 通过在 Vim 配置文件设置 set noswapfile 来关闭交换文件。
-2. Vim 的备份文件 ~默认">
+2. Vim 的">
 <meta name="twitter:image" content="http://7xku36.com1.z0.glb.clouddn.com/vimswp.png">
 
     
@@ -108,20 +108,20 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Vim-的交换文件-swp"><span class="toc-number">1.</span> <span class="toc-text">1. Vim 的交换文件  ..swp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Vim-的备份文件"><span class="toc-number">2.</span> <span class="toc-text">2. Vim 的备份文件 ~</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-undo-备份文件-un"><span class="toc-number">3.</span> <span class="toc-text">3. undo 备份文件  ..un.~</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-PS"><span class="toc-number">4.</span> <span class="toc-text">4. PS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-参考"><span class="toc-number">5.</span> <span class="toc-text">5. 参考</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Vim-的交换文件-filename-swp"><span class="toc-number">1.</span> <span class="toc-text">1. Vim 的交换文件  .filename.swp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Vim-的备份文件-filename"><span class="toc-number">2.</span> <span class="toc-text">2. Vim 的备份文件 filename~</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-undo-备份文件-filename-un"><span class="toc-number">3.</span> <span class="toc-text">3. undo 备份文件  .filename.un.~</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-PS"><span class="toc-number">4.</span> <span class="toc-text">4. PS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-参考"><span class="toc-number">5.</span> <span class="toc-text">5. 参考</span></a></li></ol>
 		
 		</div>
 		
 		<p>源自 MCTF 看到了 Vim 的 undo 备份，顺手学习了下 Vim 的几种备份机制，或有疏漏，请指出。</p>
-<h3 id="1-Vim-的交换文件-swp"><a href="#1-Vim-的交换文件-swp" class="headerlink" title="1. Vim 的交换文件  ..swp"></a>1. Vim 的交换文件  .<filename>.swp</filename></h3><p>默认交换文件在打开文件的时候就会产生交换文件，正常退出的时候才会删除交换文件（断电，Ctrl+Z强制退出就不会删除），内容大致是这个样子。</p>
+<h3 id="1-Vim-的交换文件-filename-swp"><a href="#1-Vim-的交换文件-filename-swp" class="headerlink" title="1. Vim 的交换文件  .filename.swp"></a>1. Vim 的交换文件  .filename.swp</h3><p>默认交换文件在打开文件的时候就会产生交换文件，正常退出的时候才会删除交换文件（断电，Ctrl+Z强制退出就不会删除），内容大致是这个样子。</p>
 <p><img src="http://7xku36.com1.z0.glb.clouddn.com/vimswp.png" alt="swpdemo"></p>
 <p>通过在 Vim 配置文件设置 set noswapfile 来关闭交换文件。</p>
-<h3 id="2-Vim-的备份文件"><a href="#2-Vim-的备份文件" class="headerlink" title="2. Vim 的备份文件 ~"></a>2. Vim 的备份文件 <filename>~</filename></h3><p>默认关闭，需要通过设置 set backup 来开启，Unbuntu的Vim配置文件是 /etc/vim/vimrc</p>
+<h3 id="2-Vim-的备份文件-filename"><a href="#2-Vim-的备份文件-filename" class="headerlink" title="2. Vim 的备份文件 filename~"></a>2. Vim 的备份文件 filename~</h3><p>默认关闭，需要通过设置 set backup 来开启，Unbuntu的Vim配置文件是 /etc/vim/vimrc</p>
 <p>开启后，对文件进行修改后会保存修改之前的一个副本，展示如下：</p>
 <p><img src="http://7xku36.com1.z0.glb.clouddn.com/vimbackup.png" alt="~Demo"></p>
 <p>如果不喜欢 ~ 作为备份文件的后缀，可以使用 set backupext=.bak 来设置备份文件的扩展名。</p>
 <p>当然可以通过设置 set nobackup 来关闭备份文件。</p>
-<h3 id="3-undo-备份文件-un"><a href="#3-undo-备份文件-un" class="headerlink" title="3. undo 备份文件  ..un.~"></a>3. undo 备份文件  .<filename>.un.~</filename></h3><p>默认关闭，需要设置 set undofile 来开启 undo 备份文件。这是 Vim 官方给出的 undo 备份文件的解释：</p>
+<h3 id="3-undo-备份文件-filename-un"><a href="#3-undo-备份文件-filename-un" class="headerlink" title="3. undo 备份文件  .filename.un.~"></a>3. undo 备份文件  .filename.un.~</h3><p>默认关闭，需要设置 set undofile 来开启 undo 备份文件。这是 Vim 官方给出的 undo 备份文件的解释：</p>
 <p>When on, Vim automatically saves undo history to an undo file when writing a buffer to a file, and restores undo history from the same file on buffer read.</p>
 <p>也就是说开启时，在 Vim 中编辑文件是使用了 撤销更改（u命令）的操作，会把撤销更改的那部分保存到缓存文件 .<filename>.un.~ 中。</filename></p>
 <p>测试发现这个 undo 缓存文件是追加写入的，所以你所有的撤销操作都会在这个文件中找到。</p>
@@ -185,7 +185,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Vim-的交换文件-swp"><span class="toc-number">1.</span> <span class="toc-text">1. Vim 的交换文件  ..swp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Vim-的备份文件"><span class="toc-number">2.</span> <span class="toc-text">2. Vim 的备份文件 ~</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-undo-备份文件-un"><span class="toc-number">3.</span> <span class="toc-text">3. undo 备份文件  ..un.~</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-PS"><span class="toc-number">4.</span> <span class="toc-text">4. PS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-参考"><span class="toc-number">5.</span> <span class="toc-text">5. 参考</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Vim-的交换文件-filename-swp"><span class="toc-number">1.</span> <span class="toc-text">1. Vim 的交换文件  .filename.swp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Vim-的备份文件-filename"><span class="toc-number">2.</span> <span class="toc-text">2. Vim 的备份文件 filename~</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-undo-备份文件-filename-un"><span class="toc-number">3.</span> <span class="toc-text">3. undo 备份文件  .filename.un.~</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-PS"><span class="toc-number">4.</span> <span class="toc-text">4. PS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-参考"><span class="toc-number">5.</span> <span class="toc-text">5. 参考</span></a></li></ol>
  
   </div>
 
