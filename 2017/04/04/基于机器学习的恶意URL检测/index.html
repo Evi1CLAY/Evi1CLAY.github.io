@@ -1,0 +1,617 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>基于机器学习的恶意 URL 检测 | Anka9080&#39;s Notes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Anka9080">
+    
+
+    
+    <meta name="description" content="在Freebuf 上之前也发过一些机器学习应用于Web异常检测的文章，阐述了几种检测模型的建立方式，可以先了解一番。本文参考了国外的一篇博文，英语好的可以直接看下原文，在这里记录了下研究检测模型实现的过程，因为也是最近才接触机器学习这块，有啥问题请大牛们指出。
+先说重点，这篇文章使用逻辑回归的方式建立检测模型，对未知的 URL 进行检测。
+模型建立的整体思路如下：
+
+分别拿到正常请求和恶意请求的数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于机器学习的恶意 URL 检测">
+<meta property="og:url" content="http://www.evilclay.com/2017/04/04/基于机器学习的恶意URL检测/index.html">
+<meta property="og:site_name" content="Anka9080's Notes">
+<meta property="og:description" content="在Freebuf 上之前也发过一些机器学习应用于Web异常检测的文章，阐述了几种检测模型的建立方式，可以先了解一番。本文参考了国外的一篇博文，英语好的可以直接看下原文，在这里记录了下研究检测模型实现的过程，因为也是最近才接触机器学习这块，有啥问题请大牛们指出。
+先说重点，这篇文章使用逻辑回归的方式建立检测模型，对未知的 URL 进行检测。
+模型建立的整体思路如下：
+
+分别拿到正常请求和恶意请求的数">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/aiwaf/aiwaf.png">
+<meta property="og:updated_time" content="2017-04-04T17:20:26.565Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于机器学习的恶意 URL 检测">
+<meta name="twitter:description" content="在Freebuf 上之前也发过一些机器学习应用于Web异常检测的文章，阐述了几种检测模型的建立方式，可以先了解一番。本文参考了国外的一篇博文，英语好的可以直接看下原文，在这里记录了下研究检测模型实现的过程，因为也是最近才接触机器学习这块，有啥问题请大牛们指出。
+先说重点，这篇文章使用逻辑回归的方式建立检测模型，对未知的 URL 进行检测。
+模型建立的整体思路如下：
+
+分别拿到正常请求和恶意请求的数">
+<meta name="twitter:image" content="http://7xku36.com1.z0.glb.clouddn.com/aiwaf/aiwaf.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Anka9080&#39;s Notes" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Anka9080&#39;s Notes">Anka9080&#39;s Notes</a></h1>
+				<h2 class="blog-motto">勿忘初心。</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/2048/">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:www.evilclay.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/04/04/基于机器学习的恶意URL检测/" title="基于机器学习的恶意 URL 检测" itemprop="url">基于机器学习的恶意 URL 检测</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
+		
+  <p class="article-time">
+    <time datetime="2017-04-04T10:46:24.000Z" itemprop="datePublished"> Published 2017-04-04</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#收集数据集"><span class="toc-number">1.</span> <span class="toc-text">收集数据集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#计算特征矩阵"><span class="toc-number">2.</span> <span class="toc-text">计算特征矩阵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#训练检测模型"><span class="toc-number">3.</span> <span class="toc-text">训练检测模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试模型效果"><span class="toc-number">4.</span> <span class="toc-text">测试模型效果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
+		
+		</div>
+		
+		<p>在Freebuf 上之前也发过一些机器学习应用于Web异常检测的文章，阐述了几种检测模型的建立方式，可以先了解一番。本文参考了国外的<a href="http://fsecurify.com/fwaf-machine-learning-driven-web-application-firewall/" target="_blank" rel="external">一篇博文</a>，英语好的可以直接看下原文，在这里记录了下研究检测模型实现的过程，因为也是最近才接触机器学习这块，有啥问题请大牛们指出。</p>
+<p>先说重点，这篇文章使用逻辑回归的方式建立检测模型，对未知的 URL 进行检测。</p>
+<p>模型建立的整体思路如下：</p>
+<ol>
+<li>分别拿到正常请求和恶意请求的数据集。</li>
+<li>对无规律的数据集进行处理得到特征矩阵。</li>
+<li>使用机器逻辑回归算法拿特征矩阵训练检测模型。</li>
+<li>最后使用检测模型判断新的 URL 请求是恶意的还是正常的。</li>
+</ol>
+<h2 id="收集数据集"><a href="#收集数据集" class="headerlink" title="收集数据集"></a>收集数据集</h2><p>我们需要分别拿到恶意的数据集和正常的数据集用来后期处理，在这里恶意的数据集来自 <a href="https://github.com/foospidy/payloads" target="_blank" rel="external">https://github.com/foospidy/payloads</a> 中的一些 XSS SQL注入等攻击的payload，结合github上一些知名仓库的payload，一共整理出 50000 条恶意请求作为恶意的数据集；正常请求的数据集来自于<a href="http://secrepo.com/" target="_blank" rel="external">http://secrepo.com/</a> , 攻击1000000条日志请求（资源有限，假定认为这些数据全部都是正常的请求，有精力可以进行降噪处理）。</p>
+<p>恶意请求部分样本：</p>
+<pre><code>/top.php?stuff=&apos;uname &gt;q36497765 #
+/h21y8w52.nsf?&lt;script&gt;cross_site_scripting.nasl&lt;/script&gt;
+/ca000001.pl?action=showcart&amp;hop=\&quot;&gt;&lt;script&gt;alert(&apos;vulnerable&apos;)&lt;/script&gt;&amp;path=acatalog/
+/scripts/edit_image.php?dn=1&amp;userfile=/etc/passwd&amp;userfile_name= ;id; 
+/javascript/mta.exe
+/examples/jsp/colors/kernel/loadkernel.php?installpath=/etc/passwd\x00
+/examples/jsp/cal/feedsplitter.php?format=../../../../../../../../../../etc/passwd\x00&amp;debug=1
+/phpwebfilemgr/index.php?f=../../../../../../../../../etc/passwd
+/cgi-bin/script/cat_for_gen.php?ad=1&amp;ad_direct=../&amp;m_for_racine=&lt;/option&gt;&lt;/select&gt;&lt;?phpinfo();?&gt;
+/examples/jsp/cal/search.php?allwords=&lt;br&gt;&lt;script&gt;foo&lt;/script&gt;&amp;cid=0&amp;title=1&amp;desc=1
+</code></pre><p>正常请求部分样本：</p>
+<pre><code>/rcanimal/
+/458010b88d9ce/
+/cclogovs/
+/using-localization/
+/121006_dakotacwpressconf/
+/50393994/
+/166636/
+/labview_v2/
+/javascript/nets.png
+/p25-03/
+/javascript/minute.rb
+/javascript/weblogs.rss
+/javascript/util.rtf
+</code></pre><h2 id="计算特征矩阵"><a href="#计算特征矩阵" class="headerlink" title="计算特征矩阵"></a>计算特征矩阵</h2><p>无论是恶意请求数据集还是正常请求数据集，都是不定长的字符串列表，很难直接用逻辑回归算法对这些不规律的数据进行处理，所以，需要找到这些文本的数字特征，用来训练我们的检测模型。</p>
+<p>在这里，我们使用 Tfidvectorizer（TD-IDF） 来提取文本的特征，并以数字矩阵的形式进行输出。</p>
+<p>TD-IDF 是一种用于资讯检索与文本挖掘的常用加权技术，被经常用于描述文本特征。</p>
+<p>实际上是：TF * IDF，TF 词频（Term Frequency），IDF 逆向文件频率（Inverse Document Frequency）。</p>
+<p>这里简单说下他们的概念，感兴趣的可以搜搜资料：</p>
+<p>TF表示词条在某文档中出现的频率。<br>IDF的主要思想是：如果包含词条的文档越少，则 IDF越大，说明该词条具有很好的类别区分能力。</p>
+<p>TF-IDF 倾向于过滤掉常见的词语，保留重要的词语。</p>
+<p>要计算 TD-IDF 之前首先需要对 每个文档（URL请求）的内容进行分词处理，也就是需要定义文档的词条长度，这里我们选择长度为3，可以根据模型的准确度对这个参数进行调整。</p>
+<p>比如：<br>// URL 请求<br>www.foo.com/1<br>// 经过分词后<br>[‘www’,’ww.’,’w.f’,’.fo’,’foo’,’oo.’,’o.c’,’.co’,’com’,’om/‘,’m/1’]</p>
+<p>下面对所有 URL 请求计算出 TD-IDF 特征矩阵，输出格式基本上是下面的样子：</p>
+<pre><code>(0, 31445)    0.0739022819816
+(0, 62475)    0.0629894240925
+(0, 46832)    0.0589025342739
+(0, 77623)    0.0717033170552
+(0, 35908)    0.0882896248394
+
+:    省略 :
+
+(1310503, 17869)    0.245096903287
+(1310503, 7490)    0.350336780418
+(1310504, 8283)    0.344234609884
+(1310504, 72979)    0.265488228146
+(1310504, 67485)    0.253863271567
+(1310504, 37730)    0.328153786399
+</code></pre><p>可以看出特征矩阵的元素由[(i,j) weight] 三个元素组成，</p>
+<p>在矩阵中：<br>i 对应于集合中的文档编号，列对应于术语term（或者说是词片？）<br>矩阵元素[(i,j) weight] 表示编号 为 j 的词片 在编号为 i 的文档下的 fd-idf 值（weight）。<br>比如： (0, 31445)    0.0739022819816  表示词片编号31445的在第0号文档的权值是 0.0739022819816</p>
+<h2 id="训练检测模型"><a href="#训练检测模型" class="headerlink" title="训练检测模型"></a>训练检测模型</h2><p>现在有了特征矩阵作为训练数据，可以直接使用逻辑回归的方法来训练我们的模型，这一步需要电脑花点时间对数据进行处理，但是Python已经有强大的库给我们直接提供了训练入口(fit函数)，所以只需要定义一个逻辑模型实例，然后调用训练方法，传值训练数据即可，代码如下：</p>
+<pre><code>lgs = LogisticRegression()
+lgs.fit(x_train, y_train)
+// x_train 是特征矩阵，y_train 是该条矩阵的分词对应的检测输出（正常是0 恶意是1）的列表
+</code></pre><h2 id="测试模型效果"><a href="#测试模型效果" class="headerlink" title="测试模型效果"></a>测试模型效果</h2><p>经过训练之后 lgs 提供 score 方法 选择一批测试数据来计算模型的准确度，初步测试，准确度也不算低。</p>
+<pre><code>lgs.score(x_test, y_test)
+// output: 99 %
+</code></pre><p>同时，可以调用 lgs.predict 的方法对 新的 URL 进行恶意判定。</p>
+<pre><code>x_predict = [&apos;http://www.foo.com/id=1&lt;script&gt;alert(1)&lt;/script&gt;&apos;,&apos;www.foo.com/login.html&apos;]
+x_predict = vectorizer.transform(x_predict)
+x_Predict = lgs.predict(x_predict)
+// output: [1,0]
+</code></pre><p>粗略的测试了几组数据，结果如下：</p>
+<p><img src="http://7xku36.com1.z0.glb.clouddn.com/aiwaf/aiwaf.png" alt="结果输出"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>基于逻辑回归的恶意URL检测很依赖于训练数据集，有必要保证原始数据集尽可能的减少噪点（异常数据），以及每条数据之间尽可能的减少关联性。<br>若能拿到自身业务中确定正常或者威胁的请求数据作为训练数据集训练出的模型应该也更加适用于当前环境的检测。<br>同时作为监督式学习，可以定期把检测出确定威胁的请求放入原始数据集中，对检测模型进行优化。</p>
+<p>源码地址：</p>
+<p><a href="https://github.com/exp-db/AI-Driven-WAF" target="_blank" rel="external">https://github.com/exp-db/AI-Driven-WAF</a></p>
+<p>参考：</p>
+<p><a href="http://www.freebuf.com/articles/web/126543.html" target="_blank" rel="external">http://www.freebuf.com/articles/web/126543.html</a><br><a href="http://fsecurify.com/fwaf-machine-learning-driven-web-application-firewall/" target="_blank" rel="external">http://fsecurify.com/fwaf-machine-learning-driven-web-application-firewall/</a><br><a href="http://scikit-learn.org/stable/modules/feature_extraction.html#text-feature-extraction" target="_blank" rel="external">http://scikit-learn.org/stable/modules/feature_extraction.html#text-feature-extraction</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://www.evilclay.com/2017/04/04/基于机器学习的恶意URL检测/" data-title="基于机器学习的恶意 URL 检测 | Anka9080&#39;s Notes" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/04/28/SSI-服务端包含注入/" title="SSI-服务端包含注入">
+  <strong>上一篇：</strong><br/>
+  <span>
+  SSI-服务端包含注入</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/03/31/谈谈-Vim-的几种文件备份/"  title="谈谈 Vim 的几种文件备份">
+ <strong>下一篇：</strong><br/> 
+ <span>谈谈 Vim 的几种文件备份
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2017/04/04/基于机器学习的恶意URL检测/" data-title="基于机器学习的恶意 URL 检测" data-url="http://www.evilclay.com/2017/04/04/基于机器学习的恶意URL检测/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#收集数据集"><span class="toc-number">1.</span> <span class="toc-text">收集数据集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#计算特征矩阵"><span class="toc-number">2.</span> <span class="toc-text">计算特征矩阵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#训练检测模型"><span class="toc-number">3.</span> <span class="toc-text">训练检测模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试模型效果"><span class="toc-number">4.</span> <span class="toc-text">测试模型效果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/安全工具/" title="安全工具">安全工具<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Ubuntu/" title="Ubuntu">Ubuntu<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/漏洞分析/" title="漏洞分析">漏洞分析<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/多线程/" title="多线程">多线程<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/内网渗透/" title="内网渗透">内网渗透<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/信息收集/" title="信息收集">信息收集<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/kali/" title="kali">kali<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/端口扫描/" title="端口扫描">端口扫描<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SQL注入/" title="SQL注入">SQL注入<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Flask/" title="Flask">Flask<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Cookie劫持/" title="Cookie劫持">Cookie劫持<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DNS区域传送/" title="DNS区域传送">DNS区域传送<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Docker/" title="Docker">Docker<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ARP欺骗/" title="ARP欺骗">ARP欺骗<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/想法/" title="想法">想法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/社工工程学/" title="社工工程学">社工工程学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/钓鱼网站/" title="钓鱼网站">钓鱼网站<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SET/" title="SET">SET<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DNSLog/" title="DNSLog">DNSLog<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://navisec.it" target="_blank" title="信息安全从业简明导航">Navisec.it</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://sec-wiki.com" target="_blank" title="安全维基">Sec-Wiki</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Anka9080 Page in ZorelWorld. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/5800672330" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/Evi1CLAY" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="Anka9080">Anka9080</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+
+<script src="/js/instantclick.js" data-no-instant></script>
+<script data-no-instant>InstantClick.init();</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"evi1clay"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

@@ -1,0 +1,622 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>SSI-服务端包含注入 | Anka9080&#39;s Notes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Anka9080">
+    
+
+    
+    <meta name="description" content="前言看到 MottoIN 上有个 SSI 的文章，正好学习一番。
+SSISSI是英文Server Side Includes的缩写，SSI是嵌入HTML页面中的指令，在页面被提供时由服务器进行运算，以对现有HTML页面增加动态生成的内容，而无须通过CGI程序提供其整个页面，或者使用其他动态技术。
+至于什么时候应当用SSI ，而什么时候应当用某些程序生成整个页面，取决于页面中有多少内容是静态的，又有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSI-服务端包含注入">
+<meta property="og:url" content="http://www.evilclay.com/2017/04/28/SSI-服务端包含注入/index.html">
+<meta property="og:site_name" content="Anka9080's Notes">
+<meta property="og:description" content="前言看到 MottoIN 上有个 SSI 的文章，正好学习一番。
+SSISSI是英文Server Side Includes的缩写，SSI是嵌入HTML页面中的指令，在页面被提供时由服务器进行运算，以对现有HTML页面增加动态生成的内容，而无须通过CGI程序提供其整个页面，或者使用其他动态技术。
+至于什么时候应当用SSI ，而什么时候应当用某些程序生成整个页面，取决于页面中有多少内容是静态的，又有">
+<meta property="og:updated_time" content="2017-04-27T18:29:28.263Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SSI-服务端包含注入">
+<meta name="twitter:description" content="前言看到 MottoIN 上有个 SSI 的文章，正好学习一番。
+SSISSI是英文Server Side Includes的缩写，SSI是嵌入HTML页面中的指令，在页面被提供时由服务器进行运算，以对现有HTML页面增加动态生成的内容，而无须通过CGI程序提供其整个页面，或者使用其他动态技术。
+至于什么时候应当用SSI ，而什么时候应当用某些程序生成整个页面，取决于页面中有多少内容是静态的，又有">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Anka9080&#39;s Notes" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Anka9080&#39;s Notes">Anka9080&#39;s Notes</a></h1>
+				<h2 class="blog-motto">勿忘初心。</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/2048/">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:www.evilclay.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/04/28/SSI-服务端包含注入/" title="SSI-服务端包含注入" itemprop="url">SSI-服务端包含注入</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
+		
+  <p class="article-time">
+    <time datetime="2017-04-27T18:28:28.000Z" itemprop="datePublished"> Published 2017-04-28</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSI"><span class="toc-number">2.</span> <span class="toc-text">SSI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启用-SSI"><span class="toc-number">3.</span> <span class="toc-text">启用 SSI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSI-的能力"><span class="toc-number">4.</span> <span class="toc-text">SSI 的能力</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SSI-支持的指令"><span class="toc-number">4.1.</span> <span class="toc-text">SSI 支持的指令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSI-业务场景"><span class="toc-number">5.</span> <span class="toc-text">SSI 业务场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSI-注入条件"><span class="toc-number">6.</span> <span class="toc-text">SSI 注入条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#挖掘-SSI-注入"><span class="toc-number">7.</span> <span class="toc-text">挖掘 SSI 注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSI-注入危害"><span class="toc-number">8.</span> <span class="toc-text">SSI 注入危害</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSI-注入防护"><span class="toc-number">9.</span> <span class="toc-text">SSI 注入防护</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>看到 <a href="http://www.mottoin.com/101526.html" target="_blank" rel="external">MottoIN</a> 上有个 SSI 的文章，正好学习一番。</p>
+<h2 id="SSI"><a href="#SSI" class="headerlink" title="SSI"></a>SSI</h2><p>SSI是英文Server Side Includes的缩写，SSI是嵌入HTML页面中的指令，在页面被提供时由服务器进行运算，以对现有HTML页面增加动态生成的内容，而无须通过CGI程序提供其整个页面，或者使用其他动态技术。</p>
+<p>至于什么时候应当用SSI ，而什么时候应当用某些程序生成整个页面，取决于页面中有多少内容是静态的，又有多少内容需要在每次页面被提供时重新计算。SSI是一种增加小段动态信息的好方法，比如当前时间。如果你的页面大部分内容是在被提供时动态生成的，那就要另找方案了。</p>
+<p>SSI固然不能替代CGI或者其他动态页面技术，但它是在页面中插入众多小型的动态片段的优秀方法，而无须大量额外的操作。</p>
+<p>现在这种业务少了，洞也少了，重在记录学习过程。</p>
+<h2 id="启用-SSI"><a href="#启用-SSI" class="headerlink" title="启用 SSI"></a>启用 SSI</h2><blockquote>
+<p>环境： Apache/2.4.10 (Win32) OpenSSL/0.9.8zb PHP/5.3.29</p>
+</blockquote>
+<p>Apache默认未启用 SSI ，若使用 SSI，需要对做以下配置：</p>
+<p>打开 Apache 配置文件 httpd.conf ：</p>
+<ol>
+<li>确认加载include.so模块，将注释去掉：LoadModule include_module libexec/apache2/mod_include.so</li>
+<li>AddType部分去掉这两段注释：AddType text/html .shtmlAddOutputFilter INCLUDES .shtml</li>
+<li>Directory目录权限里面找到Options Indexes FollowSymLinks 增加 Includes<br> 比如，修改成：Options +Indexes +FollowSymLinks +ExecCGI +Includes</li>
+<li>重新启动 Apache</li>
+</ol>
+<p>此外，IIS 和 <a href="http://www.kubiji.cn/topic-id998.html" target="_blank" rel="external">Nginx</a> 都可以开启 SSI 功能，这里不在赘述方法。</p>
+<h2 id="SSI-的能力"><a href="#SSI-的能力" class="headerlink" title="SSI 的能力"></a>SSI 的能力</h2><p>要想知道 SSI 能做出什么好玩的，首先要了解 SSI 的指令。</p>
+<p>SSI 的语法如下：</p>
+<pre><code>&lt;!--#element attribute=value attribute=value ... --&gt;
+</code></pre><p>类似于HTML注释，即使没有正确配置SSI ，它也不会被浏览器显示，但在HTML代码中可见。而若正确配置了SSI ，则 SSI 指令会被其结果所取代。</p>
+<h3 id="SSI-支持的指令"><a href="#SSI-支持的指令" class="headerlink" title="SSI 支持的指令"></a>SSI 支持的指令</h3><p><strong>echo 指令</strong> 将环境变量输出到页面</p>
+<p>语法： <code>&lt;!--#echo var=&quot;变量名称&quot;--&gt;</code></p>
+<p>例子：</p>
+<pre><code>&lt;!--#echo var=&quot;DOCUMENT_NAME&quot;--&gt;  // 文档名称
+&lt;!--#echo var=&quot;DATE_LOCAL&quot;--&gt;  // 现在时间
+&lt;!--#echo var=&quot;REMOTE_ADDR&quot;--&gt;   // 访客 IP 地址
+</code></pre><p><strong>include 指令</strong>  包含一个php文件 类似于include函数</p>
+<p>语法：</p>
+<pre><code>&lt;!--#include virtual=&quot;文件名称&quot;--&gt;
+&lt;!--#include file=&quot;文件名称&quot;--&gt;
+</code></pre><p>参数：</p>
+<p><strong>file 指定</strong> 包含文件相对于本文档的位置，不允许包含上级目录的文件；</p>
+<p>virtual 指定相对于服务器文档根目录的位置。</p>
+<p>例子:</p>
+<pre><code>&lt;!--#include virtual=&quot;/footer.html&quot; --&gt; // 包含标准页脚
+</code></pre><p><strong>flastmod 和 fsize 指令</strong></p>
+<p>参数和 include 参数一样有 file 和 virtual ；</p>
+<p>flastmod 和 fsize 用于输出文件的最后修改时间 和 文件大小。</p>
+<p>例子：</p>
+<pre><code>&lt;!--#flastmod file=&quot;文件名称&quot;--&gt;
+&lt;!--#fsize file=&quot;文件名称&quot;--&gt;
+</code></pre><p><strong>exec 指令</strong> 将某一外部程序的输出插入到页面中。可插入CGI程序或者是bash/cmd命令（命令执行），这取决于使用的参数是cmd还是cgi。</p>
+<p>参数：</p>
+<p>cmd bash命令行</p>
+<p>cgi CGI脚本程序</p>
+<p>示例：</p>
+<pre><code>&lt;!--#exec cmd=&quot;cat /etc/passwd&quot;--&gt;；将会显示密码文件
+
+&lt;!--#exec cmd=&quot;dir /b&quot;--&gt;；将会显示当前目录下文件列表　
+
+&lt;!--#exec cgi=&quot;/cgi-bin/gb.cgi&quot;--&gt;；将会执行CGI程序gb.cgi。
+
+&lt;!--#exec cgi=&quot;/cgi-bin/access_log.cgi&quot;--&gt;；将会执行CGI程序access_log.cgi。
+</code></pre><p>可以看出，从上面的示例可以看出，这个指令相当方便，但是也存在重大的安全隐患。</p>
+<p>config 指令 指定返回给客户端浏览器的错误信息、日期和文件大小的格式。</p>
+<p>语法：</p>
+<pre><code>&lt;!--#config errmsg=&quot;自定义错误信息&quot;--&gt;
+
+&lt;!--#config sizefmt=&quot;显示单位&quot;--&gt;
+
+&lt;!--#config timefmt=&quot;显示格式&quot;--&gt;
+</code></pre><p>参数：</p>
+<p>errmsg 自定义SSI执行错误信息，可以为任何你喜欢的方式。</p>
+<p>sizefmt 文件大小显示方式，默认为字节方式（”bytes”)可以改为千字节方式（”abbrev”)</p>
+<p>timefmt 时间显示方式，最灵活的配置属性。</p>
+<p>示例：</p>
+<pre><code>显示一个不存在文件的大小
+
+&lt;!--#config errmsg=&quot;服务器执行错误，请联系管理员，谢谢！&quot;--&gt;
+
+&lt;!--#fsize file=&quot;不存在的文件.htm&quot;--&gt;
+
+&lt;!--#config timefmt=&quot;%Y年/%m月%d日 星期%W 北京时间%H:%M:%s，%Y年已过去了%j天 今天是%Y年的第%U个星期&quot;--&gt;
+</code></pre><h2 id="SSI-业务场景"><a href="#SSI-业务场景" class="headerlink" title="SSI 业务场景"></a>SSI 业务场景</h2><p>从定义中看出，页面中有一小部分是动态输出的时候使用SSI，</p>
+<p>比如：</p>
+<pre><code>文件相关的属性字段
+当前时间
+访客IP
+调用 CGI 程序
+</code></pre><h2 id="SSI-注入条件"><a href="#SSI-注入条件" class="headerlink" title="SSI 注入条件"></a>SSI 注入条件</h2><ol>
+<li>支持 SSI</li>
+<li>用户输入能够嵌入到响应页面</li>
+<li>用户输入的SSI关键字未被过滤</li>
+</ol>
+<h2 id="挖掘-SSI-注入"><a href="#挖掘-SSI-注入" class="headerlink" title="挖掘 SSI 注入"></a>挖掘 SSI 注入</h2><p>两个思路：</p>
+<p>第一个方面从业务场景的几个情况来 Fuzz</p>
+<p>第二方面可以关注 .stm，.shtm和.shtml 这三种扩展名。</p>
+<h2 id="SSI-注入危害"><a href="#SSI-注入危害" class="headerlink" title="SSI 注入危害"></a>SSI 注入危害</h2><p>可以导致命令执行（exec指令），本地文件包含（include指令）。</p>
+<h2 id="SSI-注入防护"><a href="#SSI-注入防护" class="headerlink" title="SSI 注入防护"></a>SSI 注入防护</h2><p>若可以，请关闭服务器对 SSI 的支持；</p>
+<p>过滤 SSI 关键字（&lt; &gt; # - “ ‘）。</p>
+<p>参考：</p>
+<ol>
+<li><a href="http://www.kubiji.cn/topic-id998.html" target="_blank" rel="external">http://www.kubiji.cn/topic-id998.html</a></li>
+<li><a href="https://www.owasp.org/index.php/Server-Side_Includes_(SSI)_Injection" target="_blank" rel="external">https://www.owasp.org/index.php/Server-Side_Includes_(SSI)_Injection</a></li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/SSI-服务端包含注入/">SSI|服务端包含注入</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://www.evilclay.com/2017/04/28/SSI-服务端包含注入/" data-title="SSI-服务端包含注入 | Anka9080&#39;s Notes" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/04/04/基于机器学习的恶意URL检测/"  title="基于机器学习的恶意 URL 检测">
+ <strong>下一篇：</strong><br/> 
+ <span>基于机器学习的恶意 URL 检测
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2017/04/28/SSI-服务端包含注入/" data-title="SSI-服务端包含注入" data-url="http://www.evilclay.com/2017/04/28/SSI-服务端包含注入/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSI"><span class="toc-number">2.</span> <span class="toc-text">SSI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启用-SSI"><span class="toc-number">3.</span> <span class="toc-text">启用 SSI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSI-的能力"><span class="toc-number">4.</span> <span class="toc-text">SSI 的能力</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SSI-支持的指令"><span class="toc-number">4.1.</span> <span class="toc-text">SSI 支持的指令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSI-业务场景"><span class="toc-number">5.</span> <span class="toc-text">SSI 业务场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSI-注入条件"><span class="toc-number">6.</span> <span class="toc-text">SSI 注入条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#挖掘-SSI-注入"><span class="toc-number">7.</span> <span class="toc-text">挖掘 SSI 注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSI-注入危害"><span class="toc-number">8.</span> <span class="toc-text">SSI 注入危害</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSI-注入防护"><span class="toc-number">9.</span> <span class="toc-text">SSI 注入防护</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/安全工具/" title="安全工具">安全工具<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Ubuntu/" title="Ubuntu">Ubuntu<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/漏洞分析/" title="漏洞分析">漏洞分析<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/多线程/" title="多线程">多线程<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/内网渗透/" title="内网渗透">内网渗透<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/信息收集/" title="信息收集">信息收集<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/kali/" title="kali">kali<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/端口扫描/" title="端口扫描">端口扫描<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SQL注入/" title="SQL注入">SQL注入<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Flask/" title="Flask">Flask<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Cookie劫持/" title="Cookie劫持">Cookie劫持<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DNS区域传送/" title="DNS区域传送">DNS区域传送<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Docker/" title="Docker">Docker<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ARP欺骗/" title="ARP欺骗">ARP欺骗<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/想法/" title="想法">想法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/社工工程学/" title="社工工程学">社工工程学<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/钓鱼网站/" title="钓鱼网站">钓鱼网站<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SET/" title="SET">SET<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DNSLog/" title="DNSLog">DNSLog<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://navisec.it" target="_blank" title="信息安全从业简明导航">Navisec.it</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://sec-wiki.com" target="_blank" title="安全维基">Sec-Wiki</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Anka9080 Page in ZorelWorld. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/5800672330" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/Evi1CLAY" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="Anka9080">Anka9080</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+
+<script src="/js/instantclick.js" data-no-instant></script>
+<script data-no-instant>InstantClick.init();</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"evi1clay"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
