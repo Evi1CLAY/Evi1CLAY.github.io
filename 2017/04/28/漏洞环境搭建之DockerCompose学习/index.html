@@ -4,56 +4,32 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Flask-Web项目小结 | Anka9080&#39;s Notes</title>
+    <title>漏洞环境搭建之DockerCompose学习 | Anka9080&#39;s Notes</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Anka9080">
     
 
     
-    <meta name="description" content="项目文件结构
-libs 一些声明的类和函数文件夹
-static 静态文件文件夹
-templates HTML模板文件文件夹
-config.py 项目配置文件
-app.py 项目入口文件
-CHANGELOG.md 项目更新log
-README.md 项目介绍文件
-
-说明
-功能函数以及类函数 统一写在 libs 文件夹内
-MySQL的配置参数，入口口令等（一些根据情况需要自定义的参数）全局参数统一使用">
+    <meta name="description" content="Docker Compose 概念可以在一个文件中定义一个多容器的应用，然后使用一条命令来启动你的应用，然后所有相关的操作都会被自动完成。
+通过 Docker Compose 可以将多个 Docker 容器组合成一个应用。
+以 WordPress 漏洞环境为例：
+一个完整的环境需要 Web容器 MySQL PHP环境； 在 docker compose 的角度会把这三个环境分别部署到三个docke">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Flask-Web项目小结">
-<meta property="og:url" content="http://www.evilclay.com/2016/09/06/Flask-Web项目小结/index.html">
+<meta property="og:title" content="漏洞环境搭建之DockerCompose学习">
+<meta property="og:url" content="http://www.evilclay.com/2017/04/28/漏洞环境搭建之DockerCompose学习/index.html">
 <meta property="og:site_name" content="Anka9080's Notes">
-<meta property="og:description" content="项目文件结构
-libs 一些声明的类和函数文件夹
-static 静态文件文件夹
-templates HTML模板文件文件夹
-config.py 项目配置文件
-app.py 项目入口文件
-CHANGELOG.md 项目更新log
-README.md 项目介绍文件
-
-说明
-功能函数以及类函数 统一写在 libs 文件夹内
-MySQL的配置参数，入口口令等（一些根据情况需要自定义的参数）全局参数统一使用">
-<meta property="og:updated_time" content="2016-09-06T15:36:06.363Z">
+<meta property="og:description" content="Docker Compose 概念可以在一个文件中定义一个多容器的应用，然后使用一条命令来启动你的应用，然后所有相关的操作都会被自动完成。
+通过 Docker Compose 可以将多个 Docker 容器组合成一个应用。
+以 WordPress 漏洞环境为例：
+一个完整的环境需要 Web容器 MySQL PHP环境； 在 docker compose 的角度会把这三个环境分别部署到三个docke">
+<meta property="og:updated_time" content="2017-04-28T03:47:18.014Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Flask-Web项目小结">
-<meta name="twitter:description" content="项目文件结构
-libs 一些声明的类和函数文件夹
-static 静态文件文件夹
-templates HTML模板文件文件夹
-config.py 项目配置文件
-app.py 项目入口文件
-CHANGELOG.md 项目更新log
-README.md 项目介绍文件
-
-说明
-功能函数以及类函数 统一写在 libs 文件夹内
-MySQL的配置参数，入口口令等（一些根据情况需要自定义的参数）全局参数统一使用">
+<meta name="twitter:title" content="漏洞环境搭建之DockerCompose学习">
+<meta name="twitter:description" content="Docker Compose 概念可以在一个文件中定义一个多容器的应用，然后使用一条命令来启动你的应用，然后所有相关的操作都会被自动完成。
+通过 Docker Compose 可以将多个 Docker 容器组合成一个应用。
+以 WordPress 漏洞环境为例：
+一个完整的环境需要 Web容器 MySQL PHP环境； 在 docker compose 的角度会把这三个环境分别部署到三个docke">
 
     
     <link rel="alternative" href="/atom.xml" title="Anka9080&#39;s Notes" type="application/atom+xml">
@@ -109,14 +85,14 @@ MySQL的配置参数，入口口令等（一些根据情况需要自定义的参
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/09/06/Flask-Web项目小结/" title="Flask-Web项目小结" itemprop="url">Flask-Web项目小结</a>
+      <a href="/2017/04/28/漏洞环境搭建之DockerCompose学习/" title="漏洞环境搭建之DockerCompose学习" itemprop="url">漏洞环境搭建之DockerCompose学习</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
 		
   <p class="article-time">
-    <time datetime="2016-09-06T14:47:29.000Z" itemprop="datePublished"> 发表于 2016-09-06</time>
+    <time datetime="2017-04-28T03:45:59.000Z" itemprop="datePublished"> 发表于 2017-04-28</time>
     
   </p>
 </header>
@@ -125,61 +101,58 @@ MySQL的配置参数，入口口令等（一些根据情况需要自定义的参
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#项目文件结构"><span class="toc-number">1.</span> <span class="toc-text">项目文件结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#说明"><span class="toc-number">2.</span> <span class="toc-text">说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于路由"><span class="toc-number">3.</span> <span class="toc-text">关于路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于数据库操作"><span class="toc-number">4.</span> <span class="toc-text">关于数据库操作</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-Compose-概念"><span class="toc-number">1.</span> <span class="toc-text">Docker Compose 概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-Docker-Compose-创建应用"><span class="toc-number">2.</span> <span class="toc-text">使用 Docker Compose 创建应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-DockerFile-定义应用环境"><span class="toc-number">2.1.</span> <span class="toc-text">使用 DockerFile 定义应用环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-compose-yaml-定义应用服务"><span class="toc-number">2.2.</span> <span class="toc-text">使用 compose.yaml 定义应用服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动容器"><span class="toc-number">2.3.</span> <span class="toc-text">启动容器</span></a></li></ol></li></ol>
 		
 		</div>
 		
-		<h2 id="项目文件结构"><a href="#项目文件结构" class="headerlink" title="项目文件结构"></a>项目文件结构</h2><ul>
-<li>libs 一些声明的类和函数文件夹</li>
-<li>static 静态文件文件夹</li>
-<li>templates HTML模板文件文件夹</li>
-<li>config.py 项目配置文件</li>
-<li>app.py 项目入口文件</li>
-<li>CHANGELOG.md 项目更新log</li>
-<li>README.md 项目介绍文件</li>
-</ul>
-<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><ol>
-<li>功能函数以及类函数 统一写在 libs 文件夹内</li>
-<li>MySQL的配置参数，入口口令等（一些根据情况需要自定义的参数）全局参数统一使用config.py的方式配置。</li>
-<li><code>app_secret_key</code>这种在项目中不需要变动的参数可以写在app.py文件中。<br>app.py 文件除了一些route定义不应该包含其他的方法。</li>
-<li>一些类若需要在路由函数中调用，其实例化放在 app.py 路由区域前。</li>
-</ol>
-<h2 id="关于路由"><a href="#关于路由" class="headerlink" title="关于路由"></a>关于路由</h2><p>忽略 <code>get/post</code> 型</p>
-<pre><code>@app.route(&apos;/&apos;)
-</code></pre><p>判断是否是 GET 请求</p>
-<pre><code>if request.method == &apos;GET&apos;:
-</code></pre><p>重定向使用</p>
-<pre><code>redirect(&apos;/login&apos;)
-</code></pre><p>返回错误信息</p>
-<pre><code>return &apos;&lt;html&gt;&lt;script&gt;alert(&apos;Some ERR message&apos;)&lt;/script&gt;&lt;/html&gt;&apos;
-</code></pre><p>判断是GET请求中是否有某参数</p>
-<pre><code>if request.args.has_key(&apos;somekey&apos;):
-</code></pre><p>从GET请求里取出某参数，不存在则设为默认值：</p>
-<pre><code>request.args.get(&apos;keyname&apos;,&apos;defaultvalue&apos;)
-</code></pre><p>刷新数据使用 JSON 的数据格式</p>
-<pre><code>return json.dump(dict_var)
-</code></pre><h2 id="关于数据库操作"><a href="#关于数据库操作" class="headerlink" title="关于数据库操作"></a>关于数据库操作</h2><ol>
-<li><p>数据库类写在libs.models文件中</p>
-</li>
-<li><p>数据库连接信息从config.py文件中读取</p>
-</li>
-<li><p><code>__init__</code>方法包含 <code>self._conn</code> 和 <code>self._cur</code> 的定义,<code>connhe cur</code> 都是私有变量</p>
-</li>
-<li><p>查询，更新，插入操作统一用 <code>query/update/insert</code> 方法，而且需要使用 <code>try..catch</code> 包围。返回游标执行SQL语句的结果</p>
-</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	sql op..</span><br><span class="line">	result = ...</span><br><span class="line"><span class="keyword">except</span> MySQLdb.Error,e:</span><br><span class="line">	err_msg = <span class="string">'[-] MySQL err!'</span>,e.args[<span class="number">0</span>],e.args[<span class="number">1</span>]</span><br><span class="line">	<span class="keyword">print</span> err_msg</span><br><span class="line">	result = <span class="keyword">False</span></span><br><span class="line"><span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+		<h2 id="Docker-Compose-概念"><a href="#Docker-Compose-概念" class="headerlink" title="Docker Compose 概念"></a>Docker Compose 概念</h2><p>可以在一个文件中定义一个多容器的应用，然后使用一条命令来启动你的应用，然后所有相关的操作都会被自动完成。</p>
+<p>通过 Docker Compose 可以将多个 Docker 容器组合成一个应用。</p>
+<p>以 WordPress 漏洞环境为例：</p>
+<p>一个完整的环境需要 Web容器 MySQL PHP环境； 在 docker compose 的角度会把这三个环境分别部署到三个docker容器中，然后把他们连接起来共同组成了 WordPress 的漏洞环境，如何定义这些容器以及如何连接成一个整体，请参照 Docker Compose 配置文件。</p>
+<p>在 Docker Compose 配置文件中：所有的容器通过services来定义，然后使用docker-compose脚本来启动，停止和重启应用，和应用中的服务以及所有依赖服务的容器。</p>
+<p>Docker Compose 配置文件详解参照： <a href="http://dockone.io/article/834" target="_blank" rel="external">http://dockone.io/article/834</a></p>
+<p>而且可以通过修改本地文件的方式对 Docker 镜像中的文件做修改，相当于 把宿主机的文件 与 docker 镜像中的文件做了映射关系，这个我觉得非常好用。</p>
+<p>之前对 docker 镜像做修改的步骤如下：</p>
 <ol>
-<li>常用方法</li>
+<li>启动 docker 容器</li>
+<li>进入容器做相应的修改</li>
+<li>重新封装成一个新的镜像</li>
 </ol>
-<p>a. 获得所有数据 fetch_all</p>
-<pre><code>self._cur.fetchall()
-</code></pre><p>b. 获得一行数据 fetch_one</p>
-<pre><code>self._cur.fetchone()
-</code></pre><p>c. 获得返回结果的数量 get_count</p>
-<pre><code>self._cur.rowcount
-</code></pre><p>d. 关闭连接 close</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	self._cur.close()</span><br><span class="line">	self._conn.close()</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">	<span class="keyword">pass</span></span><br></pre></td></tr></table></figure>  
+<p>现在有了 Docker Compose 是不是更简单了些？</p>
+<h2 id="使用-Docker-Compose-创建应用"><a href="#使用-Docker-Compose-创建应用" class="headerlink" title="使用 Docker Compose 创建应用"></a>使用 Docker Compose 创建应用</h2><h3 id="使用-DockerFile-定义应用环境"><a href="#使用-DockerFile-定义应用环境" class="headerlink" title="使用 DockerFile 定义应用环境"></a>使用 DockerFile 定义应用环境</h3><pre><code>FROM python:2.7
+ADD . /code
+WORKDIR /code
+RUN pip install -r requirements.txt
+</code></pre><p>上面是DockerFile指令，说说对应指令：</p>
+<p>FROM 来源镜像 首选本地是否存在，如果不存在则会从公共仓库下载</p>
+<p>ADD 把文件拷贝到容器相应文件下 在这里是吧当前目录的所有文件拷贝到 容器中/code 中</p>
+<p>WORKDIR RUN、CMD和ENTRYPOINT指令默认的工作目录，不指定默认为根目录。</p>
+<p>RUN  执行容器内的 bash 命令</p>
+<h3 id="使用-compose-yaml-定义应用服务"><a href="#使用-compose-yaml-定义应用服务" class="headerlink" title="使用 compose.yaml 定义应用服务"></a>使用 compose.yaml 定义应用服务</h3><p>通过 Compose 配置文件，可以把不同服务生成的不同容器组成你的应用。</p>
+<p>配置文件示例：</p>
+<pre><code>web:
+  build:.
+  command: python app.py
+  ports:
+         - &quot;5000:5000&quot;
+  volumes:
+         - .:/code
+  links:
+         - redis
+redis:
+  image: redis
+</code></pre><p>在配置文件中定义了两个应用 web 和 redis， 通过 links 把两个容器连接起来，对外暴露的是 web 容器的 5000端口， volumes 定义磁盘映射，把当前目录的所有文件 映射到 web 容器的 /code 的目录中，以后可以直接修改当前目录的文件对容器做修改啦。</p>
+<h3 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h3><p>执行docker-compose up来启动你的应用，它会根据compose.yaml的设置来pull/run这俩个容器，然后再启动。</p>
+<p>docker-compose up -d在后台启动服务</p>
+<p>docker-compose ps命令查看启动的服务</p>
+<p>docker-compose stop停止服务</p>
+<p>参考：</p>
+<ol>
+<li><a href="http://debugo.com/docker-compose/" target="_blank" rel="external">http://debugo.com/docker-compose/</a></li>
+<li><a href="http://dockone.io/article/834" target="_blank" rel="external">http://dockone.io/article/834</a></li>
+<li><a href="http://blog.csdn.net/wangtaoking1/article/details/44278951" target="_blank" rel="external">http://blog.csdn.net/wangtaoking1/article/details/44278951</a></li>
+</ol>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -187,7 +160,7 @@ MySQL的配置参数，入口口令等（一些根据情况需要自定义的参
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Flask/">Flask</a>
+  <span></span> <a href="/tags/Docker/">Docker</a><a href="/tags/漏洞环境/">漏洞环境</a>
   </div>
 
 </div>
@@ -196,7 +169,7 @@ MySQL的配置参数，入口口令等（一些根据情况需要自定义的参
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://www.evilclay.com/2016/09/06/Flask-Web项目小结/" data-title="Flask-Web项目小结 | Anka9080&#39;s Notes" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.evilclay.com/2017/04/28/漏洞环境搭建之DockerCompose学习/" data-title="漏洞环境搭建之DockerCompose学习 | Anka9080&#39;s Notes" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -209,19 +182,11 @@ MySQL的配置参数，入口口令等（一些根据情况需要自定义的参
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/09/11/Ubuntu16.04-编译安装最新版Hydra/" title="Ubuntu16.04 编译安装最新版Hydra">
-  <strong>上一篇：</strong><br/>
-  <span>
-  Ubuntu16.04 编译安装最新版Hydra</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/09/06/Celery-分布式任务队列小记/"  title="Celery-分布式任务队列小记">
+<a href="/2017/04/28/SSI-服务端包含注入/"  title="SSI-服务端包含注入">
  <strong>下一篇：</strong><br/> 
- <span>Celery-分布式任务队列小记
+ <span>SSI-服务端包含注入
 </span>
 </a>
 </div>
@@ -230,7 +195,7 @@ MySQL的配置参数，入口口令等（一些根据情况需要自定义的参
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/09/06/Flask-Web项目小结/" data-title="Flask-Web项目小结" data-url="http://www.evilclay.com/2016/09/06/Flask-Web项目小结/"></div>
+	<div class="ds-thread" data-thread-key="2017/04/28/漏洞环境搭建之DockerCompose学习/" data-title="漏洞环境搭建之DockerCompose学习" data-url="http://www.evilclay.com/2017/04/28/漏洞环境搭建之DockerCompose学习/"></div>
 </section>
 
 
@@ -240,7 +205,7 @@ MySQL的配置参数，入口口令等（一些根据情况需要自定义的参
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#项目文件结构"><span class="toc-number">1.</span> <span class="toc-text">项目文件结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#说明"><span class="toc-number">2.</span> <span class="toc-text">说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于路由"><span class="toc-number">3.</span> <span class="toc-text">关于路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于数据库操作"><span class="toc-number">4.</span> <span class="toc-text">关于数据库操作</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-Compose-概念"><span class="toc-number">1.</span> <span class="toc-text">Docker Compose 概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-Docker-Compose-创建应用"><span class="toc-number">2.</span> <span class="toc-text">使用 Docker Compose 创建应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-DockerFile-定义应用环境"><span class="toc-number">2.1.</span> <span class="toc-text">使用 DockerFile 定义应用环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-compose-yaml-定义应用服务"><span class="toc-number">2.2.</span> <span class="toc-text">使用 compose.yaml 定义应用服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动容器"><span class="toc-number">2.3.</span> <span class="toc-text">启动容器</span></a></li></ol></li></ol>
  
   </div>
 

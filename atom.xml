@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.evilclay.com/"/>
-  <updated>2017-04-27T18:29:28.263Z</updated>
+  <updated>2017-04-28T03:47:18.014Z</updated>
   <id>http://www.evilclay.com/</id>
   
   <author>
@@ -14,6 +14,75 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>漏洞环境搭建之DockerCompose学习</title>
+    <link href="http://www.evilclay.com/2017/04/28/%E6%BC%8F%E6%B4%9E%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B9%8BDockerCompose%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://www.evilclay.com/2017/04/28/漏洞环境搭建之DockerCompose学习/</id>
+    <published>2017-04-28T03:45:59.000Z</published>
+    <updated>2017-04-28T03:47:18.014Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Docker-Compose-概念"><a href="#Docker-Compose-概念" class="headerlink" title="Docker Compose 概念"></a>Docker Compose 概念</h2><p>可以在一个文件中定义一个多容器的应用，然后使用一条命令来启动你的应用，然后所有相关的操作都会被自动完成。</p>
+<p>通过 Docker Compose 可以将多个 Docker 容器组合成一个应用。</p>
+<p>以 WordPress 漏洞环境为例：</p>
+<p>一个完整的环境需要 Web容器 MySQL PHP环境； 在 docker compose 的角度会把这三个环境分别部署到三个docker容器中，然后把他们连接起来共同组成了 WordPress 的漏洞环境，如何定义这些容器以及如何连接成一个整体，请参照 Docker Compose 配置文件。</p>
+<p>在 Docker Compose 配置文件中：所有的容器通过services来定义，然后使用docker-compose脚本来启动，停止和重启应用，和应用中的服务以及所有依赖服务的容器。</p>
+<p>Docker Compose 配置文件详解参照： <a href="http://dockone.io/article/834" target="_blank" rel="external">http://dockone.io/article/834</a></p>
+<p>而且可以通过修改本地文件的方式对 Docker 镜像中的文件做修改，相当于 把宿主机的文件 与 docker 镜像中的文件做了映射关系，这个我觉得非常好用。</p>
+<p>之前对 docker 镜像做修改的步骤如下：</p>
+<ol>
+<li>启动 docker 容器</li>
+<li>进入容器做相应的修改</li>
+<li>重新封装成一个新的镜像</li>
+</ol>
+<p>现在有了 Docker Compose 是不是更简单了些？</p>
+<h2 id="使用-Docker-Compose-创建应用"><a href="#使用-Docker-Compose-创建应用" class="headerlink" title="使用 Docker Compose 创建应用"></a>使用 Docker Compose 创建应用</h2><h3 id="使用-DockerFile-定义应用环境"><a href="#使用-DockerFile-定义应用环境" class="headerlink" title="使用 DockerFile 定义应用环境"></a>使用 DockerFile 定义应用环境</h3><pre><code>FROM python:2.7
+ADD . /code
+WORKDIR /code
+RUN pip install -r requirements.txt
+</code></pre><p>上面是DockerFile指令，说说对应指令：</p>
+<p>FROM 来源镜像 首选本地是否存在，如果不存在则会从公共仓库下载</p>
+<p>ADD 把文件拷贝到容器相应文件下 在这里是吧当前目录的所有文件拷贝到 容器中/code 中</p>
+<p>WORKDIR RUN、CMD和ENTRYPOINT指令默认的工作目录，不指定默认为根目录。</p>
+<p>RUN  执行容器内的 bash 命令</p>
+<h3 id="使用-compose-yaml-定义应用服务"><a href="#使用-compose-yaml-定义应用服务" class="headerlink" title="使用 compose.yaml 定义应用服务"></a>使用 compose.yaml 定义应用服务</h3><p>通过 Compose 配置文件，可以把不同服务生成的不同容器组成你的应用。</p>
+<p>配置文件示例：</p>
+<pre><code>web:
+  build:.
+  command: python app.py
+  ports:
+         - &quot;5000:5000&quot;
+  volumes:
+         - .:/code
+  links:
+         - redis
+redis:
+  image: redis
+</code></pre><p>在配置文件中定义了两个应用 web 和 redis， 通过 links 把两个容器连接起来，对外暴露的是 web 容器的 5000端口， volumes 定义磁盘映射，把当前目录的所有文件 映射到 web 容器的 /code 的目录中，以后可以直接修改当前目录的文件对容器做修改啦。</p>
+<h3 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h3><p>执行docker-compose up来启动你的应用，它会根据compose.yaml的设置来pull/run这俩个容器，然后再启动。</p>
+<p>docker-compose up -d在后台启动服务</p>
+<p>docker-compose ps命令查看启动的服务</p>
+<p>docker-compose stop停止服务</p>
+<p>参考：</p>
+<ol>
+<li><a href="http://debugo.com/docker-compose/" target="_blank" rel="external">http://debugo.com/docker-compose/</a></li>
+<li><a href="http://dockone.io/article/834" target="_blank" rel="external">http://dockone.io/article/834</a></li>
+<li><a href="http://blog.csdn.net/wangtaoking1/article/details/44278951" target="_blank" rel="external">http://blog.csdn.net/wangtaoking1/article/details/44278951</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Docker-Compose-概念&quot;&gt;&lt;a href=&quot;#Docker-Compose-概念&quot; class=&quot;headerlink&quot; title=&quot;Docker Compose 概念&quot;&gt;&lt;/a&gt;Docker Compose 概念&lt;/h2&gt;&lt;p&gt;可以在一个文件中定义
+    
+    </summary>
+    
+    
+      <category term="Docker" scheme="http://www.evilclay.com/tags/Docker/"/>
+    
+      <category term="漏洞环境" scheme="http://www.evilclay.com/tags/%E6%BC%8F%E6%B4%9E%E7%8E%AF%E5%A2%83/"/>
+    
+  </entry>
   
   <entry>
     <title>SSI-服务端包含注入</title>
@@ -1083,74 +1152,6 @@ net use \\ip\ipc$ /del        // 关闭与 IP 已经建立的 IPC 连接
       <category term="钓鱼网站" scheme="http://www.evilclay.com/tags/%E9%92%93%E9%B1%BC%E7%BD%91%E7%AB%99/"/>
     
       <category term="SET" scheme="http://www.evilclay.com/tags/SET/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Windows内网提权命令收集</title>
-    <link href="http://www.evilclay.com/2016/09/27/Windows%E5%86%85%E7%BD%91%E6%8F%90%E6%9D%83%E5%91%BD%E4%BB%A4%E6%94%B6%E9%9B%86/"/>
-    <id>http://www.evilclay.com/2016/09/27/Windows内网提权命令收集/</id>
-    <published>2016-09-26T17:07:24.000Z</published>
-    <updated>2016-09-29T14:50:02.256Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="一、系统信息"><a href="#一、系统信息" class="headerlink" title="一、系统信息"></a>一、系统信息</h3><p>查看系统的各种信息</p>
-<pre><code>systeminfo
-// 结果返回OS的名称，版本，系统安装时间，启动时间，CPU位数，CPU个数，频率，系统目录，内存大小，安装了多少补丁，网卡
-systeminfo | findstr /B /C:&quot;OS 名称&quot;
-// 过滤输出 系统名称
-// findstr /B 从行的开始进行匹配  /C: 表示匹配字符串
-</code></pre><p>识别系统体系架构</p>
-<pre><code>echo %PROCESSOR_ARCHITECTURE% 
-</code></pre><p>查看所有系统环境变量</p>
-<pre><code>SET
-</code></pre><p>查看用户的信息</p>
-<pre><code>net user xxx
-</code></pre><h3 id="二、网络信息"><a href="#二、网络信息" class="headerlink" title="二、网络信息"></a>二、网络信息</h3><p>路由信息</p>
-<pre><code>route print
-// 查看内网的route信息
-</code></pre><p>查看 ARP 缓存表</p>
-<pre><code>arp -a
-</code></pre><p>查看所有的网络连接</p>
-<pre><code>netstat -ano
-</code></pre><h3 id="三、应用程序信息"><a href="#三、应用程序信息" class="headerlink" title="三、应用程序信息"></a>三、应用程序信息</h3><p>查看计划任务</p>
-<pre><code>chcp 437 // 中文系统需要先设置成美国编码
-schtasks /QUERY /fo LIST /v
-</code></pre><p>查看服务进程PID</p>
-<pre><code>tasklist /SVC
-// 在任务资源管理器页面也可以设置查看
-</code></pre><p>查看安装的驱动</p>
-<pre><code>DRIVERQUERY
-</code></pre><p>查看安装的程序以及版本信息</p>
-<pre><code>wmic product list brief
-// 作为漏洞利用线索
-//  在控制面板-卸载程序界面也可以看到相关信息
-</code></pre><p>查看服务，进程，启动程序相关信息</p>
-<pre><code>wmic service list brief
-wmic process list brief
-wmic startup list brief
-</code></pre><p>查看安装的补丁和时间信息</p>
-<pre><code>wmic qfe get Caption,Description,HotFixID,InstalledOn
-</code></pre><p>查看特定漏洞的补丁信息</p>
-<pre><code>wmic qfe get Caption,Description,HotFixID,InstalledOn | findstr /C:&quot;KBxxxxxxx&quot;
-</code></pre><h3 id="四、-敏感数据文件"><a href="#四、-敏感数据文件" class="headerlink" title="四、 敏感数据文件"></a>四、 敏感数据文件</h3><pre><code>dir /b/s config*  // 当前目录下查找所有文件以config开头的文件
-findstr /si password *.xml *.ini *.txt    当前目录下在指定的文件类型中查找指定的字符串
-</code></pre><blockquote>
-<p>参考<br><a href="http://www.freebuf.com/articles/system/114731.html" target="_blank" rel="external">http://www.freebuf.com/articles/system/114731.html</a></p>
-</blockquote>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;一、系统信息&quot;&gt;&lt;a href=&quot;#一、系统信息&quot; class=&quot;headerlink&quot; title=&quot;一、系统信息&quot;&gt;&lt;/a&gt;一、系统信息&lt;/h3&gt;&lt;p&gt;查看系统的各种信息&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;systeminfo
-// 结果返回OS的名称，版本，系统
-    
-    </summary>
-    
-    
-      <category term="内网提权" scheme="http://www.evilclay.com/tags/%E5%86%85%E7%BD%91%E6%8F%90%E6%9D%83/"/>
-    
-      <category term="Windows运维" scheme="http://www.evilclay.com/tags/Windows%E8%BF%90%E7%BB%B4/"/>
     
   </entry>
   
