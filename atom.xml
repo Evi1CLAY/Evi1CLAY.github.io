@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.evilclay.com/"/>
-  <updated>2017-05-09T06:04:32.603Z</updated>
+  <updated>2017-05-09T06:05:43.377Z</updated>
   <id>http://www.evilclay.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.evilclay.com/2017/05/09/VSCode%E9%85%8D%E7%BD%AEPHP%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83/"/>
     <id>http://www.evilclay.com/2017/05/09/VSCode配置PHP动态调试环境/</id>
     <published>2017-05-09T05:38:58.000Z</published>
-    <updated>2017-05-09T06:04:32.603Z</updated>
+    <updated>2017-05-09T06:05:43.377Z</updated>
     
     <content type="html"><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>首先 PHP 需要安装 XDebug 扩展，然后在 php 配置文件中启用该扩展，然后 在 VSCode 中安装  php-debug 扩展，并做响应的配置就可以直接在 VSCode 中对 PHP 代码进行动态调试。</p>
 <p>XDebug 扩展就是一个 dll 文件，用来对PHP代码进行调试分析，一些 WAMP 中已经包含了该文件，只需要手动启用即可。</p>
@@ -62,7 +62,11 @@ xdebug.remote_autostart=1
     </summary>
     
     
-      <category term="代码审计|PHP|动态调试" scheme="http://www.evilclay.com/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-PHP-%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95/"/>
+      <category term="代码审计" scheme="http://www.evilclay.com/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
+    
+      <category term="PHP" scheme="http://www.evilclay.com/tags/PHP/"/>
+    
+      <category term="动态调试" scheme="http://www.evilclay.com/tags/%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95/"/>
     
   </entry>
   
