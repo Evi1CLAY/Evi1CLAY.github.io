@@ -20,10 +20,11 @@
 <meta property="og:description" content="漏洞描述本次漏洞产生的原因是因为PHPCMS程序在下载远程/本地文件时没有对文件的类型做正确的效验导致可以下载PHP脚本，同时下载之后的文件名可以使用暴力破解的方式或者是数据库插入报错的形式获得，所以把预先准备好的一句话木马下载到服务器上，最后使用客户端连接拿到shell。
 漏洞点漏洞存在于 \phpcmsv9.6.0\phpcms\libs\classes\attachment.class.ph">
 <meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/phpcmsv9.6.0/demo3.png">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/phpcmsv9.6.0/res.png">
 <meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/phpcmsv9.6.0/models.png">
 <meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/phpcmsv9.6.0/demo1.png">
 <meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/phpcmsv9.6.0/demo2.png">
-<meta property="og:updated_time" content="2017-05-09T19:00:48.909Z">
+<meta property="og:updated_time" content="2017-05-09T19:05:56.124Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHPCMSv9.6.0任意文件上传漏洞分析">
 <meta name="twitter:description" content="漏洞描述本次漏洞产生的原因是因为PHPCMS程序在下载远程/本地文件时没有对文件的类型做正确的效验导致可以下载PHP脚本，同时下载之后的文件名可以使用暴力破解的方式或者是数据库插入报错的形式获得，所以把预先准备好的一句话木马下载到服务器上，最后使用客户端连接拿到shell。
@@ -52,7 +53,7 @@
 				<h1 class="site-name"><a href="/" title="Anka9080&#39;s Notes">Anka9080&#39;s Notes</a></h1>
 				<h2 class="blog-motto">勿忘初心。</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -68,7 +69,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
 						<input type="hidden" name="q" value="site:www.evilclay.com">
 					</form>
 					
@@ -91,14 +92,14 @@
 		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
 		
   <p class="article-time">
-    <time datetime="2017-05-09T18:57:49.000Z" itemprop="datePublished"> Published 2017-05-10</time>
+    <time datetime="2017-05-09T18:57:49.000Z" itemprop="datePublished"> 发表于 2017-05-10</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
+			<strong class="toc-title">文章目录</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞描述"><span class="toc-number">1.</span> <span class="toc-text">漏洞描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞点"><span class="toc-number">2.</span> <span class="toc-text">漏洞点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用"><span class="toc-number">3.</span> <span class="toc-text">利用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#复现"><span class="toc-number">4.</span> <span class="toc-text">复现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修复"><span class="toc-number">5.</span> <span class="toc-text">修复</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">7.</span> <span class="toc-text">参考</span></a></li></ol>
 		
@@ -212,7 +213,7 @@ $filename = $this-&gt;getname($filename);
 </code></pre><p>burp 抓包上传成功：</p>
 <p><img src="http://7xku36.com1.z0.glb.clouddn.com/phpcmsv9.6.0/demo3.png" alt=""></p>
 <p>上传的文件内容：</p>
-<p>!{}(<a href="http://7xku36.com1.z0.glb.clouddn.com/phpcmsv9.6.0/res.png" target="_blank" rel="external">http://7xku36.com1.z0.glb.clouddn.com/phpcmsv9.6.0/res.png</a>)</p>
+<p><img src="http://7xku36.com1.z0.glb.clouddn.com/phpcmsv9.6.0/res.png" alt=""></p>
 <h2 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h2><p>知道了 download 是漏洞点，所以可以直接搜索有哪些地方调用了 download 函数，只要调用了 download 函数都可能会出现这个问题。</p>
 <p>搜索项目发现下面几个文件存在 直接调用：</p>
 <pre><code>python find.py -k download(
@@ -331,24 +332,24 @@ modelid=3&amp;info[content]=&lt;img href=http://localhost/cms/phpcmsv9.6.0/2.php
 
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">Contents</strong>
+  <strong class="toc-title">文章目录</strong>
  
  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞描述"><span class="toc-number">1.</span> <span class="toc-text">漏洞描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞点"><span class="toc-number">2.</span> <span class="toc-text">漏洞点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用"><span class="toc-number">3.</span> <span class="toc-text">利用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#复现"><span class="toc-number">4.</span> <span class="toc-text">复现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修复"><span class="toc-number">5.</span> <span class="toc-text">修复</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">7.</span> <span class="toc-text">参考</span></a></li></ol>
  
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
 
   
 
   
 <div class="tagslist">
-	<p class="asidetitle">Tags</p>
+	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
 			
@@ -436,7 +437,7 @@ modelid=3&amp;info[content]=&lt;img href=http://localhost/cms/phpcmsv9.6.0/2.php
 
 
   <div class="linkslist">
-  <p class="asidetitle">Links</p>
+  <p class="asidetitle">友情链接</p>
     <ul>
         
           <li>
@@ -455,7 +456,7 @@ modelid=3&amp;info[content]=&lt;img href=http://localhost/cms/phpcmsv9.6.0/2.php
 </div>
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
 
 </aside>
@@ -687,7 +688,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 

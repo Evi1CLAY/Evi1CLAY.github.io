@@ -50,7 +50,7 @@ SSISSI是英文Server Side Includes的缩写，SSI是嵌入HTML页面中的指�
 				<h1 class="site-name"><a href="/" title="Anka9080&#39;s Notes">Anka9080&#39;s Notes</a></h1>
 				<h2 class="blog-motto">勿忘初心。</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -66,7 +66,7 @@ SSISSI是英文Server Side Includes的缩写，SSI是嵌入HTML页面中的指�
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
 						<input type="hidden" name="q" value="site:www.evilclay.com">
 					</form>
 					
@@ -89,14 +89,14 @@ SSISSI是英文Server Side Includes的缩写，SSI是嵌入HTML页面中的指�
 		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
 		
   <p class="article-time">
-    <time datetime="2017-04-27T18:28:28.000Z" itemprop="datePublished"> Published 2017-04-28</time>
+    <time datetime="2017-04-27T18:28:28.000Z" itemprop="datePublished"> 发表于 2017-04-28</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
+			<strong class="toc-title">文章目录</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSI"><span class="toc-number">2.</span> <span class="toc-text">SSI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启用-SSI"><span class="toc-number">3.</span> <span class="toc-text">启用 SSI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSI-的能力"><span class="toc-number">4.</span> <span class="toc-text">SSI 的能力</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SSI-支持的指令"><span class="toc-number">4.1.</span> <span class="toc-text">SSI 支持的指令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSI-业务场景"><span class="toc-number">5.</span> <span class="toc-text">SSI 业务场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSI-注入条件"><span class="toc-number">6.</span> <span class="toc-text">SSI 注入条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#挖掘-SSI-注入"><span class="toc-number">7.</span> <span class="toc-text">挖掘 SSI 注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSI-注入危害"><span class="toc-number">8.</span> <span class="toc-text">SSI 注入危害</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSI-注入防护"><span class="toc-number">9.</span> <span class="toc-text">SSI 注入防护</span></a></li></ol>
 		
@@ -254,24 +254,24 @@ SSISSI是英文Server Side Includes的缩写，SSI是嵌入HTML页面中的指�
 
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">Contents</strong>
+  <strong class="toc-title">文章目录</strong>
  
  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSI"><span class="toc-number">2.</span> <span class="toc-text">SSI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启用-SSI"><span class="toc-number">3.</span> <span class="toc-text">启用 SSI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSI-的能力"><span class="toc-number">4.</span> <span class="toc-text">SSI 的能力</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SSI-支持的指令"><span class="toc-number">4.1.</span> <span class="toc-text">SSI 支持的指令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSI-业务场景"><span class="toc-number">5.</span> <span class="toc-text">SSI 业务场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSI-注入条件"><span class="toc-number">6.</span> <span class="toc-text">SSI 注入条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#挖掘-SSI-注入"><span class="toc-number">7.</span> <span class="toc-text">挖掘 SSI 注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSI-注入危害"><span class="toc-number">8.</span> <span class="toc-text">SSI 注入危害</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSI-注入防护"><span class="toc-number">9.</span> <span class="toc-text">SSI 注入防护</span></a></li></ol>
  
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
 
   
 
   
 <div class="tagslist">
-	<p class="asidetitle">Tags</p>
+	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
 			
@@ -359,7 +359,7 @@ SSISSI是英文Server Side Includes的缩写，SSI是嵌入HTML页面中的指�
 
 
   <div class="linkslist">
-  <p class="asidetitle">Links</p>
+  <p class="asidetitle">友情链接</p>
     <ul>
         
           <li>
@@ -378,7 +378,7 @@ SSISSI是英文Server Side Includes的缩写，SSI是嵌入HTML页面中的指�
 </div>
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
 
 </aside>
@@ -610,7 +610,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
