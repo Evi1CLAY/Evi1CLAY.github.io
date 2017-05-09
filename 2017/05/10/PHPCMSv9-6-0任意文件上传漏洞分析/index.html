@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/phpcmsv9.6.0/models.png">
 <meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/phpcmsv9.6.0/demo1.png">
 <meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/phpcmsv9.6.0/demo2.png">
-<meta property="og:updated_time" content="2017-05-09T19:06:59.483Z">
+<meta property="og:updated_time" content="2017-05-09T19:07:45.196Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHPCMSv9.6.0任意文件上传漏洞分析">
 <meta name="twitter:description" content="漏洞描述本次漏洞产生的原因是因为PHPCMS程序在下载远程/本地文件时没有对文件的类型做正确的效验导致可以下载PHP脚本，同时下载之后的文件名可以使用暴力破解的方式或者是数据库插入报错的形式获得，所以把预先准备好的一句话木马下载到服务器上，最后使用客户端连接拿到shell。
@@ -53,7 +53,7 @@
 				<h1 class="site-name"><a href="/" title="Anka9080&#39;s Notes">Anka9080&#39;s Notes</a></h1>
 				<h2 class="blog-motto">勿忘初心。</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -69,7 +69,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
 						<input type="hidden" name="q" value="site:www.evilclay.com">
 					</form>
 					
@@ -92,14 +92,14 @@
 		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
 		
   <p class="article-time">
-    <time datetime="2017-05-09T18:57:49.000Z" itemprop="datePublished"> 發表於 2017-05-10</time>
+    <time datetime="2017-05-09T18:57:49.000Z" itemprop="datePublished"> Published 2017-05-10</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目錄</strong>
+			<strong class="toc-title">Contents</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞描述"><span class="toc-number">1.</span> <span class="toc-text">漏洞描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞点"><span class="toc-number">2.</span> <span class="toc-text">漏洞点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用"><span class="toc-number">3.</span> <span class="toc-text">利用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#复现"><span class="toc-number">4.</span> <span class="toc-text">复现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修复"><span class="toc-number">5.</span> <span class="toc-text">修复</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">7.</span> <span class="toc-text">参考</span></a></li></ol>
 		
@@ -285,7 +285,7 @@ modelid=3&amp;info[content]=&lt;img href=http://localhost/cms/phpcmsv9.6.0/2.php
 <pre><code>1. 对最后生成的文件名的后缀进行一次白名单过滤。（ v9.6.1更新官方做法 ）
 2. 干掉上传文件路径的可执行权限。（不建议，配合文件包含漏洞会GG）
 3. 增加文件重命名的随机字符长度。（也不建议，需要确保上传的图片用户不能访问）
-</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这个漏洞点是文件下载点触发的，当然以后可能是上传点，与数据库交互的参数，用户控制的参数 …<br>想到一点，关于使用关键字搜索函数调用这种审计方法有点low啊，这篇文章中的最后用到的是动态调用 editor 函数的方法找到的关联。<br>所以静态分析进行不下去了，多看看代码的逻辑关系，毕竟代码越多，漏洞越多嘛。<br>最后，这是我的第一篇 PHP 的代码审计文章，参考了一些大牛的分析文章，感谢~ 希望自己有机会多写写，漏洞再多，选择自己感兴趣的分析分析。</p>
+</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这个漏洞点是文件下载点触发的，当然以后可能是上传点，与数据库交互的参数，用户控制的参数 …<br>想到一点，关于使用关键字搜索函数调用这种审计方法有点low啊，这篇文章中的最后用到的是动态调用 editor 函数的方法找到的关联。<br>所以静态分析进行不下去了，多看看代码的逻辑关系，毕竟代码越多，漏洞越多嘛。<br>最后，这是我的第一篇 PHP 的代码审计文章，参考了一些大牛的分析文章，感谢~<br>希望自己有机会多写写，漏洞再多，选择自己感兴趣的分析分析。</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://paper.seebug.org/273/" target="_blank" rel="external">http://paper.seebug.org/273/</a></p>
 <p>还有一位DALAO的文档 :P</p>
   
@@ -336,24 +336,24 @@ modelid=3&amp;info[content]=&lt;img href=http://localhost/cms/phpcmsv9.6.0/2.php
 
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目錄</strong>
+  <strong class="toc-title">Contents</strong>
  
  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞描述"><span class="toc-number">1.</span> <span class="toc-text">漏洞描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞点"><span class="toc-number">2.</span> <span class="toc-text">漏洞点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用"><span class="toc-number">3.</span> <span class="toc-text">利用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#复现"><span class="toc-number">4.</span> <span class="toc-text">复现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修复"><span class="toc-number">5.</span> <span class="toc-text">修复</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">7.</span> <span class="toc-text">参考</span></a></li></ol>
  
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
 <aside class="clearfix">
 
   
 
   
 <div class="tagslist">
-	<p class="asidetitle">標簽</p>
+	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
 			
@@ -441,7 +441,7 @@ modelid=3&amp;info[content]=&lt;img href=http://localhost/cms/phpcmsv9.6.0/2.php
 
 
   <div class="linkslist">
-  <p class="asidetitle">友情鏈接</p>
+  <p class="asidetitle">Links</p>
     <ul>
         
           <li>
@@ -460,7 +460,7 @@ modelid=3&amp;info[content]=&lt;img href=http://localhost/cms/phpcmsv9.6.0/2.php
 </div>
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
 </div>
 
 </aside>
@@ -692,7 +692,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
