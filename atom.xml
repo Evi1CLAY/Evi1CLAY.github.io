@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.evilclay.com/"/>
-  <updated>2017-04-28T03:47:18.014Z</updated>
+  <updated>2017-05-09T06:04:32.603Z</updated>
   <id>http://www.evilclay.com/</id>
   
   <author>
@@ -14,6 +14,57 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>VSCode配置PHP动态调试环境</title>
+    <link href="http://www.evilclay.com/2017/05/09/VSCode%E9%85%8D%E7%BD%AEPHP%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83/"/>
+    <id>http://www.evilclay.com/2017/05/09/VSCode配置PHP动态调试环境/</id>
+    <published>2017-05-09T05:38:58.000Z</published>
+    <updated>2017-05-09T06:04:32.603Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>首先 PHP 需要安装 XDebug 扩展，然后在 php 配置文件中启用该扩展，然后 在 VSCode 中安装  php-debug 扩展，并做响应的配置就可以直接在 VSCode 中对 PHP 代码进行动态调试。</p>
+<p>XDebug 扩展就是一个 dll 文件，用来对PHP代码进行调试分析，一些 WAMP 中已经包含了该文件，只需要手动启用即可。</p>
+<p>php-debug 是 VSCode 的扩展应用，直接在 VSCode 中可到看到它是一个VS代码和XDebug之间的调试适配器。</p>
+<h2 id="安装配置-XDebug"><a href="#安装配置-XDebug" class="headerlink" title="安装配置 XDebug"></a>安装配置 XDebug</h2><p>PHPStudy 中 XDebug文件 已经集成在环境中，只需要修改 php.ini 成如下配置：</p>
+<pre><code>zend_extension=&quot;...\ext\xdebug.dll&quot;  // 这里是xdebug.dll的绝对路径
+xdebug.remote_enable = 1
+xdebug.remote_autostart=1
+</code></pre><p>若没有继承 xdebug.dll 文件，可以根据 php 版本在 <a href="https://xdebug.org/download.php" target="_blank" rel="external">https://xdebug.org/download.php</a> 下载对应 扩展。之后重启 Apache 环境是配置生效。</p>
+<h2 id="VSCode-扩展安装"><a href="#VSCode-扩展安装" class="headerlink" title="VSCode 扩展安装"></a>VSCode 扩展安装</h2><p>按 F1 输入 ext install php-debug 安装扩展应用。</p>
+<p>安装完成后，新建 php 测试文件如下：</p>
+<pre><code>&lt;?php
+    echo &quot;PHP动态调试测试&quot;;
+
+    $name = &apos;Anka9080&apos;;
+
+    echo &quot;这是断点之后的内容&quot;;
+
+    echo phpinfo();
+
+?&gt;
+</code></pre><p>若提示不解析 php 代码, 需要对项目设置指定 PHP 程序路径，</p>
+<p>文件 —— 首选项 —— 设置， 再右侧用户设置添加：</p>
+<pre><code>// 将设置放入此文件中以覆盖默认设置
+{
+    &quot;php.validate.executablePath&quot;: &quot;..../php53/php.exe&quot;  // php 程序的路径
+}
+</code></pre><p>之后在 VSCode 调试模块选用 Xdebug 调试器，如下配置：</p>
+<p><img src="http://7xku36.com1.z0.glb.clouddn.com/phpdebug/phpd1.png" alt=""></p>
+<p>重启 VSCode 使 配置生效。</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>使用 VSCode 打开 test.php，鼠标左键下红色断点，然后直接 F5 开启调试模式，然后 用浏览器访问 test.php 文件，结果如下：</p>
+<p><img src="http://7xku36.com1.z0.glb.clouddn.com/phpdebug/phpd2.png" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;首先 PHP 需要安装 XDebug 扩展，然后在 php 配置文件中启用该扩展，然后 在 VSCode 中安装  php-debug 扩展
+    
+    </summary>
+    
+    
+      <category term="代码审计|PHP|动态调试" scheme="http://www.evilclay.com/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-PHP-%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95/"/>
+    
+  </entry>
   
   <entry>
     <title>漏洞环境搭建之DockerCompose学习</title>
@@ -1064,94 +1115,6 @@ net use \\ip\ipc$ /del        // 关闭与 IP 已经建立的 IPC 连接
     
     
       <category term="DNS区域传送" scheme="http://www.evilclay.com/tags/DNS%E5%8C%BA%E5%9F%9F%E4%BC%A0%E9%80%81/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Social-Engineer-Tool（SET）社会工程学工具包制作钓鱼网站</title>
-    <link href="http://www.evilclay.com/2016/10/03/Social-Engineer-Tool%EF%BC%88SET%EF%BC%89%E7%A4%BE%E4%BC%9A%E5%B7%A5%E7%A8%8B%E5%AD%A6%E5%B7%A5%E5%85%B7%E5%8C%85%E5%88%B6%E4%BD%9C%E9%92%93%E9%B1%BC%E7%BD%91%E7%AB%99/"/>
-    <id>http://www.evilclay.com/2016/10/03/Social-Engineer-Tool（SET）社会工程学工具包制作钓鱼网站/</id>
-    <published>2016-10-02T16:22:06.000Z</published>
-    <updated>2016-10-02T17:14:26.388Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote>
-<p>Social-Engineer-Tool 是一个好工具，使用 Python 开发，准备后期深入的挖掘一下，今天俺要拿它的克隆网站功能制作一个钓鱼网站看看效果咋样~</p>
-</blockquote>
-<h4 id="一、安装最新版-SET-工具"><a href="#一、安装最新版-SET-工具" class="headerlink" title="一、安装最新版 SET 工具"></a>一、安装最新版 SET 工具</h4><ol>
-<li><p>从 GitHub上下载最近的安装包并解压(20161003最新是7.3.16版本)</p>
-<p> <a href="https://github.com/trustedsec/social-engineer-toolkit/releases" target="_blank" rel="external">https://github.com/trustedsec/social-engineer-toolkit/releases</a></p>
-</li>
-<li><p>执行 <code>sudo python setup.py install</code> 会安装 SET 以及相关的依赖工具。</p>
-</li>
-</ol>
-<h4 id="二、克隆网站"><a href="#二、克隆网站" class="headerlink" title="二、克隆网站"></a>二、克隆网站</h4><ol>
-<li><p>使用 <code>sudo setoolkit</code> 打开 SET 工具</p>
-<p> <img src="http://7xku36.com1.z0.glb.clouddn.com/set0.png" alt=""></p>
-</li>
-<li><p>主菜单选择社会工程学攻击 2</p>
-<p> <img src="http://7xku36.com1.z0.glb.clouddn.com/setset00.png" alt=""></p>
-</li>
-<li><p>因为要做钓鱼攻击，选择3</p>
-<p> <img src="http://7xku36.com1.z0.glb.clouddn.com/set1.png" alt=""></p>
-</li>
-<li><p>这一步选择钓鱼页面的生成方式，选择从指定的网站克隆钓鱼页面 2</p>
-<p> <img src="http://7xku36.com1.z0.glb.clouddn.com/set3.png" alt=""></p>
-</li>
-<li><p>这一步设定钓鱼服务器的 IP 以及需要克隆的页面 URL 地址，我这里使用本机(192.168.1.105)直接作为钓鱼服务器。</p>
-<p> <img src="http://7xku36.com1.z0.glb.clouddn.com/set4.png" alt=""></p>
-</li>
-<li><p>设置好之后会在 钓鱼服务器的 Web 根目录下直接生成钓鱼页面，如下所示:</p>
-<p> <img src="http://7xku36.com1.z0.glb.clouddn.com/html1.png" alt=""></p>
-</li>
-<li><p>html 文件 和 PHP 文件都是用来钓鱼的页面，havester 开头的文件是用来接收用户输入的账户信息，看一下文件的内容：</p>
-<ul>
-<li><p>index.html 内容：</p>
-<p>  <img src="http://7xku36.com1.z0.glb.clouddn.com/html2.png" alt=""></p>
-<p>可以看出 把 form 的action 改成 钓鱼网站的接收地址。</p>
-</li>
-<li><p>post.php  内容：</p>
-<p>  <img src="http://7xku36.com1.z0.glb.clouddn.com/php.png" alt=""></p>
-<p>就是接收 POST 参数，然后把 POST数据写到文件里。</p>
-</li>
-</ul>
-</li>
-</ol>
-<h4 id="三、测试效果"><a href="#三、测试效果" class="headerlink" title="三、测试效果"></a>三、测试效果</h4><ol>
-<li><p>先看需要钓鱼的真实网站：</p>
-<p> <img src="http://7xku36.com1.z0.glb.clouddn.com/formal_login.png" alt=""></p>
-<p> 是一个简单的 登录 界面。</p>
-</li>
-<li><p>使用 SET 工具 克隆后的钓鱼网站页面：</p>
-<p> <img src="http://7xku36.com1.z0.glb.clouddn.com/fake_login.png" alt=""></p>
-<p> 可以看出 克隆出来的网站除了图标没有意外其他和真实网站一模一样，话说这个SET做钓鱼页面简直省心省力，赞！</p>
-</li>
-<li><p>在钓鱼页面输了一个账户，密码测试后，钓鱼服务器接收的账户信息：</p>
-<p> <img src="http://7xku36.com1.z0.glb.clouddn.com/set5.png" alt=""></p>
-</li>
-<li><p>随手 克隆了一个FreeBuf 的登录界面，发现克隆出来的效果还是很理想的，左边是 FB 的 右边是克隆出的页面 :)</p>
-<p> <img src="http://7xku36.com1.z0.glb.clouddn.com/freebuf.png" alt=""></p>
-<blockquote>
-<p>参考:<br><a href="https://github.com/trustedsec/social-engineer-toolkit/blob/master/readme/User_Manual.pdf" target="_blank" rel="external">https://github.com/trustedsec/social-engineer-toolkit/blob/master/readme/User_Manual.pdf</a><br><a href="http://www.freebuf.com/sectool/73409.html" target="_blank" rel="external">http://www.freebuf.com/sectool/73409.html</a></p>
-</blockquote>
-</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;Social-Engineer-Tool 是一个好工具，使用 Python 开发，准备后期深入的挖掘一下，今天俺要拿它的克隆网站功能制作一个钓鱼网站看看效果咋样~&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h4 id=&quot;一、安装最新版-SET-工具&quot;&gt;
-    
-    </summary>
-    
-    
-      <category term="社工工程学" scheme="http://www.evilclay.com/tags/%E7%A4%BE%E5%B7%A5%E5%B7%A5%E7%A8%8B%E5%AD%A6/"/>
-    
-      <category term="钓鱼网站" scheme="http://www.evilclay.com/tags/%E9%92%93%E9%B1%BC%E7%BD%91%E7%AB%99/"/>
-    
-      <category term="SET" scheme="http://www.evilclay.com/tags/SET/"/>
     
   </entry>
   
