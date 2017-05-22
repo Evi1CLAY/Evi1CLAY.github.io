@@ -1,563 +1,498 @@
-
- <!DOCTYPE HTML>
-<html lang="zh-Hans">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8">
-  
-    <title>爬取 WooYun 论坛所有漏洞条目的相关信息 | Anka9080&#39;s Notes</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Anka9080">
     
 
     
-    <meta name="description" content="每个漏洞条目包含：
-乌云ID，漏洞标题，漏洞所属厂商，白帽子，漏洞类型，厂商或平台给的Rank值
-主要是做数据分析使用：可以分析某厂商的各类型漏洞的统计；或者对白帽子的能力进行分析…..
-数据更新时间：2016/5/27漏洞条目：104796条
-数据截图如下：
 
-数据网盘链接：
-链接：http://pan.baidu.com/s/1bpDNKOv 密码：6y57
-爬虫脚本：123456789101">
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>爬取 WooYun 论坛所有漏洞条目的相关信息 | Anka9080&#39;s Notes | 勿忘初心。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Python,多线程,乌云爬虫,正则表达式">
+    <meta name="description" content="每个漏洞条目包含： 乌云ID，漏洞标题，漏洞所属厂商，白帽子，漏洞类型，厂商或平台给的Rank值 主要是做数据分析使用：可以分析某厂商的各类型漏洞的统计；或者对白帽子的能力进行分析….. 数据更新时间：2016/5/27漏洞条目：104796条 数据截图如下：">
+<meta name="keywords" content="Python,多线程,乌云爬虫,正则表达式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="爬取 WooYun 论坛所有漏洞条目的相关信息">
 <meta property="og:url" content="http://www.evilclay.com/2016/05/27/wooyun-spider/index.html">
-<meta property="og:site_name" content="Anka9080's Notes">
-<meta property="og:description" content="每个漏洞条目包含：
-乌云ID，漏洞标题，漏洞所属厂商，白帽子，漏洞类型，厂商或平台给的Rank值
-主要是做数据分析使用：可以分析某厂商的各类型漏洞的统计；或者对白帽子的能力进行分析…..
-数据更新时间：2016/5/27漏洞条目：104796条
-数据截图如下：
-
-数据网盘链接：
-链接：http://pan.baidu.com/s/1bpDNKOv 密码：6y57
-爬虫脚本：123456789101">
+<meta property="og:site_name" content="Anka9080&#39;s Notes">
+<meta property="og:description" content="每个漏洞条目包含： 乌云ID，漏洞标题，漏洞所属厂商，白帽子，漏洞类型，厂商或平台给的Rank值 主要是做数据分析使用：可以分析某厂商的各类型漏洞的统计；或者对白帽子的能力进行分析….. 数据更新时间：2016/5/27漏洞条目：104796条 数据截图如下：">
 <meta property="og:image" content="http://images2015.cnblogs.com/blog/671902/201605/671902-20160527002538147-1212236189.png">
 <meta property="og:updated_time" content="2016-05-29T03:27:25.450Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="爬取 WooYun 论坛所有漏洞条目的相关信息">
-<meta name="twitter:description" content="每个漏洞条目包含：
-乌云ID，漏洞标题，漏洞所属厂商，白帽子，漏洞类型，厂商或平台给的Rank值
-主要是做数据分析使用：可以分析某厂商的各类型漏洞的统计；或者对白帽子的能力进行分析…..
-数据更新时间：2016/5/27漏洞条目：104796条
-数据截图如下：
-
-数据网盘链接：
-链接：http://pan.baidu.com/s/1bpDNKOv 密码：6y57
-爬虫脚本：123456789101">
+<meta name="twitter:description" content="每个漏洞条目包含： 乌云ID，漏洞标题，漏洞所属厂商，白帽子，漏洞类型，厂商或平台给的Rank值 主要是做数据分析使用：可以分析某厂商的各类型漏洞的统计；或者对白帽子的能力进行分析….. 数据更新时间：2016/5/27漏洞条目：104796条 数据截图如下：">
 <meta name="twitter:image" content="http://images2015.cnblogs.com/blog/671902/201605/671902-20160527002538147-1212236189.png">
-
     
-    <link rel="alternative" href="/atom.xml" title="Anka9080&#39;s Notes" type="application/atom+xml">
+        <link rel="alternate" type="application/atom+xml" title="Anka9080&#39;s Notes" href="/atom.xml">
     
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
 </head>
 
-  <body>
-    <header>
-      
-<div>
-		
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="Anka9080&#39;s Notes">Anka9080&#39;s Notes</a></h1>
-				<h2 class="blog-motto">勿忘初心。</h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/2048/">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:www.evilclay.com">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
-</div>
-    </header>
-    <div id="container">
-      <div id="main" class="post" itemscope itemprop="blogPost">
-  
-	<article itemprop="articleBody"> 
-		<header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/05/27/wooyun-spider/" title="爬取 WooYun 论坛所有漏洞条目的相关信息" itemprop="url">爬取 WooYun 论坛所有漏洞条目的相关信息</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2016-05-27T10:24:16.000Z" itemprop="datePublished"> Published 2016-05-27</time>
-    
-  </p>
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Anka9080</h5>
+          <a href="mailto:634206017@qq.com" title="634206017@qq.com" class="mail">634206017@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/yscoder" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/ysweb" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">爬取 WooYun 论坛所有漏洞条目的相关信息</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
 </header>
-	<div class="article-content">
-		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
-		
-			
-		
-		</div>
-		
-		<p><strong>每个漏洞条目包含：</strong></p>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">爬取 WooYun 论坛所有漏洞条目的相关信息</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-05-27T10:24:16.000Z" itemprop="datePublished" class="page-time">
+  2016-05-27
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-wooyun-spider"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">爬取 WooYun 论坛所有漏洞条目的相关信息</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-05-27 18:24:16" datetime="2016-05-27T10:24:16.000Z"  itemprop="datePublished">2016-05-27</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p><strong>每个漏洞条目包含：</strong></p>
 <p>乌云ID，漏洞标题，漏洞所属厂商，白帽子，漏洞类型，厂商或平台给的Rank值</p>
 <p><strong>主要是做数据分析使用：</strong><br>可以分析某厂商的各类型漏洞的统计；<br>或者对白帽子的能力进行分析…..</p>
 <p>数据更新时间：2016/5/27<br>漏洞条目：104796条</p>
 <p><strong>数据截图如下：</strong></p>
-<p><img src="http://images2015.cnblogs.com/blog/671902/201605/671902-20160527002538147-1212236189.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://images2015.cnblogs.com/blog/671902/201605/671902-20160527002538147-1212236189.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p><strong>数据网盘链接：</strong></p>
 <p>链接：<a href="http://pan.baidu.com/s/1bpDNKOv" target="_blank" rel="external">http://pan.baidu.com/s/1bpDNKOv</a> 密码：6y57</p>
-<p><strong>爬虫脚本：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"><span class="comment"># author: anka9080</span></span><br><span class="line"><span class="comment"># version: 1.0  py3</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> sys,re,time,socket</span><br><span class="line"><span class="keyword">from</span> requests <span class="keyword">import</span> get</span><br><span class="line"><span class="keyword">from</span> queue <span class="keyword">import</span> Queue, Empty</span><br><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Thread</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 全局变量</span></span><br><span class="line">COUNT = <span class="number">1</span></span><br><span class="line">START_URL = <span class="string">'http://wooyun.org/bugs'</span></span><br><span class="line">ID_DETAILS = []</span><br><span class="line">ALL_ID = []</span><br><span class="line">Failed_ID = []</span><br><span class="line">PROXIES = []</span><br><span class="line"> </span><br><span class="line">HEADERS = &#123;</span><br><span class="line">    <span class="string">"Accept"</span>: <span class="string">"text/html,application/xhtml+xml,application/xml,application/json;q=0.9,image/webp,*/*;q=0.8"</span>,</span><br><span class="line">    <span class="string">"Accept-Encoding"</span>: <span class="string">"gzip, deflate, sdch"</span>,</span><br><span class="line">    <span class="string">"Accept-Language"</span>: <span class="string">"zh-CN,zh;q=0.8"</span>,</span><br><span class="line">    <span class="string">"Cache-Control"</span>: <span class="string">"max-age=0"</span>,</span><br><span class="line">    <span class="string">"Connection"</span>: <span class="string">"keep-alive"</span>,</span><br><span class="line">    <span class="string">"DNT"</span>: <span class="string">"1"</span>,</span><br><span class="line">    <span class="string">"Host"</span>: <span class="string">"wooyun.org"</span>,</span><br><span class="line">    <span class="string">"Upgrade-Insecure-Requests"</span>: <span class="string">"1"</span>,</span><br><span class="line">    <span class="string">"User-Agent"</span>: <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2716.0 Safari/537.36"</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WooYunSpider</span><span class="params">(Thread)</span>:</span></span><br><span class="line">    <span class="string">"""docstring for WooYunSpider"""</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,queue)</span>:</span></span><br><span class="line">        Thread.__init__(self)</span><br><span class="line">        self.pattern1 = re.compile(<span class="string">r'title&gt;(.*?)\| WooYun.*?keywords" content="(.*?),(.*?),(.*?),wooyun'</span>,re.S)  <span class="comment"># 匹配模式在 compile 的时候指定</span></span><br><span class="line">        self.pattern2 = re.compile(<span class="string">r"漏洞Rank：(\d&#123;1,3&#125;)"</span>)</span><br><span class="line">        self.queue = queue</span><br><span class="line">        self.start() <span class="comment"># 执行 run()</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"每次读取 queue 的一条"</span></span><br><span class="line">        <span class="keyword">global</span> COUNT,RES_LOG,ERR_LOG</span><br><span class="line">        <span class="keyword">while</span>(<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                id = self.queue.get(block = <span class="keyword">False</span>)</span><br><span class="line">                r = get(<span class="string">'http://wooyun.org/bugs/'</span> + id,headers = HEADERS)</span><br><span class="line">                html = r.text</span><br><span class="line">            <span class="keyword">except</span> Empty:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                msg = <span class="string">'[ - Socket_Excpt ] 链接被拒绝，再次添加到队列：'</span> + id</span><br><span class="line">                print(msg)</span><br><span class="line">                ERR_LOG.write(msg+<span class="string">'\n'</span>)</span><br><span class="line">                self.queue.put(id)  <span class="comment"># 访问失败则把这个 URL从新加入队列</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                title,comp,author,bug_type,rank = self.get_detail(html,id)</span><br><span class="line">                detail = id+<span class="string">'----'</span>+title+<span class="string">'----'</span>+comp+<span class="string">'----'</span>+author+<span class="string">'----'</span>+bug_type+<span class="string">'----'</span>+rank</span><br><span class="line">                <span class="keyword">try</span>: <span class="comment"># 写入文件可能会诱发 gbk 编码异常，这里保存 id 到 failed</span></span><br><span class="line">                    RES_LOG.write(detail + <span class="string">'\n'</span>)</span><br><span class="line">                <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                    Failed_ID.append(id)</span><br><span class="line">                    msg = <span class="string">'[ - Encode_Excpt ] 字符编码异常：'</span> + id</span><br><span class="line">                    print(msg)</span><br><span class="line">                    ERR_LOG.write(msg+<span class="string">'\n'</span>)</span><br><span class="line">                ID_DETAILS.append(detail)</span><br><span class="line">            <span class="comment"># time.sleep(1)</span></span><br><span class="line"> </span><br><span class="line">            print(<span class="string">'[ - info ] id: &#123;&#125;  count: &#123;&#125;  time: &#123;:.2f&#125;s'</span>.format(id,COUNT,time.time() - start))</span><br><span class="line">            COUNT += <span class="number">1</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment"># 由 缺陷编号 获得对应的 厂商 和 漏洞类型信息</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_detail</span><span class="params">(self,html,id)</span>:</span></span><br><span class="line">        <span class="keyword">global</span> ERR_LOG</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="comment"># print(html)</span></span><br><span class="line">            res = self.pattern1.search(html)</span><br><span class="line">            title = res.group(<span class="number">1</span>).strip()</span><br><span class="line">            comp = res.group(<span class="number">2</span>).strip()</span><br><span class="line">            author = res.group(<span class="number">3</span>).strip()</span><br><span class="line">            bug_type = res.group(<span class="number">4</span>).strip()</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            msg = <span class="string">'[ - Detail_Excpt ] 未解析出 标题等相关信息：'</span> + id</span><br><span class="line">            print(msg)</span><br><span class="line">            ERR_LOG.write(msg+<span class="string">'\n'</span>)</span><br><span class="line">            Failed_ID.append(id)</span><br><span class="line">            title,comp,author,bug_type,rank = <span class="string">'Null'</span>,<span class="string">'Null'</span>,<span class="string">'Null'</span>,<span class="string">'Null'</span>,<span class="string">'Null'</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                res2 = self.pattern2.search(html)  <span class="comment"># 若厂商暂无回应则 rank 为 Null</span></span><br><span class="line">                rank = res2.group(<span class="number">1</span>).strip()</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                msg = <span class="string">'[ - Rank_Excpt ] 未解析出 Rank：'</span> + id</span><br><span class="line">                print(msg)</span><br><span class="line">                ERR_LOG.write(msg+<span class="string">'\n'</span>)</span><br><span class="line">                rank = <span class="string">'Null'</span></span><br><span class="line">             </span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="keyword">print</span> (title,comp,author,bug_type,rank)</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                msg = <span class="string">'[ - Print_Excpt ] 字符编码异常：'</span> + id +<span class="string">'::'</span>+ str(e)</span><br><span class="line">                print(msg)</span><br><span class="line">                ERR_LOG.write(msg+<span class="string">'\n'</span>)</span><br><span class="line">            <span class="keyword">return</span> title,comp,author,bug_type,rank</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ThreadPool</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,thread_num,id_file)</span>:</span></span><br><span class="line">        self.queue = Queue() <span class="comment"># 需要执行的队列</span></span><br><span class="line">        self.threads = [] <span class="comment"># 多线程列表</span></span><br><span class="line">        self.add_task(id_file)</span><br><span class="line">        self.init_threads(thread_num)</span><br><span class="line">         </span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_task</span><span class="params">(self,id_file)</span>:</span></span><br><span class="line">        <span class="keyword">with</span> open(id_file) <span class="keyword">as</span> input:</span><br><span class="line">            <span class="keyword">for</span> id <span class="keyword">in</span> input.readlines():</span><br><span class="line">                self.queue.put(id.strip())         </span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">init_threads</span><span class="params">(self,thread_num)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(thread_num):</span><br><span class="line">            <span class="keyword">print</span> (<span class="string">'[ - info :] loading threading ---&gt; '</span>,i)</span><br><span class="line">            <span class="comment"># time.sleep(1)</span></span><br><span class="line">            self.threads.append(WooYunSpider(self.queue)) <span class="comment"># threads 列表装的是 爬虫线程</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wait</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> t <span class="keyword">in</span> self.threads:</span><br><span class="line">            <span class="keyword">if</span> t.isAlive():</span><br><span class="line">                t.join()</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></span><br><span class="line">    url = <span class="string">'http://wooyun.org/bugs/wooyun-2016-0177647'</span></span><br><span class="line">    r = get(url,headers = HEADERS)</span><br><span class="line">    html = r.text</span><br><span class="line">    <span class="comment"># print type(html)</span></span><br><span class="line">    <span class="comment"># keywords" content="(.*?),(.*?),(.*?),wooyun  ====&gt; 厂商，白帽子，类型</span></span><br><span class="line">    pattern1 = re.compile(<span class="string">r'title&gt;(.*?)\| WooYun'</span>)</span><br><span class="line">    pattern2 = re.compile(<span class="string">r'keywords" content="(.*?),(.*?),(.*?),wooyun'</span>)</span><br><span class="line">    pattern3 = re.compile(<span class="string">r'漏洞Rank：(\d&#123;1,3&#125;)'</span>)</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">500</span>):</span><br><span class="line">        res = pattern1.search(html)</span><br><span class="line">        <span class="comment"># print (res.group(1))</span></span><br><span class="line">        res = pattern2.search(html)</span><br><span class="line">        <span class="comment"># print (res.group(1),res.group(2),res.group(3))</span></span><br><span class="line">        res = pattern3.search(html)</span><br><span class="line">        <span class="comment"># print (res.group(1))</span></span><br><span class="line">        x += <span class="number">1</span></span><br><span class="line">        print(x)</span><br><span class="line">    <span class="comment"># rank = res.group(4).strip()</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment"># print html</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test2</span><span class="params">()</span>:</span></span><br><span class="line">    url = <span class="string">'http://wooyun.org/bugs/wooyun-2016-0177647'</span></span><br><span class="line">    r = get(url,headers = HEADERS)</span><br><span class="line">    html = r.text</span><br><span class="line">    pattern = re.compile(<span class="string">r'title&gt;(.*?)\| WooYun.*?keywords" content="(.*?),(.*?),(.*?),wooyun.*?漏洞Rank：(\d&#123;1,3&#125;)'</span>,re.S)</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">500</span>):</span><br><span class="line">        res = pattern.search(html)</span><br><span class="line">        <span class="comment"># print (res.group(1),res.group(2),res.group(3),res.group(4),res.group(5))</span></span><br><span class="line">        x += <span class="number">1</span></span><br><span class="line">        print(x)</span><br><span class="line"><span class="comment"># 保存结果</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save2file</span><span class="params">(filename,filename_failed_id)</span>:</span></span><br><span class="line">    <span class="keyword">with</span> open(filename,<span class="string">'w'</span>) <span class="keyword">as</span> output:</span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> ID_DETAILS:</span><br><span class="line">            <span class="keyword">try</span>: <span class="comment"># 写入文件可能会诱发 gbk 编码异常，这里忽略</span></span><br><span class="line">                output.write(item + <span class="string">'\n'</span>)</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                <span class="keyword">pass</span></span><br><span class="line">             </span><br><span class="line">    <span class="keyword">with</span> open(filename_failed_id,<span class="string">'w'</span>) <span class="keyword">as</span> output:</span><br><span class="line">        output.write(<span class="string">'\n'</span>.join(Failed_ID))</span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line"> </span><br><span class="line">    socket.setdefaulttimeout(<span class="number">1</span>)</span><br><span class="line">    start = time.time()</span><br><span class="line"> </span><br><span class="line">    <span class="comment"># test()</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment"># 日志记录</span></span><br><span class="line">    ERR_LOG = open(<span class="string">'err_log.txt'</span>,<span class="string">'w'</span>)</span><br><span class="line">    RES_LOG = open(<span class="string">'res_log.txt'</span>,<span class="string">'w'</span>)</span><br><span class="line">    id_file = <span class="string">'id_0526.txt'</span></span><br><span class="line">    <span class="comment"># id_file = 'id_test.txt'</span></span><br><span class="line">    tp = ThreadPool(<span class="number">20</span>,id_file)</span><br><span class="line">    tp.wait()</span><br><span class="line"> </span><br><span class="line">    save2file(<span class="string">'id_details.txt'</span>,<span class="string">'failed_id.txt'</span>)</span><br><span class="line"> </span><br><span class="line">    end = time.time()</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">'[ - info ] cost time :&#123;:.2f&#125;s'</span>.format(end - start))</span><br></pre></td></tr></table></figure></p>
+<p><strong>爬虫脚本：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># coding:utf-8</span></div><div class="line"><span class="comment"># author: anka9080</span></div><div class="line"><span class="comment"># version: 1.0  py3</span></div><div class="line"> </div><div class="line"><span class="keyword">import</span> sys,re,time,socket</div><div class="line"><span class="keyword">from</span> requests <span class="keyword">import</span> get</div><div class="line"><span class="keyword">from</span> queue <span class="keyword">import</span> Queue, Empty</div><div class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Thread</div><div class="line"> </div><div class="line"><span class="comment"># 全局变量</span></div><div class="line">COUNT = <span class="number">1</span></div><div class="line">START_URL = <span class="string">'http://wooyun.org/bugs'</span></div><div class="line">ID_DETAILS = []</div><div class="line">ALL_ID = []</div><div class="line">Failed_ID = []</div><div class="line">PROXIES = []</div><div class="line"> </div><div class="line">HEADERS = &#123;</div><div class="line">    <span class="string">"Accept"</span>: <span class="string">"text/html,application/xhtml+xml,application/xml,application/json;q=0.9,image/webp,*/*;q=0.8"</span>,</div><div class="line">    <span class="string">"Accept-Encoding"</span>: <span class="string">"gzip, deflate, sdch"</span>,</div><div class="line">    <span class="string">"Accept-Language"</span>: <span class="string">"zh-CN,zh;q=0.8"</span>,</div><div class="line">    <span class="string">"Cache-Control"</span>: <span class="string">"max-age=0"</span>,</div><div class="line">    <span class="string">"Connection"</span>: <span class="string">"keep-alive"</span>,</div><div class="line">    <span class="string">"DNT"</span>: <span class="string">"1"</span>,</div><div class="line">    <span class="string">"Host"</span>: <span class="string">"wooyun.org"</span>,</div><div class="line">    <span class="string">"Upgrade-Insecure-Requests"</span>: <span class="string">"1"</span>,</div><div class="line">    <span class="string">"User-Agent"</span>: <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2716.0 Safari/537.36"</span></div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">WooYunSpider</span><span class="params">(Thread)</span>:</span></div><div class="line">    <span class="string">"""docstring for WooYunSpider"""</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,queue)</span>:</span></div><div class="line">        Thread.__init__(self)</div><div class="line">        self.pattern1 = re.compile(<span class="string">r'title&gt;(.*?)\| WooYun.*?keywords" content="(.*?),(.*?),(.*?),wooyun'</span>,re.S)  <span class="comment"># 匹配模式在 compile 的时候指定</span></div><div class="line">        self.pattern2 = re.compile(<span class="string">r"漏洞Rank：(\d&#123;1,3&#125;)"</span>)</div><div class="line">        self.queue = queue</div><div class="line">        self.start() <span class="comment"># 执行 run()</span></div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="string">"每次读取 queue 的一条"</span></div><div class="line">        <span class="keyword">global</span> COUNT,RES_LOG,ERR_LOG</div><div class="line">        <span class="keyword">while</span>(<span class="number">1</span>):</div><div class="line">            <span class="keyword">try</span>:</div><div class="line">                id = self.queue.get(block = <span class="keyword">False</span>)</div><div class="line">                r = get(<span class="string">'http://wooyun.org/bugs/'</span> + id,headers = HEADERS)</div><div class="line">                html = r.text</div><div class="line">            <span class="keyword">except</span> Empty:</div><div class="line">                <span class="keyword">break</span></div><div class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</div><div class="line">                msg = <span class="string">'[ - Socket_Excpt ] 链接被拒绝，再次添加到队列：'</span> + id</div><div class="line">                print(msg)</div><div class="line">                ERR_LOG.write(msg+<span class="string">'\n'</span>)</div><div class="line">                self.queue.put(id)  <span class="comment"># 访问失败则把这个 URL从新加入队列</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                title,comp,author,bug_type,rank = self.get_detail(html,id)</div><div class="line">                detail = id+<span class="string">'----'</span>+title+<span class="string">'----'</span>+comp+<span class="string">'----'</span>+author+<span class="string">'----'</span>+bug_type+<span class="string">'----'</span>+rank</div><div class="line">                <span class="keyword">try</span>: <span class="comment"># 写入文件可能会诱发 gbk 编码异常，这里保存 id 到 failed</span></div><div class="line">                    RES_LOG.write(detail + <span class="string">'\n'</span>)</div><div class="line">                <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</div><div class="line">                    Failed_ID.append(id)</div><div class="line">                    msg = <span class="string">'[ - Encode_Excpt ] 字符编码异常：'</span> + id</div><div class="line">                    print(msg)</div><div class="line">                    ERR_LOG.write(msg+<span class="string">'\n'</span>)</div><div class="line">                ID_DETAILS.append(detail)</div><div class="line">            <span class="comment"># time.sleep(1)</span></div><div class="line"> </div><div class="line">            print(<span class="string">'[ - info ] id: &#123;&#125;  count: &#123;&#125;  time: &#123;:.2f&#125;s'</span>.format(id,COUNT,time.time() - start))</div><div class="line">            COUNT += <span class="number">1</span></div><div class="line"> </div><div class="line">    <span class="comment"># 由 缺陷编号 获得对应的 厂商 和 漏洞类型信息</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_detail</span><span class="params">(self,html,id)</span>:</span></div><div class="line">        <span class="keyword">global</span> ERR_LOG</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            <span class="comment"># print(html)</span></div><div class="line">            res = self.pattern1.search(html)</div><div class="line">            title = res.group(<span class="number">1</span>).strip()</div><div class="line">            comp = res.group(<span class="number">2</span>).strip()</div><div class="line">            author = res.group(<span class="number">3</span>).strip()</div><div class="line">            bug_type = res.group(<span class="number">4</span>).strip()</div><div class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</div><div class="line">            msg = <span class="string">'[ - Detail_Excpt ] 未解析出 标题等相关信息：'</span> + id</div><div class="line">            print(msg)</div><div class="line">            ERR_LOG.write(msg+<span class="string">'\n'</span>)</div><div class="line">            Failed_ID.append(id)</div><div class="line">            title,comp,author,bug_type,rank = <span class="string">'Null'</span>,<span class="string">'Null'</span>,<span class="string">'Null'</span>,<span class="string">'Null'</span>,<span class="string">'Null'</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">try</span>:</div><div class="line">                res2 = self.pattern2.search(html)  <span class="comment"># 若厂商暂无回应则 rank 为 Null</span></div><div class="line">                rank = res2.group(<span class="number">1</span>).strip()</div><div class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</div><div class="line">                msg = <span class="string">'[ - Rank_Excpt ] 未解析出 Rank：'</span> + id</div><div class="line">                print(msg)</div><div class="line">                ERR_LOG.write(msg+<span class="string">'\n'</span>)</div><div class="line">                rank = <span class="string">'Null'</span></div><div class="line">             </div><div class="line">        <span class="keyword">finally</span>:</div><div class="line">            <span class="keyword">try</span>:</div><div class="line">                <span class="keyword">print</span> (title,comp,author,bug_type,rank)</div><div class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</div><div class="line">                msg = <span class="string">'[ - Print_Excpt ] 字符编码异常：'</span> + id +<span class="string">'::'</span>+ str(e)</div><div class="line">                print(msg)</div><div class="line">                ERR_LOG.write(msg+<span class="string">'\n'</span>)</div><div class="line">            <span class="keyword">return</span> title,comp,author,bug_type,rank</div><div class="line"> </div><div class="line"> </div><div class="line"> </div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ThreadPool</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,thread_num,id_file)</span>:</span></div><div class="line">        self.queue = Queue() <span class="comment"># 需要执行的队列</span></div><div class="line">        self.threads = [] <span class="comment"># 多线程列表</span></div><div class="line">        self.add_task(id_file)</div><div class="line">        self.init_threads(thread_num)</div><div class="line">         </div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_task</span><span class="params">(self,id_file)</span>:</span></div><div class="line">        <span class="keyword">with</span> open(id_file) <span class="keyword">as</span> input:</div><div class="line">            <span class="keyword">for</span> id <span class="keyword">in</span> input.readlines():</div><div class="line">                self.queue.put(id.strip())         </div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">init_threads</span><span class="params">(self,thread_num)</span>:</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(thread_num):</div><div class="line">            <span class="keyword">print</span> (<span class="string">'[ - info :] loading threading ---&gt; '</span>,i)</div><div class="line">            <span class="comment"># time.sleep(1)</span></div><div class="line">            self.threads.append(WooYunSpider(self.queue)) <span class="comment"># threads 列表装的是 爬虫线程</span></div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wait</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">for</span> t <span class="keyword">in</span> self.threads:</div><div class="line">            <span class="keyword">if</span> t.isAlive():</div><div class="line">                t.join()</div><div class="line"> </div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></div><div class="line">    url = <span class="string">'http://wooyun.org/bugs/wooyun-2016-0177647'</span></div><div class="line">    r = get(url,headers = HEADERS)</div><div class="line">    html = r.text</div><div class="line">    <span class="comment"># print type(html)</span></div><div class="line">    <span class="comment"># keywords" content="(.*?),(.*?),(.*?),wooyun  ====&gt; 厂商，白帽子，类型</span></div><div class="line">    pattern1 = re.compile(<span class="string">r'title&gt;(.*?)\| WooYun'</span>)</div><div class="line">    pattern2 = re.compile(<span class="string">r'keywords" content="(.*?),(.*?),(.*?),wooyun'</span>)</div><div class="line">    pattern3 = re.compile(<span class="string">r'漏洞Rank：(\d&#123;1,3&#125;)'</span>)</div><div class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">500</span>):</div><div class="line">        res = pattern1.search(html)</div><div class="line">        <span class="comment"># print (res.group(1))</span></div><div class="line">        res = pattern2.search(html)</div><div class="line">        <span class="comment"># print (res.group(1),res.group(2),res.group(3))</span></div><div class="line">        res = pattern3.search(html)</div><div class="line">        <span class="comment"># print (res.group(1))</span></div><div class="line">        x += <span class="number">1</span></div><div class="line">        print(x)</div><div class="line">    <span class="comment"># rank = res.group(4).strip()</span></div><div class="line"> </div><div class="line">    <span class="comment"># print html</span></div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test2</span><span class="params">()</span>:</span></div><div class="line">    url = <span class="string">'http://wooyun.org/bugs/wooyun-2016-0177647'</span></div><div class="line">    r = get(url,headers = HEADERS)</div><div class="line">    html = r.text</div><div class="line">    pattern = re.compile(<span class="string">r'title&gt;(.*?)\| WooYun.*?keywords" content="(.*?),(.*?),(.*?),wooyun.*?漏洞Rank：(\d&#123;1,3&#125;)'</span>,re.S)</div><div class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">500</span>):</div><div class="line">        res = pattern.search(html)</div><div class="line">        <span class="comment"># print (res.group(1),res.group(2),res.group(3),res.group(4),res.group(5))</span></div><div class="line">        x += <span class="number">1</span></div><div class="line">        print(x)</div><div class="line"><span class="comment"># 保存结果</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">save2file</span><span class="params">(filename,filename_failed_id)</span>:</span></div><div class="line">    <span class="keyword">with</span> open(filename,<span class="string">'w'</span>) <span class="keyword">as</span> output:</div><div class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> ID_DETAILS:</div><div class="line">            <span class="keyword">try</span>: <span class="comment"># 写入文件可能会诱发 gbk 编码异常，这里忽略</span></div><div class="line">                output.write(item + <span class="string">'\n'</span>)</div><div class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</div><div class="line">                <span class="keyword">pass</span></div><div class="line">             </div><div class="line">    <span class="keyword">with</span> open(filename_failed_id,<span class="string">'w'</span>) <span class="keyword">as</span> output:</div><div class="line">        output.write(<span class="string">'\n'</span>.join(Failed_ID))</div><div class="line"> </div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line"> </div><div class="line">    socket.setdefaulttimeout(<span class="number">1</span>)</div><div class="line">    start = time.time()</div><div class="line"> </div><div class="line">    <span class="comment"># test()</span></div><div class="line"> </div><div class="line">    <span class="comment"># 日志记录</span></div><div class="line">    ERR_LOG = open(<span class="string">'err_log.txt'</span>,<span class="string">'w'</span>)</div><div class="line">    RES_LOG = open(<span class="string">'res_log.txt'</span>,<span class="string">'w'</span>)</div><div class="line">    id_file = <span class="string">'id_0526.txt'</span></div><div class="line">    <span class="comment"># id_file = 'id_test.txt'</span></div><div class="line">    tp = ThreadPool(<span class="number">20</span>,id_file)</div><div class="line">    tp.wait()</div><div class="line"> </div><div class="line">    save2file(<span class="string">'id_details.txt'</span>,<span class="string">'failed_id.txt'</span>)</div><div class="line"> </div><div class="line">    end = time.time()</div><div class="line">    <span class="keyword">print</span> (<span class="string">'[ - info ] cost time :&#123;:.2f&#125;s'</span>.format(end - start))</div></pre></td></tr></table></figure></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2016-05-29T03:27:25.450Z" itemprop="dateUpdated">2016-05-29 11:27:25</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2016/05/27/wooyun-spider/" target="_blank" rel="external">http://www.evilclay.com/2016/05/27/wooyun-spider/</a>
+        
+    </div>
+    <footer>
+        <a href="http://www.evilclay.com">
+            <img src="/img/avatar.jpg" alt="Anka9080">
+            Anka9080
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/乌云爬虫/">乌云爬虫</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/正则表达式/">正则表达式</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.evilclay.com/2016/05/27/wooyun-spider/&title=《爬取 WooYun 论坛所有漏洞条目的相关信息》 — Anka9080's Notes&pic=http://www.evilclay.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.evilclay.com/2016/05/27/wooyun-spider/&title=《爬取 WooYun 论坛所有漏洞条目的相关信息》 — Anka9080's Notes&source=Python,渗透测试,安全研发" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.evilclay.com/2016/05/27/wooyun-spider/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《爬取 WooYun 论坛所有漏洞条目的相关信息》 — Anka9080's Notes&url=http://www.evilclay.com/2016/05/27/wooyun-spider/&via=http://www.evilclay.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.evilclay.com/2016/05/27/wooyun-spider/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
   
-	</div>
-		<footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/07/10/近期更新的-Github-Python-脚本/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">近期更新的 Github Python 脚本</h4>
+      </a>
+    </div>
   
-  <span></span> <a href="/tags/Python/">Python</a><a href="/tags/多线程/">多线程</a><a href="/tags/乌云爬虫/">乌云爬虫</a><a href="/tags/正则表达式/">正则表达式</a>
-  </div>
 
-</div>
-
-
-
-	<div class="article-share" id="share">
-	
-	  <div data-url="http://www.evilclay.com/2016/05/27/wooyun-spider/" data-title="爬取 WooYun 论坛所有漏洞条目的相关信息 | Anka9080&#39;s Notes" data-tsina="null" class="share clearfix">
-	  </div>
-	
-	</div>
-
-
-</footer>
-
-   	       
-	</article>
-	
-<nav class="article-nav clearfix">
- 
- <div class="prev" >
- <a href="/2016/07/10/近期更新的-Github-Python-脚本/" title="近期更新的 Github Python 脚本">
-  <strong>上一篇：</strong><br/>
-  <span>
-  近期更新的 Github Python 脚本</span>
-</a>
-</div>
-
-
-<div class="next">
-<a href="/2016/05/26/ua-sql-injection/"  title="User-Agent 手工注入的探测与利用分析">
- <strong>下一篇：</strong><br/> 
- <span>User-Agent 手工注入的探测与利用分析
-</span>
-</a>
-</div>
-
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/05/26/ua-sql-injection/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">User-Agent 手工注入的探测与利用分析</h4>
+      </a>
+    </div>
+  
 </nav>
 
-	
-<section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/05/27/wooyun-spider/" data-title="爬取 WooYun 论坛所有漏洞条目的相关信息" data-url="http://www.evilclay.com/2016/05/27/wooyun-spider/"></div>
-</section>
 
 
-</div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
-
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">Contents</strong>
- 
- 
- 
-  </div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
-<aside class="clearfix">
-
-  
-
-  
-<div class="tagslist">
-	<p class="asidetitle">Tags</p>
-		<ul class="clearfix">
-		
-			
-				<li><a href="/tags/安全工具/" title="安全工具">安全工具<sup>5</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Ubuntu/" title="Ubuntu">Ubuntu<sup>4</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Python/" title="Python">Python<sup>4</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/漏洞分析/" title="漏洞分析">漏洞分析<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/多线程/" title="多线程">多线程<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/内网渗透/" title="内网渗透">内网渗透<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/信息收集/" title="信息收集">信息收集<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Flask/" title="Flask">Flask<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/代码审计/" title="代码审计">代码审计<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/kali/" title="kali">kali<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/端口扫描/" title="端口扫描">端口扫描<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Docker/" title="Docker">Docker<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/SQL注入/" title="SQL注入">SQL注入<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/WIFI热点伪造/" title="WIFI热点伪造">WIFI热点伪造<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Celery/" title="Celery">Celery<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/任意文件上传/" title="任意文件上传">任意文件上传<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/分布式/" title="分布式">分布式<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/sudo/" title="sudo">sudo<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/想法/" title="想法">想法<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/社工工程学/" title="社工工程学">社工工程学<sup>1</sup></a></li>
-			
-		
-		</ul>
-</div>
+    
 
 
-  <div class="linkslist">
-  <p class="asidetitle">Links</p>
-    <ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
         
-          <li>
-            
-            	<a href="http://navisec.it" target="_blank" title="信息安全从业简明导航">Navisec.it</a>
-            
-          </li>
+        <li>
+            <img src="/img/wechat.jpg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
         
-          <li>
-            
-            	<a href="http://sec-wiki.com" target="_blank" title="安全维基">Sec-Wiki</a>
-            
-          </li>
+
+        
+        <li>
+            <img src="/img/alipay.jpg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
         
     </ul>
 </div>
 
-  <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+
+
 </div>
 
-</aside>
-</div>
-    </div>
-    <footer><div id="footer" >
-	
-	<div class="line">
-		<span></span>
-		<div class="author"></div>
-	</div>
-	
-	
-	<section class="info">
-		<p> Hello ,I&#39;m Anka9080 Page in ZorelWorld. <br/>
-			This is my blog,believe it or not.</p>
-	</section>
-	 
-	<div class="social-font" class="clearfix">
-		
-		<a href="http://weibo.com/5800672330" target="_blank" class="icon-weibo" title="微博"></a>
-		
-		
-		<a href="https://github.com/Evi1CLAY" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	</div>
-			
-		
-
-		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
-		
-		<a href="/about" target="_blank" title="Anka9080">Anka9080</a>
-		
-		</p>
-</div>
-</footer>
-    <script src="/js/jquery-2.0.3.min.js"></script>
-<script src="/js/jquery.imagesloaded.min.js"></script>
-<script src="/js/gallery.js"></script>
-<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
-
-
-<script src="/js/instantclick.js" data-no-instant></script>
-<script data-no-instant>InstantClick.init();</script>
-
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-  
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else{
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
+        <footer class="footer">
+    <div class="top">
         
-    }
-  });
-});
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>Anka9080 &copy; 2015 - 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.evilclay.com/2016/05/27/wooyun-spider/&title=《爬取 WooYun 论坛所有漏洞条目的相关信息》 — Anka9080's Notes&pic=http://www.evilclay.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.evilclay.com/2016/05/27/wooyun-spider/&title=《爬取 WooYun 论坛所有漏洞条目的相关信息》 — Anka9080's Notes&source=Python,渗透测试,安全研发" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.evilclay.com/2016/05/27/wooyun-spider/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《爬取 WooYun 论坛所有漏洞条目的相关信息》 — Anka9080's Notes&url=http://www.evilclay.com/2016/05/27/wooyun-spider/&via=http://www.evilclay.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.evilclay.com/2016/05/27/wooyun-spider/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACNUlEQVR42u3ay67CMAyEYd7/pXs2Z4FUkc6MQ5HdvysENOTrwviS10u+jrfr/Z31p+f3lTU/fX/DBQMGjLaMY3ll3zmvf37tPqCLRwMDBowHMD5FMGUryvf1FdzfggEDBgx9i1ngrj8yGDBgwFC2vl5HL1l/EHBhwIDRiqEESqUQzULqrbU4DBgwGjL0rvv9r78y34ABA0YrxmFeCi8bTGaF8f9dMGDAGM3QA5wL+8bhjHVJDAMGjKkMtxytNNfcpNNYBwYMGKMZerDLWl16SK036WDAgPE0RqX5lVHd0teYb8CAAWMEw00cK2Wtsppyl50ywoABoy1DKRrrLf5KcN9Qi8OAAaM5454fyIKyHqZhwIDxBIbe4nefza4Bg9FugwEDxjhG1uJXksisueaOV+3eGwwYMJozlAa90gKrhOlwDAADBozRDH0M4D4Io3re2/iDAQPGOIZeZOojASVYK5jS0VUYMGAMYmSHIbIjX9kvGmkiDBgwRjP023YNMrOQLa0DAwaMoQy3TX+Yl7tC6bAFDBgwRjOUMrK+6UoFevEnAQMGjMcwssQua5MZrbRdJ0dgwIDRkFFP8nTM+i792MdFbgsDBoxxjCzMKQmlm2gqZWppwAkDBozmjCzI7hokZAHX/veAAQPGCIa+IfcQhpt66qUvDBgwYOihsz5a2FCmwoABA4ZcBxtDx2iH9nwDBgwYgxj6Ia3sAJk9WXVHqjBgwBjNqOdd7laypFAfi8KAAWMQ4w8mOJNhuqn3TgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
 </script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var ai = $('.article-content>iframe'),
-      ae = $('.article-content>embed'),
-      t  = $('#toc'),
-      ta = $('#toc.toc-aside'),
-      o  = $('.openaside'),
-      c  = $('.closeaside');
-  if(ai.length>0){
-    ai.wrap('<div class="video-container" />');
-  };
-  if(ae.length>0){
-   ae.wrap('<div class="video-container" />');
-  };
-  c.click(function(){
-    ta.css('display', 'block').addClass('fadeIn');
-  });
-  o.click(function(){
-    ta.css('display', 'none');
-  });
-  $(window).scroll(function(){
-    ta.css("top",Math.max(140,320-$(this).scrollTop()));
-  });
-});
-</script>
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
 
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var $this = $('.share'),
-      url = $this.attr('data-url'),
-      encodedUrl = encodeURIComponent(url),
-      title = $this.attr('data-title'),
-      tsina = $this.attr('data-tsina'),
-      description = $this.attr('description');
-  var html = [
-  '<div class="hoverqrcode clearfix"></div>',
-  '<a class="overlay" id="qrcode"></a>',
-  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
-  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
-  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
-  '<span title="Share to"></span>'
-  ].join('');
-  $this.append(html);
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
 
-  $('.hoverqrcode').hide();
-
-  var myWidth = 0;
-  function updatehoverqrcode(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-    var qrsize = myWidth > 1024 ? 200:100;
-    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
-    var p = $('.article-share-qrcode').position();
-    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
-                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
-                          .qrcode(options);
-  };
-  $(window).resize(function(){
-    $('.hoverqrcode').hide();
-  });
-  $('.article-share-qrcode').click(function(){
-    updatehoverqrcode();
-    $('.hoverqrcode').toggle();
-  });
-  $('.article-share-qrcode').hover(function(){}, function(){
-      $('.hoverqrcode').hide();
-  });
-});   
-</script>
-
-
-
-<script type="text/javascript">
-  var duoshuoQuery = {short_name:"evi1clay"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-    || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-</script> 
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
 
 
 
 
 
 
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.article-content').each(function(i){
-    $(this).find('img').each(function(){
-      if ($(this).parent().hasClass('fancybox')) return;
-      var alt = this.alt;
-      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
-      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
     });
-    $(this).find('.fancybox').each(function(){
-      $(this).attr('rel', 'article' + i);
-    });
-  });
-  if($.fancybox){
-    $('.fancybox').fancybox();
-  }
-}); 
+})();
 </script>
 
 
 
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-<!-- Tiny_search Begin -->
-
-<!-- Tiny_search End -->
-
-  </body>
+</body>
 </html>

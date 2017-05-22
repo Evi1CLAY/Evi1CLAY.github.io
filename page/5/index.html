@@ -1,583 +1,844 @@
-
- <!DOCTYPE HTML>
-<html lang="zh-Hans">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8">
-  
-    <title>Anka9080&#39;s Notes</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Anka9080">
     
 
     
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Anka9080&#39;s Notes | 勿忘初心。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="undefined">
     <meta name="description" content="Python,渗透测试,安全研发">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Anka9080's Notes">
+<meta property="og:title" content="Anka9080&#39;s Notes">
 <meta property="og:url" content="http://www.evilclay.com/page/5/index.html">
-<meta property="og:site_name" content="Anka9080's Notes">
+<meta property="og:site_name" content="Anka9080&#39;s Notes">
 <meta property="og:description" content="Python,渗透测试,安全研发">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Anka9080's Notes">
+<meta name="twitter:title" content="Anka9080&#39;s Notes">
 <meta name="twitter:description" content="Python,渗透测试,安全研发">
-
     
-    <link rel="alternative" href="/atom.xml" title="Anka9080&#39;s Notes" type="application/atom+xml">
+        <link rel="alternate" type="application/atom+xml" title="Anka9080&#39;s Notes" href="/atom.xml">
     
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
 </head>
 
-  <body>
-    <header>
-      
-<div>
-		
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="Anka9080&#39;s Notes">Anka9080&#39;s Notes</a></h1>
-				<h2 class="blog-motto">勿忘初心。</h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/2048/">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:www.evilclay.com">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
-</div>
-    </header>
-    <div id="container">
-      <div id="main">
+<body>
+    <div id="loading" class="active"></div>
 
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2016/03/30/zoomeye-api/" title="Python 调用 ZoomEye API 批量获取目标网站IP" itemprop="url">
-  
-    <h1 itemprop="name">Python 调用 ZoomEye API 批量获取目标网站IP</h1>
-    
-     
-           <p itemprop="description" >0x 00 前言　　ZoomEye 的 API 在前几天正式对外部开发，这对网络渗透人员来说是一件开心的事
-　　可以说“妈妈再也不用担心批量测(x)试(zhan)没有资源了。”
-　　官方的 API 帮助文档在下面：
-　　https://www.zoomeye.org/api/
-　</p>
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Anka9080</h5>
+          <a href="mailto:634206017@qq.com" title="634206017@qq.com" class="mail">634206017@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
         
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/yscoder" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/ysweb" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Anka9080&#39;s Notes</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header index-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Anka9080&#39;s Notes</h1>
+        <h5 class="subtitle">
+            
+                勿忘初心。
+            
+        </h5>
+    </div>
+
     
-    <time datetime="2016-03-30T10:03:39.000Z" itemprop="datePublished">2016-03-30</time>
-  </a>
-</section>
 
 
+</header>
 
+<div class="container body-wrap">
 
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2016/03/09/python-multithread-ports-scanner/" title="多线程端口扫描器的 Python 脚本" itemprop="url">
-  
-    <h1 itemprop="name">多线程端口扫描器的 Python 脚本</h1>
+    <ul class="post-list">
     
-     
-           <p itemprop="description" >0x 00 Before Coding当端口打开时，向端口发送 TCP SYN 请求，会返回一个 ACK 响应:
+        <li class="post-list-item fade">
+            <article id="post-zoomeye-api"
+  class="article-card article-type-post" itemprop="blogPost">
 
+    <div class="post-meta">
+        <time class="post-time" title="2016-03-30 18:03:39" datetime="2016-03-30T10:03:39.000Z"  itemprop="datePublished">2016-03-30</time>
+
+        
+
+
+        
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2016/03/30/zoomeye-api/">Python 调用 ZoomEye API 批量获取目标网站IP</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+                
+                    
+                    
+                
+                
+            
+0x 00 前言　　ZoomEye 的 API 在前几天正式对外部开发，这对网络渗透人员来说是一件开心的事
+　　可以说“妈妈再也不用担心批量测(x)试(zhan)没有资源了。”
+　...
+    
+
+        <a href="/2016/03/30/zoomeye-api/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ZoomEye/">ZoomEye</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-python-multithread-ports-scanner"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2016-03-09 17:26:32" datetime="2016-03-09T09:26:32.000Z"  itemprop="datePublished">2016-03-09</time>
+
+        
+
+
+        
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2016/03/09/python-multithread-ports-scanner/">多线程端口扫描器的 Python 脚本</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        0x 00 Before Coding当端口打开时，向端口发送 TCP SYN 请求，会返回一个 ACK 响应:
+
+                
+                    
+                    
+                
+                
+            
 当端口关闭，返回的是 RST 响应：
 
-Coding可以用 socket 编写一个小脚本来测试主机端口的开启情况，基本代码如下：
-12345678910111213</p>
-        
+             ...
     
-    <time datetime="2016-03-09T09:26:32.000Z" itemprop="datePublished">2016-03-09</time>
-  </a>
-</section>
 
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2016/03/02/printer-hack/" title="HP 打印机 PCL 漏洞分析与利用" itemprop="url">
-  
-    <h1 itemprop="name">HP 打印机 PCL 漏洞分析与利用</h1>
-    
-     
-           <p itemprop="description" >0x01 漏洞概要PCL代表打印机控制语言（Printer Control Language），由惠普公司开发，并被广泛使用的一种打印机协议。关于另一种页面描述语言，应该提一提由Adobe设计的PostScript（PS），它可以将更为复杂的事情交由绘图仪/打印机处理。PJL (</p>
-        
-    
-    <time datetime="2016-03-02T09:46:18.000Z" itemprop="datePublished">2016-03-02</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2015/07/10/github-cmd/" title="GitHub 常用命令备忘录" itemprop="url">
-  
-    <h1 itemprop="name">GitHub 常用命令备忘录</h1>
-    
-     
-           <p itemprop="description" >git init 把当前目录变成Git可以管理的仓库随后出现.git目录，这个目录是Git来跟踪管理版本库的git commit -m “change message” 提交代码到Gitgit add file1.txtgit add file2.txt 先添加多个文件 之后一起</p>
-        
-    
-    <time datetime="2015-07-10T09:42:04.000Z" itemprop="datePublished">2015-07-10</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2015/06/10/python-spider-subdomain-ip/" title="Python 爬虫获取指定主机子域名及IP信息" itemprop="url">
-  
-    <h1 itemprop="name">Python 爬虫获取指定主机子域名及IP信息</h1>
-    
-     
-           <p itemprop="description" >0x 00 前言前天自己在玩的时候，自己通过百度搜索主机的二级域名感觉好麻烦，自已要一页页的去翻
-而且人工识别是否是重复的二级域名也够蛋疼的，正好最近在学正则表达式，权当练手了
-2016年更新：发现了一些不错的扫子域名的网站，如下
-http://subdomain.chaxun.</p>
-        
-    
-    <time datetime="2015-06-10T09:09:11.000Z" itemprop="datePublished">2015-06-10</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2015/01/02/fake-wifi-ap/" title="搭建假冒 WIFI 热点等小(mei)白(zhi)兔(men)来蹭网啊 - -。" itemprop="url">
-  
-    <h1 itemprop="name">搭建假冒 WIFI 热点等小(mei)白(zhi)兔(men)来蹭网啊 - -。</h1>
-    
-     
-           <p itemprop="description" >0x 00 ╮(╯▽╰)╭　　　　请喊我万恶的标题党  哈哈哈哈哈
-0x 01 这里正题　　　　虚拟机（Kali）不支持内置网卡，还好我有神器，插上我的RT8187L，开始搞起
-　　　　参考资料：zone.wooyun.org/content/2562
-　　　　下面看攻击测试吧
-</p>
-        
-    
-    <time datetime="2015-01-02T08:58:22.000Z" itemprop="datePublished">2015-01-02</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2015/01/02/arpspoof/" title="内网 ARP 欺骗劫持 Cookie 登入百度" itemprop="url">
-  
-    <h1 itemprop="name">内网 ARP 欺骗劫持 Cookie 登入百度</h1>
-    
-     
-           <p itemprop="description" >0x 00 ARP欺骗说明欺骗原理相关内容就不多叙述了，Google一大堆
-实施ARP欺骗在 Windows 下， Linux 下都相关工具
-由于在 Linux 下可以开启 ip_forward 功能，个人认为 Linux 下的工具作用效果比较好，本次测试是在Kali（Linux</p>
-        
-    
-    <time datetime="2015-01-02T08:42:41.000Z" itemprop="datePublished">2015-01-02</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2014/11/26/sqlmap/" title="SQL注入利用神器 SQLMap 的介绍与 Demo" itemprop="url">
-  
-    <h1 itemprop="name">SQL注入利用神器 SQLMap 的介绍与 Demo</h1>
-    
-     
-           <p itemprop="description" >0x 00　前言正是SQLMAP这种神器的存在，SQL注入简直Easy到根本停不下来….
-PS：国内类似软件也有阿D，明小子，挖掘机，当你用过他们之后你才会发现SQLMap才是绝对的注入神器
-0x 01 注入原理存在注入的原因是因为后台在编写程序时，没有对用户输入的数据做过滤导致</p>
-        
-    
-    <time datetime="2014-11-26T08:05:01.000Z" itemprop="datePublished">2014-11-26</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2014/11/26/nessus/" title="Nessus 多功能扫描器" itemprop="url">
-  
-    <h1 itemprop="name">Nessus 多功能扫描器</h1>
-    
-     
-           <p itemprop="description" >0x 00 前言　　写这篇博客，证明我还活着……
-0x 01 安装Nessus　　直接官网  www.tenable.com/products/nessus/select-your-operating-system
-　　选择Nessus Home版下载，下载之后点击安装我这里是N</p>
-        
-    
-    <time datetime="2014-11-26T07:53:11.000Z" itemprop="datePublished">2014-11-26</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2014/10/25/pojie-windows-login/" title="破解 Windows 7/8 登录密码" itemprop="url">
-  
-    <h1 itemprop="name">破解 Windows 7/8 登录密码</h1>
-    
-     
-           <p itemprop="description" >// 文末有惊喜：）
-
-0x 00 破解思路用户的明文密码经过单向Hash加密生成Hash散列，Hash散列又被加密存放在系统盘\Windiws\System32\config文件下
-要获得明文就要先得到SAM文件，从中提取出hash散列，然后网上查询或者暴力破解获得明文密码
-　</p>
-        
-    
-    <time datetime="2014-10-25T07:27:16.000Z" itemprop="datePublished">2014-10-25</time>
-  </a>
-</section>
-
-
-
-
-
-
-
-  <nav id="page-nav" class="clearfix unexpand">
-    <a class="extend prev" rel="prev" href="/page/4/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">Next<span></span></a>
-  </nav>
-
-</div>
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
-<aside class="clearfix">
-
-  
-
-  
-<div class="tagslist">
-	<p class="asidetitle">Tags</p>
-		<ul class="clearfix">
-		
-			
-				<li><a href="/tags/安全工具/" title="安全工具">安全工具<sup>5</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Ubuntu/" title="Ubuntu">Ubuntu<sup>4</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Python/" title="Python">Python<sup>4</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/漏洞分析/" title="漏洞分析">漏洞分析<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/多线程/" title="多线程">多线程<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/内网渗透/" title="内网渗透">内网渗透<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/信息收集/" title="信息收集">信息收集<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Flask/" title="Flask">Flask<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/代码审计/" title="代码审计">代码审计<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/kali/" title="kali">kali<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/端口扫描/" title="端口扫描">端口扫描<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Docker/" title="Docker">Docker<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/SQL注入/" title="SQL注入">SQL注入<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/WIFI热点伪造/" title="WIFI热点伪造">WIFI热点伪造<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Celery/" title="Celery">Celery<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/任意文件上传/" title="任意文件上传">任意文件上传<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/分布式/" title="分布式">分布式<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/sudo/" title="sudo">sudo<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/想法/" title="想法">想法<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/社工工程学/" title="社工工程学">社工工程学<sup>1</sup></a></li>
-			
-		
-		</ul>
-</div>
-
-
-  <div class="linkslist">
-  <p class="asidetitle">Links</p>
-    <ul>
-        
-          <li>
-            
-            	<a href="http://navisec.it" target="_blank" title="信息安全从业简明导航">Navisec.it</a>
-            
-          </li>
-        
-          <li>
-            
-            	<a href="http://sec-wiki.com" target="_blank" title="安全维基">Sec-Wiki</a>
-            
-          </li>
-        
-    </ul>
-</div>
-
-  <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
-</div>
-
-</aside>
-</div>
+        <a href="/2016/03/09/python-multithread-ports-scanner/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
     </div>
-    <footer><div id="footer" >
-	
-	<div class="line">
-		<span></span>
-		<div class="author"></div>
-	</div>
-	
-	
-	<section class="info">
-		<p> Hello ,I&#39;m Anka9080 Page in ZorelWorld. <br/>
-			This is my blog,believe it or not.</p>
-	</section>
-	 
-	<div class="social-font" class="clearfix">
-		
-		<a href="http://weibo.com/5800672330" target="_blank" class="icon-weibo" title="微博"></a>
-		
-		
-		<a href="https://github.com/Evi1CLAY" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	</div>
-			
-		
-
-		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
-		
-		<a href="/about" target="_blank" title="Anka9080">Anka9080</a>
-		
-		</p>
-</div>
-</footer>
-    <script src="/js/jquery-2.0.3.min.js"></script>
-<script src="/js/jquery.imagesloaded.min.js"></script>
-<script src="/js/gallery.js"></script>
-<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
-
-
-<script src="/js/instantclick.js" data-no-instant></script>
-<script data-no-instant>InstantClick.init();</script>
-
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-  
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else{
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
+    
+    <div class="post-footer">
         
-    }
-  });
-});
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/端口扫描/">端口扫描</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-printer-hack"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2016-03-02 17:46:18" datetime="2016-03-02T09:46:18.000Z"  itemprop="datePublished">2016-03-02</time>
+
+        
+
+
+        
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2016/03/02/printer-hack/">HP 打印机 PCL 漏洞分析与利用</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        0x01 漏洞概要PCL代表打印机控制语言（Printer Control Language），由惠普公司开发，并被广泛使用的一种打印机协议。关于另一种页面描述语言，应该提一提由Adobe设计的PostScript（PS），它可以将更为复杂的事情交由绘图仪/打印机处理。PJL (Printer Job Language，打印机作业语言)作为PCL的扩展，用于指导打印机行为，比如更改设备设置、...
+    
+
+        <a href="/2016/03/02/printer-hack/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/打印机漏洞/">打印机漏洞</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/漏洞分析/">漏洞分析</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-github-cmd"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2015-07-10 17:42:04" datetime="2015-07-10T09:42:04.000Z"  itemprop="datePublished">2015-07-10</time>
+
+        
+
+
+        
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2015/07/10/github-cmd/">GitHub 常用命令备忘录</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        git init 把当前目录变成Git可以管理的仓库随后出现.git目录，这个目录是Git来跟踪管理版本库的git commit -m “change message” 提交代码到Gitgit add file1.txtgit add file2.txt 先添加多个文件 之后一起提交
+git status 命令可以让我们时刻掌握仓库当前的状态比如：文件是否被修改，修改后是否提交git dif...
+    
+
+        <a href="/2015/07/10/github-cmd/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GitHub/">GitHub</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-python-spider-subdomain-ip"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2015-06-10 17:09:11" datetime="2015-06-10T09:09:11.000Z"  itemprop="datePublished">2015-06-10</time>
+
+        
+
+
+        
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2015/06/10/python-spider-subdomain-ip/">Python 爬虫获取指定主机子域名及IP信息</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+                
+                    
+                    
+                
+                
+            
+0x 00 前言前天自己在玩的时候，自己通过百度搜索主机的二级域名感觉好麻烦，自已要一页页的去翻
+而且人工识别是否是重复的二级域名也够蛋疼的，正好最近在学正则表达式，权当练手了
+2...
+    
+
+        <a href="/2015/06/10/python-spider-subdomain-ip/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python脚本/">Python脚本</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/信息收集/">信息收集</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-fake-wifi-ap"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2015-01-02 16:58:22" datetime="2015-01-02T08:58:22.000Z"  itemprop="datePublished">2015-01-02</time>
+
+        
+
+
+        
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2015/01/02/fake-wifi-ap/">搭建假冒 WIFI 热点等小(mei)白(zhi)兔(men)来蹭网啊 - -。</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+                
+                    
+                    
+                
+                
+            
+0x 00 ╮(╯▽╰)╭　　　　请喊我万恶的标题党  哈哈哈哈哈
+0x 01 这里正题　　　　虚拟机（Kali）不支持内置网卡，还好我有神器，插上我的RT8187L，开始搞起
+　...
+    
+
+        <a href="/2015/01/02/fake-wifi-ap/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WIFI热点伪造/">WIFI热点伪造</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kali/">kali</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-arpspoof"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2015-01-02 16:42:41" datetime="2015-01-02T08:42:41.000Z"  itemprop="datePublished">2015-01-02</time>
+
+        
+
+
+        
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2015/01/02/arpspoof/">内网 ARP 欺骗劫持 Cookie 登入百度</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        0x 00 ARP欺骗说明欺骗原理相关内容就不多叙述了，Google一大堆
+实施ARP欺骗在 Windows 下， Linux 下都相关工具
+由于在 Linux 下可以开启 ip_forward 功能，个人认为 Linux 下的工具作用效果比较好，本次测试是在Kali（Linux）中进行
+0x 01 攻击测试1、 攻击拓扑
+　　　　攻击机：Kali Linux    IP：192.168.1...
+    
+
+        <a href="/2015/01/02/arpspoof/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cookie劫持/">Cookie劫持</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kali/">Kali</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内网渗透/">内网渗透</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-sqlmap"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2014-11-26 16:05:01" datetime="2014-11-26T08:05:01.000Z"  itemprop="datePublished">2014-11-26</time>
+
+        
+
+
+        
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2014/11/26/sqlmap/">SQL注入利用神器 SQLMap 的介绍与 Demo</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+                
+                    
+                    
+                
+                
+            
+0x 00　前言正是SQLMAP这种神器的存在，SQL注入简直Easy到根本停不下来….
+PS：国内类似软件也有阿D，明小子，挖掘机，当你用过他们之后你才会发现SQLMap才是绝对...
+    
+
+        <a href="/2014/11/26/sqlmap/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQLMap/">SQLMap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL注入/">SQL注入</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全工具/">安全工具</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-nessus"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2014-11-26 15:53:11" datetime="2014-11-26T07:53:11.000Z"  itemprop="datePublished">2014-11-26</time>
+
+        
+
+
+        
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2014/11/26/nessus/">Nessus 多功能扫描器</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        0x 00 前言　　写这篇博客，证明我还活着……
+0x 01 安装Nessus　　直接官网  www.tenable.com/products/nessus/select-your-operating-system
+　　选择Nessus Home版下载，下载之后点击安装我这里是Nessus-6.1.0-x64版（附件处有百度网盘链接）
+　　安装开始设置一个用户名和密码（记住，使用Nessus...
+    
+
+        <a href="/2014/11/26/nessus/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nessus/">Nessus</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全工具/">安全工具</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-pojie-windows-login"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2014-10-25 15:27:16" datetime="2014-10-25T07:27:16.000Z"  itemprop="datePublished">2014-10-25</time>
+
+        
+
+
+        
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2014/10/25/pojie-windows-login/">破解 Windows 7/8 登录密码</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+                
+                    
+                    
+                
+                
+            
+
+// 文末有惊喜：）
+
+0x 00 破解思路用户的明文密码经过单向Hash加密生成Hash散列，Hash散列又被加密存放在系统盘\Windiws\System32\config文...
+    
+
+        <a href="/2014/10/25/pojie-windows-login/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kali/">kali</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/密码破解/">密码破解</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+    </ul>
+
+    
+<nav id="page-nav">
+    <div class="inner">
+    <a class="extend prev" rel="prev" href="/page/4/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">下一页</a>
+    </div>
+</nav>
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>Anka9080 &copy; 2015 - 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.evilclay.com/page/5/&title=Anka9080's Notes&pic=http://www.evilclay.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.evilclay.com/page/5/&title=Anka9080's Notes&source=Python,渗透测试,安全研发" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.evilclay.com/page/5/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=Anka9080's Notes&url=http://www.evilclay.com/page/5/&via=http://www.evilclay.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.evilclay.com/page/5/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABzElEQVR42u3awa6CMBAFUP7/p3lbEl/xTsdWTE5XRFBOXUzaOz2OeJyXcf3k9e718+Q3jxUDFxe3zT1vR/JMdSQTHk4eFxd3I/e+0PSvX98yev6NDRcX95HcahGsLphwcXF/kZtvchI0Li7uk7nVjUo12vjCXg0XF7fBrYabK66X5Lu4uLhT3E7QOReDduJXXFzcPdy8oNwvOPJItLp8wcXF/RY3eWW/ZXI/mfuVzFH9h3BxcRvcucKU360uj948g4uL+xjuXOOkE38MSycuLu52bv8oVVKeqo2TYSHDxcVdxu0fjOjHJXNvx8XF3cPNi1Qha2lP/k1giouLu4BbXV7MXXfat/9sfnBxcRdz821P3gLpbJaiuouLi7uFm0elK7Y61b8AFxd3DzePL6uTvJ9qMrFh3cXFxd3CrcYfOSWZRr7pwsXF3c/Ny0r10NXcMY4P7L1wcXGL3LM4qjFKtcC1VlK4uLgf4uYjb6vMxSXVqAUXF3c1t1q88mMZCTdv8eLi4u7n5geq8sI011aJWim4uLgP4861Uqrh6fB3cHFxH8nNA5ROCRt+FxcXdyN3rk3yqU1Ofo2Li7uHO7cJyaOTTmrbyndxcXFnuH9rRnGwAQOWtgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
 </script>
 
 
 
-
-
-
-
-
-
-
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.article-content').each(function(i){
-    $(this).find('img').each(function(){
-      if ($(this).parent().hasClass('fancybox')) return;
-      var alt = this.alt;
-      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
-      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
-    });
-    $(this).find('.fancybox').each(function(){
-      $(this).attr('rel', 'article' + i);
-    });
-  });
-  if($.fancybox){
-    $('.fancybox').fancybox();
-  }
-}); 
-</script>
-
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-<!-- Tiny_search Begin -->
-
-<!-- Tiny_search End -->
-
-  </body>
- </html>
+</body>
+</html>

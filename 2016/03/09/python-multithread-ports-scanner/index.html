@@ -1,32 +1,32 @@
-
- <!DOCTYPE HTML>
-<html lang="zh-Hans">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8">
-  
-    <title>多线程端口扫描器的 Python 脚本 | Anka9080&#39;s Notes</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Anka9080">
     
 
     
-    <meta name="description" content="0x 00 Before Coding当端口打开时，向端口发送 TCP SYN 请求，会返回一个 ACK 响应:
 
-当端口关闭，返回的是 RST 响应：
+    
 
-Coding可以用 socket 编写一个小脚本来测试主机端口的开启情况，基本代码如下：
-12345678910111213141516171819202122232425262728293031323334353637383940414243">
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>多线程端口扫描器的 Python 脚本 | Anka9080&#39;s Notes | 勿忘初心。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="端口扫描,Python,多线程">
+    <meta name="description" content="0x 00 Before Coding当端口打开时，向端口发送 TCP SYN 请求，会返回一个 ACK 响应:                                                                                                            当端口关闭，返回的是 RST 响应：">
+<meta name="keywords" content="端口扫描,Python,多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="多线程端口扫描器的 Python 脚本">
 <meta property="og:url" content="http://www.evilclay.com/2016/03/09/python-multithread-ports-scanner/index.html">
-<meta property="og:site_name" content="Anka9080's Notes">
-<meta property="og:description" content="0x 00 Before Coding当端口打开时，向端口发送 TCP SYN 请求，会返回一个 ACK 响应:
-
-当端口关闭，返回的是 RST 响应：
-
-Coding可以用 socket 编写一个小脚本来测试主机端口的开启情况，基本代码如下：
-12345678910111213141516171819202122232425262728293031323334353637383940414243">
+<meta property="og:site_name" content="Anka9080&#39;s Notes">
+<meta property="og:description" content="0x 00 Before Coding当端口打开时，向端口发送 TCP SYN 请求，会返回一个 ACK 响应:                                                                                                            当端口关闭，返回的是 RST 响应：">
 <meta property="og:image" content="http://images2015.cnblogs.com/blog/671902/201603/671902-20160309164525663-1708465423.png">
 <meta property="og:image" content="http://images2015.cnblogs.com/blog/671902/201603/671902-20160309164613975-859417226.png">
 <meta property="og:image" content="http://images2015.cnblogs.com/blog/671902/201603/671902-20160309165331772-1919340199.png">
@@ -35,96 +35,194 @@ Coding可以用 socket 编写一个小脚本来测试主机端口的开启情况
 <meta property="og:updated_time" content="2016-05-29T03:32:18.538Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="多线程端口扫描器的 Python 脚本">
-<meta name="twitter:description" content="0x 00 Before Coding当端口打开时，向端口发送 TCP SYN 请求，会返回一个 ACK 响应:
-
-当端口关闭，返回的是 RST 响应：
-
-Coding可以用 socket 编写一个小脚本来测试主机端口的开启情况，基本代码如下：
-12345678910111213141516171819202122232425262728293031323334353637383940414243">
+<meta name="twitter:description" content="0x 00 Before Coding当端口打开时，向端口发送 TCP SYN 请求，会返回一个 ACK 响应:                                                                                                            当端口关闭，返回的是 RST 响应：">
 <meta name="twitter:image" content="http://images2015.cnblogs.com/blog/671902/201603/671902-20160309164525663-1708465423.png">
-
     
-    <link rel="alternative" href="/atom.xml" title="Anka9080&#39;s Notes" type="application/atom+xml">
+        <link rel="alternate" type="application/atom+xml" title="Anka9080&#39;s Notes" href="/atom.xml">
     
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
 </head>
 
-  <body>
-    <header>
-      
-<div>
-		
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="Anka9080&#39;s Notes">Anka9080&#39;s Notes</a></h1>
-				<h2 class="blog-motto">勿忘初心。</h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/2048/">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:www.evilclay.com">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
-</div>
-    </header>
-    <div id="container">
-      <div id="main" class="post" itemscope itemprop="blogPost">
-  
-	<article itemprop="articleBody"> 
-		<header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/03/09/python-multithread-ports-scanner/" title="多线程端口扫描器的 Python 脚本" itemprop="url">多线程端口扫描器的 Python 脚本</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2016-03-09T09:26:32.000Z" itemprop="datePublished"> Published 2016-03-09</time>
-    
-  </p>
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Anka9080</h5>
+          <a href="mailto:634206017@qq.com" title="634206017@qq.com" class="mail">634206017@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/yscoder" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/ysweb" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">多线程端口扫描器的 Python 脚本</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
 </header>
-	<div class="article-content">
-		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
-		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x-00-Before-Coding"><span class="toc-number">1.</span> <span class="toc-text">0x 00 Before Coding</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Coding"><span class="toc-number">2.</span> <span class="toc-text">Coding</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x-02-Better-Coding"><span class="toc-number">3.</span> <span class="toc-text">0x 02 Better Coding</span></a></li></ol>
-		
-		</div>
-		
-		<h2 id="0x-00-Before-Coding"><a href="#0x-00-Before-Coding" class="headerlink" title="0x 00 Before Coding"></a>0x 00 Before Coding</h2><p>当端口打开时，向端口发送 TCP SYN 请求，会返回一个 ACK 响应:</p>
-<p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160309164525663-1708465423.png" alt=""></p>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">多线程端口扫描器的 Python 脚本</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2016-03-09T09:26:32.000Z" itemprop="datePublished" class="page-time">
+  2016-03-09
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#0x-00-Before-Coding"><span class="post-toc-number">1.</span> <span class="post-toc-text">0x 00 Before Coding</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Coding"><span class="post-toc-number">2.</span> <span class="post-toc-text">Coding</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#0x-02-Better-Coding"><span class="post-toc-number">3.</span> <span class="post-toc-text">0x 02 Better Coding</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-python-multithread-ports-scanner"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">多线程端口扫描器的 Python 脚本</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2016-03-09 17:26:32" datetime="2016-03-09T09:26:32.000Z"  itemprop="datePublished">2016-03-09</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="0x-00-Before-Coding"><a href="#0x-00-Before-Coding" class="headerlink" title="0x 00 Before Coding"></a>0x 00 Before Coding</h2><p>当端口打开时，向端口发送 TCP SYN 请求，会返回一个 ACK 响应:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160309164525663-1708465423.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>当端口关闭，返回的是 RST 响应：</p>
-<p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160309164613975-859417226.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160309164613975-859417226.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <h2 id="Coding"><a href="#Coding" class="headerlink" title="Coding"></a>Coding</h2><p>可以用 socket 编写一个小脚本来测试主机端口的开启情况，基本代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"><span class="comment">#author: anka9080</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line"><span class="comment"># Set time-out to get the scanning fast</span></span><br><span class="line">socket.setdefaulttimeout(<span class="number">0.5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ask for input</span></span><br><span class="line">remote_server = raw_input(<span class="string">"Enter a remote host to scan:"</span>)</span><br><span class="line">remote_server_ip = socket.gethostbyname(remote_server)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Print a nice banner with info on which host we are about to scan</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'-'</span> * <span class="number">60</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'Please wait, scanning remote host '</span>, remote_server_ip</span><br><span class="line"><span class="keyword">print</span> <span class="string">'-'</span> * <span class="number">60</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Check what time the scan started</span></span><br><span class="line">t1 = datetime.now()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Using the range function to specify ports(1 - 1024)</span></span><br><span class="line"><span class="comment"># We also put in some error handling for catching errors</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">for</span> port <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">1025</span>):</span><br><span class="line">        sock = socket.socket(<span class="number">2</span>,<span class="number">1</span>) <span class="comment"># 2:socket.AF_INET 1:socket.SOCK_STREAM</span></span><br><span class="line">        res = sock.connect_ex((remote_server_ip,port))</span><br><span class="line">        <span class="keyword">if</span> res == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">print</span> <span class="string">'Port &#123;&#125;: OPEN'</span>.format(port)</span><br><span class="line">        sock.close()</span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> socket.gaierror:</span><br><span class="line">    <span class="keyword">print</span> <span class="string">'Hostname could not be resolved.Exiting'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> socket.error:</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"Could't connect to the server"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Check the time now</span></span><br><span class="line">t2 = datetime.now()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Calculates the difference of time</span></span><br><span class="line">total = t2 - t1</span><br><span class="line"></span><br><span class="line"><span class="comment"># Print the info to screen</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'Scanning Completed in: '</span>, total</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># coding: utf-8</span></div><div class="line"><span class="comment">#author: anka9080</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> socket</div><div class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</div><div class="line"></div><div class="line"><span class="comment"># Set time-out to get the scanning fast</span></div><div class="line">socket.setdefaulttimeout(<span class="number">0.5</span>)</div><div class="line"></div><div class="line"><span class="comment"># Ask for input</span></div><div class="line">remote_server = raw_input(<span class="string">"Enter a remote host to scan:"</span>)</div><div class="line">remote_server_ip = socket.gethostbyname(remote_server)</div><div class="line"></div><div class="line"><span class="comment"># Print a nice banner with info on which host we are about to scan</span></div><div class="line"><span class="keyword">print</span> <span class="string">'-'</span> * <span class="number">60</span></div><div class="line"><span class="keyword">print</span> <span class="string">'Please wait, scanning remote host '</span>, remote_server_ip</div><div class="line"><span class="keyword">print</span> <span class="string">'-'</span> * <span class="number">60</span></div><div class="line"></div><div class="line"><span class="comment"># Check what time the scan started</span></div><div class="line">t1 = datetime.now()</div><div class="line"></div><div class="line"><span class="comment"># Using the range function to specify ports(1 - 1024)</span></div><div class="line"><span class="comment"># We also put in some error handling for catching errors</span></div><div class="line"><span class="keyword">try</span>:</div><div class="line">    <span class="keyword">for</span> port <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">1025</span>):</div><div class="line">        sock = socket.socket(<span class="number">2</span>,<span class="number">1</span>) <span class="comment"># 2:socket.AF_INET 1:socket.SOCK_STREAM</span></div><div class="line">        res = sock.connect_ex((remote_server_ip,port))</div><div class="line">        <span class="keyword">if</span> res == <span class="number">0</span>:</div><div class="line">            <span class="keyword">print</span> <span class="string">'Port &#123;&#125;: OPEN'</span>.format(port)</div><div class="line">        sock.close()</div><div class="line"></div><div class="line"><span class="keyword">except</span> socket.gaierror:</div><div class="line">    <span class="keyword">print</span> <span class="string">'Hostname could not be resolved.Exiting'</span></div><div class="line"></div><div class="line"><span class="keyword">except</span> socket.error:</div><div class="line">    <span class="keyword">print</span> <span class="string">"Could't connect to the server"</span></div><div class="line"></div><div class="line"><span class="comment"># Check the time now</span></div><div class="line">t2 = datetime.now()</div><div class="line"></div><div class="line"><span class="comment"># Calculates the difference of time</span></div><div class="line">total = t2 - t1</div><div class="line"></div><div class="line"><span class="comment"># Print the info to screen</span></div><div class="line"><span class="keyword">print</span> <span class="string">'Scanning Completed in: '</span>, total</div></pre></td></tr></table></figure>
 <p>程序测试结果如下：</p>
-<p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160309165331772-1919340199.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160309165331772-1919340199.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>看出来 在 socket 的超时时间设置为0.5的前提下 依然需要花费 8分27秒才能够把周知端口号扫完，有没有其他方式加快扫描速度？答案是有的。</p>
 <blockquote>
 <p>// <strong><strong><strong><strong><em>**</em></strong></strong></strong></strong> 该部分可以略过，本人踩到的一个小坑 </p>
@@ -133,7 +231,13 @@ Coding可以用 socket 编写一个小脚本来测试主机端口的开启情况
 <p>　　所以在想能不能不让程序发这两个包来提高效率？？</p>
 <p>　　自己分析连续两个端口的时间间隔就会发现：间隔是0.5s（由 39号、46号、53号数据包分析得出），这恰好是在程序中设置的超时时间，</p>
 <p>　　也就是说超时重传的包并不会占用专门的时间，所以这种想法就被干掉了。</p>
-<p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160309171312835-1560836350.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160309171312835-1560836350.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>　　这样的话，1个端口0.5的超时等待，扫描一个主机的 1- 1024 号端口所用时间是可以大致估算下的：</p>
 <p>　　1024 * 0.5 / 60 = 8.53 分钟左右。和上面程序实际扫描的时间（8分27秒）相符合。</p>
 <blockquote>
@@ -141,9 +245,15 @@ Coding可以用 socket 编写一个小脚本来测试主机端口的开启情况
 </blockquote>
 <h2 id="0x-02-Better-Coding"><a href="#0x-02-Better-Coding" class="headerlink" title="0x 02 Better Coding"></a>0x 02 Better Coding</h2><p>所以对于这种时间主要花费在 socket 连接( 非 CPU 计算密集型 )的程序 可以使用 多线程来提升效率，</p>
 <p>这里选择使用内建的库 multiprocessing.dummy 来实现多线程扫描：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"><span class="comment"># proj: 多线程 Socket TCP 端口扫描器</span></span><br><span class="line"><span class="comment"># author: anka9080</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">from</span> multiprocessing.dummy <span class="keyword">import</span> Pool <span class="keyword">as</span> ThreadPool</span><br><span class="line"> </span><br><span class="line">remote_server = raw_input(<span class="string">"Enter a remote host to scan:"</span>)</span><br><span class="line">remote_server_ip = socket.gethostbyname(remote_server)</span><br><span class="line">ports = []</span><br><span class="line"> </span><br><span class="line"><span class="keyword">print</span> <span class="string">'-'</span> * <span class="number">60</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'Please wait, scanning remote host '</span>, remote_server_ip</span><br><span class="line"><span class="keyword">print</span> <span class="string">'-'</span> * <span class="number">60</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">socket.setdefaulttimeout(<span class="number">0.5</span>)</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">scan_port</span><span class="params">(port)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        s = socket.socket(<span class="number">2</span>,<span class="number">1</span>)</span><br><span class="line">        res = s.connect_ex((remote_server_ip,port))</span><br><span class="line">        <span class="keyword">if</span> res == <span class="number">0</span>: <span class="comment"># 如果端口开启 发送 hello 获取banner</span></span><br><span class="line">            <span class="keyword">print</span> <span class="string">'Port &#123;&#125;: OPEN'</span>.format(port)</span><br><span class="line">        s.close()</span><br><span class="line">    <span class="keyword">except</span> Exception,e:</span><br><span class="line">        <span class="keyword">print</span> str(e.message)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">1025</span>):</span><br><span class="line">    ports.append(i)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Check what time the scan started</span></span><br><span class="line">t1 = datetime.now()</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">pool = ThreadPool(processes = <span class="number">8</span>)</span><br><span class="line">results = pool.map(scan_port,ports)</span><br><span class="line">pool.close()</span><br><span class="line">pool.join()</span><br><span class="line"> </span><br><span class="line"><span class="keyword">print</span> <span class="string">'Multiprocess Scanning Completed in  '</span>, datetime.now() - t1</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># coding: utf-8</span></div><div class="line"><span class="comment"># proj: 多线程 Socket TCP 端口扫描器</span></div><div class="line"><span class="comment"># author: anka9080</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> socket</div><div class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</div><div class="line"><span class="keyword">from</span> multiprocessing.dummy <span class="keyword">import</span> Pool <span class="keyword">as</span> ThreadPool</div><div class="line"> </div><div class="line">remote_server = raw_input(<span class="string">"Enter a remote host to scan:"</span>)</div><div class="line">remote_server_ip = socket.gethostbyname(remote_server)</div><div class="line">ports = []</div><div class="line"> </div><div class="line"><span class="keyword">print</span> <span class="string">'-'</span> * <span class="number">60</span></div><div class="line"><span class="keyword">print</span> <span class="string">'Please wait, scanning remote host '</span>, remote_server_ip</div><div class="line"><span class="keyword">print</span> <span class="string">'-'</span> * <span class="number">60</span></div><div class="line"> </div><div class="line"> </div><div class="line">socket.setdefaulttimeout(<span class="number">0.5</span>)</div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">scan_port</span><span class="params">(port)</span>:</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        s = socket.socket(<span class="number">2</span>,<span class="number">1</span>)</div><div class="line">        res = s.connect_ex((remote_server_ip,port))</div><div class="line">        <span class="keyword">if</span> res == <span class="number">0</span>: <span class="comment"># 如果端口开启 发送 hello 获取banner</span></div><div class="line">            <span class="keyword">print</span> <span class="string">'Port &#123;&#125;: OPEN'</span>.format(port)</div><div class="line">        s.close()</div><div class="line">    <span class="keyword">except</span> Exception,e:</div><div class="line">        <span class="keyword">print</span> str(e.message)</div><div class="line"> </div><div class="line"> </div><div class="line"> </div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">1025</span>):</div><div class="line">    ports.append(i)</div><div class="line"> </div><div class="line"><span class="comment"># Check what time the scan started</span></div><div class="line">t1 = datetime.now()</div><div class="line"> </div><div class="line"> </div><div class="line">pool = ThreadPool(processes = <span class="number">8</span>)</div><div class="line">results = pool.map(scan_port,ports)</div><div class="line">pool.close()</div><div class="line">pool.join()</div><div class="line"> </div><div class="line"><span class="keyword">print</span> <span class="string">'Multiprocess Scanning Completed in  '</span>, datetime.now() - t1</div></pre></td></tr></table></figure>
 <p>　扫描的结果如下：</p>
-<p><img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160309175531991-613764362.png" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://images2015.cnblogs.com/blog/671902/201603/671902-20160309175531991-613764362.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
 <p>　　可以发现 8 个线程并行发起请求，效率有很大的提升。</p>
 <p>　　在被扫描主机未安装连接限制软件的前提下，测试了开启不同线程扫描所花费的时间 ：</p>
 <ul>
@@ -157,434 +267,299 @@ Coding可以用 socket 编写一个小脚本来测试主机端口的开启情况
 </ul>
 <p><strong>至于开多少线程合适要自己来 fuzzing ， 不要以为开的线程越多越好，因为线程的创建，线程之间的切换也是要消耗资源的。</strong></p>
 <p>要获取 Banner 的话，把核心函数修改成如下即可：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">scan_port</span><span class="params">(port)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        s = socket.socket(<span class="number">2</span>,<span class="number">1</span>)</span><br><span class="line">        res = s.connect_ex((remote_server_ip,port))</span><br><span class="line">        <span class="keyword">if</span> res == <span class="number">0</span>: <span class="comment"># 如果端口开启 发送 hello 获取banner</span></span><br><span class="line"> </span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                s.send(<span class="string">'hello'</span>)</span><br><span class="line">                banner = s.recv(<span class="number">1024</span>)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">            <span class="keyword">except</span> Exception,e:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'Port &#123;&#125;: OPEN'</span>.format(port)</span><br><span class="line">                <span class="keyword">print</span> str(e.message)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'Port &#123;&#125;: OPEN'</span>.format(port)</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'Banner &#123;&#125;'</span>.format(banner)</span><br><span class="line"> </span><br><span class="line">        s.close()</span><br><span class="line">    <span class="keyword">except</span> Exception,e:</span><br><span class="line">        <span class="keyword">print</span> str(e.message)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">scan_port</span><span class="params">(port)</span>:</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        s = socket.socket(<span class="number">2</span>,<span class="number">1</span>)</div><div class="line">        res = s.connect_ex((remote_server_ip,port))</div><div class="line">        <span class="keyword">if</span> res == <span class="number">0</span>: <span class="comment"># 如果端口开启 发送 hello 获取banner</span></div><div class="line"> </div><div class="line">            <span class="keyword">try</span>:</div><div class="line">                s.send(<span class="string">'hello'</span>)</div><div class="line">                banner = s.recv(<span class="number">1024</span>)</div><div class="line"> </div><div class="line"> </div><div class="line">            <span class="keyword">except</span> Exception,e:</div><div class="line">                <span class="keyword">print</span> <span class="string">'Port &#123;&#125;: OPEN'</span>.format(port)</div><div class="line">                <span class="keyword">print</span> str(e.message)</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                <span class="keyword">print</span> <span class="string">'Port &#123;&#125;: OPEN'</span>.format(port)</div><div class="line">                <span class="keyword">print</span> <span class="string">'Banner &#123;&#125;'</span>.format(banner)</div><div class="line"> </div><div class="line">        s.close()</div><div class="line">    <span class="keyword">except</span> Exception,e:</div><div class="line">        <span class="keyword">print</span> str(e.message)</div></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2016-05-29T03:32:18.538Z" itemprop="dateUpdated">2016-05-29 11:32:18</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2016/03/09/python-multithread-ports-scanner/" target="_blank" rel="external">http://www.evilclay.com/2016/03/09/python-multithread-ports-scanner/</a>
+        
+    </div>
+    <footer>
+        <a href="http://www.evilclay.com">
+            <img src="/img/avatar.jpg" alt="Anka9080">
+            Anka9080
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/端口扫描/">端口扫描</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.evilclay.com/2016/03/09/python-multithread-ports-scanner/&title=《多线程端口扫描器的 Python 脚本》 — Anka9080's Notes&pic=http://www.evilclay.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.evilclay.com/2016/03/09/python-multithread-ports-scanner/&title=《多线程端口扫描器的 Python 脚本》 — Anka9080's Notes&source=Python,渗透测试,安全研发" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.evilclay.com/2016/03/09/python-multithread-ports-scanner/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《多线程端口扫描器的 Python 脚本》 — Anka9080's Notes&url=http://www.evilclay.com/2016/03/09/python-multithread-ports-scanner/&via=http://www.evilclay.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.evilclay.com/2016/03/09/python-multithread-ports-scanner/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
   
-	</div>
-		<footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
+    <div class="waves-block waves-effect prev">
+      <a href="/2016/03/30/zoomeye-api/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Python 调用 ZoomEye API 批量获取目标网站IP</h4>
+      </a>
+    </div>
   
-  <span></span> <a href="/tags/端口扫描/">端口扫描</a><a href="/tags/Python/">Python</a><a href="/tags/多线程/">多线程</a>
-  </div>
 
-</div>
-
-
-
-	<div class="article-share" id="share">
-	
-	  <div data-url="http://www.evilclay.com/2016/03/09/python-multithread-ports-scanner/" data-title="多线程端口扫描器的 Python 脚本 | Anka9080&#39;s Notes" data-tsina="null" class="share clearfix">
-	  </div>
-	
-	</div>
-
-
-</footer>
-
-   	       
-	</article>
-	
-<nav class="article-nav clearfix">
- 
- <div class="prev" >
- <a href="/2016/03/30/zoomeye-api/" title="Python 调用 ZoomEye API 批量获取目标网站IP">
-  <strong>上一篇：</strong><br/>
-  <span>
-  Python 调用 ZoomEye API 批量获取目标网站IP</span>
-</a>
-</div>
-
-
-<div class="next">
-<a href="/2016/03/02/printer-hack/"  title="HP 打印机 PCL 漏洞分析与利用">
- <strong>下一篇：</strong><br/> 
- <span>HP 打印机 PCL 漏洞分析与利用
-</span>
-</a>
-</div>
-
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2016/03/02/printer-hack/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">HP 打印机 PCL 漏洞分析与利用</h4>
+      </a>
+    </div>
+  
 </nav>
 
-	
-<section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/03/09/python-multithread-ports-scanner/" data-title="多线程端口扫描器的 Python 脚本" data-url="http://www.evilclay.com/2016/03/09/python-multithread-ports-scanner/"></div>
-</section>
 
 
-</div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
-
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">Contents</strong>
- 
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x-00-Before-Coding"><span class="toc-number">1.</span> <span class="toc-text">0x 00 Before Coding</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Coding"><span class="toc-number">2.</span> <span class="toc-text">Coding</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x-02-Better-Coding"><span class="toc-number">3.</span> <span class="toc-text">0x 02 Better Coding</span></a></li></ol>
- 
-  </div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
-<aside class="clearfix">
-
-  
-
-  
-<div class="tagslist">
-	<p class="asidetitle">Tags</p>
-		<ul class="clearfix">
-		
-			
-				<li><a href="/tags/安全工具/" title="安全工具">安全工具<sup>5</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Ubuntu/" title="Ubuntu">Ubuntu<sup>4</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Python/" title="Python">Python<sup>4</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/漏洞分析/" title="漏洞分析">漏洞分析<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/多线程/" title="多线程">多线程<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/内网渗透/" title="内网渗透">内网渗透<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/信息收集/" title="信息收集">信息收集<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Flask/" title="Flask">Flask<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/代码审计/" title="代码审计">代码审计<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/kali/" title="kali">kali<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/端口扫描/" title="端口扫描">端口扫描<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Docker/" title="Docker">Docker<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/SQL注入/" title="SQL注入">SQL注入<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/WIFI热点伪造/" title="WIFI热点伪造">WIFI热点伪造<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Celery/" title="Celery">Celery<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/任意文件上传/" title="任意文件上传">任意文件上传<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/分布式/" title="分布式">分布式<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/sudo/" title="sudo">sudo<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/想法/" title="想法">想法<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/社工工程学/" title="社工工程学">社工工程学<sup>1</sup></a></li>
-			
-		
-		</ul>
-</div>
+    
 
 
-  <div class="linkslist">
-  <p class="asidetitle">Links</p>
-    <ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
         
-          <li>
-            
-            	<a href="http://navisec.it" target="_blank" title="信息安全从业简明导航">Navisec.it</a>
-            
-          </li>
+        <li>
+            <img src="/img/wechat.jpg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
         
-          <li>
-            
-            	<a href="http://sec-wiki.com" target="_blank" title="安全维基">Sec-Wiki</a>
-            
-          </li>
+
+        
+        <li>
+            <img src="/img/alipay.jpg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
         
     </ul>
 </div>
 
-  <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+
+
 </div>
 
-</aside>
-</div>
-    </div>
-    <footer><div id="footer" >
-	
-	<div class="line">
-		<span></span>
-		<div class="author"></div>
-	</div>
-	
-	
-	<section class="info">
-		<p> Hello ,I&#39;m Anka9080 Page in ZorelWorld. <br/>
-			This is my blog,believe it or not.</p>
-	</section>
-	 
-	<div class="social-font" class="clearfix">
-		
-		<a href="http://weibo.com/5800672330" target="_blank" class="icon-weibo" title="微博"></a>
-		
-		
-		<a href="https://github.com/Evi1CLAY" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	</div>
-			
-		
-
-		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
-		
-		<a href="/about" target="_blank" title="Anka9080">Anka9080</a>
-		
-		</p>
-</div>
-</footer>
-    <script src="/js/jquery-2.0.3.min.js"></script>
-<script src="/js/jquery.imagesloaded.min.js"></script>
-<script src="/js/gallery.js"></script>
-<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
-
-
-<script src="/js/instantclick.js" data-no-instant></script>
-<script data-no-instant>InstantClick.init();</script>
-
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-  
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else{
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
+        <footer class="footer">
+    <div class="top">
         
-    }
-  });
-});
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>Anka9080 &copy; 2015 - 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.evilclay.com/2016/03/09/python-multithread-ports-scanner/&title=《多线程端口扫描器的 Python 脚本》 — Anka9080's Notes&pic=http://www.evilclay.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.evilclay.com/2016/03/09/python-multithread-ports-scanner/&title=《多线程端口扫描器的 Python 脚本》 — Anka9080's Notes&source=Python,渗透测试,安全研发" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.evilclay.com/2016/03/09/python-multithread-ports-scanner/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《多线程端口扫描器的 Python 脚本》 — Anka9080's Notes&url=http://www.evilclay.com/2016/03/09/python-multithread-ports-scanner/&via=http://www.evilclay.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.evilclay.com/2016/03/09/python-multithread-ports-scanner/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsUlEQVR42u3aQXLbMBAEQP//0845pZCcwQIKD82TqkxR2zwA8Oz+/MTX78d1dc/n5/snXN2ZPHPbhYeHhzcu/aqI+1Lun3xVbvLk+3oeXj0eHh7eMV6+0OcLd/7iJvU8fBcPDw/vxbx8q7jHtxsMHh4e3vt5a//v35fbxhZ4eHh4b+CtHXzbcCEPO/5D1oKHh4fXrdVRF+k9n4/09/Dw8PDGXfVkEW9/fu9R+6FaPDw8vAO8tbLyZn9+mM6P0fXrw8PDw9vKywPctdN60h5bCyDua8PDw8P7Pq8dAlgbGljbcooWHR4eHt4BXtvQWiPtihjWXg0eHh7eCd7evlnevspb/pO/4uHh4Z3gTY6qu0as2icnmwoeHh7eOV6rzxfitXZXEj0Uf8XDw8M7xtvVgmrbVPMYN0pZ8PDw8I7x8sNrW/o82hi1vvDw8PA28ZLleFeJbUOr3aj+8S08PDy8Y7x52yl/Nfd3tiHvQ7V4eHh4x3hJkyl5dBvXtrFvEmFctr7w8PDwjvGKDKP8sbUphvZY/9edeHh4eAd4k2Z/HrPmL24eVRTBLh4eHt4Srx17yo/U+ZKdx7t1qwwPDw/vAC8fC8hjgklAPEHi4eHhfYe3NiTaxgHta2ojhsvK8fDw8A7w8oPyvA22No6QhxEPLwIPDw9vKy8fAE0C1l2jBvlvRU0vPDw8vGO8Sby71vhPRrLaoQQ8PDy8b/ImbbB2WqGNGOp8Gg8PD+8A77e81sYI8qV8tAF8/hYeHh7eAd7kcDyJMNo72zGC+sLDw8MreclmMDl2t1vOrrAYDw8P7zQvjxXaIpIFfe8+djk6gIeHh/cCXr7Q791+Rv09PDw8vK/z5ofp+dBAvuXg4eHhneO1QW1SUMtYCx2ijQEPDw9vK28y2HSiGbZhFAAPDw/vFO8PJuJek6ErokAAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
 </script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var ai = $('.article-content>iframe'),
-      ae = $('.article-content>embed'),
-      t  = $('#toc'),
-      ta = $('#toc.toc-aside'),
-      o  = $('.openaside'),
-      c  = $('.closeaside');
-  if(ai.length>0){
-    ai.wrap('<div class="video-container" />');
-  };
-  if(ae.length>0){
-   ae.wrap('<div class="video-container" />');
-  };
-  c.click(function(){
-    ta.css('display', 'block').addClass('fadeIn');
-  });
-  o.click(function(){
-    ta.css('display', 'none');
-  });
-  $(window).scroll(function(){
-    ta.css("top",Math.max(140,320-$(this).scrollTop()));
-  });
-});
-</script>
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
 
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var $this = $('.share'),
-      url = $this.attr('data-url'),
-      encodedUrl = encodeURIComponent(url),
-      title = $this.attr('data-title'),
-      tsina = $this.attr('data-tsina'),
-      description = $this.attr('description');
-  var html = [
-  '<div class="hoverqrcode clearfix"></div>',
-  '<a class="overlay" id="qrcode"></a>',
-  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
-  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
-  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
-  '<span title="Share to"></span>'
-  ].join('');
-  $this.append(html);
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
 
-  $('.hoverqrcode').hide();
-
-  var myWidth = 0;
-  function updatehoverqrcode(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-    var qrsize = myWidth > 1024 ? 200:100;
-    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
-    var p = $('.article-share-qrcode').position();
-    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
-                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
-                          .qrcode(options);
-  };
-  $(window).resize(function(){
-    $('.hoverqrcode').hide();
-  });
-  $('.article-share-qrcode').click(function(){
-    updatehoverqrcode();
-    $('.hoverqrcode').toggle();
-  });
-  $('.article-share-qrcode').hover(function(){}, function(){
-      $('.hoverqrcode').hide();
-  });
-});   
-</script>
-
-
-
-<script type="text/javascript">
-  var duoshuoQuery = {short_name:"evi1clay"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-    || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-</script> 
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
 
 
 
 
 
 
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.article-content').each(function(i){
-    $(this).find('img').each(function(){
-      if ($(this).parent().hasClass('fancybox')) return;
-      var alt = this.alt;
-      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
-      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
     });
-    $(this).find('.fancybox').each(function(){
-      $(this).attr('rel', 'article' + i);
-    });
-  });
-  if($.fancybox){
-    $('.fancybox').fancybox();
-  }
-}); 
+})();
 </script>
 
 
 
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-<!-- Tiny_search Begin -->
-
-<!-- Tiny_search End -->
-
-  </body>
+</body>
 </html>

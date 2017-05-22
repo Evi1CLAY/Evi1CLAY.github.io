@@ -1,105 +1,197 @@
-
- <!DOCTYPE HTML>
-<html lang="zh-Hans">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8">
-  
-    <title>CSP（内容安全策略）学习 | Anka9080&#39;s Notes</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Anka9080">
     
 
     
-    <meta name="description" content="今天在一段 PHP 验证码代码中包含了以下内容，怀着好奇的心里研究了一下~
-header(“Content-Security-Policy: default-src ‘self’; style-src ‘self’ ‘unsafe-inline’; img-src ‘self’ data:; frame-src ‘none’”);header(“X-Content-Security-Policy:">
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>CSP（内容安全策略）学习 | Anka9080&#39;s Notes | 勿忘初心。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="XSS防护,CSP策略">
+    <meta name="description" content="今天在一段 PHP 验证码代码中包含了以下内容，怀着好奇的心里研究了一下~ header(“Content-Security-Policy: default-src ‘self’; style-src ‘self’ ‘unsafe-inline’; img-src ‘self’ data:; frame-src ‘none’”);header(“X-Content-Security-Policy:">
+<meta name="keywords" content="XSS防护,CSP策略">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CSP（内容安全策略）学习">
 <meta property="og:url" content="http://www.evilclay.com/2017/03/13/tmp/index.html">
-<meta property="og:site_name" content="Anka9080's Notes">
-<meta property="og:description" content="今天在一段 PHP 验证码代码中包含了以下内容，怀着好奇的心里研究了一下~
-header(“Content-Security-Policy: default-src ‘self’; style-src ‘self’ ‘unsafe-inline’; img-src ‘self’ data:; frame-src ‘none’”);header(“X-Content-Security-Policy:">
+<meta property="og:site_name" content="Anka9080&#39;s Notes">
+<meta property="og:description" content="今天在一段 PHP 验证码代码中包含了以下内容，怀着好奇的心里研究了一下~ header(“Content-Security-Policy: default-src ‘self’; style-src ‘self’ ‘unsafe-inline’; img-src ‘self’ data:; frame-src ‘none’”);header(“X-Content-Security-Policy:">
 <meta property="og:updated_time" content="2017-03-13T13:59:36.818Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSP（内容安全策略）学习">
-<meta name="twitter:description" content="今天在一段 PHP 验证码代码中包含了以下内容，怀着好奇的心里研究了一下~
-header(“Content-Security-Policy: default-src ‘self’; style-src ‘self’ ‘unsafe-inline’; img-src ‘self’ data:; frame-src ‘none’”);header(“X-Content-Security-Policy:">
-
+<meta name="twitter:description" content="今天在一段 PHP 验证码代码中包含了以下内容，怀着好奇的心里研究了一下~ header(“Content-Security-Policy: default-src ‘self’; style-src ‘self’ ‘unsafe-inline’; img-src ‘self’ data:; frame-src ‘none’”);header(“X-Content-Security-Policy:">
     
-    <link rel="alternative" href="/atom.xml" title="Anka9080&#39;s Notes" type="application/atom+xml">
+        <link rel="alternate" type="application/atom+xml" title="Anka9080&#39;s Notes" href="/atom.xml">
     
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
 </head>
 
-  <body>
-    <header>
-      
-<div>
-		
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="Anka9080&#39;s Notes">Anka9080&#39;s Notes</a></h1>
-				<h2 class="blog-motto">勿忘初心。</h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/2048/">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:www.evilclay.com">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
-</div>
-    </header>
-    <div id="container">
-      <div id="main" class="post" itemscope itemprop="blogPost">
-  
-	<article itemprop="articleBody"> 
-		<header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/03/13/tmp/" title="CSP（内容安全策略）学习" itemprop="url">CSP（内容安全策略）学习</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Anka9080" target="_blank" itemprop="author">Anka9080</a>
-		
-  <p class="article-time">
-    <time datetime="2017-03-13T13:05:04.000Z" itemprop="datePublished"> Published 2017-03-13</time>
-    
-  </p>
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Anka9080</h5>
+          <a href="mailto:634206017@qq.com" title="634206017@qq.com" class="mail">634206017@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/yscoder" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/ysweb" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom"  >
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">CSP（内容安全策略）学习</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
 </header>
-	<div class="article-content">
-		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
-		
-			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Content-Security-Policy"><span class="toc-number">1.</span> <span class="toc-text">Content-Security-Policy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#X-Content-Security-Policy"><span class="toc-number">2.</span> <span class="toc-text">X-Content-Security-Policy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#X-WebKit-CSP"><span class="toc-number">3.</span> <span class="toc-text">X-WebKit-CSP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#X-XSS-Protection"><span class="toc-number">4.</span> <span class="toc-text">X-XSS-Protection</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#X-Content-Type-Options"><span class="toc-number">5.</span> <span class="toc-text">X-Content-Type-Options</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#X-Frame-Options"><span class="toc-number">6.</span> <span class="toc-text">X-Frame-Options</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#题外话"><span class="toc-number">7.</span> <span class="toc-text">题外话</span></a></li></ol>
-		
-		</div>
-		
-		<p>今天在一段 PHP 验证码代码中包含了以下内容，怀着好奇的心里研究了一下~</p>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">CSP（内容安全策略）学习</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-03-13T13:05:04.000Z" itemprop="datePublished" class="page-time">
+  2017-03-13
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Content-Security-Policy"><span class="post-toc-number">1.</span> <span class="post-toc-text">Content-Security-Policy</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#X-Content-Security-Policy"><span class="post-toc-number">2.</span> <span class="post-toc-text">X-Content-Security-Policy</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#X-WebKit-CSP"><span class="post-toc-number">3.</span> <span class="post-toc-text">X-WebKit-CSP</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#X-XSS-Protection"><span class="post-toc-number">4.</span> <span class="post-toc-text">X-XSS-Protection</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#X-Content-Type-Options"><span class="post-toc-number">5.</span> <span class="post-toc-text">X-Content-Type-Options</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#X-Frame-Options"><span class="post-toc-number">6.</span> <span class="post-toc-text">X-Frame-Options</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#题外话"><span class="post-toc-number">7.</span> <span class="post-toc-text">题外话</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-tmp"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">CSP（内容安全策略）学习</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-03-13 21:05:04" datetime="2017-03-13T13:05:04.000Z"  itemprop="datePublished">2017-03-13</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>今天在一段 PHP 验证码代码中包含了以下内容，怀着好奇的心里研究了一下~</p>
 <p>header(“Content-Security-Policy: default-src ‘self’; style-src ‘self’ ‘unsafe-inline’; img-src ‘self’ data:; frame-src ‘none’”);<br>header(“X-Content-Security-Policy: default-src ‘self’; style-src ‘self’ ‘unsafe-inline’; img-src ‘self’ data:; frame-src ‘none’”);<br>header(“X-WebKit-CSP: default-src ‘self’; style-src ‘self’ ‘unsafe-inline’;img-src ‘self’ data:; frame-src ‘none’”);<br>header(“X-XSS-Protection: 1; mode=block”);<br>header(“X-Content-Type-Options: nosniff”);<br>header(“X-Frame-Options: DENY”);</p>
 <p>我们来先说一下CSP， 内容安全策略 (CSP, Content Security Policy) 是一个附加的安全层，用于帮助检测和缓解某些类型的攻击，包括跨站脚本 (XSS) 和数据注入等攻击。 这些攻击可用于实现从数据窃取到网站破坏或作为恶意软件分发版本等用途。</p>
 <h4 id="Content-Security-Policy"><a href="#Content-Security-Policy" class="headerlink" title="Content-Security-Policy"></a>Content-Security-Policy</h4><p>这个字段表示内容安全策略，也就是大名鼎鼎的 CSP ，主要是定义页面可以加载哪些资源，减少 XSS 的发生。</p>
@@ -114,433 +206,298 @@ header(“Content-Security-Policy: default-src ‘self’; style-src ‘self’ 
 <h4 id="X-Content-Type-Options"><a href="#X-Content-Type-Options" class="headerlink" title="X-Content-Type-Options"></a>X-Content-Type-Options</h4><p>X-Content-Type-Options: nosniff 禁用浏览器的类型猜测行为，也就是说Content-Type是错的或者未定义的时候，不会解析执行响应内容。</p>
 <h4 id="X-Frame-Options"><a href="#X-Frame-Options" class="headerlink" title="X-Frame-Options"></a>X-Frame-Options</h4><p>X-Frame-Options 用来给浏览器指示允许一个页面可否在frame , iframe 或者object 中展现的标记。DENY 表示不允许被陷入到其他 frame /iframe 中。</p>
 <h4 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h4><p>差了些相关资料，发现前端果然很乱啊，一种功能在不同的浏览器中有不同的实现形式。。。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-03-13T13:59:36.818Z" itemprop="dateUpdated">2017-03-13 21:59:36</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2017/03/13/tmp/" target="_blank" rel="external">http://www.evilclay.com/2017/03/13/tmp/</a>
+        
+    </div>
+    <footer>
+        <a href="http://www.evilclay.com">
+            <img src="/img/avatar.jpg" alt="Anka9080">
+            Anka9080
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSP策略/">CSP策略</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/XSS防护/">XSS防护</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.evilclay.com/2017/03/13/tmp/&title=《CSP（内容安全策略）学习》 — Anka9080's Notes&pic=http://www.evilclay.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.evilclay.com/2017/03/13/tmp/&title=《CSP（内容安全策略）学习》 — Anka9080's Notes&source=Python,渗透测试,安全研发" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.evilclay.com/2017/03/13/tmp/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《CSP（内容安全策略）学习》 — Anka9080's Notes&url=http://www.evilclay.com/2017/03/13/tmp/&via=http://www.evilclay.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.evilclay.com/2017/03/13/tmp/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
   
-	</div>
-		<footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/03/31/谈谈-Vim-的几种文件备份/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">谈谈 Vim 的几种文件备份</h4>
+      </a>
+    </div>
   
-  <span></span> <a href="/tags/XSS防护/">XSS防护</a><a href="/tags/CSP策略/">CSP策略</a>
-  </div>
 
-</div>
-
-
-
-	<div class="article-share" id="share">
-	
-	  <div data-url="http://www.evilclay.com/2017/03/13/tmp/" data-title="CSP（内容安全策略）学习 | Anka9080&#39;s Notes" data-tsina="null" class="share clearfix">
-	  </div>
-	
-	</div>
-
-
-</footer>
-
-   	       
-	</article>
-	
-<nav class="article-nav clearfix">
- 
- <div class="prev" >
- <a href="/2017/03/31/谈谈-Vim-的几种文件备份/" title="谈谈 Vim 的几种文件备份">
-  <strong>上一篇：</strong><br/>
-  <span>
-  谈谈 Vim 的几种文件备份</span>
-</a>
-</div>
-
-
-<div class="next">
-<a href="/2017/03/13/Apache绑定多域名 or 多端口配置命令/"  title="Apache 绑定多域名/多端口配置命令">
- <strong>下一篇：</strong><br/> 
- <span>Apache 绑定多域名/多端口配置命令
-</span>
-</a>
-</div>
-
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/03/13/Apache绑定多域名 or 多端口配置命令/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Apache 绑定多域名/多端口配置命令</h4>
+      </a>
+    </div>
+  
 </nav>
 
-	
-<section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2017/03/13/tmp/" data-title="CSP（内容安全策略）学习" data-url="http://www.evilclay.com/2017/03/13/tmp/"></div>
-</section>
 
 
-</div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
-
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">Contents</strong>
- 
- <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Content-Security-Policy"><span class="toc-number">1.</span> <span class="toc-text">Content-Security-Policy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#X-Content-Security-Policy"><span class="toc-number">2.</span> <span class="toc-text">X-Content-Security-Policy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#X-WebKit-CSP"><span class="toc-number">3.</span> <span class="toc-text">X-WebKit-CSP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#X-XSS-Protection"><span class="toc-number">4.</span> <span class="toc-text">X-XSS-Protection</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#X-Content-Type-Options"><span class="toc-number">5.</span> <span class="toc-text">X-Content-Type-Options</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#X-Frame-Options"><span class="toc-number">6.</span> <span class="toc-text">X-Frame-Options</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#题外话"><span class="toc-number">7.</span> <span class="toc-text">题外话</span></a></li></ol>
- 
-  </div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
-<aside class="clearfix">
-
-  
-
-  
-<div class="tagslist">
-	<p class="asidetitle">Tags</p>
-		<ul class="clearfix">
-		
-			
-				<li><a href="/tags/安全工具/" title="安全工具">安全工具<sup>5</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Ubuntu/" title="Ubuntu">Ubuntu<sup>4</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Python/" title="Python">Python<sup>4</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/漏洞分析/" title="漏洞分析">漏洞分析<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/多线程/" title="多线程">多线程<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/内网渗透/" title="内网渗透">内网渗透<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/信息收集/" title="信息收集">信息收集<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Flask/" title="Flask">Flask<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/代码审计/" title="代码审计">代码审计<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/kali/" title="kali">kali<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/端口扫描/" title="端口扫描">端口扫描<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Docker/" title="Docker">Docker<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/SQL注入/" title="SQL注入">SQL注入<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/WIFI热点伪造/" title="WIFI热点伪造">WIFI热点伪造<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Celery/" title="Celery">Celery<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/任意文件上传/" title="任意文件上传">任意文件上传<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/分布式/" title="分布式">分布式<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/sudo/" title="sudo">sudo<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/想法/" title="想法">想法<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/社工工程学/" title="社工工程学">社工工程学<sup>1</sup></a></li>
-			
-		
-		</ul>
-</div>
+    
 
 
-  <div class="linkslist">
-  <p class="asidetitle">Links</p>
-    <ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
         
-          <li>
-            
-            	<a href="http://navisec.it" target="_blank" title="信息安全从业简明导航">Navisec.it</a>
-            
-          </li>
+        <li>
+            <img src="/img/wechat.jpg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
         
-          <li>
-            
-            	<a href="http://sec-wiki.com" target="_blank" title="安全维基">Sec-Wiki</a>
-            
-          </li>
+
+        
+        <li>
+            <img src="/img/alipay.jpg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
         
     </ul>
 </div>
 
-  <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+
+
 </div>
 
-</aside>
-</div>
-    </div>
-    <footer><div id="footer" >
-	
-	<div class="line">
-		<span></span>
-		<div class="author"></div>
-	</div>
-	
-	
-	<section class="info">
-		<p> Hello ,I&#39;m Anka9080 Page in ZorelWorld. <br/>
-			This is my blog,believe it or not.</p>
-	</section>
-	 
-	<div class="social-font" class="clearfix">
-		
-		<a href="http://weibo.com/5800672330" target="_blank" class="icon-weibo" title="微博"></a>
-		
-		
-		<a href="https://github.com/Evi1CLAY" target="_blank" class="icon-github" title="github"></a>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	</div>
-			
-		
-
-		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
-		
-		<a href="/about" target="_blank" title="Anka9080">Anka9080</a>
-		
-		</p>
-</div>
-</footer>
-    <script src="/js/jquery-2.0.3.min.js"></script>
-<script src="/js/jquery.imagesloaded.min.js"></script>
-<script src="/js/gallery.js"></script>
-<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
-
-
-<script src="/js/instantclick.js" data-no-instant></script>
-<script data-no-instant>InstantClick.init();</script>
-
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-  
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else{
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
+        <footer class="footer">
+    <div class="top">
         
-    }
-  });
-});
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>Anka9080 &copy; 2015 - 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.evilclay.com/2017/03/13/tmp/&title=《CSP（内容安全策略）学习》 — Anka9080's Notes&pic=http://www.evilclay.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.evilclay.com/2017/03/13/tmp/&title=《CSP（内容安全策略）学习》 — Anka9080's Notes&source=Python,渗透测试,安全研发" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.evilclay.com/2017/03/13/tmp/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《CSP（内容安全策略）学习》 — Anka9080's Notes&url=http://www.evilclay.com/2017/03/13/tmp/&via=http://www.evilclay.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.evilclay.com/2017/03/13/tmp/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABxklEQVR42u3au47CQBAEQP7/p33pJTbd+5KRaiMENi4IRjs9+/nE6/q37j5Nrry7a/HCxcWd5l6P6/maZ2JyV27AxcU9z03KU/46KYL5vbi4uL/Lndkw4eLi/jo3eadtfnBxcd/JXdWo5Bud7b0aLi7uBDfflOx7vSXfxcXFHeJe5Wq/57mE1U/HxcU9wm0blTFK8j3FcBcXF3czN3nMWCCSlMKkTbr9X3FxcQ9y81HHWHiR/4zbHRkuLu5m7trxZ77RWTWCxcXF3cHNi1c7YplJPuvmBxcXdym3jTzy4Uo+sq2PZeDi4h7hJlHFl+Ky6ABW+5fh4uLu4I4FE3mcmo9Xo40ULi7uEW5epJLtzkz8MVV3cXFxj3PzIev80a56y4WLi7uNO3Ywoh2attujL4EpLi7uQW7e6rQNUnvw6/YaXFzc49yioJSsNpAtPsbFxV3Kvco1FpS08ehgjoKLi7uIOxZujj0sb4rmo1hcXNx5bnuUKm9d8lJYFEpcXNyD3PxAVT0KLZufOt/FxcV9AXd+rDJ25AsXF/f93PboxkzwsaCQ4eLiDnHbcDPZ4qw6nIGLi3ue25aSFj2T2k7lu7i4uCNX/gFs21LBwBhzkgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
 </script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var ai = $('.article-content>iframe'),
-      ae = $('.article-content>embed'),
-      t  = $('#toc'),
-      ta = $('#toc.toc-aside'),
-      o  = $('.openaside'),
-      c  = $('.closeaside');
-  if(ai.length>0){
-    ai.wrap('<div class="video-container" />');
-  };
-  if(ae.length>0){
-   ae.wrap('<div class="video-container" />');
-  };
-  c.click(function(){
-    ta.css('display', 'block').addClass('fadeIn');
-  });
-  o.click(function(){
-    ta.css('display', 'none');
-  });
-  $(window).scroll(function(){
-    ta.css("top",Math.max(140,320-$(this).scrollTop()));
-  });
-});
-</script>
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
 
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var $this = $('.share'),
-      url = $this.attr('data-url'),
-      encodedUrl = encodeURIComponent(url),
-      title = $this.attr('data-title'),
-      tsina = $this.attr('data-tsina'),
-      description = $this.attr('description');
-  var html = [
-  '<div class="hoverqrcode clearfix"></div>',
-  '<a class="overlay" id="qrcode"></a>',
-  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
-  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
-  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
-  '<span title="Share to"></span>'
-  ].join('');
-  $this.append(html);
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
 
-  $('.hoverqrcode').hide();
-
-  var myWidth = 0;
-  function updatehoverqrcode(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-    var qrsize = myWidth > 1024 ? 200:100;
-    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
-    var p = $('.article-share-qrcode').position();
-    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
-                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
-                          .qrcode(options);
-  };
-  $(window).resize(function(){
-    $('.hoverqrcode').hide();
-  });
-  $('.article-share-qrcode').click(function(){
-    updatehoverqrcode();
-    $('.hoverqrcode').toggle();
-  });
-  $('.article-share-qrcode').hover(function(){}, function(){
-      $('.hoverqrcode').hide();
-  });
-});   
-</script>
-
-
-
-<script type="text/javascript">
-  var duoshuoQuery = {short_name:"evi1clay"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-    || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-</script> 
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
 
 
 
 
 
 
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.article-content').each(function(i){
-    $(this).find('img').each(function(){
-      if ($(this).parent().hasClass('fancybox')) return;
-      var alt = this.alt;
-      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
-      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
     });
-    $(this).find('.fancybox').each(function(){
-      $(this).attr('rel', 'article' + i);
-    });
-  });
-  if($.fancybox){
-    $('.fancybox').fancybox();
-  }
-}); 
+})();
 </script>
 
 
 
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-
-<!-- MathJax End -->
-
-<!-- Tiny_search Begin -->
-
-<!-- Tiny_search End -->
-
-  </body>
+</body>
 </html>
