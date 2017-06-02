@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.evilclay.com/"/>
-  <updated>2017-05-09T19:07:45.196Z</updated>
+  <updated>2017-06-02T17:24:00.679Z</updated>
   <id>http://www.evilclay.com/</id>
   
   <author>
@@ -14,6 +14,243 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>1.5W条密码样本分析</title>
+    <link href="http://www.evilclay.com/2017/06/03/1-5W%E6%9D%A1%E5%AF%86%E7%A0%81%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90/"/>
+    <id>http://www.evilclay.com/2017/06/03/1-5W条密码样本分析/</id>
+    <published>2017-06-02T17:17:25.000Z</published>
+    <updated>2017-06-02T17:24:00.679Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>之前对某公开的一段密码库做的一个分析，目的是想得到大家的密码组合规律，无奈一直没用上，在笔记里备份下，以后想针对姓名做组合字典的时候再回头看看。</p>
+<p>直接贴出当时的分析结果啦~(≧▽≦)/~</p>
+<h2 id="组合规律"><a href="#组合规律" class="headerlink" title="组合规律"></a>组合规律</h2><pre><code>姓 + 6位数字 
+8位生日 + 两个字母 
+一位字母+123456 
+姓名首字母+123 
+名拼音+520 
+姓拼音+6位生日 
+123456+姓名首字母 
+姓名首字母+6位数字 
+姓名+000 
+a+QQ号 
+小名(名连读)+1111 
+姓+123 
+姓名首字母+4位生日年份 
+4位生日年份+名拼音 
+名拼音+6位生日 
+6位数字+姓名首字母 
+姓名+4位数字 
+姓拼音+生日年份 
+姓名首字母+4位生日月份天数 
+姓首字母+6位数字 
+姓名首字母+1234 
+6位生日(月份+1)+名拼音 
+qwerty+6538 
+姓名首字母+6位生日 
+姓名首字母+4位数字 
+姓名首字母+123456 
+对象姓名首字母+6位生日 
+123456+姓 
+名+4位数字 
+姓名首字母+4位年份+2随机数字 
+姓+123123 
+名+4位年份 
+姓首字母+2位月份+4位年份 
+姓+年份最后2位 
+姓名首字母+4位年份+ 
+1位月份(生日-1)+1位天数 
+姓名首字母+4位年份+2位月份 
+6位对象生日+姓名首字母 
+姓首字母+名+生日年份 
+对象首字母+520 
+2个字母+123321 
+对象首字母+8位生日 
+对象首字母+520520 
+520+对象首字母 
+姓+258369
+</code></pre><h2 id="TOP-20"><a href="#TOP-20" class="headerlink" title="TOP 20"></a>TOP 20</h2><pre><code>a123456
+qwe123456
+qwe123
+asd123456
+123456a
+qq123456
+asd123
+qwer1234
+123456AA
+aaa123456
+a123123
+qaz123
+aa123456
+123123aa
+abcd1234
+a123456789
+a112233
+woaini1314
+123QWE
+qwe123123
+</code></pre><h2 id="TOP-50"><a href="#TOP-50" class="headerlink" title="TOP 50"></a>TOP 50</h2><pre><code>a123456
+qwe123456
+qwe123
+asd123456
+123456a
+qq123456
+asd123
+qwer1234
+123456AA
+aaa123456
+a123123
+qaz123
+aa123456
+123123aa
+abcd1234
+a123456789
+a112233
+woaini1314
+123QWE
+qwe123123
+aa123123
+q123456
+y123456
+qaz123456
+z123456
+aini1314
+a1234567
+w123456
+woaini520
+1234qwer
+qq112233
+zj5201314
+abc123456
+qq111111
+a2329765
+love1314
+a111111
+a147258
+woaini123
+123123a
+a123456a
+wu123456
+asdf1234
+qqq111
+zxcvbnm123
+ll123456
+123456asd
+li123456
+123456z
+a12345
+</code></pre><h2 id="TOP-100"><a href="#TOP-100" class="headerlink" title="TOP 100"></a>TOP 100</h2><pre><code>a123456
+qwe123456
+qwe123
+asd123456
+123456a
+qq123456
+asd123
+qwer1234
+123456AA
+aaa123456
+a123123
+qaz123
+aa123456
+123123aa
+abcd1234
+a123456789
+a112233
+woaini1314
+123QWE
+qwe123123
+aa123123
+q123456
+y123456
+qaz123456
+z123456
+aini1314
+a1234567
+w123456
+woaini520
+1234qwer
+qq112233
+zj5201314
+abc123456
+qq111111
+a2329765
+love1314
+a111111
+a147258
+woaini123
+123123a
+a123456a
+wu123456
+asdf1234
+zxcvbnm123
+ll123456
+123456asd
+li123456
+123456z
+a12345
+aa000000
+aaa123123
+qq123123
+qqq111
+a5201314
+zhang123
+aaa123789
+a1314520
+yang1314
+zxc123456
+liushu123
+zhang520
+qweqwe123
+zx123456
+li5201314
+aaa111
+xiao520
+xiang520
+w123456789
+liu6577453
+zhang1314
+wang12345
+zhong123
+ws640805
+hh124124
+nn23456
+x891104
+c123456
+qwe12345
+159951a
+z520520
+hai520
+qqww1122
+qwe112233
+1995312w
+b123456
+bb5201314
+qqq123
+qwe123355
+zy584520
+mima123
+cwt123456
+zhuzhu520
+pmwdea58
+peng1989
+LMJ831023
+chm420924
+123456qq
+123qaz
+woaini8023
+zhou123
+</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h2&gt;&lt;p&gt;之前对某公开的一段密码库做的一个分析，目的是想得到大家的密码组合规律，无奈一直没用上，在笔记里备份下，以后想针对姓名做组合字典的时候再回头看
+    
+    </summary>
+    
+    
+      <category term="密码规律" scheme="http://www.evilclay.com/tags/%E5%AF%86%E7%A0%81%E8%A7%84%E5%BE%8B/"/>
+    
+  </entry>
   
   <entry>
     <title>PHPCMSv9.6.0任意文件上传漏洞分析</title>
@@ -1403,75 +1640,6 @@ net use \\ip\ipc$ /del        // 关闭与 IP 已经建立的 IPC 连接
       <category term="内网渗透" scheme="http://www.evilclay.com/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/"/>
     
       <category term="安全工具" scheme="http://www.evilclay.com/tags/%E5%AE%89%E5%85%A8%E5%B7%A5%E5%85%B7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>XML外部实体注入（XXE）漏洞分析及漏洞场景探索</title>
-    <link href="http://www.evilclay.com/2016/10/11/XML%E5%A4%96%E9%83%A8%E5%AE%9E%E4%BD%93%E6%B3%A8%E5%85%A5%EF%BC%88XXE%EF%BC%89%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E5%8F%8A%E6%BC%8F%E6%B4%9E%E5%9C%BA%E6%99%AF%E6%8E%A2%E7%B4%A2/"/>
-    <id>http://www.evilclay.com/2016/10/11/XML外部实体注入（XXE）漏洞分析及漏洞场景探索/</id>
-    <published>2016-10-11T15:16:07.000Z</published>
-    <updated>2016-10-13T15:57:53.126Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="闲扯"><a href="#闲扯" class="headerlink" title="闲扯"></a>闲扯</h2><p>发呆这种事情真的有毒，想到3年前一个前辈问我的一个技术问题，<strong>当你拿到一个非 ROOT 权限的注入点后，如何获得 系统的 ROOT/SYSTEM 权限</strong>，实话说，到今天我依然回答不出来一个我想要的答案，突然间一种技术止步不前的危机感，实在惶恐(惶恐是因为明明刚入门的骚年就有这种感觉了，可怕)，就在不久前的一次ShowCase上，牛叉的 no 老师在提权这块给我一些实用的思路，回想起来有以下三种方法：</p>
-<ol>
-<li>查看 系统内的 补丁安装情况，以及安装了那些软件或者组件，利用系统或者软件本身的漏洞使用对用的 EXP 进行提权操作。</li>
-<li>手机数据库以及可接触到的文件各种账户信息（Web后台账户，DB账户），分析邮件，密码规则，对高权限的账户进行 Fuzz。</li>
-<li>针对不同的数据库（SQLServer，MySQL，Oracle）使用不同的提权技巧，比如 SQLServer，可以利用有写日志权限的账户把新建administrator权限的账户代码写入到.hta后缀的日志中，把该日志文件放到系统的启动项文件夹，当系统重启的时候自动会给你创建系统权限的账户。</li>
-</ol>
-<p>针对上面的三条依然停留在概念阶段，由其是第三条被动提权的方式一定很好玩，准备过两周对提权这块好好研究研究。在这里Mark一下。</p>
-<p>对于渗透测试有一种见一种打一套的感觉，尤其是听了 No 老师的分享之后，也就觉得技能反而没这么重要了，重要的是实战经验。多 x 站，多分析，以后遇到某种情况心中自然满是套路，23333. 有一种阅片无数心中自然无码的感觉，哦不对，是胸有成竹的感觉: )</p>
-<p>所谓套路就是就是一些正常打法，就像解一道数学题一样，咱们一步一步来，这步走不通或者解法十分复杂就换一个切入段使用第二种解法。不错，这很 Nice。如果心中自有方圆，一套一套的打下去估计也该心满意足了。</p>
-<p>谈到猥琐流，卧槽，牛逼啊，能猥琐说明了咱已经熟练的掌握了正规的打法，也就是所谓的套路，不然连一个正常的套路都打不出来的话又何谈猥琐呢？ 所以说：</p>
-<blockquote>
-<p>要想猥琐，先学套路！</p>
-<p>要想猥琐，先学套路！</p>
-<p>要想猥琐，先学套路！</p>
-</blockquote>
-<p>闲扯了这些，没啥卵用，但就是想扯，毕竟我有点控计不住我子鸡了。</p>
-<p>下面步入正题，这周看了下 XXE 相关的文章，最终目的很简单，就是想看看 XXE 的漏洞该怎么去挖，在一步步走向终点的过程中，会学习什么是 XXE，XXE 漏洞对应代码/程序的使用场景，以及为什么会出现XXE。</p>
-<p>XXE（XML外部实体注入）是针对于使用 XML 交互的Web应用程序攻击方法，是一种服务端攻击方式。Web程序（PHP，Java，Python）在解析不安全的 XML 的文件的时候由于没有正确的安全效验导致 XXE 的产生。又应证了一句话，”All inputs are EVAL!”，所以说漏洞出现的地方就是用到了XML方式交互数据的地方。</p>
-<h2 id="什么是-XML-External-Entity"><a href="#什么是-XML-External-Entity" class="headerlink" title="什么是 XML External Entity"></a>什么是 XML External Entity</h2><p>一般来说，XML 是一种用来定义数据的一种文件格式，类似于 JSON，倒是近些年由于基于 API 开发的盛行，使用 JSON 作为前后端数据交换的格式火了起来。一般的 XML 文件格式如下：</p>
-<pre><code>&lt;worker&gt;
-    &lt;name&gt;Anka9080&lt;/name&gt;
-    &lt;slogan&gt;PPAP&lt;/slogan&gt;
-&lt;/worker&gt;
-</code></pre><p>一个完整的 XML 文件应该包含 XML声明(可选)，文档类型定义（可选），文档元素三个部分。</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="./xml_stru.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<p>DTD（文档类型定义）的作用是定义 XML 文档的合法构建模块。DTD 可以在 XML 文档内声明，也可以外部引用。</p>
-<p>如图所示 DTD 是在文档内声明，若外部声明 DTD 需要以 SYSTEM 或者 PUBLIC 作为关键字进行声明：</p>
-<pre><code>&lt;!DOCTYPE 根元素 SYSTEM &quot;文件名&quot;&gt;
-</code></pre><p>或者：</p>
-<pre><code>&lt;!DOCTYPE 根元素 PUBLIC &quot;public_ID&quot; &quot;文件名&quot;&gt;
-</code></pre><p>DTD实体是用于定义引用普通文本或特殊字符的快捷方式的变量，可以内部声明或外部引用。</p>
-<p>内部声明使用 <code>&lt;!ENTITY 实体名称 &quot;实体的值&quot;&gt;</code></p>
-<p>外部声明同样使用 SYSTEM 或者 PUBLIC 关键字：</p>
-<pre><code>&lt;!ENTITY 实体名称 SYSTEM &quot;URI&quot;&gt;
-</code></pre><p>或者</p>
-<pre><code>&lt;!ENTITY 实体名称 PUBLIC &quot;public_ID&quot; &quot;URI&quot;&gt;
-</code></pre><h2 id="什么是-XXE注入"><a href="#什么是-XXE注入" class="headerlink" title="什么是 XXE注入"></a>什么是 XXE注入</h2><p>通过 XML 实体，”SYSTEM”关键词导致 XML 解析器可以从本地文件或者远程 URI 中读取数据。所以攻击者可以通过 XML 实体传递自己构造的恶意值，是处理程序解析它。当引用外部实体时，通过构造恶意内容，可导致读取任意文件、执行系统命令、探测内网端口、攻击内网网站等危害，有一种 SSRF 的Feel~</p>
-<p>引入外部实体的方式有很多种，如下：</p>
-<ol>
-<li>直接引入本地文件</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;闲扯&quot;&gt;&lt;a href=&quot;#闲扯&quot; class=&quot;headerlink&quot; title=&quot;闲扯&quot;&gt;&lt;/a&gt;闲扯&lt;/h2&gt;&lt;p&gt;发呆这种事情真的有毒，想到3年前一个前辈问我的一个技术问题，&lt;strong&gt;当你拿到一个非 ROOT 权限的注入点后，如何获得 系统的 RO
-    
-    </summary>
-    
-    
-      <category term="XXE" scheme="http://www.evilclay.com/tags/XXE/"/>
-    
-      <category term="闲扯" scheme="http://www.evilclay.com/tags/%E9%97%B2%E6%89%AF/"/>
     
   </entry>
   
