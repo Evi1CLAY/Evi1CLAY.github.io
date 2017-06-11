@@ -118,7 +118,7 @@
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
                 <i class="icon icon-lg icon-chevron-left"></i>
             </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
                 <i class="icon icon-lg icon-search"></i>
             </a>
@@ -150,6 +150,50 @@
 <div class="container body-wrap">
 
     <ul class="post-list">
+    
+        <li class="post-list-item fade">
+            <article id="post-Shadowsocks服务端配置命令"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-03-11 11:38:37" datetime="2017-03-11T03:38:37.000Z"  itemprop="datePublished">2017-03-11</time>
+
+        
+
+
+        
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/03/11/Shadowsocks服务端配置命令/">Shadowsocks服务端配置命令</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+安装 服务端pip install shadowsocks
+
+创建 /etc/shadowsocks/，进入并添加 config.json文件，内容如下：{服务器IP地址需要设置为0.0.0.0“server”:”0.0.0.0”,“server_port”:8838,“local_port”:1080,“password”:”pass”,“timeout”:600,“method”:”a...
+    
+
+        <a href="/2017/03/11/Shadowsocks服务端配置命令/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+</article>
+
+        </li>
     
         <li class="post-list-item fade">
             <article id="post-WIFI密码-破解命令"
@@ -193,7 +237,7 @@ service.msc 开启 VM USB相关的服务
     
 
         <a href="/2017/02/21/WIFI密码-破解命令/" class="post-more waves-effect waves-button">
-            阅读全文…
+            Continue reading...
         </a>
     </div>
     
@@ -237,7 +281,7 @@ service.msc 开启 VM USB相关的服务
     
 
         <a href="/2017/02/18/SQLALchemy问题调试的一点想法/" class="post-more waves-effect waves-button">
-            阅读全文…
+            Continue reading...
         </a>
     </div>
     
@@ -286,7 +330,7 @@ service.msc 开启 VM USB相关的服务
     
 
         <a href="/2017/01/05/DockerHelloWorld分享备忘录/" class="post-more waves-effect waves-button">
-            阅读全文…
+            Continue reading...
         </a>
     </div>
     
@@ -339,7 +383,7 @@ service.msc 开启 VM USB相关的服务
     
 
         <a href="/2017/01/04/FakeDNSServer-轻量级DNSLog查询工具/" class="post-more waves-effect waves-button">
-            阅读全文…
+            Continue reading...
         </a>
     </div>
     
@@ -388,7 +432,7 @@ service.msc 开启 VM USB相关的服务
     
 
         <a href="/2017/01/03/一次文件上传绕过笔记/" class="post-more waves-effect waves-button">
-            阅读全文…
+            Continue reading...
         </a>
     </div>
     
@@ -443,7 +487,7 @@ DNS枚举
     
 
         <a href="/2017/01/02/domain-seeker二级域名收集脚本/" class="post-more waves-effect waves-button">
-            阅读全文…
+            Continue reading...
         </a>
     </div>
     
@@ -494,7 +538,7 @@ DNS枚举
     
 
         <a href="/2016/12/18/识别验证码账户暴力破解小记/" class="post-more waves-effect waves-button">
-            阅读全文…
+            Continue reading...
         </a>
     </div>
     
@@ -545,7 +589,7 @@ DNS枚举
     
 
         <a href="/2016/11/06/Linux的sudo权限分析小记/" class="post-more waves-effect waves-button">
-            阅读全文…
+            Continue reading...
         </a>
     </div>
     
@@ -602,64 +646,13 @@ ARP 工作流程
     
 
         <a href="/2016/10/28/ARP协议分析与漏洞利用/" class="post-more waves-effect waves-button">
-            阅读全文…
+            Continue reading...
         </a>
     </div>
     
     <div class="post-footer">
         
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ARP欺骗/">ARP欺骗</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-Windows内网渗透常用工具命令速记"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2016-10-27 23:36:24" datetime="2016-10-27T15:36:24.000Z"  itemprop="datePublished">2016-10-27</time>
-
-        
-
-
-        
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2016/10/27/Windows内网渗透常用工具命令速记/">Windows内网渗透常用工具命令速记</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        建立 IPC 连接（需要139 or 445 端口）：
-net use \\ip\ipc$ /user:username password
-net use \\ip\ipc$ /del        // 关闭与 IP 已经建立的 IPC 连接
-net use z: \\ip\C$            // 对已经建立 IPC 连接的IP 映射 C 盘为 本地 Z盘
-copy c:\123...
-    
-
-        <a href="/2016/10/27/Windows内网渗透常用工具命令速记/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内网渗透/">内网渗透</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全工具/">安全工具</a></li></ul>
 
     </div>
     
@@ -696,7 +689,7 @@ copy c:\123...
             
                 <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
             
-            <span>博客内容遵循<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
         </p>
     </div>
     <div class="bottom">
