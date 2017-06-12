@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>部署阿里云免费HTTPS证书笔记 | Anka9080&#39;s Notes | 勿忘初心。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="HTTPS">
+    <meta name="description" content="系统环境Ubuntu 16.04 Apache2 设置域名A记录 注意：已经存在的网站不需要这一步操作。  这一步是用来把 域名 绑定到指定的 IP 上，访问域名会直接返回 IP 的 Web 默认路径。 在控制台新增加一条域名(x.evilclay.com)的A记录解析：">
+<meta name="keywords" content="HTTPS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="部署阿里云免费HTTPS证书笔记">
+<meta property="og:url" content="http://www.evilclay.com/2017/06/12/部署阿里云免费HTTPS证书笔记/index.html">
+<meta property="og:site_name" content="Anka9080&#39;s Notes">
+<meta property="og:description" content="系统环境Ubuntu 16.04 Apache2 设置域名A记录 注意：已经存在的网站不需要这一步操作。  这一步是用来把 域名 绑定到指定的 IP 上，访问域名会直接返回 IP 的 Web 默认路径。 在控制台新增加一条域名(x.evilclay.com)的A记录解析：">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/https/a_record.png">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/https/http_ok.png">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/https/cert_aliyun.png">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/https/https_ok.png">
+<meta property="og:updated_time" content="2017-06-12T12:40:15.581Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="部署阿里云免费HTTPS证书笔记">
+<meta name="twitter:description" content="系统环境Ubuntu 16.04 Apache2 设置域名A记录 注意：已经存在的网站不需要这一步操作。  这一步是用来把 域名 绑定到指定的 IP 上，访问域名会直接返回 IP 的 Web 默认路径。 在控制台新增加一条域名(x.evilclay.com)的A记录解析：">
+<meta name="twitter:image" content="http://7xku36.com1.z0.glb.clouddn.com/https/a_record.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Anka9080&#39;s Notes" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/yh.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Anka9080</h5>
+          <a href="mailto:funsociety.bat@gmail.com" title="funsociety.bat@gmail.com" class="mail">funsociety.bat@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/exp-db" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/anka9080" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/2048/"  >
+                <i class="icon icon-lg icon-link"></i>
+                2048
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">部署阿里云免费HTTPS证书笔记</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">部署阿里云免费HTTPS证书笔记</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-06-12T12:39:11.000Z" itemprop="datePublished" class="page-time">
+  2017-06-12
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#系统环境"><span class="post-toc-number">1.</span> <span class="post-toc-text">系统环境</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#设置域名A记录"><span class="post-toc-number">2.</span> <span class="post-toc-text">设置域名A记录</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#新建虚拟主机"><span class="post-toc-number">3.</span> <span class="post-toc-text">新建虚拟主机</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#申请阿里云免费证书"><span class="post-toc-number">4.</span> <span class="post-toc-text">申请阿里云免费证书</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#服务器配置HTTPS证书"><span class="post-toc-number">5.</span> <span class="post-toc-text">服务器配置HTTPS证书</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#HTTP请求重定向HTTPS"><span class="post-toc-number">6.</span> <span class="post-toc-text">HTTP请求重定向HTTPS</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考"><span class="post-toc-number">7.</span> <span class="post-toc-text">参考</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-部署阿里云免费HTTPS证书笔记"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">部署阿里云免费HTTPS证书笔记</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-06-12 20:39:11" datetime="2017-06-12T12:39:11.000Z"  itemprop="datePublished">2017-06-12</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="系统环境"><a href="#系统环境" class="headerlink" title="系统环境"></a>系统环境</h2><pre><code>Ubuntu 16.04
+Apache2
+</code></pre><h2 id="设置域名A记录"><a href="#设置域名A记录" class="headerlink" title="设置域名A记录"></a>设置域名A记录</h2><blockquote>
+<p>注意：已经存在的网站不需要这一步操作。</p>
+</blockquote>
+<p>这一步是用来把 域名 绑定到指定的 IP 上，访问域名会直接返回 IP 的 Web 默认路径。</p>
+<p>在控制台新增加一条域名(x.evilclay.com)的A记录解析：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/https/a_record.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h2 id="新建虚拟主机"><a href="#新建虚拟主机" class="headerlink" title="新建虚拟主机"></a>新建虚拟主机</h2><blockquote>
+<p>注意：已经存在的网站也不需要这一步操作。</p>
+</blockquote>
+<p>之前写的笔记 <a href="http://www.evilclay.com/2017/03/13/Apache绑定多域名%20or%20多端口配置命令">Apache绑定多域名or多端口配置命令</a> 中的多域名相关配置写的就是这一部分的配置，在这里直接搞吧。</p>
+<p>新建 x.evilclay.com 作为新的虚拟主机。</p>
+<p>在 /etc/apache2/sites-enable/目录下新建 x.evilclay.com.conf 配置文件，内容如下：</p>
+<pre><code>&lt;VirtualHost *:80&gt;
+ServerName x.evilclay.com  # 域名
+ServerAdmin webmaster@localhost
+DocumentRoot /var/www/html/x.evilclay.com  # 虚拟主机目录
+ErrorLog ${APACHE_LOG_DIR}/error_x.evilclay.com.log
+CustomLog ${APACHE_LOG_DIR}/access_x.evilclay.com.log combined
+&lt;/VirtualHost&gt;
+</code></pre><p>为了测试是否成功 在 /var/www/html 中创建 x.evilclay.com 目录，新建 hello.txt 文件用来测试配置是否成功，内容如下：</p>
+<pre><code>ubuntu@evilclay:/var/www/html/x.evilclay.com$ cat hello.txt
+Hello Baby!
+</code></pre><p>重启 apache2 使用浏览器访问 <a href="http://x.evilclay.com/hello.txt" target="_blank" rel="external">http://x.evilclay.com/hello.txt</a> ，显示如下：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/https/http_ok.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>可以看出新建的虚拟主机 x.evilclay.com 已经可以成功解析。</p>
+<h2 id="申请阿里云免费证书"><a href="#申请阿里云免费证书" class="headerlink" title="申请阿里云免费证书"></a>申请阿里云免费证书</h2><ul>
+<li>登录：阿里云控制台，产品与服务，证书服务，购买证书。</li>
+<li>购买：证书类型选择 免费型DV SSL，然后完成购买。</li>
+<li>补全：在 我的证书 控制台，找到购买的证书，在操作栏里选择 补全。填写证书相关信息，在这一步，我的域名填写成 x.evilclay.com，对应修改成上一部你的域名。</li>
+<li>域名验证：可以选择 DNS，如果域名用了阿里云的 DNS 服务，再勾选一下 证书绑定的域名在 阿里云的云解析。</li>
+<li>上传：系统生成 CSR，点一下 创建。</li>
+<li>提交审核。</li>
+</ul>
+<p>根据提示，24小时内会给出审核结果，审核通过如下：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/https/cert_aliyun.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>点击操作-下载按钮，把证书的相关密钥下载到本地，待会需要上传到服务器上。</p>
+<p>主要包含：</p>
+<ul>
+<li>证书文件214144412712457.pem</li>
+<li>证书私钥文件214144412712457.key</li>
+<li>证书公钥文件public.pem</li>
+<li>证书链文件chain.pem。</li>
+</ul>
+<h2 id="服务器配置HTTPS证书"><a href="#服务器配置HTTPS证书" class="headerlink" title="服务器配置HTTPS证书"></a>服务器配置HTTPS证书</h2><p>登陆到服务器上，先安装HTTPS证书相关库：</p>
+<pre><code>sudo apt-get install openssl
+</code></pre><p>之后在 /etc/apache2 目录下新建 cert 目录，并把刚这四个文件上传到该目录。</p>
+<pre><code>sudo cd /etc/apache2  
+sudo mkdir cert
+</code></pre><p>启用 Apache 的 SSL 模块：</p>
+<pre><code>sudo a2enmod ssl
+</code></pre><p>再配置服务器域名绑定：</p>
+<pre><code>sudo cp /etc/apache2/sites-enabled/x.evilclay.com /etc/apache2/sites-enabled/x.evilclay.com_ssl    
+sudo vim x.evilclay.com_ssl
+</code></pre><p>在<virtualhost *:80="">段中，DocumentRoot一行的下方加入内容：</virtualhost></p>
+<pre><code># 添加 SSL 协议支持协议，去掉不安全的协议
+SSLProtocol TLSv1 TLSv1.1 TLSv1.2
+# 修改加密套件如下
+SSLCipherSuite ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4
+# 证书公钥配置
+SSLCertificateFile /etc/apache2/cert/public.pem
+# 证书私钥配置
+SSLCertificateKeyFile /etc/apache2/cert/214144412790737.key
+# 证书链配置，如果该属性开头有 &apos;#&apos;字符，请删除掉
+SSLCertificateChainFile /etc/apache2/cert/chain.pem
+</code></pre><p>端口修改为：443，即<virtualhost *:443="">(ssl的端口)</virtualhost></p>
+<p> 重启 Apache2, 访问 <a href="https://x.evilclay.com/hello.txt" target="_blank" rel="external">https://x.evilclay.com/hello.txt</a> 再次进行测试：</p>
+<p> <img src="http://7xku36.com1.z0.glb.clouddn.com/https/https_ok.png" alt=""></p>
+<p> 至此，从新建虚拟主机到配置HTTPS证书已经完成。</p>
+<h2 id="HTTP请求重定向HTTPS"><a href="#HTTP请求重定向HTTPS" class="headerlink" title="HTTP请求重定向HTTPS"></a>HTTP请求重定向HTTPS</h2><p>在配置文件里对 80 端口的流量做一个重定向即可：</p>
+<pre><code>vim /etc/apache2/sites-available/x.evilclay.com.conf
+
+//在&lt;VirtualHost *:80&gt;&lt;/VirtualHost&gt; 标签内加入下面一行
+Redirect permanent / https://x.evilclay.com/
+</code></pre><p>今后访问 <a href="http://x.evilclay.com" target="_blank" rel="external">http://x.evilclay.com</a> 会自动跳转到 <a href="https://x.evilclay.com/，确保所有网站流量走" target="_blank" rel="external">https://x.evilclay.com/，确保所有网站流量走</a> HTTPS 通讯。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a href="https://yundun.console.aliyun.com/" target="_blank" rel="external">https://yundun.console.aliyun.com/</a></li>
+<li><a href="https://ninghao.net/blog/4449" target="_blank" rel="external">https://ninghao.net/blog/4449</a></li>
+<li><a href="http://blog.csdn.net/trh0123/article/details/70932448" target="_blank" rel="external">http://blog.csdn.net/trh0123/article/details/70932448</a></li>
+<li><a href="https://www.howtoing.com/apache-redirect-http-to-https/" target="_blank" rel="external">https://www.howtoing.com/apache-redirect-http-to-https/</a></li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2017-06-12T12:40:15.581Z" itemprop="dateUpdated">2017-06-12 20:40:15</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2017/06/12/部署阿里云免费HTTPS证书笔记/" target="_blank" rel="external">http://www.evilclay.com/2017/06/12/部署阿里云免费HTTPS证书笔记/</a>
+        
+    </div>
+    <footer>
+        <a href="http://www.evilclay.com">
+            <img src="/img/yh.png" alt="Anka9080">
+            Anka9080
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTPS/">HTTPS</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.evilclay.com/2017/06/12/部署阿里云免费HTTPS证书笔记/&title=《部署阿里云免费HTTPS证书笔记》 — Anka9080's Notes&pic=http://www.evilclay.com/img/yh.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.evilclay.com/2017/06/12/部署阿里云免费HTTPS证书笔记/&title=《部署阿里云免费HTTPS证书笔记》 — Anka9080's Notes&source=Python,渗透测试,安全研发" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.evilclay.com/2017/06/12/部署阿里云免费HTTPS证书笔记/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《部署阿里云免费HTTPS证书笔记》 — Anka9080's Notes&url=http://www.evilclay.com/2017/06/12/部署阿里云免费HTTPS证书笔记/&via=http://www.evilclay.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.evilclay.com/2017/06/12/部署阿里云免费HTTPS证书笔记/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/06/11/SOCKS4反向代理实验/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">SOCKS4反向代理实验</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.png" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.png" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>Anka9080 &copy; 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.evilclay.com/2017/06/12/部署阿里云免费HTTPS证书笔记/&title=《部署阿里云免费HTTPS证书笔记》 — Anka9080's Notes&pic=http://www.evilclay.com/img/yh.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.evilclay.com/2017/06/12/部署阿里云免费HTTPS证书笔记/&title=《部署阿里云免费HTTPS证书笔记》 — Anka9080's Notes&source=Python,渗透测试,安全研发" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.evilclay.com/2017/06/12/部署阿里云免费HTTPS证书笔记/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《部署阿里云免费HTTPS证书笔记》 — Anka9080's Notes&url=http://www.evilclay.com/2017/06/12/部署阿里云免费HTTPS证书笔记/&via=http://www.evilclay.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.evilclay.com/2017/06/12/部署阿里云免费HTTPS证书笔记/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsklEQVR42u3aQW7jQAwEwPz/08nVF0ndwxnbAUqnIGtZLAUYckn+/MTX78vVfv7qev1k8pT86fWFh4eHNwj9PoirsPLHr2Hu47mKGQ8PD+80L3lAe1ce6Bo4Sh54eHh4X8O7x7THfXIXHh4e3n/n5aG0bYW8bYGHh4f3WV7bbM1DaYvp/N7NvRY8PDy8mJdPkb7n5yPzPTw8PLxNA/7JgXt/xM//9SFaPDw8vAO8duSflLZr53ObhJI48fDw8M7x5pgk0LYdvDaQi74TDw8Pb8xbW05dG4zlTeF22HYJxsPDw9vKawdXbasif0HtSmv0cvHw8PDewtvFzkPJF7DaljEeHh7eO3nzpuoE1jZ5o/keHh4e3iZengza9muSKpI0s7amgIeHh3eal8DaEVe+ItCW5vVLxMPDwzvGW2tGJId1u1bVFs1RMxcPDw9vEy8/svOR1WiLoVxTePhj4OHh4R3jTQ76vFDOE0w79HrYJsPDw8M7xlsb208Yu4Zexf8V8PDw8DbxJgdxUv62yWNSiF9uRuDh4eFt4q2N5NvCekNboVxuwMPDwzvHm6wFtLC11nD+l6nzHh4eHt76hlK9qDpvB+9dUHhIRXh4eHgHeGuTo2SN4L71UNT1g6fj4eHhneDlrYHkWE/eZV46t+uqeHh4eJ/i5cP7tqTOWxL3mKL4xsPDw3sLr20H7F2Wahu1i3kPDw8Pb8xr08P9UT5ZRKi3G+5fNB4eHt5W3m955SG2pXPboi0GXXh4eHhbeZN8ci7o/HtGCwR4eHh4A96ur85L5+SIX0s2dfbDw8PDG/CSEOerAx/rteDh4eF9lJd8fi1VtEsGUZMCDw8P7wt4+b1J6GsDtqQ5goeHh3eal9w8CbQtiPMYHp6Lh4eHd4CXP3gyiMpfTRv6hjUCPDw8vPT3f4u8sCWNP8QwAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1259317280&web_id=1259317280')
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

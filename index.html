@@ -152,6 +152,64 @@
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-部署阿里云免费HTTPS证书笔记"
+  class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-06-12 20:39:11" datetime="2017-06-12T12:39:11.000Z"  itemprop="datePublished">2017-06-12</time>
+
+        
+
+
+        
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/06/12/部署阿里云免费HTTPS证书笔记/">部署阿里云免费HTTPS证书笔记</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        系统环境Ubuntu 16.04
+Apache2
+设置域名A记录
+注意：已经存在的网站不需要这一步操作。
+
+这一步是用来把 域名 绑定到指定的 IP 上，访问域名会直接返回 IP 的 Web 默认路径。
+在控制台新增加一条域名(x.evilclay.com)的A记录解析：
+
+                
+                    
+                    
+...
+    
+
+        <a href="/2017/06/12/部署阿里云免费HTTPS证书笔记/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTPS/">HTTPS</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-SOCKS4反向代理实验"
   class="article-card article-type-post" itemprop="blogPost">
 
@@ -593,49 +651,6 @@ header(“Content-Security-Policy: default-src ‘self’; style-src ‘self’ 
         
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSP策略/">CSP策略</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/XSS防护/">XSS防护</a></li></ul>
 
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-Apache绑定多域名 or 多端口配置命令"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-03-13 14:23:24" datetime="2017-03-13T06:23:24.000Z"  itemprop="datePublished">2017-03-13</time>
-
-        
-
-
-        
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/03/13/Apache绑定多域名 or 多端口配置命令/">Apache 绑定多域名/多端口配置命令</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        大致提一下，Apache实现多主机的方式有多种：1)基于IP地址的虚拟主机配置，2) 基于IP和多端口的虚拟主机配置，3)单个IP地址的服务器上基于域名的虚拟主机配置，4)在多个IP地址的服务器上配置基于域名的虚拟主机。
-绑定多端口方式设置 Apache 监听新端口打开 /etc/apache2/ports.conf 文件，在 Listen 80 下追加监听新的端口号，比如 8888
-Lis...
-    
-
-        <a href="/2017/03/13/Apache绑定多域名 or 多端口配置命令/" class="post-more waves-effect waves-button">
-            Continue reading...
-        </a>
     </div>
     
 </article>

