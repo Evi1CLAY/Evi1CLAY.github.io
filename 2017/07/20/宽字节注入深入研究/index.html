@@ -40,7 +40,7 @@
 <meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/demo3.png">
 <meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/demo3_gbk.png">
 <meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/demo4.png">
-<meta property="og:updated_time" content="2017-07-20T13:53:11.759Z">
+<meta property="og:updated_time" content="2017-07-20T13:57:14.903Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="宽字节注入深入研究">
 <meta name="twitter:description" content="一些概念单字节字符集： 所有的字符都使用一个字节来表示，比如 ASCII 编码。  多字节字符集： 在多字节字符集中，一部分字节用多个字节来表示，另一部分（可能没有）用单个字节来表示。 两位的多字节字符有一个前导字节和尾字节。 在某个多字节字符集内，前导字节位于某个特定范围内，尾字节也一样。 UTF-8 编码： 是一种编码的编码方式（多字节编码），它可以使用1~4个字节表示一个符号，根据不同的符号">
@@ -490,6 +490,7 @@ mysqli_close($con);
 <p>经过两个转义 配合 GBK 对 SQL 语句进行解码导致了 最后 单引号成功逃逸，不容易啊。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>至此关于手上的宽字节注入场景分析完毕，可以看出 在使用UTF-8 对 SQL 语句进行解析时，若想发生 注入，并不是在 解析 MySQL 语句的阶段，而是在客户端提交到 服务器之前就已经发生了 SQL 注入，所以这种注入 并不是 UTF-8 编码的锅， 统一使用 UTF-8 编码并且不要使用危险的函数 iconv 是一个比较安全的编码方案。</p>
 <p>如果由于历史遗留原因一定要使用 GBK 的编码（解析）方式，可以采用 mysql_set_charset 配合 mysql_real_escape_string 转义的方式进行防护。可以参考 <a href="http://blog.csdn.net/u011721501/article/details/42874517" target="_blank" rel="external">文章</a>末尾提供的案例，行了，晚安。</p>
+<p>在代码审计的较多需要留意一下 类似 GBK 和 BIG5 这种的双字节编码，同时存在低字节位位可以是 %5C 的字符，如果使用这种存在这种字符的编码对 SQL 语句进行解析，宽字节注入就离你不远啦。</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
 <li><a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html</a></li>
 <li><a href="http://www.laruence.com/2008/01/05/12.html" target="_blank" rel="external">http://www.laruence.com/2008/01/05/12.html</a></li>
@@ -504,7 +505,7 @@ mysqli_close($con);
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2017-07-20T13:53:11.759Z" itemprop="dateUpdated">2017-07-20 21:53:11</time>
+    Last updated: <time datetime="2017-07-20T13:57:14.903Z" itemprop="dateUpdated">2017-07-20 21:57:14</time>
 </span><br>
 
 
