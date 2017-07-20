@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.evilclay.com/"/>
-  <updated>2017-07-20T13:19:15.265Z</updated>
+  <updated>2017-07-20T13:45:36.528Z</updated>
   <id>http://www.evilclay.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.evilclay.com/2017/07/20/%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5%E6%B7%B1%E5%85%A5%E7%A0%94%E7%A9%B6/"/>
     <id>http://www.evilclay.com/2017/07/20/宽字节注入深入研究/</id>
     <published>2017-07-20T13:18:21.000Z</published>
-    <updated>2017-07-20T13:19:15.265Z</updated>
+    <updated>2017-07-20T13:45:36.528Z</updated>
     
     <content type="html"><![CDATA[<h2 id="一些概念"><a href="#一些概念" class="headerlink" title="一些概念"></a>一些概念</h2><p>单字节字符集： 所有的字符都使用一个字节来表示，比如 ASCII 编码。 </p>
 <p>多字节字符集： 在多字节字符集中，一部分字节用多个字节来表示，另一部分（可能没有）用单个字节来表示。</p>
@@ -109,7 +109,7 @@ mysqli_close($con);
 <p>可以看到 先设置 客户端、连接层、结果集 都是 GBK 编码，然后执行下面的SQL语句 ：</p>
 <pre><code>select * from user where name = &apos;111�\&apos; or 1=1 -- x&apos;
 </code></pre><p>下面分析 这条语句是如何生成的：</p>
-<p>111%de’ or 1=1 – x —-经过 URL 解码—-&gt;  1110xDE’ or 1=1 –x   —-经过 addslashes 处理—-&gt; 1110xDE\’ or 1=1 –x ，随后拼接成如下 SQL 语句：</p>
+<p>111%de’ or 1=1 – x <code>—-经过 URL 解码—-&gt;</code>  1110xDE’ or 1=1 –x   <code>—-经过 addslashes 处理—-&gt;</code> 1110xDE\’ or 1=1 –x ，随后拼接成如下 SQL 语句：</p>
 <pre><code>select * from user where name = &apos;1110xDE\&apos; or 1=1 -- x&apos;
 </code></pre><p>由于在 bash 默认编码环境中 十六进制字符 0xDE 是不可显示字符，所以在 查询 log 中 会用 乱码 � 代替 0xDE。</p>
 <p>接下来分析这条SQL语句是如何被解析执行的：</p>
@@ -167,7 +167,7 @@ mysqli_close($con);
 <p>同样导致了SQL注入，这里原理就比较好玩了。</p>
 <p>先说结论： 由于 addslashed 转义后生成的 反斜杠（\），被 iconv 函数 在从 GBK 到 UTF-8 转码的过程中吃掉了，所以进入MySQL服务器之前用户输入单引号已经逃逸。</p>
 <p>现在来一步一步理一下这个过程：</p>
-<p>%B3’ or 1=1 – x —经过 URL Decode 处理—-&gt; 0xB3’ or 1=1 – x — 经过 addslashed 处理 —&gt; 0xB3\’ or 1=1 – x</p>
+<p>%B3’ or 1=1 – x <code>—经过 URL Decode 处理—-&gt;</code> 0xB3’ or 1=1 – x <code>— 经过 addslashed 处理 —&gt;</code> 0xB3\’ or 1=1 – x</p>
 <p>然后经过 转码函数 <code>iconv(&quot;GBK&quot;,&quot;UTF-8&quot;, &lt;payload&gt;)</code> 处理， 这一步是比较有意思的，需要深入分析下：</p>
 <ol>
 <li>首先要理解这个神奇的转码函数 iconv() 是用来干嘛的。</li>
@@ -253,7 +253,7 @@ mysqli_close($con);
             </figure>
 <p>其实这里访问 <a href="http://ubuntu.com/sqli_widebytes/demo3.php?name=%E9%8C%A6" target="_blank" rel="external">http://ubuntu.com/sqli_widebytes/demo3.php?name=%E9%8C%A6</a>‘ or 1=1 – x 得到的效果也是一样的。</p>
 <p>这里参考上一个场景的分析直接从 十六进制 的这个请求开始啦</p>
-<p>%E9%8C%A6’ or 1=1 – x  — URL解码 —&gt; 0xE98CA6’ or 1=1 – x — addslashes处理 —&gt; 0xE98CA6\’ or 1=1 – x</p>
+<p>%E9%8C%A6’ or 1=1 – x  <code>— URL解码 —&gt;</code> 0xE98CA6’ or 1=1 – x <code>— addslashes处理 —&gt;</code> 0xE98CA6\’ or 1=1 – x</p>
 <p>由于 E98CA6 是 <strong>錦</strong> 的十六进制编码，所以使用 iconv 转换成后得到的 GBK 编码如下：</p>
 <figure class="image-bubble">
                 <div class="img-lightbox">
@@ -308,7 +308,7 @@ mysqli_close($con);
                 <div class="image-caption"></div>
             </figure>
 <p>该场景下 PoC 与 场景三的 PoC 完全一致，但是 处理的过程却不是相同的。</p>
-<p>錦’ or 1=1 – x — 经过iconv转换成GBK编码 —&gt; 0xE55C27 or 1=1 – x — 经过addslashes处理 —&gt; 0xE55C5C5C27 or 1=1 – x</p>
+<p>錦’ or 1=1 – x <code>— 经过iconv转换成GBK编码 —&gt;</code> 0xE55C27 or 1=1 – x <code>— 经过addslashes处理 —&gt;</code> 0xE55C5C5C27 or 1=1 – x</p>
 <p>可以看出使用addslashes处理时，不仅转义了单引号，还转移了5C，这是为啥呢，因为addslashes会把输入的字符当做 UTF-8 处理，导致对 5C（UTF-8的反斜杠）也进行了转义，最后 MySQL 服务器接收到 该 Payload 之后使用 GBK 编码的方式进行解码：</p>
 <p>錦\‘ or 1=1 – x </p>
 <p>经过两个转义 配合 GBK 对 SQL 语句进行解码导致了 最后 单引号成功逃逸，不容易啊。</p>
