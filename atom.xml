@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.evilclay.com/"/>
-  <updated>2017-06-12T12:40:15.581Z</updated>
+  <updated>2017-07-20T13:19:15.265Z</updated>
   <id>http://www.evilclay.com/</id>
   
   <author>
@@ -14,6 +14,330 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>宽字节注入深入研究</title>
+    <link href="http://www.evilclay.com/2017/07/20/%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5%E6%B7%B1%E5%85%A5%E7%A0%94%E7%A9%B6/"/>
+    <id>http://www.evilclay.com/2017/07/20/宽字节注入深入研究/</id>
+    <published>2017-07-20T13:18:21.000Z</published>
+    <updated>2017-07-20T13:19:15.265Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="一些概念"><a href="#一些概念" class="headerlink" title="一些概念"></a>一些概念</h2><p>单字节字符集： 所有的字符都使用一个字节来表示，比如 ASCII 编码。 </p>
+<p>多字节字符集： 在多字节字符集中，一部分字节用多个字节来表示，另一部分（可能没有）用单个字节来表示。</p>
+<p>两位的多字节字符有一个前导字节和尾字节。 在某个多字节字符集内，前导字节位于某个特定范围内，尾字节也一样。</p>
+<p>UTF-8 编码： 是一种编码的编码方式（多字节编码），它可以使用1~4个字节表示一个符号，根据不同的符号而变化字节长度。[1]</p>
+<p>常见的宽字节：  GB2312、GBK、GB18030、BIG5、Shift_JIS</p>
+<p>GB2312 不存在宽字节注入，可以收集存在宽字节注入的编码。</p>
+<h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>一提到 宽字节注入， 笔者首先会想到由于 后端 编码和 数据库编码的 不统一，导致用户的数据 绕过(吃掉)本身的转义符号（\）从而数据 被当作 SQL 指令来执行。</p>
+<p>这句话对不对呢，经过今天公司的 showcase 之后我产生了怀疑。  从而得到观点二：</p>
+<p>宽字节注入的原因是因为 数据库后端采用了 非 单字节 编码，也就是说 UTF-8， GB2312 等都可以导致宽字节注入。</p>
+<p>下面我们就来验证验证观点一和观点二到底那个正确。</p>
+<p><strong>最终的实验结论在这里：要有宽字节注入漏洞，首先要满足数据库后端使用双/多字节解析SQL语句，其次还要保证在该种字符集范围中包含低字节位是 0x5C(01011100) 的字符，初步的测试结果 Big5 和 GBK 字符集都是有的， UTF-8 和 GB2312 没有这种字符（也就不存在宽字节注入）。</strong></p>
+<h2 id="SQL-执行原理"><a href="#SQL-执行原理" class="headerlink" title="SQL 执行原理"></a>SQL 执行原理</h2><p>网上遇到一个能较好体现 SQL 语句的解析&amp;执行过程的图片，在这里：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/sql_parse.jpg" alt="SQL语句解析过程" title="">
+                </div>
+                <div class="image-caption">SQL语句解析过程</div>
+            </figure>
+<p>SQL 在执行过程中，会分为如下几个部分：</p>
+<ol>
+<li>客户端以某种字符生成SQL语句发送至服务器，这里“某种字符”其实是任意规定的，当 PHP 作为客户端连接 MySQL 的时候，这个字符集就是 PHP 的默认编码。</li>
+<li>服务器接收到请求后会把客户端编码的字符串转换成连接层编码字符串（具体流程是先使用系统变量 character_set_client 对 SQL 语句进行解码后 会使用 系统变量 character_set_connection 对解码后的十六进制进行编码）。</li>
+<li>进行内部操作前，将 请求 按照如下规则转化成内部操作字符集，如下：<br> 3.1 使用字段 CHARACTER SET 设定值；<br> 3.2 若上述值不存在，使用对应数据表的DEFAULT CHARACTER SET设定值；<br> 3.3 若上述值不存在，则使用对应数据库的DEFAULT CHARACTER SET设定值；<br> 3.4 若上述值不存在，则使用character_set_server设定值。</li>
+<li>执行完 SQL 语句之后，将执行结果按照 character_set_results 编码进行输出。</li>
+</ol>
+<p>使用 SET NAMES <charset> 命令可以把 character_set_client  character_set_client character_set_results 设置成统一的字符编码，比如：</charset></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/set_names_demo.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>使用这一步的命令结果会使用 MySQL 数据库使用 gbk 的编码对客户端传来 SQL 语句进行解析执行，并把结果集以 gbk 编码的形式输出。</p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p>参照 深入探究宽字节注入漏洞与修补原理 这篇文章我们来进行一些实验，从而从 SQL执行原理上对 宽字节注入进行分析。</p>
+<h3 id="情景一"><a href="#情景一" class="headerlink" title="情景一"></a>情景一</h3><p>在 PHP 代码中使用 mysql_query(“set names GBK”)； 指定三个字符集（客户端、连接层、结果集）都是GBK编码。</p>
+<p>场景代码如下 demo1.php ：</p>
+<pre><code>&lt;?php 
+$name = addslashes($_GET[&apos;name&apos;]);
+$con=mysqli_connect(&quot;localhost&quot;,&quot;root&quot;,&quot;fuckroot&quot;,&quot;sqli&quot;); 
+if (mysqli_connect_errno($con)) 
+{ 
+    echo &quot;连接 MySQL 失败: &quot; . mysqli_connect_error(); 
+} 
+// 执行查询
+$sql = &quot;select * from user where name = &apos;&quot;.$name.&quot;&apos;&quot;;
+echo &quot;SQL:&quot;.$sql.&quot;&lt;br&gt;&quot;;
+mysqli_query($con,&quot;set names GBK&quot;);
+$result = mysqli_query($con,$sql);
+if(!$result){
+    // 打印错误原因
+    printf(&quot;Error: %s\n&quot;, mysqli_error($con));
+}
+// echo(&quot;Res num_rows:&quot;.$result-&gt;num_rows.&quot;&lt;br&gt;&quot;);
+// 一条条获取
+while ($row=mysqli_fetch_row($result))
+{
+    printf (&quot;%s : %s&quot;,$row[0],$row[1]);
+    echo &quot;&lt;br&gt;&quot;;
+}
+// 释放结果集合
+mysqli_free_result($result);
+// $row=mysqli_fetch_row($result);
+echo &quot;Closed!&quot;;
+mysqli_close($con);
+?&gt;
+</code></pre><h4 id="PoC"><a href="#PoC" class="headerlink" title="PoC"></a>PoC</h4><p>访问 <a href="http://ubuntu.com/sqli_widebytes/demo1.php?name=111%de" target="_blank" rel="external">http://ubuntu.com/sqli_widebytes/demo1.php?name=111%de</a>‘ or 1=1 – x</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/demo1.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>可以发现 or 1=1 已经被成功执行，结果集不为空。</p>
+<p>为了可以清晰的追踪 SQL 语句的执行过程，我们把 SQL 语句的执行 log 打印出来，配置方式参考 <a href="">这里</a></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/demo1_query_log.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>可以看到 先设置 客户端、连接层、结果集 都是 GBK 编码，然后执行下面的SQL语句 ：</p>
+<pre><code>select * from user where name = &apos;111�\&apos; or 1=1 -- x&apos;
+</code></pre><p>下面分析 这条语句是如何生成的：</p>
+<p>111%de’ or 1=1 – x —-经过 URL 解码—-&gt;  1110xDE’ or 1=1 –x   —-经过 addslashes 处理—-&gt; 1110xDE\’ or 1=1 –x ，随后拼接成如下 SQL 语句：</p>
+<pre><code>select * from user where name = &apos;1110xDE\&apos; or 1=1 -- x&apos;
+</code></pre><p>由于在 bash 默认编码环境中 十六进制字符 0xDE 是不可显示字符，所以在 查询 log 中 会用 乱码 � 代替 0xDE。</p>
+<p>接下来分析这条SQL语句是如何被解析执行的：</p>
+<p>由于前面设定了 客户端 和 连接层都是使用 GBK 编码，现在需要使用 GBK 对传来的 SQL 语句进行解析。</p>
+<p>\ 的十六进制是 0x5C，由于十六进制 0xDE5C 会被 GBK 解码成  一个生僻的汉字 <strong>轡</strong></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/demo1_gbk_shift.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>所以 GBK 解码之后执行的 SQL 语句是：</p>
+<p>select * from user where name = ‘111轡’ or 1=1 – x’</p>
+<p>addslashes 转移的 反斜杠被吃掉，导致最终的 SQL 语句执行。</p>
+<p>一句话总结起来是 转义后的反斜杠与之前的十六进制字符 0x5C 在 GBK 编码情况下被解析成新一个双字节字符（轡），进而用户输入的单引号逃逸，导致 SQL 注入。</p>
+<h3 id="情景二"><a href="#情景二" class="headerlink" title="情景二"></a>情景二</h3><p>使用 set names UTF-8 指定了 UTF-8 字符集，在 addslashes 函数处理之后使用 转码函数进行转码处理。<br>比如有时候，为了避免乱码，会将一些用户提交的 GBK 字符使用 iconv 函数（或者mb_convert_encoding）先转为 UTF-8，然后再拼接入 SQL 语句。</p>
+<p>场景代码如下 demo2.php：</p>
+<pre><code>&lt;?php 
+$name = iconv(&quot;GBK&quot;,&quot;UTF-8&quot;, addslashes($_GET[&apos;name&apos;])) ; 
+$con=mysqli_connect(&quot;localhost&quot;,&quot;root&quot;,&quot;fuckroot&quot;,&quot;sqli&quot;); 
+if (mysqli_connect_errno($con)) 
+{ 
+    echo &quot;连接 MySQL 失败: &quot; . mysqli_connect_error(); 
+} 
+// 执行查询
+$sql = &quot;select * from user where name = &apos;&quot;.$name.&quot;&apos;&quot;;
+echo &quot;SQL:&quot;.$sql.&quot;&lt;br&gt;&quot;;
+mysqli_query($con,&quot;set names UTF-8&quot;);
+$result = mysqli_query($con,$sql);
+if(!$result){
+    // 打印错误原因
+    printf(&quot;Error: %s\n&quot;, mysqli_error($con));
+}
+// 一条条获取
+while ($row=mysqli_fetch_row($result))
+{
+    printf (&quot;%s : %s&quot;,$row[0],$row[1]);
+    echo &quot;&lt;br&gt;&quot;;
+}
+// 释放结果集合
+mysqli_free_result($result);
+// $row=mysqli_fetch_row($result);
+echo &quot;Closed!&quot;;
+mysqli_close($con);
+?&gt;
+</code></pre><h4 id="PoC-1"><a href="#PoC-1" class="headerlink" title="PoC"></a>PoC</h4><p>访问 <a href="http://ubuntu.com/sqli_widebytes/demo2.php?name=111%B3" target="_blank" rel="external">http://ubuntu.com/sqli_widebytes/demo2.php?name=111%B3</a>‘ or 1=1 – x</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/demo2.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>同样导致了SQL注入，这里原理就比较好玩了。</p>
+<p>先说结论： 由于 addslashed 转义后生成的 反斜杠（\），被 iconv 函数 在从 GBK 到 UTF-8 转码的过程中吃掉了，所以进入MySQL服务器之前用户输入单引号已经逃逸。</p>
+<p>现在来一步一步理一下这个过程：</p>
+<p>%B3’ or 1=1 – x —经过 URL Decode 处理—-&gt; 0xB3’ or 1=1 – x — 经过 addslashed 处理 —&gt; 0xB3\’ or 1=1 – x</p>
+<p>然后经过 转码函数 <code>iconv(&quot;GBK&quot;,&quot;UTF-8&quot;, &lt;payload&gt;)</code> 处理， 这一步是比较有意思的，需要深入分析下：</p>
+<ol>
+<li>首先要理解这个神奇的转码函数 iconv() 是用来干嘛的。</li>
+</ol>
+<p>大家都知道 无论什么编码的文字，都会以十六进制（其实是二进制，十六进制便于表述）的方式保存在磁盘中。</p>
+<p>也就是说相同的一个 字符，比如 <strong>睿</strong> ， 他在 UTF-8 和 GBK 的编码方式下存储的十六进制是不同的，如下图所示：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/gbk_rui.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/utf-8_rui.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>可以 看出相同的 字符 <strong>睿</strong> ，在 GBK 编码的情况下 和 UTF-8 的情况下 分别存储成 EEA3 和 E79DBF。</p>
+<p>所以 iconv(“GBK”,”UTF-8”, “睿”) 其实就是把 对应的二进制从 EEA3 转换成 E79DBF 的过程，只不过编码不同，表示的还是同一个字符。</p>
+<ol>
+<li>接着按照之前的分析 首先对十六进制的 payload 进行 GBK 解码处理，得到真正 想要表达的字符。</li>
+</ol>
+<p>0xB3\’ or 1=1 – x 的 十六进制表现形式 0xB35C 27 20 6F 72 20 31 3D 31 20 2D 2D 20 78 20</p>
+<p>可以把 0xB35C 27 20 6F 72 20 31 3D 31 20 2D 2D 20 78 20 理解成经过 GBK 编码后存储内存中的真实数据，先用 GBK 对其进行解码看看其是什么样的字符</p>
+<p>重点是 GBK 会把 B35C 解码成一个中文字符 <strong>砛</strong> ，如下：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/gbk_b35c.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>把所有十六进制解码成 砛’ or 1=1 – x </p>
+<p>可以发现 使用 GBK 对输入的数据进行 解码处理在这一步已经把 转义的反斜杠给吃掉了，后面就是 使用 UTF-8 编码对这段字符编码成十六进制的形式存储在内存中的故事了。</p>
+<p>UTF-8 编码的结果如下所示：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/utf-8_payload.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>合在一起就是 0xE7A09B 27 20 6F 72 20 31 3D 31 20 2D 2D 20 78 20 ，根据编码结果可以看出 GBK 和 UTF-8 对 1-127 范围内的字符编码都是沿用了 ASCII 码，结果是相同的。</p>
+<p>到这一步我们得到了 数据库接收 SQL 语句的 十六进制形式，下面根据 SET NAMES UTF8 可知数据库会用 UTF-8 编码对这段语句进行解码，</p>
+<p>当然结果其实已经知道了，UTF-8 的解码结果就是 砛’ or 1=1 – x </p>
+<p>所以说最终执行的 SQL 语句是：</p>
+<p>select * from user where name = ‘111砛’ or 1=1 – x’</p>
+<h3 id="场景三"><a href="#场景三" class="headerlink" title="场景三"></a>场景三</h3><p>这个场景和场景二有些类似，在 iconv 的使用上与上一个相反，用 iconv 函数是用来把 UTF-8 的编码转换成 GBK 编码。</p>
+<p>按理说这种用法应该不会常见，因为转换成 GBK 编码的数据最后插入数据库时会用 UTF-8 的编码来解析导致最后的单引号溢出，奇怪的74CMS 3.4版本还真有这样一个漏洞，相关的分析在<a href="http://www.cnbraid.com/2016/sql4.html" target="_blank" rel="external">这篇文章里</a>，说句题外话，看到最后的ID 才发现是我的一位大牛学长早期的作品，厉害厉害。</p>
+<p>代码在这里（demo3.php）：</p>
+<pre><code>&lt;?php 
+$name = iconv(&quot;UTF-8&quot;,&quot;GBK&quot;, addslashes($_GET[&apos;name&apos;])) ; 
+$con=mysqli_connect(&quot;localhost&quot;,&quot;root&quot;,&quot;fuckroot&quot;,&quot;sqli&quot;); 
+// 执行查询
+$sql = &quot;select * from user where name = &apos;&quot;.$name.&quot;&apos;&quot;;
+echo &quot;SQL:&quot;.$sql.&quot;&lt;br&gt;&quot;;
+// mysqli_query($con,&quot;set names UTF-8&quot;);
+$result = mysqli_query($con,$sql);
+// echo(&quot;Res num_rows:&quot;.$result-&gt;num_rows.&quot;&lt;br&gt;&quot;);
+// 一条条获取
+while ($row=mysqli_fetch_row($result))
+{
+    printf (&quot;%s : %s&quot;,$row[0],$row[1]);
+    echo &quot;&lt;br&gt;&quot;;
+}
+// 释放结果集合
+mysqli_free_result($result);
+// $row=mysqli_fetch_row($result);
+echo &quot;Closed!&quot;;
+mysqli_close($con);
+?&gt;
+</code></pre><h4 id="PoC-2"><a href="#PoC-2" class="headerlink" title="PoC"></a>PoC</h4><p>访问 ：<a href="http://ubuntu.com/sqli_widebytes/demo3.php?name=錦" target="_blank" rel="external">http://ubuntu.com/sqli_widebytes/demo3.php?name=錦</a>‘ or 1=1 – x</p>
+<p>输出：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/demo3.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>其实这里访问 <a href="http://ubuntu.com/sqli_widebytes/demo3.php?name=%E9%8C%A6" target="_blank" rel="external">http://ubuntu.com/sqli_widebytes/demo3.php?name=%E9%8C%A6</a>‘ or 1=1 – x 得到的效果也是一样的。</p>
+<p>这里参考上一个场景的分析直接从 十六进制 的这个请求开始啦</p>
+<p>%E9%8C%A6’ or 1=1 – x  — URL解码 —&gt; 0xE98CA6’ or 1=1 – x — addslashes处理 —&gt; 0xE98CA6\’ or 1=1 – x</p>
+<p>由于 E98CA6 是 <strong>錦</strong> 的十六进制编码，所以使用 iconv 转换成后得到的 GBK 编码如下：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/demo3_gbk.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>所以 payload 经过 iconv 转换后 的十六进制结果是 0xE55C5C 27 20 6F 72 20 31 3D 31 20 2D 2D 20 78</p>
+<p>得到了 发送给数据库的十六进制的 Payload，现在使用默认的 UTF-8 编码对数据进行解码，得到</p>
+<p>�\‘ or 1=1 – x</p>
+<p>因为 E5 不被 UTF-8 编码所识别，所以转换成乱码，从而， 从 錦 分离出的 5C 和 转义生成 5C 组成 \，也就是把转义生成的反斜杠给转义了，导致用户输入的单引号逃逸。</p>
+<h3 id="情景四"><a href="#情景四" class="headerlink" title="情景四"></a>情景四</h3><p>先使用 iconv 进行字符集转换，将UTF-8转为GBK，然后使用 addslashes 函数对特殊字符进行转义，同时，set names字符集为GBK。</p>
+<p>这种场景确实比较少见，不过也并不是不会存在，下面给出场景代码：</p>
+<p>场景四 （demo4.php）</p>
+<pre><code>&lt;?php 
+$name = iconv(&quot;UTF-8&quot;,&quot;GBK&quot;, $_GET[&apos;name&apos;]) ; 
+$name = addslashes($name);
+$con=mysqli_connect(&quot;localhost&quot;,&quot;root&quot;,&quot;fuckroot&quot;,&quot;sqli&quot;); 
+if (mysqli_connect_errno($con)) 
+{ 
+    echo &quot;连接 MySQL 失败: &quot; . mysqli_connect_error(); 
+} 
+// 执行查询
+$sql = &quot;select * from user where name = &apos;&quot;.$name.&quot;&apos;&quot;;
+echo &quot;SQL:&quot;.$sql.&quot;&lt;br&gt;&quot;;
+mysqli_query($con,&quot;set names GBK&quot;);
+$result = mysqli_query($con,$sql);
+if(!$result){
+    // 打印错误原因
+    printf(&quot;Error: %s\n&quot;, mysqli_error($con));
+}
+// 一条条获取
+while ($row=mysqli_fetch_row($result))
+{
+    printf (&quot;%s : %s&quot;,$row[0],$row[1]);
+    echo &quot;&lt;br&gt;&quot;;
+}
+// 释放结果集合
+mysqli_free_result($result);
+// $row=mysqli_fetch_row($result);
+echo &quot;Closed!&quot;;
+mysqli_close($con);
+?&gt;
+</code></pre><h4 id="PoC-3"><a href="#PoC-3" class="headerlink" title="PoC"></a>PoC</h4><p>访问 <a href="http://ubuntu.com/sqli_widebytes/demo4.php?name=錦" target="_blank" rel="external">http://ubuntu.com/sqli_widebytes/demo4.php?name=錦</a>‘ or 1=1 – x</p>
+<p>显示（需要把页面编码设置成简体中文）：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/demo4.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>该场景下 PoC 与 场景三的 PoC 完全一致，但是 处理的过程却不是相同的。</p>
+<p>錦’ or 1=1 – x — 经过iconv转换成GBK编码 —&gt; 0xE55C27 or 1=1 – x — 经过addslashes处理 —&gt; 0xE55C5C5C27 or 1=1 – x</p>
+<p>可以看出使用addslashes处理时，不仅转义了单引号，还转移了5C，这是为啥呢，因为addslashes会把输入的字符当做 UTF-8 处理，导致对 5C（UTF-8的反斜杠）也进行了转义，最后 MySQL 服务器接收到 该 Payload 之后使用 GBK 编码的方式进行解码：</p>
+<p>錦\‘ or 1=1 – x </p>
+<p>经过两个转义 配合 GBK 对 SQL 语句进行解码导致了 最后 单引号成功逃逸，不容易啊。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>至此关于手上的宽字节注入场景分析完毕，可以看出 在使用UTF-8 对 SQL 语句进行解析时，若想发生 注入，并不是在 解析 MySQL 语句的阶段，而是在客户端提交到 服务器之前就已经发生了 SQL 注入，所以这种注入 并不是 UTF-8 编码的锅， 统一使用 UTF-8 编码并且不要使用危险的函数 iconv 是一个比较安全的编码方案。</p>
+<p>如果由于历史遗留原因一定要使用 GBK 的编码（解析）方式，可以采用 mysql_set_charset 配合 mysql_real_escape_string 转义的方式进行防护。可以参考 <a href="http://blog.csdn.net/u011721501/article/details/42874517" target="_blank" rel="external">文章</a>末尾提供的案例，行了，晚安。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html</a></li>
+<li><a href="http://www.laruence.com/2008/01/05/12.html" target="_blank" rel="external">http://www.laruence.com/2008/01/05/12.html</a></li>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/charset-connection.html" target="_blank" rel="external">https://dev.mysql.com/doc/refman/5.7/en/charset-connection.html</a></li>
+<li><a href="http://blog.csdn.net/u011721501/article/details/42874517" target="_blank" rel="external">http://blog.csdn.net/u011721501/article/details/42874517</a></li>
+<li><a href="http://www.cnbraid.com/2016/sql4.html" target="_blank" rel="external">http://www.cnbraid.com/2016/sql4.html</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;一些概念&quot;&gt;&lt;a href=&quot;#一些概念&quot; class=&quot;headerlink&quot; title=&quot;一些概念&quot;&gt;&lt;/a&gt;一些概念&lt;/h2&gt;&lt;p&gt;单字节字符集： 所有的字符都使用一个字节来表示，比如 ASCII 编码。 &lt;/p&gt;
+&lt;p&gt;多字节字符集： 在多字节字符集中，
+    
+    </summary>
+    
+    
+      <category term="漏洞分析" scheme="http://www.evilclay.com/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
+    
+      <category term="SQL注入" scheme="http://www.evilclay.com/tags/SQL%E6%B3%A8%E5%85%A5/"/>
+    
+      <category term="宽字节注入" scheme="http://www.evilclay.com/tags/%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5/"/>
+    
+  </entry>
   
   <entry>
     <title>部署阿里云免费HTTPS证书笔记</title>
@@ -1547,54 +1871,6 @@ import requests    //  网络请求库
       <category term="验证码识别" scheme="http://www.evilclay.com/tags/%E9%AA%8C%E8%AF%81%E7%A0%81%E8%AF%86%E5%88%AB/"/>
     
       <category term="暴力破解" scheme="http://www.evilclay.com/tags/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux的sudo权限分析小记</title>
-    <link href="http://www.evilclay.com/2016/11/06/Linux%E7%9A%84sudo%E6%9D%83%E9%99%90%E5%88%86%E6%9E%90%E5%B0%8F%E8%AE%B0/"/>
-    <id>http://www.evilclay.com/2016/11/06/Linux的sudo权限分析小记/</id>
-    <published>2016-11-06T04:07:05.000Z</published>
-    <updated>2016-11-06T04:07:51.574Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><pre><code>所谓 sudo ，就是 &quot;superuser do&quot;,即让普通用户以 root 权限执行命令。
-</code></pre><h2 id="添加-sudo-权限"><a href="#添加-sudo-权限" class="headerlink" title="添加 sudo 权限"></a>添加 sudo 权限</h2><p>给已经存在的用户添加 sudo 权限一般有两种方式：</p>
-<pre><code>1. 直接修改 /etc/sudoer 文件
-2. 使用命令把用户添加到sudo组
-</code></pre><p>不管是方式1 还是 方式2 最终都可以在 sudo 的配置文件 /etc/sudoer 中看出原因，正所谓”一切皆文件”。</p>
-<p>直接修改 /etc/sudoer 文件</p>
-<pre><code>sudo vi /etc/sudoers
-// 追加如下格式字符串
-username    ALL=(ALL:ALL) ALL
-//  这是把某一用户赋予 sudo 权限，若需要对整个用户组赋予 sudo 权限需要用关键字 %作为标志
-%groupname    ALL=(ALL:ALL) ALL
-</code></pre><p>使用命令把用户添加到sudo组</p>
-<pre><code>sudo adduser anka1 sudo
-// 或者
-sudo usermod -a -G sudo anka1
-</code></pre><p>这种方式虽然没有直接修改 /etc/sudoers 文件，却把 username 用户追加到sudo组中，在sudo组中的用户本身就有 sudo 权限，可以从配置文件中看出</p>
-<pre><code>sudo vi /etc/sudoers
-//  默认有如下一行
-%sudo   ALL=(ALL:ALL) ALL
-</code></pre><p>使用命令查看 sudo 组中的成员有哪些：</p>
-<pre><code>anka9080@evilclay:/home$ getent group sudo
-sudo:x:27:anka9080,anka1
-//  除了默认的用户 anka9080 ， anka1 也已经被添加到 sudo 组中了。
-</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>所以新建一个sudo权限的用户的脚本如下：</p>
-<pre><code>sudo useradd ankauser
-sudo echo &quot;ankauser:ankapass&quot; | sudo chpasswd
-sudo adduser ankauser sudo
-</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;所谓 sudo ，就是 &amp;quot;superuser do&amp;quot;,即让普通用户以 root 权限执行命令。
-&lt;/co
-    
-    </summary>
-    
-    
-      <category term="sudo" scheme="http://www.evilclay.com/tags/sudo/"/>
     
   </entry>
   

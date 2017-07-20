@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>宽字节注入深入研究 | Anka9080&#39;s Notes | 勿忘初心。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="漏洞分析,SQL注入,宽字节注入">
+    <meta name="description" content="一些概念单字节字符集： 所有的字符都使用一个字节来表示，比如 ASCII 编码。  多字节字符集： 在多字节字符集中，一部分字节用多个字节来表示，另一部分（可能没有）用单个字节来表示。 两位的多字节字符有一个前导字节和尾字节。 在某个多字节字符集内，前导字节位于某个特定范围内，尾字节也一样。 UTF-8 编码： 是一种编码的编码方式（多字节编码），它可以使用1~4个字节表示一个符号，根据不同的符号">
+<meta name="keywords" content="漏洞分析,SQL注入,宽字节注入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="宽字节注入深入研究">
+<meta property="og:url" content="http://www.evilclay.com/2017/07/20/宽字节注入深入研究/index.html">
+<meta property="og:site_name" content="Anka9080&#39;s Notes">
+<meta property="og:description" content="一些概念单字节字符集： 所有的字符都使用一个字节来表示，比如 ASCII 编码。  多字节字符集： 在多字节字符集中，一部分字节用多个字节来表示，另一部分（可能没有）用单个字节来表示。 两位的多字节字符有一个前导字节和尾字节。 在某个多字节字符集内，前导字节位于某个特定范围内，尾字节也一样。 UTF-8 编码： 是一种编码的编码方式（多字节编码），它可以使用1~4个字节表示一个符号，根据不同的符号">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/sql_parse.jpg">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/set_names_demo.png">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/demo1.png">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/demo1_query_log.png">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/demo1_gbk_shift.png">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/demo2.png">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/gbk_rui.png">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/utf-8_rui.png">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/gbk_b35c.png">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/utf-8_payload.png">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/demo3.png">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/demo3_gbk.png">
+<meta property="og:image" content="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/demo4.png">
+<meta property="og:updated_time" content="2017-07-20T13:19:15.265Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="宽字节注入深入研究">
+<meta name="twitter:description" content="一些概念单字节字符集： 所有的字符都使用一个字节来表示，比如 ASCII 编码。  多字节字符集： 在多字节字符集中，一部分字节用多个字节来表示，另一部分（可能没有）用单个字节来表示。 两位的多字节字符有一个前导字节和尾字节。 在某个多字节字符集内，前导字节位于某个特定范围内，尾字节也一样。 UTF-8 编码： 是一种编码的编码方式（多字节编码），它可以使用1~4个字节表示一个符号，根据不同的符号">
+<meta name="twitter:image" content="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/sql_parse.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Anka9080&#39;s Notes" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/yh.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Anka9080</h5>
+          <a href="mailto:funsociety.bat@gmail.com" title="funsociety.bat@gmail.com" class="mail">funsociety.bat@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/exp-db" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/anka9080" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/2048/"  >
+                <i class="icon icon-lg icon-link"></i>
+                2048
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">宽字节注入深入研究</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">宽字节注入深入研究</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-07-20T13:18:21.000Z" itemprop="datePublished" class="page-time">
+  2017-07-20
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#一些概念"><span class="post-toc-number">1.</span> <span class="post-toc-text">一些概念</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#目的"><span class="post-toc-number">2.</span> <span class="post-toc-text">目的</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SQL-执行原理"><span class="post-toc-number">3.</span> <span class="post-toc-text">SQL 执行原理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实验"><span class="post-toc-number">4.</span> <span class="post-toc-text">实验</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#情景一"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">情景一</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#PoC"><span class="post-toc-number">4.1.1.</span> <span class="post-toc-text">PoC</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#情景二"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">情景二</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#PoC-1"><span class="post-toc-number">4.2.1.</span> <span class="post-toc-text">PoC</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#场景三"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">场景三</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#PoC-2"><span class="post-toc-number">4.3.1.</span> <span class="post-toc-text">PoC</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#情景四"><span class="post-toc-number">4.4.</span> <span class="post-toc-text">情景四</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#PoC-3"><span class="post-toc-number">4.4.1.</span> <span class="post-toc-text">PoC</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">5.</span> <span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考"><span class="post-toc-number">6.</span> <span class="post-toc-text">参考</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-宽字节注入深入研究"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">宽字节注入深入研究</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-07-20 21:18:21" datetime="2017-07-20T13:18:21.000Z"  itemprop="datePublished">2017-07-20</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="一些概念"><a href="#一些概念" class="headerlink" title="一些概念"></a>一些概念</h2><p>单字节字符集： 所有的字符都使用一个字节来表示，比如 ASCII 编码。 </p>
+<p>多字节字符集： 在多字节字符集中，一部分字节用多个字节来表示，另一部分（可能没有）用单个字节来表示。</p>
+<p>两位的多字节字符有一个前导字节和尾字节。 在某个多字节字符集内，前导字节位于某个特定范围内，尾字节也一样。</p>
+<p>UTF-8 编码： 是一种编码的编码方式（多字节编码），它可以使用1~4个字节表示一个符号，根据不同的符号而变化字节长度。[1]</p>
+<p>常见的宽字节：  GB2312、GBK、GB18030、BIG5、Shift_JIS</p>
+<p>GB2312 不存在宽字节注入，可以收集存在宽字节注入的编码。</p>
+<h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>一提到 宽字节注入， 笔者首先会想到由于 后端 编码和 数据库编码的 不统一，导致用户的数据 绕过(吃掉)本身的转义符号（\）从而数据 被当作 SQL 指令来执行。</p>
+<p>这句话对不对呢，经过今天公司的 showcase 之后我产生了怀疑。  从而得到观点二：</p>
+<p>宽字节注入的原因是因为 数据库后端采用了 非 单字节 编码，也就是说 UTF-8， GB2312 等都可以导致宽字节注入。</p>
+<p>下面我们就来验证验证观点一和观点二到底那个正确。</p>
+<p><strong>最终的实验结论在这里：要有宽字节注入漏洞，首先要满足数据库后端使用双/多字节解析SQL语句，其次还要保证在该种字符集范围中包含低字节位是 0x5C(01011100) 的字符，初步的测试结果 Big5 和 GBK 字符集都是有的， UTF-8 和 GB2312 没有这种字符（也就不存在宽字节注入）。</strong></p>
+<h2 id="SQL-执行原理"><a href="#SQL-执行原理" class="headerlink" title="SQL 执行原理"></a>SQL 执行原理</h2><p>网上遇到一个能较好体现 SQL 语句的解析&amp;执行过程的图片，在这里：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/sql_parse.jpg" alt="SQL语句解析过程" title="">
+                </div>
+                <div class="image-caption">SQL语句解析过程</div>
+            </figure>
+<p>SQL 在执行过程中，会分为如下几个部分：</p>
+<ol>
+<li>客户端以某种字符生成SQL语句发送至服务器，这里“某种字符”其实是任意规定的，当 PHP 作为客户端连接 MySQL 的时候，这个字符集就是 PHP 的默认编码。</li>
+<li>服务器接收到请求后会把客户端编码的字符串转换成连接层编码字符串（具体流程是先使用系统变量 character_set_client 对 SQL 语句进行解码后 会使用 系统变量 character_set_connection 对解码后的十六进制进行编码）。</li>
+<li>进行内部操作前，将 请求 按照如下规则转化成内部操作字符集，如下：<br> 3.1 使用字段 CHARACTER SET 设定值；<br> 3.2 若上述值不存在，使用对应数据表的DEFAULT CHARACTER SET设定值；<br> 3.3 若上述值不存在，则使用对应数据库的DEFAULT CHARACTER SET设定值；<br> 3.4 若上述值不存在，则使用character_set_server设定值。</li>
+<li>执行完 SQL 语句之后，将执行结果按照 character_set_results 编码进行输出。</li>
+</ol>
+<p>使用 SET NAMES <charset> 命令可以把 character_set_client  character_set_client character_set_results 设置成统一的字符编码，比如：</charset></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/set_names_demo.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>使用这一步的命令结果会使用 MySQL 数据库使用 gbk 的编码对客户端传来 SQL 语句进行解析执行，并把结果集以 gbk 编码的形式输出。</p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p>参照 深入探究宽字节注入漏洞与修补原理 这篇文章我们来进行一些实验，从而从 SQL执行原理上对 宽字节注入进行分析。</p>
+<h3 id="情景一"><a href="#情景一" class="headerlink" title="情景一"></a>情景一</h3><p>在 PHP 代码中使用 mysql_query(“set names GBK”)； 指定三个字符集（客户端、连接层、结果集）都是GBK编码。</p>
+<p>场景代码如下 demo1.php ：</p>
+<pre><code>&lt;?php 
+$name = addslashes($_GET[&apos;name&apos;]);
+$con=mysqli_connect(&quot;localhost&quot;,&quot;root&quot;,&quot;fuckroot&quot;,&quot;sqli&quot;); 
+if (mysqli_connect_errno($con)) 
+{ 
+    echo &quot;连接 MySQL 失败: &quot; . mysqli_connect_error(); 
+} 
+// 执行查询
+$sql = &quot;select * from user where name = &apos;&quot;.$name.&quot;&apos;&quot;;
+echo &quot;SQL:&quot;.$sql.&quot;&lt;br&gt;&quot;;
+mysqli_query($con,&quot;set names GBK&quot;);
+$result = mysqli_query($con,$sql);
+if(!$result){
+    // 打印错误原因
+    printf(&quot;Error: %s\n&quot;, mysqli_error($con));
+}
+// echo(&quot;Res num_rows:&quot;.$result-&gt;num_rows.&quot;&lt;br&gt;&quot;);
+// 一条条获取
+while ($row=mysqli_fetch_row($result))
+{
+    printf (&quot;%s : %s&quot;,$row[0],$row[1]);
+    echo &quot;&lt;br&gt;&quot;;
+}
+// 释放结果集合
+mysqli_free_result($result);
+// $row=mysqli_fetch_row($result);
+echo &quot;Closed!&quot;;
+mysqli_close($con);
+?&gt;
+</code></pre><h4 id="PoC"><a href="#PoC" class="headerlink" title="PoC"></a>PoC</h4><p>访问 <a href="http://ubuntu.com/sqli_widebytes/demo1.php?name=111%de" target="_blank" rel="external">http://ubuntu.com/sqli_widebytes/demo1.php?name=111%de</a>‘ or 1=1 – x</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/demo1.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>可以发现 or 1=1 已经被成功执行，结果集不为空。</p>
+<p>为了可以清晰的追踪 SQL 语句的执行过程，我们把 SQL 语句的执行 log 打印出来，配置方式参考 <a href="">这里</a></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/demo1_query_log.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>可以看到 先设置 客户端、连接层、结果集 都是 GBK 编码，然后执行下面的SQL语句 ：</p>
+<pre><code>select * from user where name = &apos;111�\&apos; or 1=1 -- x&apos;
+</code></pre><p>下面分析 这条语句是如何生成的：</p>
+<p>111%de’ or 1=1 – x —-经过 URL 解码—-&gt;  1110xDE’ or 1=1 –x   —-经过 addslashes 处理—-&gt; 1110xDE\’ or 1=1 –x ，随后拼接成如下 SQL 语句：</p>
+<pre><code>select * from user where name = &apos;1110xDE\&apos; or 1=1 -- x&apos;
+</code></pre><p>由于在 bash 默认编码环境中 十六进制字符 0xDE 是不可显示字符，所以在 查询 log 中 会用 乱码 � 代替 0xDE。</p>
+<p>接下来分析这条SQL语句是如何被解析执行的：</p>
+<p>由于前面设定了 客户端 和 连接层都是使用 GBK 编码，现在需要使用 GBK 对传来的 SQL 语句进行解析。</p>
+<p>\ 的十六进制是 0x5C，由于十六进制 0xDE5C 会被 GBK 解码成  一个生僻的汉字 <strong>轡</strong></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/demo1_gbk_shift.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>所以 GBK 解码之后执行的 SQL 语句是：</p>
+<p>select * from user where name = ‘111轡’ or 1=1 – x’</p>
+<p>addslashes 转移的 反斜杠被吃掉，导致最终的 SQL 语句执行。</p>
+<p>一句话总结起来是 转义后的反斜杠与之前的十六进制字符 0x5C 在 GBK 编码情况下被解析成新一个双字节字符（轡），进而用户输入的单引号逃逸，导致 SQL 注入。</p>
+<h3 id="情景二"><a href="#情景二" class="headerlink" title="情景二"></a>情景二</h3><p>使用 set names UTF-8 指定了 UTF-8 字符集，在 addslashes 函数处理之后使用 转码函数进行转码处理。<br>比如有时候，为了避免乱码，会将一些用户提交的 GBK 字符使用 iconv 函数（或者mb_convert_encoding）先转为 UTF-8，然后再拼接入 SQL 语句。</p>
+<p>场景代码如下 demo2.php：</p>
+<pre><code>&lt;?php 
+$name = iconv(&quot;GBK&quot;,&quot;UTF-8&quot;, addslashes($_GET[&apos;name&apos;])) ; 
+$con=mysqli_connect(&quot;localhost&quot;,&quot;root&quot;,&quot;fuckroot&quot;,&quot;sqli&quot;); 
+if (mysqli_connect_errno($con)) 
+{ 
+    echo &quot;连接 MySQL 失败: &quot; . mysqli_connect_error(); 
+} 
+// 执行查询
+$sql = &quot;select * from user where name = &apos;&quot;.$name.&quot;&apos;&quot;;
+echo &quot;SQL:&quot;.$sql.&quot;&lt;br&gt;&quot;;
+mysqli_query($con,&quot;set names UTF-8&quot;);
+$result = mysqli_query($con,$sql);
+if(!$result){
+    // 打印错误原因
+    printf(&quot;Error: %s\n&quot;, mysqli_error($con));
+}
+// 一条条获取
+while ($row=mysqli_fetch_row($result))
+{
+    printf (&quot;%s : %s&quot;,$row[0],$row[1]);
+    echo &quot;&lt;br&gt;&quot;;
+}
+// 释放结果集合
+mysqli_free_result($result);
+// $row=mysqli_fetch_row($result);
+echo &quot;Closed!&quot;;
+mysqli_close($con);
+?&gt;
+</code></pre><h4 id="PoC-1"><a href="#PoC-1" class="headerlink" title="PoC"></a>PoC</h4><p>访问 <a href="http://ubuntu.com/sqli_widebytes/demo2.php?name=111%B3" target="_blank" rel="external">http://ubuntu.com/sqli_widebytes/demo2.php?name=111%B3</a>‘ or 1=1 – x</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/demo2.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>同样导致了SQL注入，这里原理就比较好玩了。</p>
+<p>先说结论： 由于 addslashed 转义后生成的 反斜杠（\），被 iconv 函数 在从 GBK 到 UTF-8 转码的过程中吃掉了，所以进入MySQL服务器之前用户输入单引号已经逃逸。</p>
+<p>现在来一步一步理一下这个过程：</p>
+<p>%B3’ or 1=1 – x —经过 URL Decode 处理—-&gt; 0xB3’ or 1=1 – x — 经过 addslashed 处理 —&gt; 0xB3\’ or 1=1 – x</p>
+<p>然后经过 转码函数 <code>iconv(&quot;GBK&quot;,&quot;UTF-8&quot;, &lt;payload&gt;)</code> 处理， 这一步是比较有意思的，需要深入分析下：</p>
+<ol>
+<li>首先要理解这个神奇的转码函数 iconv() 是用来干嘛的。</li>
+</ol>
+<p>大家都知道 无论什么编码的文字，都会以十六进制（其实是二进制，十六进制便于表述）的方式保存在磁盘中。</p>
+<p>也就是说相同的一个 字符，比如 <strong>睿</strong> ， 他在 UTF-8 和 GBK 的编码方式下存储的十六进制是不同的，如下图所示：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/gbk_rui.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/utf-8_rui.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>可以 看出相同的 字符 <strong>睿</strong> ，在 GBK 编码的情况下 和 UTF-8 的情况下 分别存储成 EEA3 和 E79DBF。</p>
+<p>所以 iconv(“GBK”,”UTF-8”, “睿”) 其实就是把 对应的二进制从 EEA3 转换成 E79DBF 的过程，只不过编码不同，表示的还是同一个字符。</p>
+<ol>
+<li>接着按照之前的分析 首先对十六进制的 payload 进行 GBK 解码处理，得到真正 想要表达的字符。</li>
+</ol>
+<p>0xB3\’ or 1=1 – x 的 十六进制表现形式 0xB35C 27 20 6F 72 20 31 3D 31 20 2D 2D 20 78 20</p>
+<p>可以把 0xB35C 27 20 6F 72 20 31 3D 31 20 2D 2D 20 78 20 理解成经过 GBK 编码后存储内存中的真实数据，先用 GBK 对其进行解码看看其是什么样的字符</p>
+<p>重点是 GBK 会把 B35C 解码成一个中文字符 <strong>砛</strong> ，如下：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/gbk_b35c.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>把所有十六进制解码成 砛’ or 1=1 – x </p>
+<p>可以发现 使用 GBK 对输入的数据进行 解码处理在这一步已经把 转义的反斜杠给吃掉了，后面就是 使用 UTF-8 编码对这段字符编码成十六进制的形式存储在内存中的故事了。</p>
+<p>UTF-8 编码的结果如下所示：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/utf-8_payload.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>合在一起就是 0xE7A09B 27 20 6F 72 20 31 3D 31 20 2D 2D 20 78 20 ，根据编码结果可以看出 GBK 和 UTF-8 对 1-127 范围内的字符编码都是沿用了 ASCII 码，结果是相同的。</p>
+<p>到这一步我们得到了 数据库接收 SQL 语句的 十六进制形式，下面根据 SET NAMES UTF8 可知数据库会用 UTF-8 编码对这段语句进行解码，</p>
+<p>当然结果其实已经知道了，UTF-8 的解码结果就是 砛’ or 1=1 – x </p>
+<p>所以说最终执行的 SQL 语句是：</p>
+<p>select * from user where name = ‘111砛’ or 1=1 – x’</p>
+<h3 id="场景三"><a href="#场景三" class="headerlink" title="场景三"></a>场景三</h3><p>这个场景和场景二有些类似，在 iconv 的使用上与上一个相反，用 iconv 函数是用来把 UTF-8 的编码转换成 GBK 编码。</p>
+<p>按理说这种用法应该不会常见，因为转换成 GBK 编码的数据最后插入数据库时会用 UTF-8 的编码来解析导致最后的单引号溢出，奇怪的74CMS 3.4版本还真有这样一个漏洞，相关的分析在<a href="http://www.cnbraid.com/2016/sql4.html" target="_blank" rel="external">这篇文章里</a>，说句题外话，看到最后的ID 才发现是我的一位大牛学长早期的作品，厉害厉害。</p>
+<p>代码在这里（demo3.php）：</p>
+<pre><code>&lt;?php 
+$name = iconv(&quot;UTF-8&quot;,&quot;GBK&quot;, addslashes($_GET[&apos;name&apos;])) ; 
+$con=mysqli_connect(&quot;localhost&quot;,&quot;root&quot;,&quot;fuckroot&quot;,&quot;sqli&quot;); 
+// 执行查询
+$sql = &quot;select * from user where name = &apos;&quot;.$name.&quot;&apos;&quot;;
+echo &quot;SQL:&quot;.$sql.&quot;&lt;br&gt;&quot;;
+// mysqli_query($con,&quot;set names UTF-8&quot;);
+$result = mysqli_query($con,$sql);
+// echo(&quot;Res num_rows:&quot;.$result-&gt;num_rows.&quot;&lt;br&gt;&quot;);
+// 一条条获取
+while ($row=mysqli_fetch_row($result))
+{
+    printf (&quot;%s : %s&quot;,$row[0],$row[1]);
+    echo &quot;&lt;br&gt;&quot;;
+}
+// 释放结果集合
+mysqli_free_result($result);
+// $row=mysqli_fetch_row($result);
+echo &quot;Closed!&quot;;
+mysqli_close($con);
+?&gt;
+</code></pre><h4 id="PoC-2"><a href="#PoC-2" class="headerlink" title="PoC"></a>PoC</h4><p>访问 ：<a href="http://ubuntu.com/sqli_widebytes/demo3.php?name=錦" target="_blank" rel="external">http://ubuntu.com/sqli_widebytes/demo3.php?name=錦</a>‘ or 1=1 – x</p>
+<p>输出：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/demo3.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>其实这里访问 <a href="http://ubuntu.com/sqli_widebytes/demo3.php?name=%E9%8C%A6" target="_blank" rel="external">http://ubuntu.com/sqli_widebytes/demo3.php?name=%E9%8C%A6</a>‘ or 1=1 – x 得到的效果也是一样的。</p>
+<p>这里参考上一个场景的分析直接从 十六进制 的这个请求开始啦</p>
+<p>%E9%8C%A6’ or 1=1 – x  — URL解码 —&gt; 0xE98CA6’ or 1=1 – x — addslashes处理 —&gt; 0xE98CA6\’ or 1=1 – x</p>
+<p>由于 E98CA6 是 <strong>錦</strong> 的十六进制编码，所以使用 iconv 转换成后得到的 GBK 编码如下：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/demo3_gbk.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>所以 payload 经过 iconv 转换后 的十六进制结果是 0xE55C5C 27 20 6F 72 20 31 3D 31 20 2D 2D 20 78</p>
+<p>得到了 发送给数据库的十六进制的 Payload，现在使用默认的 UTF-8 编码对数据进行解码，得到</p>
+<p>�\‘ or 1=1 – x</p>
+<p>因为 E5 不被 UTF-8 编码所识别，所以转换成乱码，从而， 从 錦 分离出的 5C 和 转义生成 5C 组成 \，也就是把转义生成的反斜杠给转义了，导致用户输入的单引号逃逸。</p>
+<h3 id="情景四"><a href="#情景四" class="headerlink" title="情景四"></a>情景四</h3><p>先使用 iconv 进行字符集转换，将UTF-8转为GBK，然后使用 addslashes 函数对特殊字符进行转义，同时，set names字符集为GBK。</p>
+<p>这种场景确实比较少见，不过也并不是不会存在，下面给出场景代码：</p>
+<p>场景四 （demo4.php）</p>
+<pre><code>&lt;?php 
+$name = iconv(&quot;UTF-8&quot;,&quot;GBK&quot;, $_GET[&apos;name&apos;]) ; 
+$name = addslashes($name);
+$con=mysqli_connect(&quot;localhost&quot;,&quot;root&quot;,&quot;fuckroot&quot;,&quot;sqli&quot;); 
+if (mysqli_connect_errno($con)) 
+{ 
+    echo &quot;连接 MySQL 失败: &quot; . mysqli_connect_error(); 
+} 
+// 执行查询
+$sql = &quot;select * from user where name = &apos;&quot;.$name.&quot;&apos;&quot;;
+echo &quot;SQL:&quot;.$sql.&quot;&lt;br&gt;&quot;;
+mysqli_query($con,&quot;set names GBK&quot;);
+$result = mysqli_query($con,$sql);
+if(!$result){
+    // 打印错误原因
+    printf(&quot;Error: %s\n&quot;, mysqli_error($con));
+}
+// 一条条获取
+while ($row=mysqli_fetch_row($result))
+{
+    printf (&quot;%s : %s&quot;,$row[0],$row[1]);
+    echo &quot;&lt;br&gt;&quot;;
+}
+// 释放结果集合
+mysqli_free_result($result);
+// $row=mysqli_fetch_row($result);
+echo &quot;Closed!&quot;;
+mysqli_close($con);
+?&gt;
+</code></pre><h4 id="PoC-3"><a href="#PoC-3" class="headerlink" title="PoC"></a>PoC</h4><p>访问 <a href="http://ubuntu.com/sqli_widebytes/demo4.php?name=錦" target="_blank" rel="external">http://ubuntu.com/sqli_widebytes/demo4.php?name=錦</a>‘ or 1=1 – x</p>
+<p>显示（需要把页面编码设置成简体中文）：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://7xku36.com1.z0.glb.clouddn.com/widebyte_sqli/demo4.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>该场景下 PoC 与 场景三的 PoC 完全一致，但是 处理的过程却不是相同的。</p>
+<p>錦’ or 1=1 – x — 经过iconv转换成GBK编码 —&gt; 0xE55C27 or 1=1 – x — 经过addslashes处理 —&gt; 0xE55C5C5C27 or 1=1 – x</p>
+<p>可以看出使用addslashes处理时，不仅转义了单引号，还转移了5C，这是为啥呢，因为addslashes会把输入的字符当做 UTF-8 处理，导致对 5C（UTF-8的反斜杠）也进行了转义，最后 MySQL 服务器接收到 该 Payload 之后使用 GBK 编码的方式进行解码：</p>
+<p>錦\‘ or 1=1 – x </p>
+<p>经过两个转义 配合 GBK 对 SQL 语句进行解码导致了 最后 单引号成功逃逸，不容易啊。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>至此关于手上的宽字节注入场景分析完毕，可以看出 在使用UTF-8 对 SQL 语句进行解析时，若想发生 注入，并不是在 解析 MySQL 语句的阶段，而是在客户端提交到 服务器之前就已经发生了 SQL 注入，所以这种注入 并不是 UTF-8 编码的锅， 统一使用 UTF-8 编码并且不要使用危险的函数 iconv 是一个比较安全的编码方案。</p>
+<p>如果由于历史遗留原因一定要使用 GBK 的编码（解析）方式，可以采用 mysql_set_charset 配合 mysql_real_escape_string 转义的方式进行防护。可以参考 <a href="http://blog.csdn.net/u011721501/article/details/42874517" target="_blank" rel="external">文章</a>末尾提供的案例，行了，晚安。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html</a></li>
+<li><a href="http://www.laruence.com/2008/01/05/12.html" target="_blank" rel="external">http://www.laruence.com/2008/01/05/12.html</a></li>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/charset-connection.html" target="_blank" rel="external">https://dev.mysql.com/doc/refman/5.7/en/charset-connection.html</a></li>
+<li><a href="http://blog.csdn.net/u011721501/article/details/42874517" target="_blank" rel="external">http://blog.csdn.net/u011721501/article/details/42874517</a></li>
+<li><a href="http://www.cnbraid.com/2016/sql4.html" target="_blank" rel="external">http://www.cnbraid.com/2016/sql4.html</a></li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-07-20T13:19:15.265Z" itemprop="dateUpdated">2017-07-20 21:19:15</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2017/07/20/宽字节注入深入研究/" target="_blank" rel="external">http://www.evilclay.com/2017/07/20/宽字节注入深入研究/</a>
+        
+    </div>
+    <footer>
+        <a href="http://www.evilclay.com">
+            <img src="/img/yh.png" alt="Anka9080">
+            Anka9080
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL注入/">SQL注入</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/宽字节注入/">宽字节注入</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/漏洞分析/">漏洞分析</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.evilclay.com/2017/07/20/宽字节注入深入研究/&title=《宽字节注入深入研究》 — Anka9080's Notes&pic=http://www.evilclay.com/img/yh.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.evilclay.com/2017/07/20/宽字节注入深入研究/&title=《宽字节注入深入研究》 — Anka9080's Notes&source=Python,渗透测试,安全研发" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.evilclay.com/2017/07/20/宽字节注入深入研究/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《宽字节注入深入研究》 — Anka9080's Notes&url=http://www.evilclay.com/2017/07/20/宽字节注入深入研究/&via=http://www.evilclay.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.evilclay.com/2017/07/20/宽字节注入深入研究/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/06/12/部署阿里云免费HTTPS证书笔记/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">部署阿里云免费HTTPS证书笔记</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.png" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.png" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>Anka9080 &copy; 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.evilclay.com/2017/07/20/宽字节注入深入研究/&title=《宽字节注入深入研究》 — Anka9080's Notes&pic=http://www.evilclay.com/img/yh.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.evilclay.com/2017/07/20/宽字节注入深入研究/&title=《宽字节注入深入研究》 — Anka9080's Notes&source=Python,渗透测试,安全研发" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.evilclay.com/2017/07/20/宽字节注入深入研究/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《宽字节注入深入研究》 — Anka9080's Notes&url=http://www.evilclay.com/2017/07/20/宽字节注入深入研究/&via=http://www.evilclay.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.evilclay.com/2017/07/20/宽字节注入深入研究/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACrklEQVR42u3aUW4qMQwF0O5/030LoG96r50gVJ35QsBMcoKUGNtfX/H1/XK9vv987+vr/DvJKKsLDw8Pbz31hPG/SSTTakfMP/1hCfDw8PCu8fabdfL6ed+ejfWLBQ8PD+8DeM8Bbh7+Rts6Hh4e3p/j5cFxvgTJc/Dw8PA+gZdPsd3Kk3ufn/mmXAseHh5ezMurSJ/z+kp9Dw8PD29dVW9D2/0xkAfi0Wzx8PDwLvDyDXeWus3Tr22zVzFPPDw8vKO8NlE7S8ueTU8UDWF4eHh4F3izjThJniaTeF6sutB16pzBw8PDW7c9ndqaZ6W1Fv/DfwU8PDy8a7zZ4fE8cPtOUn4rPsXDw8N7Iy9PBCSw2XTbsX6p7+Hh4eEd4rVpgmFoO9qlT7WF4eHh4d3jzRIHeRJh35qwOhjw8PDwjvJm230eRrfLlEw9eQIeHh7ePV5elNokC/JWgPz5w38MeHh4eAveZsM9ezDUwXGSMsbDw8N7C28TELcB+o1v/tJThoeHh3emMvU1C1vzUll7INUHwPM38fDw8I7y2iRpW/pK2gXyPbxNmuDh4eHd4LWR59kC1X6ZiswDHh4e3lHe5hjIn5C8nwf3eHh4eJ/Dm7VY5e0F7XSP/W/Aw8PDO8pLHp0cGMlizVq48rQvHh4e3nt4bQGsnUoeQOejFA0HeHh4eNd4m+RplCcOnjlr/xp2luHh4eGtefkAbSmrDdZnjVx4eHh47+F9l9cMeaOBIFoUPDw8vAu8dqttkxGn0rizZDEeHh7ePd7sMNg0BCQJjk2pLPpl8PDw8Na8WdvT7MCoU7GjAwwPDw/vc3htgDsLkTfpYDw8PLzP5OXbd96AlR8q+bGEh4eHd4+3CXzbJOwsDVH3RODh4eFd47W3zULtIvG6abTa34yHh4f3xPsHTYBUuR3EyB0AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+lazyScripts.push('//s95.cnzz.com/z_stat.php?id=1259317280&web_id=1259317280')
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
